@@ -3,13 +3,32 @@
 {% block content %}
 <h1>Traffic Light</h1>
 
-<canvas id='canvas' width='400' height='400'>
-  No canvas in your browser...sorry...
-</canvas>
-<br />
-<input id="red" type="checkbox" onClick="setLights()" />Red<br />
-<input id="yellow" type="checkbox" onClick="setLights()" />Yellow<br />
-<input id="green" type="checkbox" onClick="setLights()" />Green<br />
+<form class="form-inline">
+  <div class="form-check mr-2">
+    <input id="red" class="form-check-input" type="checkbox" value="" onClick="setLights()">
+    <label class="form-check-label" for="red">
+      Red
+    </label>
+  </div>
+  <div class="form-check mr-2">
+    <input id="yellow" class="form-check-input" type="checkbox" value="" onClick="setLights()">
+    <label class="form-check-label" for="yellow">
+      Yellow
+    </label>
+  </div>
+  <div class="form-check mr-2">
+    <input id="green" class="form-check-input" type="checkbox" value="" onClick="setLights()">
+    <label class="form-check-label" for="green">
+      Green
+    </label>
+  </div>
+</form>
+
+<div>
+  <canvas id='canvas' width='400' height='400'>
+    No canvas in your browser...sorry...
+  </canvas>
+</div>
 
 <script>
   var trafficLight;

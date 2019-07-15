@@ -1,27 +1,19 @@
 {% extends "_common.njk" %}
 {% block content %}
 <h1>Light Bulb</h1>
-<table>
-  <tr>
-    <td>
-      <canvas id='canvas' width='400' height='400'>
-        No canvas in your browser...sorry...
-      </canvas>
-    </td>
-    <td>
-      <input id="light" type="checkbox" onClick="setLight()" />Light on</br>
-      <input id="red" type="radio" name="color" onclick="setColor('rgb(204, 51, 0)');" />red<br />
-      <input id="green" type="radio" name="color" onclick="setColor('rgb(0, 255, 0)');" />green<br />
-      <input id="blue" type="radio" name="color" onclick="setColor('rgb(0, 0, 255)');" />blue<br />
-      <input id="yellow" type="radio" name="color" checked onclick="setColor('rgb(255, 255, 0)');" />yellow<br />
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <input type="range" min="0" max="100" value="100" step="1" onchange="setAlpha(this.value)" />
-    </td>
-  </tr>
-</table>
+<form class="form-inline">
+  <input class="form-control" id="light" type="checkbox" onClick="setLight()" />Light on</br>
+  <input class="form-control" id="red" type="radio" name="color" onclick="setColor('rgb(204, 51, 0)');" />red<br />
+  <input class="form-control" id="green" type="radio" name="color" onclick="setColor('rgb(0, 255, 0)');" />green<br />
+  <input class="form-control" id="blue" type="radio" name="color" onclick="setColor('rgb(0, 0, 255)');" />blue<br />
+  <input class="form-control" id="yellow" type="radio" name="color" checked onclick="setColor('rgb(255, 255, 0)');" />yellow<br />
+  <input class="form-control" type="range" min="0" max="100" value="100" step="1" onchange="setAlpha(this.value)" />
+</form>
+<div>
+  <canvas id='canvas' width='400' height='400'>
+    No canvas in your browser...sorry...
+  </canvas>
+</div>
 <script>
   var lightBulb;
 
