@@ -1,12 +1,6 @@
-This repo represents the current state of the steelseries javascript canvas port.
-There is no documentation or build automation, yet.
 
+# Steelseries
 
-The minified versions are produced (generally!) using the Microsoft Ajax Minifier:
-http://ajaxmin.codeplex.com/
+A collection of gauge components for JavaScript.
 
-I use the following simple batch file:
-@echo Minifying %~n1 to %~n1.min.js ...
-@"C:\Program Files (x86)\Microsoft\Microsoft Ajax Minifier\ajaxmin.exe" -JS "%1" -clobber:true -out "%~p1%~n1-min.js" -enc:in utf-8
-
-See my <a href="https://plus.google.com/105784522827877256999" rel="publisher">Google+</a> page for announcements
+This project is a re-packaging of [HanSolo's SteelSeries-Canvas](https://github.com/HanSolo/SteelSeries-Canvas).
