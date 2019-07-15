@@ -1,6 +1,7 @@
 {% extends "_common.njk" %}
 
 {% block content %}
+<h1>Traffic Light</h1>
 
     <canvas id='canvas' width='400' height='400'>
       No canvas in your browser...sorry...
@@ -9,7 +10,6 @@
 	<input id="red" type="checkbox" onClick="setLights()"/>Red<br />
 	<input id="yellow" type="checkbox" onClick="setLights()"/>Yellow<br />
 	<input id="green" type="checkbox" onClick="setLights()"/>Green<br />
-    <script src="dist/steelseries.js"></script>
 
       <script>
         var trafficLight;
