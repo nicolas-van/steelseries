@@ -2,84 +2,74 @@
 
 {% block content %}
 <h1>Stop Watch</h1>
-<table>
-  <tbody>
-    <tr>
-      <td width="100%">
-        <select id="comboFrame" onchange="setFrameDesign(this)">
-          <option selected="selected" value="">Frame design</option>
-          <option value="BLACK_METAL">BlackMetal</option>
-          <option value="METAL">Metal</option>
-          <option value="SHINY_METAL">ShinyMetal</option>
-          <option value="BRASS">Brass</option>
-          <option value="STEEL">Steel</option>
-          <option value="CHROME">Chrome</option>
-          <option value="GOLD">Gold</option>
-          <option value="ANTHRACITE">Anthracite</option>
-          <option value="TILTED_GRAY">TiltedGray</option>
-          <option value="TILTED_BLACK">TiltedBlack</option>
-          <option value="GLOSSY_METAL">GlossyMetal</option>
-        </select>
-        <select id="comboBackground" onchange="setBackgroundColor(this)">
-          <option selected="selected" value="">Background</option>
-          <option value="DARK_GRAY">DarkGray</option>
-          <option value="SATIN_GRAY">SatinGray</option>
-          <option value="LIGHT_GRAY">LightGray</option>
-          <option value="WHITE">White</option>
-          <option value="BLACK">Black</option>
-          <option value="BEIGE">Beige</option>
-          <option value="BROWN">Brown</option>
-          <option value="RED">Red</option>
-          <option value="GREEN">Green</option>
-          <option value="BLUE">Blue</option>
-          <option value="ANTHRACITE">Anthracite</option>
-          <option value="MUD">Mud</option>
-          <option value="PUNCHED_SHEET">PunchedSheet</option>
-          <option value="CARBON">Carbon</option>
-          <option value="STAINLESS">Stainless</option>
-          <option value="BRUSHED_METAL">BrushedMetal</option>
-          <option value="BRUSHED_STAINLESS">BrushedStainless</option>
-          <option value="TURNED">Turned</option>
-        </select>
-        <select id="comboPointerColor" onchange="setPointerColor(this)">
-          <option selected="selected" value="">Pointer color</option>
-          <option value="RED">Red</option>
-          <option value="GREEN">Green</option>
-          <option value="BLUE">Blue</option>
-          <option value="ORANGE">Orange</option>
-          <option value="YELLOW">Yellow</option>
-          <option value="CYAN">Cyan</option>
-          <option value="MAGENTA">Magenta</option>
-          <option value="WHITE">White</option>
-          <option value="GRAY">Gray</option>
-          <option value="BLACK">Black</option>
-          <option value="RAITH">Raith</option>
-          <option value="GREEN_LCD">Green LCD</option>
-          <option value="JUG_GREEN">JUG Green</option>
-        </select>
-        <select id="comboForeground" onchange="setForegroundType(this)">
-          <option selected="selected" value="">Foreground</option>
-          <option value="TYPE1">Type1</option>
-          <option value="TYPE2">Type2</option>
-          <option value="TYPE3">Type3</option>
-          <option value="TYPE4">Type4</option>
-          <option value="TYPE5">Type5</option>
-        </select>
-        <INPUT type="button" value="Stop" name="button1" onClick="radial1.stop();">
-        <INPUT type="button" value="Start" name="button2" onClick="radial1.start();">
-        <INPUT type="button" value="Reset" name="button3" onClick="radial1.reset();">
-        <INPUT type="button" value="Lap" name="button4" onClick="radial1.lap();">
-      </td>
-    </tr>
-    <tr>
-      <td width="100%">
-        <canvas id="canvasRadial1" width="201" height="201">No canvas in your browser...sorry...</canvas>
-      </td>
-    </tr>
-
-  </tbody>
-</table>
-
+<form class="form-inline">
+  <select class="form-control" id="comboFrame" onchange="setFrameDesign(this)">
+    <option selected="selected" value="">Frame design</option>
+    <option value="BLACK_METAL">BlackMetal</option>
+    <option value="METAL">Metal</option>
+    <option value="SHINY_METAL">ShinyMetal</option>
+    <option value="BRASS">Brass</option>
+    <option value="STEEL">Steel</option>
+    <option value="CHROME">Chrome</option>
+    <option value="GOLD">Gold</option>
+    <option value="ANTHRACITE">Anthracite</option>
+    <option value="TILTED_GRAY">TiltedGray</option>
+    <option value="TILTED_BLACK">TiltedBlack</option>
+    <option value="GLOSSY_METAL">GlossyMetal</option>
+  </select>
+  <select class="form-control" id="comboBackground" onchange="setBackgroundColor(this)">
+    <option selected="selected" value="">Background</option>
+    <option value="DARK_GRAY">DarkGray</option>
+    <option value="SATIN_GRAY">SatinGray</option>
+    <option value="LIGHT_GRAY">LightGray</option>
+    <option value="WHITE">White</option>
+    <option value="BLACK">Black</option>
+    <option value="BEIGE">Beige</option>
+    <option value="BROWN">Brown</option>
+    <option value="RED">Red</option>
+    <option value="GREEN">Green</option>
+    <option value="BLUE">Blue</option>
+    <option value="ANTHRACITE">Anthracite</option>
+    <option value="MUD">Mud</option>
+    <option value="PUNCHED_SHEET">PunchedSheet</option>
+    <option value="CARBON">Carbon</option>
+    <option value="STAINLESS">Stainless</option>
+    <option value="BRUSHED_METAL">BrushedMetal</option>
+    <option value="BRUSHED_STAINLESS">BrushedStainless</option>
+    <option value="TURNED">Turned</option>
+  </select>
+  <select class="form-control" id="comboPointerColor" onchange="setPointerColor(this)">
+    <option selected="selected" value="">Pointer color</option>
+    <option value="RED">Red</option>
+    <option value="GREEN">Green</option>
+    <option value="BLUE">Blue</option>
+    <option value="ORANGE">Orange</option>
+    <option value="YELLOW">Yellow</option>
+    <option value="CYAN">Cyan</option>
+    <option value="MAGENTA">Magenta</option>
+    <option value="WHITE">White</option>
+    <option value="GRAY">Gray</option>
+    <option value="BLACK">Black</option>
+    <option value="RAITH">Raith</option>
+    <option value="GREEN_LCD">Green LCD</option>
+    <option value="JUG_GREEN">JUG Green</option>
+  </select>
+  <select class="form-control" id="comboForeground" onchange="setForegroundType(this)">
+    <option selected="selected" value="">Foreground</option>
+    <option value="TYPE1">Type1</option>
+    <option value="TYPE2">Type2</option>
+    <option value="TYPE3">Type3</option>
+    <option value="TYPE4">Type4</option>
+    <option value="TYPE5">Type5</option>
+  </select>
+  <input class="btn btn-primary" type="button" value="Stop" name="button1" onClick="radial1.stop();">
+  <input class="btn btn-primary" type="button" value="Start" name="button2" onClick="radial1.start();">
+  <input class="btn btn-primary" type="button" value="Reset" name="button3" onClick="radial1.reset();">
+  <input class="btn btn-primary" type="button" value="Lap" name="button4" onClick="radial1.lap();">
+</form>
+<div>
+  <canvas id="canvasRadial1" width="201" height="201">No canvas in your browser...sorry...</canvas>
+</div>
 
 <script>
   var radial1;

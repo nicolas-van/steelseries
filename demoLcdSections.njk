@@ -1,46 +1,38 @@
 {% extends "_common.njk" %}
 {% block content %}
 <h1>LCD Sections</h1>
-<table>
-  <tbody>
-    <tr>
-      <td width="100%">
-        <select id="comboLcdColor" onchange="setLcdColor(this)">
-          <option selected="selected" value="">LCD color</option>
-          <option value="BEIGE">Beige</option>
-          <option value="BLUE">Blue</option>
-          <option value="ORANGE">Orange</option>
-          <option value="RED">Red</option>
-          <option value="YELLOW">Yellow</option>
-          <option value="WHITE">White</option>
-          <option value="GRAY">Gray</option>
-          <option value="BLACK">Black</option>
-          <option value="GREEN">Green</option>
-          <option value="BLUE2">Blue2</option>
-          <option value="BLUE_BLACK">BlueBlack</option>
-          <option value="BLUE_DARKBLUE">BlueDarkBlue</option>
-          <option value="BLUE_GRAY">BlueGray</option>
-          <option value="STANDARD">Standard</option>
-          <option value="STANDARD_GREEN">StandardGreen</option>
-          <option value="BLUE_BLUE">BlueBlue</option>
-          <option value="RED_DARKRED">RedDarkRed</option>
-          <option value="DARKBLUE">DarkBlue</option>
-          <option value="LILA">Lila</option>
-          <option value="BLACKRED">BlackRed</option>
-          <option value="DARKGREEN">DarkGreen</option>
-          <option value="AMBER">Amber</option>
-          <option value="LIGHTBLUE">LightBlue</option>
-          <option value="SECTIONS">Sections</option>
-        </select>
-      </td>
-    </tr>
-    <tr>
-      <td width="100%">
-        <canvas id="canvasSingle1" width="120" height="50"></canvas>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<form class="form-inline">
+  <select class="form-control" id="comboLcdColor" onchange="setLcdColor(this)">
+    <option selected="selected" value="">LCD color</option>
+    <option value="BEIGE">Beige</option>
+    <option value="BLUE">Blue</option>
+    <option value="ORANGE">Orange</option>
+    <option value="RED">Red</option>
+    <option value="YELLOW">Yellow</option>
+    <option value="WHITE">White</option>
+    <option value="GRAY">Gray</option>
+    <option value="BLACK">Black</option>
+    <option value="GREEN">Green</option>
+    <option value="BLUE2">Blue2</option>
+    <option value="BLUE_BLACK">BlueBlack</option>
+    <option value="BLUE_DARKBLUE">BlueDarkBlue</option>
+    <option value="BLUE_GRAY">BlueGray</option>
+    <option value="STANDARD">Standard</option>
+    <option value="STANDARD_GREEN">StandardGreen</option>
+    <option value="BLUE_BLUE">BlueBlue</option>
+    <option value="RED_DARKRED">RedDarkRed</option>
+    <option value="DARKBLUE">DarkBlue</option>
+    <option value="LILA">Lila</option>
+    <option value="BLACKRED">BlackRed</option>
+    <option value="DARKGREEN">DarkGreen</option>
+    <option value="AMBER">Amber</option>
+    <option value="LIGHTBLUE">LightBlue</option>
+    <option value="SECTIONS">Sections</option>
+  </select>
+</form>
+<div>
+  <canvas id="canvasSingle1" width="120" height="50"></canvas>
+</div>
 <script>
   var scroll = false;
   var single1;
