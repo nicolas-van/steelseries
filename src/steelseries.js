@@ -1351,6 +1351,8 @@ var steelseries = (function () {
         }
 
         var value = minValue;
+        var minMeasuredValue = minValue;
+        var maxMeasuredValue = maxValue;
         var range = maxValue - minValue;
         var ledBlinking = false;
         var ledTimerId = 0;
