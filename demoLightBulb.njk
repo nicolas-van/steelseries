@@ -2,12 +2,38 @@
 {% block content %}
 <h1>Light Bulb</h1>
 <form class="form-inline">
-  <input class="form-control" id="light" type="checkbox" onClick="setLight()" />Light on</br>
-  <input class="form-control" id="red" type="radio" name="color" onclick="setColor('rgb(204, 51, 0)');" />red<br />
-  <input class="form-control" id="green" type="radio" name="color" onclick="setColor('rgb(0, 255, 0)');" />green<br />
-  <input class="form-control" id="blue" type="radio" name="color" onclick="setColor('rgb(0, 0, 255)');" />blue<br />
-  <input class="form-control" id="yellow" type="radio" name="color" checked onclick="setColor('rgb(255, 255, 0)');" />yellow<br />
-  <input class="form-control" type="range" min="0" max="100" value="100" step="1" onchange="setAlpha(this.value)" />
+  <div class="form-check mr-2">
+    <input class="form-check-input" type="checkbox" value="" id="light" onClick="setLight()">
+    <label class="form-check-label" for="light">
+      Light on
+    </label>
+  </div>
+
+  <div class="form-check mr-2">
+    <input name="color" class="form-check-input" type="radio" value="" id="red" onclick="setColor('rgb(204, 51, 0)');">
+    <label class="form-check-label" for="red">
+      Red
+    </label>
+  </div>
+  <div class="form-check mr-2">
+    <input name="color" class="form-check-input" type="radio" value="" id="green" onclick="setColor('rgb(0, 255, 0)');">
+    <label class="form-check-label" for="green">
+      Green
+    </label>
+  </div>
+  <div class="form-check mr-2">
+    <input name="color" class="form-check-input" type="radio" value="" id="blue" onclick="setColor('rgb(0, 0, 255)');">
+    <label class="form-check-label" for="blue">
+      Blue
+    </label>
+  </div>
+  <div class="form-check mr-2">
+    <input name="color" class="form-check-input" type="radio" value="" id="yellow" checked onclick="setColor('rgb(255, 255, 0)');">
+    <label class="form-check-label" for="yellow">
+       Yellow
+    </label>
+  </div>
+  <input class="form-control mr-2" type="range" min="0" max="100" value="100" step="1" onchange="setAlpha(this.value)" />
 </form>
 <div>
   <canvas id='canvas' width='400' height='400'>
