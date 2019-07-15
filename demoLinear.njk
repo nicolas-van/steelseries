@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html manifest="demo.manifest"><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <title>Canvas Steel</title>
-</head>
-<body onload="init()" style="background-color:#84a5ed">
+{% extends "_common.njk" %}
+
+{% block content %}
     <table>
         <tbody><tr>
             <td>
@@ -1006,6 +1002,6 @@
                 break;
         }
     }
+    init();
 </script>
-<script src="dist/steelseries.js"></script>
-</body></html>
+{% endblock %}
