@@ -3,31 +3,33 @@
 {% block content %}
 <h1>Traffic Light</h1>
 
-    <canvas id='canvas' width='400' height='400'>
-      No canvas in your browser...sorry...
-    </canvas>
-	<br/>
-	<input id="red" type="checkbox" onClick="setLights()"/>Red<br />
-	<input id="yellow" type="checkbox" onClick="setLights()"/>Yellow<br />
-	<input id="green" type="checkbox" onClick="setLights()"/>Green<br />
+<canvas id='canvas' width='400' height='400'>
+  No canvas in your browser...sorry...
+</canvas>
+<br />
+<input id="red" type="checkbox" onClick="setLights()" />Red<br />
+<input id="yellow" type="checkbox" onClick="setLights()" />Yellow<br />
+<input id="green" type="checkbox" onClick="setLights()" />Green<br />
 
-      <script>
-        var trafficLight;
+<script>
+  var trafficLight;
 
-        function init()
-        {
-            // Initialzing
-            trafficLight = steelseries.TrafficLight('canvas', {
-                            width: 200,
-                            height: 200
-                            });
-        }
-    
-	    function setLights() {
-		    trafficLight.setRedOn(document.getElementById('red').checked);
-			trafficLight.setYellowOn(document.getElementById('yellow').checked);
-			trafficLight.setGreenOn(document.getElementById('green').checked);
-	    }	
-      init();
-  </script>
-  {% endblock %}
+  function init()
+  {
+    // Initialzing
+    trafficLight = steelseries.TrafficLight('canvas',
+    {
+      width: 200,
+      height: 200
+    });
+  }
+
+  function setLights()
+  {
+    trafficLight.setRedOn(document.getElementById('red').checked);
+    trafficLight.setYellowOn(document.getElementById('yellow').checked);
+    trafficLight.setGreenOn(document.getElementById('green').checked);
+  }
+  init();
+</script>
+{% endblock %}
