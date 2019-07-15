@@ -379,3 +379,5 @@ Tween.strongEaseInOut = function (t, b, c, d) {
 	}
 	return c / 2 * ((t -= 2) * t * t * t * t + 2) + b;
 };
+
+export default Tween;

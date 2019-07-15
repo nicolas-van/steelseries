@@ -1,6 +1,5 @@
 
-/*globals Tween */
-/*jshint onevar:false,plusplus:false,nomen:false,bitwise:false*/
+import Tween from "./tween.js";
 
 var steelseries = (function () {
     // Constants
@@ -15808,3 +15807,90 @@ var steelseries = (function () {
         Section : section
     };
 }());
+
+const Radial = steelseries.Radial;
+const RadialBargraph = steelseries.RadialBargraph;
+const RadialVertical = steelseries.RadialVertical;
+const Linear = steelseries.Linear;
+const LinearBargraph = steelseries.LinearBargraph;
+const DisplaySingle = steelseries.DisplaySingle;
+const DisplayMulti = steelseries.DisplayMulti;
+const Level = steelseries.Level;
+const Compass = steelseries.Compass;
+const WindDirection = steelseries.WindDirection;
+const Horizon = steelseries.Horizon;
+const Led = steelseries.Led;
+const Clock = steelseries.Clock;
+const Battery = steelseries.Battery;
+const StopWatch = steelseries.StopWatch;
+const Altimeter = steelseries.Altimeter;
+const TrafficLight = steelseries.TrafficLight;
+const LightBulb = steelseries.LightBulb;
+const Odometer = steelseries.Odometer;
+const drawFrame = steelseries.drawFrame;
+const drawBackground = steelseries.drawBackground;
+const drawForeground = steelseries.drawForeground;
+const rgbaColor = steelseries.rgbaColor;
+const ConicalGradient = steelseries.ConicalGradient;
+const setAlpha = steelseries.setAlpha;
+const getColorFromFraction = steelseries.getColorFromFraction;
+const gradientWrapper = steelseries.gradientWrapper;
+const BackgroundColor = steelseries.BackgroundColor;
+const LcdColor = steelseries.LcdColor;
+const ColorDef = steelseries.ColorDef;
+const LedColor = steelseries.LedColor;
+const GaugeType = steelseries.GaugeType;
+const Orientation = steelseries.Orientation;
+const FrameDesign = steelseries.FrameDesign;
+const PointerType = steelseries.PointerType;
+const ForegroundType = steelseries.ForegroundType;
+const KnobType = steelseries.KnobType;
+const KnobStyle = steelseries.KnobStyle;
+const LabelNumberFormat = steelseries.LabelNumberFormat;
+const TickLabelOrientation = steelseries.TickLabelOrientation;
+const TrendState = steelseries.TrendState;
+const Section = steelseries.Section;
+
+
+export {Radial};
+export {RadialBargraph};
+export {RadialVertical};
+export {Linear};
+export {LinearBargraph};
+export {DisplaySingle};
+export {DisplayMulti};
+export {Level};
+export {Compass};
+export {WindDirection};
+export {Horizon};
+export {Led};
+export {Clock};
+export {Battery};
+export {StopWatch};
+export {Altimeter};
+export {TrafficLight};
+export {LightBulb};
+export {Odometer};
+export {drawFrame};
+export {drawBackground};
+export {drawForeground};
+export {rgbaColor};
+export {ConicalGradient};
+export {setAlpha};
+export {getColorFromFraction};
+export {gradientWrapper};
+export {BackgroundColor};
+export {LcdColor};
+export {ColorDef};
+export {LedColor};
+export {GaugeType};
+export {Orientation};
+export {FrameDesign};
+export {PointerType};
+export {ForegroundType};
+export {KnobType};
+export {KnobStyle};
+export {LabelNumberFormat};
+export {TickLabelOrientation};
+export {TrendState};
+export {Section};
