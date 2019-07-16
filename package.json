@@ -4,10 +4,10 @@
   "description": "A collection of gauge components for JavaScript.",
   "main": "dist/steelseries.js",
   "scripts": {
-    "build": "rm -rf docs dist .cache && webpack",
+    "build": "webpack",
     "test": "echo \"no test specified\"",
-    "website": "rm -rf docs dist .cache && parcel build index.njk --public-url ./ --out-dir docs",
-    "website-dev": "rm -rf docs dist .cache && parcel index.njk"
+    "website": "rm -rf docs .cache && parcel build index.njk --public-url ./ --out-dir docs",
+    "website-dev": "rm -rf docs .cache && parcel index.njk --out-dir docs"
   },
   "repository": {
     "type": "git",
