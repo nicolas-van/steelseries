@@ -1,6 +1,6 @@
 {
   "name": "steelseries",
-  "version": "0.15.0",
+  "version": "0.15.1",
   "description": "A collection of gauge components for JavaScript.",
   "main": "dist/steelseries.js",
   "scripts": {
