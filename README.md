@@ -1,5 +1,5 @@
 
-# Steelseries
+# Steelseries Gauges
 
 [![Build Status](https://travis-ci.org/nicolas-van/steelseries.svg?branch=master)](https://travis-ci.org/nicolas-van/steelseries) [![npm version](https://img.shields.io/npm/v/steelseries.svg)](https://www.npmjs.com/package/steelseries)
 
