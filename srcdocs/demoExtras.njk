@@ -205,6 +205,7 @@
   </div>
 </div>
 <script>
+  "use strict";
   var scroll = false;
   var compass1;
   var compass2;
@@ -216,11 +217,19 @@
   var single2;
   var single3;
   var multi1;
+  var multi2;
   var led1;
   var clock1;
   var battery1;
   var altimeter1;
   var odometer1, n = 999997.7;
+
+  function updateOdo()
+  {
+    n += 0.005
+    odometer1.setValue(n);
+    setTimeout(updateOdo, 50);
+  }
 
   function init()
   {
@@ -441,14 +450,6 @@
     gauge.setPitchAnimated(pitch);
     gauge.setRollAnimated(roll);
   }
-
-  function updateOdo()
-  {
-    n += 0.005
-    odometer1.setValue(n);
-    setTimeout("updateOdo()", 50);
-  }
-
 
   function setFrameDesign(sel)
   {
