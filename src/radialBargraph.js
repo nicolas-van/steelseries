@@ -23,9 +23,26 @@ lcdFontName,
 stdFontName,
 } from "./tools";
 
+import {
+  backgroundColor as BackgroundColor,
+  lcdColor as LcdColor,
+  color as ColorDef,
+  ledColor as LedColor,
+  gaugeType as GaugeType,
+  orientation as Orientation,
+  knobType as KnobType,
+  knobStyle as KnobStyle,
+  frameDesign as FrameDesign,
+  pointerType as PointerType,
+  foregroundType as ForegroundType,
+  labelNumberFormat as LabelNumberFormat,
+  tickLabelOrientation as TickLabelOrientation,
+  trendState as TrendState,
+  } from "./definitions";
+
 var radialBargraph = function(canvas, parameters) {
   parameters = parameters || {};
-  var gaugeType = (undefined === parameters.gaugeType ? steelseries.GaugeType.TYPE4 : parameters.gaugeType),
+  var gaugeType = (undefined === parameters.gaugeType ? GaugeType.TYPE4 : parameters.gaugeType),
     size = (undefined === parameters.size ? 0 : parameters.size),
     minValue = (undefined === parameters.minValue ? 0 : parameters.minValue),
     maxValue = (undefined === parameters.maxValue ? (minValue + 100) : parameters.maxValue),
@@ -36,31 +53,31 @@ var radialBargraph = function(canvas, parameters) {
     useSectionColors = (undefined === parameters.useSectionColors ? false : parameters.useSectionColors),
     titleString = (undefined === parameters.titleString ? '' : parameters.titleString),
     unitString = (undefined === parameters.unitString ? '' : parameters.unitString),
-    frameDesign = (undefined === parameters.frameDesign ? steelseries.FrameDesign.METAL : parameters.frameDesign),
+    frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
     frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible),
-    backgroundColor = (undefined === parameters.backgroundColor ? steelseries.BackgroundColor.DARK_GRAY : parameters.backgroundColor),
+    backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor),
     backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible),
-    valueColor = (undefined === parameters.valueColor ? steelseries.ColorDef.RED : parameters.valueColor),
-    lcdColor = (undefined === parameters.lcdColor ? steelseries.LcdColor.STANDARD : parameters.lcdColor),
+    valueColor = (undefined === parameters.valueColor ? ColorDef.RED : parameters.valueColor),
+    lcdColor = (undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor),
     lcdVisible = (undefined === parameters.lcdVisible ? true : parameters.lcdVisible),
     lcdDecimals = (undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals),
     digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont),
     fractionalScaleDecimals = (undefined === parameters.fractionalScaleDecimals ? 1 : parameters.fractionalScaleDecimals),
     customLayer = (undefined === parameters.customLayer ? null : parameters.customLayer),
-    ledColor = (undefined === parameters.ledColor ? steelseries.LedColor.RED_LED : parameters.ledColor),
+    ledColor = (undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor),
     ledVisible = (undefined === parameters.ledVisible ? true : parameters.ledVisible),
-    userLedColor = (undefined === parameters.userLedColor ? steelseries.LedColor.GREEN_LED : parameters.userLedColor),
+    userLedColor = (undefined === parameters.userLedColor ? LedColor.GREEN_LED : parameters.userLedColor),
     userLedVisible = (undefined === parameters.userLedVisible ? false : parameters.userLedVisible),
-    labelNumberFormat = (undefined === parameters.labelNumberFormat ? steelseries.LabelNumberFormat.STANDARD : parameters.labelNumberFormat),
-    foregroundType = (undefined === parameters.foregroundType ? steelseries.ForegroundType.TYPE1 : parameters.foregroundType),
+    labelNumberFormat = (undefined === parameters.labelNumberFormat ? LabelNumberFormat.STANDARD : parameters.labelNumberFormat),
+    foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType),
     foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible),
     playAlarm = (undefined === parameters.playAlarm ? false : parameters.playAlarm),
     alarmSound = (undefined === parameters.alarmSound ? false : parameters.alarmSound),
     valueGradient = (undefined === parameters.valueGradient ? null : parameters.valueGradient),
     useValueGradient = (undefined === parameters.useValueGradient ? false : parameters.useValueGradient),
-    tickLabelOrientation = (undefined === parameters.tickLabelOrientation ? (gaugeType === steelseries.GaugeType.TYPE1 ? steelseries.TickLabelOrientation.TANGENT : steelseries.TickLabelOrientation.NORMAL) : parameters.tickLabelOrientation),
+    tickLabelOrientation = (undefined === parameters.tickLabelOrientation ? (gaugeType === GaugeType.TYPE1 ? TickLabelOrientation.TANGENT : TickLabelOrientation.NORMAL) : parameters.tickLabelOrientation),
     trendVisible = (undefined === parameters.trendVisible ? false : parameters.trendVisible),
-    trendColors = (undefined === parameters.trendColors ? [steelseries.LedColor.RED_LED, steelseries.LedColor.GREEN_LED, steelseries.LedColor.CYAN_LED] : parameters.trendColors),
+    trendColors = (undefined === parameters.trendColors ? [LedColor.RED_LED, LedColor.GREEN_LED, LedColor.CYAN_LED] : parameters.trendColors),
     fullScaleDeflectionTime = (undefined === parameters.fullScaleDeflectionTime ? 2.5 : parameters.fullScaleDeflectionTime);
 
   // Get the canvas context and clear it
@@ -129,10 +146,10 @@ var radialBargraph = function(canvas, parameters) {
   //var LED_POS_X = imageWidth * 0.453271;
   var LED_POS_X = imageWidth * 0.53;
   var LED_POS_Y = imageHeight * 0.61;
-  var USER_LED_POS_X = gaugeType === steelseries.GaugeType.TYPE3 ? 0.7 * imageWidth : centerX - LED_SIZE / 2;
-  var USER_LED_POS_Y = gaugeType === steelseries.GaugeType.TYPE3 ? 0.61 * imageHeight : 0.75 * imageHeight;
+  var USER_LED_POS_X = gaugeType === GaugeType.TYPE3 ? 0.7 * imageWidth : centerX - LED_SIZE / 2;
+  var USER_LED_POS_Y = gaugeType === GaugeType.TYPE3 ? 0.61 * imageHeight : 0.75 * imageHeight;
 
-  var trendIndicator = steelseries.TrendState.OFF;
+  var trendIndicator = TrendState.OFF;
   var trendSize = size * 0.06;
   var trendPosX = size * 0.38;
   var trendPosY = size * 0.57;
@@ -406,10 +423,10 @@ var radialBargraph = function(canvas, parameters) {
 
     // Create the trend indicator buffers
     if (drawTrend && trendVisible) {
-      trendUpBuffer = createTrendIndicator(trendSize, steelseries.TrendState.UP, trendColors);
-      trendSteadyBuffer = createTrendIndicator(trendSize, steelseries.TrendState.STEADY, trendColors);
-      trendDownBuffer = createTrendIndicator(trendSize, steelseries.TrendState.DOWN, trendColors);
-      trendOffBuffer = createTrendIndicator(trendSize, steelseries.TrendState.OFF, trendColors);
+      trendUpBuffer = createTrendIndicator(trendSize, TrendState.UP, trendColors);
+      trendSteadyBuffer = createTrendIndicator(trendSize, TrendState.STEADY, trendColors);
+      trendDownBuffer = createTrendIndicator(trendSize, TrendState.DOWN, trendColors);
+      trendOffBuffer = createTrendIndicator(trendSize, TrendState.OFF, trendColors);
     }
   };
 
@@ -564,7 +581,7 @@ var radialBargraph = function(canvas, parameters) {
     ctx.strokeStyle = lcdColor.textColor;
     ctx.fillStyle = lcdColor.textColor;
 
-    if (lcdColor === steelseries.LcdColor.STANDARD || lcdColor === steelseries.LcdColor.STANDARD_GREEN) {
+    if (lcdColor === LcdColor.STANDARD || lcdColor === LcdColor.STANDARD_GREEN) {
       ctx.shadowColor = 'gray';
       ctx.shadowOffsetX = imageWidth * 0.007;
       ctx.shadowOffsetY = imageWidth * 0.007;

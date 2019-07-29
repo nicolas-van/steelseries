@@ -11,7 +11,7 @@ var odometer = function(canvas, parameters) {
   parameters = parameters || {};
 
   // parameters
-  var _context = (undefined === parameters._context ? null : parameters._context), // If component used internally by steelseries
+  var _context = (undefined === parameters._context ? null : parameters._context),
     height = (undefined === parameters.height ? 0 : parameters.height),
     digits = (undefined === parameters.digits ? 6 : parameters.digits),
     decimals = (undefined === parameters.decimals ? 1 : parameters.decimals),

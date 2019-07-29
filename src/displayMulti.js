@@ -6,11 +6,28 @@ lcdFontName,
 stdFontName,
 } from "./tools";
 
+import {
+  backgroundColor as BackgroundColor,
+  lcdColor as LcdColor,
+  color as ColorDef,
+  ledColor as LedColor,
+  gaugeType as GaugeType,
+  orientation as Orientation,
+  knobType as KnobType,
+  knobStyle as KnobStyle,
+  frameDesign as FrameDesign,
+  pointerType as PointerType,
+  foregroundType as ForegroundType,
+  labelNumberFormat as LabelNumberFormat,
+  tickLabelOrientation as TickLabelOrientation,
+  trendState as TrendState,
+  } from "./definitions";
+
 var displayMulti = function(canvas, parameters) {
   parameters = parameters || {};
   var width = (undefined === parameters.width ? 0 : parameters.width),
     height = (undefined === parameters.height ? 0 : parameters.height),
-    lcdColor = (undefined === parameters.lcdColor ? steelseries.LcdColor.STANDARD : parameters.lcdColor),
+    lcdColor = (undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor),
     lcdDecimals = (undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals),
     headerString = (undefined === parameters.headerString ? '' : parameters.headerString),
     headerStringVisible = (undefined === parameters.headerStringVisible ? false : parameters.headerStringVisible),
@@ -60,7 +77,7 @@ var displayMulti = function(canvas, parameters) {
     mainCtx.strokeStyle = lcdColor.textColor;
     mainCtx.fillStyle = lcdColor.textColor;
 
-    if (lcdColor === steelseries.LcdColor.STANDARD || lcdColor === steelseries.LcdColor.STANDARD_GREEN) {
+    if (lcdColor === LcdColor.STANDARD || lcdColor === LcdColor.STANDARD_GREEN) {
       mainCtx.shadowColor = 'gray';
       mainCtx.shadowOffsetX = imageHeight * 0.025;
       mainCtx.shadowOffsetY = imageHeight * 0.025;
