@@ -1,6 +1,6 @@
 {
   "name": "steelseries",
-  "version": "0.15.3",
+  "version": "0.15.4",
   "description": "A collection of gauge components for JavaScript.",
   "main": "dist/steelseries.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/nicolas-van/steelseries.git"
   },
   "author": "",
-  "license": "BSD",
+  "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/nicolas-van/steelseries/issues"
   },
