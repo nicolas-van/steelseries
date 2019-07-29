@@ -24,9 +24,28 @@ lcdFontName,
 stdFontName,
 } from "./tools";
 
+import {
+  backgroundColor as BackgroundColor,
+  lcdColor as LcdColor,
+  color as ColorDef,
+  ledColor as LedColor,
+  gaugeType as GaugeType,
+  orientation as Orientation,
+  knobType as KnobType,
+  knobStyle as KnobStyle,
+  frameDesign as FrameDesign,
+  pointerType as PointerType,
+  foregroundType as ForegroundType,
+  labelNumberFormat as LabelNumberFormat,
+  tickLabelOrientation as TickLabelOrientation,
+  trendState as TrendState,
+  } from "./definitions";
+
+import Odometer from './odometer';
+
 var radial = function(canvas, parameters) {
   parameters = parameters || {};
-  var gaugeType = (undefined === parameters.gaugeType ? steelseries.GaugeType.TYPE4 : parameters.gaugeType),
+  var gaugeType = (undefined === parameters.gaugeType ? GaugeType.TYPE4 : parameters.gaugeType),
     size = (undefined === parameters.size ? 0 : parameters.size),
     minValue = (undefined === parameters.minValue ? 0 : parameters.minValue),
     maxValue = (undefined === parameters.maxValue ? (minValue + 100) : parameters.maxValue),
@@ -37,35 +56,35 @@ var radial = function(canvas, parameters) {
     area = (undefined === parameters.area ? null : parameters.area),
     titleString = (undefined === parameters.titleString ? '' : parameters.titleString),
     unitString = (undefined === parameters.unitString ? '' : parameters.unitString),
-    frameDesign = (undefined === parameters.frameDesign ? steelseries.FrameDesign.METAL : parameters.frameDesign),
+    frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
     frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible),
-    backgroundColor = (undefined === parameters.backgroundColor ? steelseries.BackgroundColor.DARK_GRAY : parameters.backgroundColor),
+    backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor),
     backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible),
-    pointerType = (undefined === parameters.pointerType ? steelseries.PointerType.TYPE1 : parameters.pointerType),
-    pointerColor = (undefined === parameters.pointerColor ? steelseries.ColorDef.RED : parameters.pointerColor),
-    knobType = (undefined === parameters.knobType ? steelseries.KnobType.STANDARD_KNOB : parameters.knobType),
-    knobStyle = (undefined === parameters.knobStyle ? steelseries.KnobStyle.SILVER : parameters.knobStyle),
-    lcdColor = (undefined === parameters.lcdColor ? steelseries.LcdColor.STANDARD : parameters.lcdColor),
+    pointerType = (undefined === parameters.pointerType ? PointerType.TYPE1 : parameters.pointerType),
+    pointerColor = (undefined === parameters.pointerColor ? ColorDef.RED : parameters.pointerColor),
+    knobType = (undefined === parameters.knobType ? KnobType.STANDARD_KNOB : parameters.knobType),
+    knobStyle = (undefined === parameters.knobStyle ? KnobStyle.SILVER : parameters.knobStyle),
+    lcdColor = (undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor),
     lcdVisible = (undefined === parameters.lcdVisible ? true : parameters.lcdVisible),
     lcdDecimals = (undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals),
     digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont),
     fractionalScaleDecimals = (undefined === parameters.fractionalScaleDecimals ? 1 : parameters.fractionalScaleDecimals),
-    ledColor = (undefined === parameters.ledColor ? steelseries.LedColor.RED_LED : parameters.ledColor),
+    ledColor = (undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor),
     ledVisible = (undefined === parameters.ledVisible ? true : parameters.ledVisible),
-    userLedColor = (undefined === parameters.userLedColor ? steelseries.LedColor.GREEN_LED : parameters.userLedColor),
+    userLedColor = (undefined === parameters.userLedColor ? LedColor.GREEN_LED : parameters.userLedColor),
     userLedVisible = (undefined === parameters.userLedVisible ? false : parameters.userLedVisible),
     thresholdVisible = (undefined === parameters.thresholdVisible ? true : parameters.thresholdVisible),
     minMeasuredValueVisible = (undefined === parameters.minMeasuredValueVisible ? false : parameters.minMeasuredValueVisible),
     maxMeasuredValueVisible = (undefined === parameters.maxMeasuredValueVisible ? false : parameters.maxMeasuredValueVisible),
-    foregroundType = (undefined === parameters.foregroundType ? steelseries.ForegroundType.TYPE1 : parameters.foregroundType),
+    foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType),
     foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible),
-    labelNumberFormat = (undefined === parameters.labelNumberFormat ? steelseries.LabelNumberFormat.STANDARD : parameters.labelNumberFormat),
+    labelNumberFormat = (undefined === parameters.labelNumberFormat ? LabelNumberFormat.STANDARD : parameters.labelNumberFormat),
     playAlarm = (undefined === parameters.playAlarm ? false : parameters.playAlarm),
     alarmSound = (undefined === parameters.alarmSound ? false : parameters.alarmSound),
     customLayer = (undefined === parameters.customLayer ? null : parameters.customLayer),
-    tickLabelOrientation = (undefined === parameters.tickLabelOrientation ? (gaugeType === steelseries.GaugeType.TYPE1 ? steelseries.TickLabelOrientation.TANGENT : steelseries.TickLabelOrientation.NORMAL) : parameters.tickLabelOrientation),
+    tickLabelOrientation = (undefined === parameters.tickLabelOrientation ? (gaugeType === GaugeType.TYPE1 ? TickLabelOrientation.TANGENT : TickLabelOrientation.NORMAL) : parameters.tickLabelOrientation),
     trendVisible = (undefined === parameters.trendVisible ? false : parameters.trendVisible),
-    trendColors = (undefined === parameters.trendColors ? [steelseries.LedColor.RED_LED, steelseries.LedColor.GREEN_LED, steelseries.LedColor.CYAN_LED] : parameters.trendColors),
+    trendColors = (undefined === parameters.trendColors ? [LedColor.RED_LED, LedColor.GREEN_LED, LedColor.CYAN_LED] : parameters.trendColors),
     useOdometer = (undefined === parameters.useOdometer ? false : parameters.useOdometer),
     odometerParams = (undefined === parameters.odometerParams ? {} : parameters.odometerParams),
     odometerUseValue = (undefined === parameters.odometerUseValue ? false : parameters.odometerUseValue),
@@ -106,7 +125,7 @@ var radial = function(canvas, parameters) {
   var tween;
   var repainting = false;
 
-  var trendIndicator = steelseries.TrendState.OFF;
+  var trendIndicator = TrendState.OFF;
   var trendSize = size * 0.06;
   var trendPosX = size * 0.29;
   var trendPosY = size * 0.36;
@@ -130,8 +149,8 @@ var radial = function(canvas, parameters) {
   var ledSize = size * 0.093457;
   var ledPosX = 0.6 * imageWidth;
   var ledPosY = 0.4 * imageHeight;
-  var userLedPosX = gaugeType === steelseries.GaugeType.TYPE3 ? 0.6 * imageWidth : centerX - ledSize / 2;
-  var userLedPosY = gaugeType === steelseries.GaugeType.TYPE3 ? 0.72 * imageHeight : 0.75 * imageHeight;
+  var userLedPosX = gaugeType === GaugeType.TYPE3 ? 0.6 * imageWidth : centerX - ledSize / 2;
+  var userLedPosY = gaugeType === GaugeType.TYPE3 ? 0.72 * imageHeight : 0.75 * imageHeight;
   var lcdFontHeight = Math.floor(imageWidth / 10);
   var stdFont = lcdFontHeight + 'px ' + stdFontName;
   var lcdFont = lcdFontHeight + 'px ' + lcdFontName;
@@ -285,7 +304,7 @@ var radial = function(canvas, parameters) {
     ctx.strokeStyle = lcdColor.textColor;
     ctx.fillStyle = lcdColor.textColor;
 
-    if (lcdColor === steelseries.LcdColor.STANDARD || lcdColor === steelseries.LcdColor.STANDARD_GREEN) {
+    if (lcdColor === LcdColor.STANDARD || lcdColor === LcdColor.STANDARD_GREEN) {
       ctx.shadowColor = 'gray';
       ctx.shadowOffsetX = imageWidth * 0.007;
       ctx.shadowOffsetY = imageWidth * 0.007;
@@ -306,30 +325,30 @@ var radial = function(canvas, parameters) {
 
     if ('type1' === gaugeType.type) {
       // Draw max center top post
-      ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), steelseries.KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.523364, imageHeight * 0.130841);
+      ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.523364, imageHeight * 0.130841);
     }
 
     if ('type1' === gaugeType.type || 'type2' === gaugeType.type) {
       // Draw min left post
-      ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), steelseries.KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.130841, imageHeight * 0.514018);
+      ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.130841, imageHeight * 0.514018);
     }
 
     if ('type2' === gaugeType.type || 'type3' === gaugeType.type) {
       // Draw max right post
-      ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), steelseries.KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.831775, imageHeight * 0.514018);
+      ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.831775, imageHeight * 0.514018);
     }
 
     if ('type3' === gaugeType.type) {
       // Draw min center bottom post
-      ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), steelseries.KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.523364, imageHeight * 0.831775);
+      ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.523364, imageHeight * 0.831775);
     }
 
     if ('type4' === gaugeType.type) {
       // Min post
-      ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), steelseries.KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.336448, imageHeight * 0.803738);
+      ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.336448, imageHeight * 0.803738);
 
       // Max post
-      ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), steelseries.KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.626168, imageHeight * 0.803738);
+      ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.626168, imageHeight * 0.803738);
     }
 
     ctx.restore();
@@ -614,12 +633,12 @@ var radial = function(canvas, parameters) {
 
     // Draw min measured value indicator in minMeasuredValueBuffer
     if (minMeasuredValueVisible) {
-      minMeasuredValueCtx.drawImage(createMeasuredValueImage(Math.ceil(size * 0.028037), steelseries.ColorDef.BLUE.dark.getRgbaColor(), true, true), 0, 0);
+      minMeasuredValueCtx.drawImage(createMeasuredValueImage(Math.ceil(size * 0.028037), ColorDef.BLUE.dark.getRgbaColor(), true, true), 0, 0);
     }
 
     // Draw max measured value indicator in maxMeasuredValueBuffer
     if (maxMeasuredValueVisible) {
-      maxMeasuredValueCtx.drawImage(createMeasuredValueImage(Math.ceil(size * 0.028037), steelseries.ColorDef.RED.medium.getRgbaColor(), true), 0, 0);
+      maxMeasuredValueCtx.drawImage(createMeasuredValueImage(Math.ceil(size * 0.028037), ColorDef.RED.medium.getRgbaColor(), true), 0, 0);
     }
 
     // Create alignment posts in background buffer (backgroundBuffer)
@@ -667,7 +686,7 @@ var radial = function(canvas, parameters) {
     // Create lcd background if selected in background buffer (backgroundBuffer)
     if (drawBackground && lcdVisible) {
       if (useOdometer && drawOdo) {
-        odoGauge = new steelseries.Odometer('', {
+        odoGauge = new Odometer('', {
           _context: odoContext,
           height: size * 0.075,
           decimals: odometerParams.decimals,
@@ -699,10 +718,10 @@ var radial = function(canvas, parameters) {
 
     // Create the trend indicator buffers
     if (drawTrend && trendVisible) {
-      trendUpBuffer = createTrendIndicator(trendSize, steelseries.TrendState.UP, trendColors);
-      trendSteadyBuffer = createTrendIndicator(trendSize, steelseries.TrendState.STEADY, trendColors);
-      trendDownBuffer = createTrendIndicator(trendSize, steelseries.TrendState.DOWN, trendColors);
-      trendOffBuffer = createTrendIndicator(trendSize, steelseries.TrendState.OFF, trendColors);
+      trendUpBuffer = createTrendIndicator(trendSize, TrendState.UP, trendColors);
+      trendSteadyBuffer = createTrendIndicator(trendSize, TrendState.STEADY, trendColors);
+      trendDownBuffer = createTrendIndicator(trendSize, TrendState.DOWN, trendColors);
+      trendOffBuffer = createTrendIndicator(trendSize, TrendState.OFF, trendColors);
     }
   };
 

@@ -4,6 +4,23 @@ import {
 createBuffer, 
 } from "./tools";
 
+import {
+  backgroundColor as BackgroundColor,
+  lcdColor as LcdColor,
+  color as ColorDef,
+  ledColor as LedColor,
+  gaugeType as GaugeType,
+  orientation as Orientation,
+  knobType as KnobType,
+  knobStyle as KnobStyle,
+  frameDesign as FrameDesign,
+  pointerType as PointerType,
+  foregroundType as ForegroundType,
+  labelNumberFormat as LabelNumberFormat,
+  tickLabelOrientation as TickLabelOrientation,
+  trendState as TrendState,
+  } from "./definitions";
+
 var drawRadialForegroundImage = function(ctx, foregroundType, imageWidth, imageHeight, withCenterKnob, knob, style, gaugeType, orientation) {
   var radFgBuffer, radFgCtx,
     knobSize = Math.ceil(imageHeight * 0.084112),
@@ -27,11 +44,11 @@ var drawRadialForegroundImage = function(ctx, foregroundType, imageWidth, imageH
       radFgCtx.shadowOffsetX = radFgCtx.shadowOffsetY = shadowOffset;
       radFgCtx.shadowBlur = shadowOffset * 2;
 
-      if (gaugeType === steelseries.GaugeType.TYPE5) {
-        if (steelseries.Orientation.WEST === orientation) {
+      if (gaugeType === GaugeType.TYPE5) {
+        if (Orientation.WEST === orientation) {
           knobX = imageWidth * 0.733644 - knobSize / 2;
           radFgCtx.drawImage(createKnobImage(knobSize, knob, style), knobX, knobY);
-        } else if (steelseries.Orientation.EAST === orientation) {
+        } else if (Orientation.EAST === orientation) {
           knobX = imageWidth * (1 - 0.733644) - knobSize / 2;
           radFgCtx.drawImage(createKnobImage(knobSize, knob, style), knobX, knobY);
         } else {

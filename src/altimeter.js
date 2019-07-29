@@ -15,24 +15,41 @@ lcdFontName,
 stdFontName,
 } from "./tools";
 
+import {
+  backgroundColor as BackgroundColor,
+  lcdColor as LcdColor,
+  color as ColorDef,
+  ledColor as LedColor,
+  gaugeType as GaugeType,
+  orientation as Orientation,
+  knobType as KnobType,
+  knobStyle as KnobStyle,
+  frameDesign as FrameDesign,
+  pointerType as PointerType,
+  foregroundType as ForegroundType,
+  labelNumberFormat as LabelNumberFormat,
+  tickLabelOrientation as TickLabelOrientation,
+  trendState as TrendState,
+  } from "./definitions";
+
 
 var altimeter = function(canvas, parameters) {
   parameters = parameters || {};
   // parameters
   var size = (undefined === parameters.size ? 0 : parameters.size),
-    frameDesign = (undefined === parameters.frameDesign ? steelseries.FrameDesign.METAL : parameters.frameDesign),
+    frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
     frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible),
-    backgroundColor = (undefined === parameters.backgroundColor ? steelseries.BackgroundColor.DARK_GRAY : parameters.backgroundColor),
+    backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor),
     backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible),
     titleString = (undefined === parameters.titleString ? '' : parameters.titleString),
     unitString = (undefined === parameters.unitString ? '' : parameters.unitString),
     unitAltPos = (undefined === parameters.unitAltPos ? false : true),
-    knobType = (undefined === parameters.knobType ? steelseries.KnobType.METAL_KNOB : parameters.knobType),
-    knobStyle = (undefined === parameters.knobStyle ? steelseries.KnobStyle.BLACK : parameters.knobStyle),
-    lcdColor = (undefined === parameters.lcdColor ? steelseries.LcdColor.BLACK : parameters.lcdColor),
+    knobType = (undefined === parameters.knobType ? KnobType.METAL_KNOB : parameters.knobType),
+    knobStyle = (undefined === parameters.knobStyle ? KnobStyle.BLACK : parameters.knobStyle),
+    lcdColor = (undefined === parameters.lcdColor ? LcdColor.BLACK : parameters.lcdColor),
     lcdVisible = (undefined === parameters.lcdVisible ? true : parameters.lcdVisible),
     digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont),
-    foregroundType = (undefined === parameters.foregroundType ? steelseries.ForegroundType.TYPE1 : parameters.foregroundType),
+    foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType),
     foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible),
     customLayer = (undefined === parameters.customLayer ? null : parameters.customLayer),
     //
@@ -109,7 +126,7 @@ var altimeter = function(canvas, parameters) {
     mainCtx.strokeStyle = lcdColor.textColor;
     mainCtx.fillStyle = lcdColor.textColor;
 
-    if (lcdColor === steelseries.LcdColor.STANDARD || lcdColor === steelseries.LcdColor.STANDARD_GREEN) {
+    if (lcdColor === LcdColor.STANDARD || lcdColor === LcdColor.STANDARD_GREEN) {
       mainCtx.shadowColor = 'gray';
       mainCtx.shadowOffsetX = imageWidth * 0.007;
       mainCtx.shadowOffsetY = imageWidth * 0.007;

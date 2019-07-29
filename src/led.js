@@ -5,10 +5,27 @@ getCanvasContext,
 doc,
 } from "./tools";
 
+import {
+  backgroundColor as BackgroundColor,
+  lcdColor as LcdColor,
+  color as ColorDef,
+  ledColor as LedColor,
+  gaugeType as GaugeType,
+  orientation as Orientation,
+  knobType as KnobType,
+  knobStyle as KnobStyle,
+  frameDesign as FrameDesign,
+  pointerType as PointerType,
+  foregroundType as ForegroundType,
+  labelNumberFormat as LabelNumberFormat,
+  tickLabelOrientation as TickLabelOrientation,
+  trendState as TrendState,
+  } from "./definitions";
+
 var led = function(canvas, parameters) {
   parameters = parameters || {};
   var size = (undefined === parameters.size ? 0 : parameters.size),
-    ledColor = (undefined === parameters.ledColor ? steelseries.LedColor.RED_LED : parameters.ledColor);
+    ledColor = (undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor);
 
   var ledBlinking = false;
   var ledTimerId = 0;

@@ -10,16 +10,33 @@ TWO_PI,
 RAD_FACTOR,
 } from "./tools";
 
+import {
+  backgroundColor as BackgroundColor,
+  lcdColor as LcdColor,
+  color as ColorDef,
+  ledColor as LedColor,
+  gaugeType as GaugeType,
+  orientation as Orientation,
+  knobType as KnobType,
+  knobStyle as KnobStyle,
+  frameDesign as FrameDesign,
+  pointerType as PointerType,
+  foregroundType as ForegroundType,
+  labelNumberFormat as LabelNumberFormat,
+  tickLabelOrientation as TickLabelOrientation,
+  trendState as TrendState,
+  } from "./definitions";
+
 var clock = function(canvas, parameters) {
   parameters = parameters || {};
   var size = (undefined === parameters.size ? 0 : parameters.size),
-    frameDesign = (undefined === parameters.frameDesign ? steelseries.FrameDesign.METAL : parameters.frameDesign),
+    frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
     frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible),
-    pointerType = (undefined === parameters.pointerType ? steelseries.PointerType.TYPE1 : parameters.pointerType),
-    pointerColor = (undefined === parameters.pointerColor ? (pointerType === steelseries.PointerType.TYPE1 ? steelseries.ColorDef.GRAY : steelseries.ColorDef.BLACK) : parameters.pointerColor),
-    backgroundColor = (undefined === parameters.backgroundColor ? (pointerType === steelseries.PointerType.TYPE1 ? steelseries.BackgroundColor.ANTHRACITE : steelseries.BackgroundColor.LIGHT_GRAY) : parameters.backgroundColor),
+    pointerType = (undefined === parameters.pointerType ? PointerType.TYPE1 : parameters.pointerType),
+    pointerColor = (undefined === parameters.pointerColor ? (pointerType === PointerType.TYPE1 ? ColorDef.GRAY : ColorDef.BLACK) : parameters.pointerColor),
+    backgroundColor = (undefined === parameters.backgroundColor ? (pointerType === PointerType.TYPE1 ? BackgroundColor.ANTHRACITE : BackgroundColor.LIGHT_GRAY) : parameters.backgroundColor),
     backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible),
-    foregroundType = (undefined === parameters.foregroundType ? steelseries.ForegroundType.TYPE1 : parameters.foregroundType),
+    foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType),
     foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible),
     customLayer = (undefined === parameters.customLayer ? null : parameters.customLayer),
     isAutomatic = (undefined === parameters.isAutomatic ? true : parameters.isAutomatic),
@@ -281,11 +298,11 @@ var clock = function(canvas, parameters) {
         ctx.lineTo(imageWidth * 0.509345, imageHeight * 0.116822);
         ctx.closePath();
         grad = ctx.createLinearGradient(imageWidth * 0.509345, imageHeight * 0.116822, imageWidth * 0.490654, imageHeight * 0.574766);
-        grad.addColorStop(0, steelseries.ColorDef.RED.light.getRgbaColor());
-        grad.addColorStop(0.47, steelseries.ColorDef.RED.medium.getRgbaColor());
-        grad.addColorStop(1, steelseries.ColorDef.RED.dark.getRgbaColor());
+        grad.addColorStop(0, ColorDef.RED.light.getRgbaColor());
+        grad.addColorStop(0.47, ColorDef.RED.medium.getRgbaColor());
+        grad.addColorStop(1, ColorDef.RED.dark.getRgbaColor());
         ctx.fillStyle = grad;
-        ctx.strokeStyle = steelseries.ColorDef.RED.dark.getRgbaColor();
+        ctx.strokeStyle = ColorDef.RED.dark.getRgbaColor();
         ctx.fill();
         ctx.stroke();
         break;
@@ -619,11 +636,11 @@ var clock = function(canvas, parameters) {
     });
     pointerType = newPointerType;
     if (pointerType.type === 'type1') {
-      pointerColor = steelseries.ColorDef.GRAY;
-      backgroundColor = steelseries.BackgroundColor.ANTHRACITE;
+      pointerColor = ColorDef.GRAY;
+      backgroundColor = BackgroundColor.ANTHRACITE;
     } else {
-      pointerColor = steelseries.ColorDef.BLACK;
-      backgroundColor = steelseries.BackgroundColor.LIGHT_GRAY;
+      pointerColor = ColorDef.BLACK;
+      backgroundColor = BackgroundColor.LIGHT_GRAY;
     }
     init({
       background: true,

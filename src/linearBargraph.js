@@ -17,6 +17,23 @@ lcdFontName,
 stdFontName,
 } from "./tools";
 
+import {
+  backgroundColor as BackgroundColor,
+  lcdColor as LcdColor,
+  color as ColorDef,
+  ledColor as LedColor,
+  gaugeType as GaugeType,
+  orientation as Orientation,
+  knobType as KnobType,
+  knobStyle as KnobStyle,
+  frameDesign as FrameDesign,
+  pointerType as PointerType,
+  foregroundType as ForegroundType,
+  labelNumberFormat as LabelNumberFormat,
+  tickLabelOrientation as TickLabelOrientation,
+  trendState as TrendState,
+  } from "./definitions";
+
 var linearBargraph = function(canvas, parameters) {
   parameters = parameters || {};
   var width = (undefined === parameters.width ? 0 : parameters.width),
@@ -29,22 +46,22 @@ var linearBargraph = function(canvas, parameters) {
     threshold = (undefined === parameters.threshold ? (maxValue - minValue) / 2 + minValue : parameters.threshold),
     titleString = (undefined === parameters.titleString ? '' : parameters.titleString),
     unitString = (undefined === parameters.unitString ? '' : parameters.unitString),
-    frameDesign = (undefined === parameters.frameDesign ? steelseries.FrameDesign.METAL : parameters.frameDesign),
+    frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
     frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible),
-    backgroundColor = (undefined === parameters.backgroundColor ? steelseries.BackgroundColor.DARK_GRAY : parameters.backgroundColor),
+    backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor),
     backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible),
-    valueColor = (undefined === parameters.valueColor ? steelseries.ColorDef.RED : parameters.valueColor),
-    lcdColor = (undefined === parameters.lcdColor ? steelseries.LcdColor.STANDARD : parameters.lcdColor),
+    valueColor = (undefined === parameters.valueColor ? ColorDef.RED : parameters.valueColor),
+    lcdColor = (undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor),
     lcdVisible = (undefined === parameters.lcdVisible ? true : parameters.lcdVisible),
     lcdDecimals = (undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals),
     digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont),
-    ledColor = (undefined === parameters.ledColor ? steelseries.LedColor.RED_LED : parameters.ledColor),
+    ledColor = (undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor),
     ledVisible = (undefined === parameters.ledVisible ? true : parameters.ledVisible),
     thresholdVisible = (undefined === parameters.thresholdVisible ? true : parameters.thresholdVisible),
     thresholdRising = (undefined === parameters.thresholdRising ? true : parameters.thresholdRising),
     minMeasuredValueVisible = (undefined === parameters.minMeasuredValueVisible ? false : parameters.minMeasuredValueVisible),
     maxMeasuredValueVisible = (undefined === parameters.maxMeasuredValueVisible ? false : parameters.maxMeasuredValueVisible),
-    labelNumberFormat = (undefined === parameters.labelNumberFormat ? steelseries.LabelNumberFormat.STANDARD : parameters.labelNumberFormat),
+    labelNumberFormat = (undefined === parameters.labelNumberFormat ? LabelNumberFormat.STANDARD : parameters.labelNumberFormat),
     foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible),
     playAlarm = (undefined === parameters.playAlarm ? false : parameters.playAlarm),
     alarmSound = (undefined === parameters.alarmSound ? false : parameters.alarmSound),
@@ -215,7 +232,7 @@ var linearBargraph = function(canvas, parameters) {
     ctx.strokeStyle = lcdColor.textColor;
     ctx.fillStyle = lcdColor.textColor;
 
-    if (lcdColor === steelseries.LcdColor.STANDARD || lcdColor === steelseries.LcdColor.STANDARD_GREEN) {
+    if (lcdColor === LcdColor.STANDARD || lcdColor === LcdColor.STANDARD_GREEN) {
       ctx.shadowColor = 'gray';
       if (vertical) {
         ctx.shadowOffsetX = imageWidth * 0.007;
@@ -476,18 +493,18 @@ var linearBargraph = function(canvas, parameters) {
     // Draw min measured value indicator in minMeasuredValueBuffer
     if (minMeasuredValueVisible) {
       if (vertical) {
-        minMeasuredValueCtx.drawImage(createMeasuredValueImage(minMaxIndSize, steelseries.ColorDef.BLUE.dark.getRgbaColor(), false, vertical), 0, 0);
+        minMeasuredValueCtx.drawImage(createMeasuredValueImage(minMaxIndSize, ColorDef.BLUE.dark.getRgbaColor(), false, vertical), 0, 0);
       } else {
-        minMeasuredValueCtx.drawImage(createMeasuredValueImage(minMaxIndSize, steelseries.ColorDef.BLUE.dark.getRgbaColor(), false, vertical), 0, 0);
+        minMeasuredValueCtx.drawImage(createMeasuredValueImage(minMaxIndSize, ColorDef.BLUE.dark.getRgbaColor(), false, vertical), 0, 0);
       }
     }
 
     // Draw max measured value indicator in maxMeasuredValueBuffer
     if (maxMeasuredValueVisible) {
       if (vertical) {
-        maxMeasuredValueCtx.drawImage(createMeasuredValueImage(minMaxIndSize, steelseries.ColorDef.RED.medium.getRgbaColor(), false, vertical), 0, 0);
+        maxMeasuredValueCtx.drawImage(createMeasuredValueImage(minMaxIndSize, ColorDef.RED.medium.getRgbaColor(), false, vertical), 0, 0);
       } else {
-        maxMeasuredValueCtx.drawImage(createMeasuredValueImage(minMaxIndSize, steelseries.ColorDef.RED.medium.getRgbaColor(), false, vertical), 0, 0);
+        maxMeasuredValueCtx.drawImage(createMeasuredValueImage(minMaxIndSize, ColorDef.RED.medium.getRgbaColor(), false, vertical), 0, 0);
       }
     }
 
@@ -711,11 +728,11 @@ var linearBargraph = function(canvas, parameters) {
       valueBackgroundStopY = valueBackgroundStartY;
     }
 
-    var darker = (backgroundColor === steelseries.BackgroundColor.CARBON ||
-      backgroundColor === steelseries.BackgroundColor.PUNCHED_SHEET ||
-      backgroundColor === steelseries.BackgroundColor.STAINLESS ||
-      backgroundColor === steelseries.BackgroundColor.BRUSHED_STAINLESS ||
-      backgroundColor === steelseries.BackgroundColor.TURNED) ? 0.3 : 0;
+    var darker = (backgroundColor === BackgroundColor.CARBON ||
+      backgroundColor === BackgroundColor.PUNCHED_SHEET ||
+      backgroundColor === BackgroundColor.STAINLESS ||
+      backgroundColor === BackgroundColor.BRUSHED_STAINLESS ||
+      backgroundColor === BackgroundColor.TURNED) ? 0.3 : 0;
 
     var valueBackgroundTrackGradient = ctx.createLinearGradient(valueBackgroundStartX, valueBackgroundStartY, valueBackgroundStopX, valueBackgroundStopY);
     labelColor.setAlpha(0.047058 + darker);

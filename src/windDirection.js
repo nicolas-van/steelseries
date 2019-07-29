@@ -18,20 +18,37 @@ lcdFontName,
 stdFontName,
 } from "./tools";
 
+import {
+  backgroundColor as BackgroundColor,
+  lcdColor as LcdColor,
+  color as ColorDef,
+  ledColor as LedColor,
+  gaugeType as GaugeType,
+  orientation as Orientation,
+  knobType as KnobType,
+  knobStyle as KnobStyle,
+  frameDesign as FrameDesign,
+  pointerType as PointerType,
+  foregroundType as ForegroundType,
+  labelNumberFormat as LabelNumberFormat,
+  tickLabelOrientation as TickLabelOrientation,
+  trendState as TrendState,
+  } from "./definitions";
+
 var windDirection = function(canvas, parameters) {
   parameters = parameters || {};
   var size = (undefined === parameters.size ? 0 : parameters.size),
-    frameDesign = (undefined === parameters.frameDesign ? steelseries.FrameDesign.METAL : parameters.frameDesign),
+    frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
     frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible),
-    backgroundColor = (undefined === parameters.backgroundColor ? steelseries.BackgroundColor.DARK_GRAY : parameters.backgroundColor),
+    backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor),
     backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible),
-    pointerTypeLatest = (undefined === parameters.pointerTypeLatest ? steelseries.PointerType.TYPE1 : parameters.pointerTypeLatest),
-    pointerTypeAverage = (undefined === parameters.pointerTypeAverage ? steelseries.PointerType.TYPE8 : parameters.pointerTypeAverage),
-    pointerColor = (undefined === parameters.pointerColor ? steelseries.ColorDef.RED : parameters.pointerColor),
-    pointerColorAverage = (undefined === parameters.pointerColorAverage ? steelseries.ColorDef.BLUE : parameters.pointerColorAverage),
-    knobType = (undefined === parameters.knobType ? steelseries.KnobType.STANDARD_KNOB : parameters.knobType),
-    knobStyle = (undefined === parameters.knobStyle ? steelseries.KnobStyle.SILVER : parameters.knobStyle),
-    foregroundType = (undefined === parameters.foregroundType ? steelseries.ForegroundType.TYPE1 : parameters.foregroundType),
+    pointerTypeLatest = (undefined === parameters.pointerTypeLatest ? PointerType.TYPE1 : parameters.pointerTypeLatest),
+    pointerTypeAverage = (undefined === parameters.pointerTypeAverage ? PointerType.TYPE8 : parameters.pointerTypeAverage),
+    pointerColor = (undefined === parameters.pointerColor ? ColorDef.RED : parameters.pointerColor),
+    pointerColorAverage = (undefined === parameters.pointerColorAverage ? ColorDef.BLUE : parameters.pointerColorAverage),
+    knobType = (undefined === parameters.knobType ? KnobType.STANDARD_KNOB : parameters.knobType),
+    knobStyle = (undefined === parameters.knobStyle ? KnobStyle.SILVER : parameters.knobStyle),
+    foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType),
     foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible),
     pointSymbols = (undefined === parameters.pointSymbols ? ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'] : parameters.pointSymbols),
     pointSymbolsVisible = (undefined === parameters.pointSymbolsVisible ? true : parameters.pointSymbolsVisible),
@@ -39,7 +56,7 @@ var windDirection = function(canvas, parameters) {
     degreeScale = (undefined === parameters.degreeScale ? true : parameters.degreeScale),
     degreeScaleHalf = (undefined === parameters.degreeScaleHalf ? false : parameters.degreeScaleHalf),
     roseVisible = (undefined === parameters.roseVisible ? false : parameters.roseVisible),
-    lcdColor = (undefined === parameters.lcdColor ? steelseries.LcdColor.STANDARD : parameters.lcdColor),
+    lcdColor = (undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor),
     lcdVisible = (undefined === parameters.lcdVisible ? true : parameters.lcdVisible),
     digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont),
     section = (undefined === parameters.section ? null : parameters.section),
@@ -136,7 +153,7 @@ var windDirection = function(canvas, parameters) {
       value = '-' + value.substring(value.length, value.length - 3);
     }
 
-    if (lcdColor === steelseries.LcdColor.STANDARD || lcdColor === steelseries.LcdColor.STANDARD_GREEN) {
+    if (lcdColor === LcdColor.STANDARD || lcdColor === LcdColor.STANDARD_GREEN) {
       mainCtx.shadowColor = 'gray';
       mainCtx.shadowOffsetX = imageWidth * 0.007;
       mainCtx.shadowOffsetY = imageWidth * 0.007;

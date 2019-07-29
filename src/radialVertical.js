@@ -17,9 +17,26 @@ doc,
 stdFontName,
 } from "./tools";
 
+import {
+  backgroundColor as BackgroundColor,
+  lcdColor as LcdColor,
+  color as ColorDef,
+  ledColor as LedColor,
+  gaugeType as GaugeType,
+  orientation as Orientation,
+  knobType as KnobType,
+  knobStyle as KnobStyle,
+  frameDesign as FrameDesign,
+  pointerType as PointerType,
+  foregroundType as ForegroundType,
+  labelNumberFormat as LabelNumberFormat,
+  tickLabelOrientation as TickLabelOrientation,
+  trendState as TrendState,
+  } from "./definitions";
+
 var radialVertical = function(canvas, parameters) {
   parameters = parameters || {};
-  var orientation = (undefined === parameters.orientation ? steelseries.Orientation.NORTH : parameters.orientation),
+  var orientation = (undefined === parameters.orientation ? Orientation.NORTH : parameters.orientation),
     size = (undefined === parameters.size ? 0 : parameters.size),
     minValue = (undefined === parameters.minValue ? 0 : parameters.minValue),
     maxValue = (undefined === parameters.maxValue ? (minValue + 100) : parameters.maxValue),
@@ -29,23 +46,23 @@ var radialVertical = function(canvas, parameters) {
     area = (undefined === parameters.area ? null : parameters.area),
     titleString = (undefined === parameters.titleString ? '' : parameters.titleString),
     unitString = (undefined === parameters.unitString ? '' : parameters.unitString),
-    frameDesign = (undefined === parameters.frameDesign ? steelseries.FrameDesign.METAL : parameters.frameDesign),
+    frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
     frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible),
-    backgroundColor = (undefined === parameters.backgroundColor ? steelseries.BackgroundColor.DARK_GRAY : parameters.backgroundColor),
+    backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor),
     backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible),
-    pointerType = (undefined === parameters.pointerType ? steelseries.PointerType.TYPE1 : parameters.pointerType),
-    pointerColor = (undefined === parameters.pointerColor ? steelseries.ColorDef.RED : parameters.pointerColor),
-    knobType = (undefined === parameters.knobType ? steelseries.KnobType.STANDARD_KNOB : parameters.knobType),
-    knobStyle = (undefined === parameters.knobStyle ? steelseries.KnobStyle.SILVER : parameters.knobStyle),
-    ledColor = (undefined === parameters.ledColor ? steelseries.LedColor.RED_LED : parameters.ledColor),
+    pointerType = (undefined === parameters.pointerType ? PointerType.TYPE1 : parameters.pointerType),
+    pointerColor = (undefined === parameters.pointerColor ? ColorDef.RED : parameters.pointerColor),
+    knobType = (undefined === parameters.knobType ? KnobType.STANDARD_KNOB : parameters.knobType),
+    knobStyle = (undefined === parameters.knobStyle ? KnobStyle.SILVER : parameters.knobStyle),
+    ledColor = (undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor),
     ledVisible = (undefined === parameters.ledVisible ? true : parameters.ledVisible),
     thresholdVisible = (undefined === parameters.thresholdVisible ? true : parameters.thresholdVisible),
     thresholdRising = (undefined === parameters.thresholdRising ? true : parameters.thresholdRising),
     minMeasuredValueVisible = (undefined === parameters.minMeasuredValueVisible ? false : parameters.minMeasuredValueVisible),
     maxMeasuredValueVisible = (undefined === parameters.maxMeasuredValueVisible ? false : parameters.maxMeasuredValueVisible),
-    foregroundType = (undefined === parameters.foregroundType ? steelseries.ForegroundType.TYPE1 : parameters.foregroundType),
+    foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType),
     foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible),
-    labelNumberFormat = (undefined === parameters.labelNumberFormat ? steelseries.LabelNumberFormat.STANDARD : parameters.labelNumberFormat),
+    labelNumberFormat = (undefined === parameters.labelNumberFormat ? LabelNumberFormat.STANDARD : parameters.labelNumberFormat),
     playAlarm = (undefined === parameters.playAlarm ? false : parameters.playAlarm),
     alarmSound = (undefined === parameters.alarmSound ? false : parameters.alarmSound),
     fullScaleDeflectionTime = (undefined === parameters.fullScaleDeflectionTime ? 2.5 : parameters.fullScaleDeflectionTime);
@@ -67,7 +84,7 @@ var radialVertical = function(canvas, parameters) {
     audioElement.setAttribute('src', alarmSound);
     audioElement.setAttribute('preload', 'auto');
   }
-  var gaugeType = steelseries.GaugeType.TYPE5;
+  var gaugeType = GaugeType.TYPE5;
 
   var self = this;
   var value = minValue;
@@ -189,19 +206,19 @@ var radialVertical = function(canvas, parameters) {
       ctx.save();
       if (orientation.type === 'west') {
         // Min post
-        ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), steelseries.KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.44, imageHeight * 0.80);
+        ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.44, imageHeight * 0.80);
         // Max post
-        ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), steelseries.KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.44, imageHeight * 0.16);
+        ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.44, imageHeight * 0.16);
       } else if (orientation.type === 'east') {
         // Min post
-        ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), steelseries.KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.52, imageHeight * 0.80);
+        ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.52, imageHeight * 0.80);
         // Max post
-        ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), steelseries.KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.52, imageHeight * 0.16);
+        ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.52, imageHeight * 0.16);
       } else {
         // Min post
-        ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), steelseries.KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.2 - imageHeight * 0.037383, imageHeight * 0.446666);
+        ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.2 - imageHeight * 0.037383, imageHeight * 0.446666);
         // Max post
-        ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), steelseries.KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.8, imageHeight * 0.446666);
+        ctx.drawImage(createKnobImage(Math.ceil(imageHeight * 0.037383), KnobType.STANDARD_KNOB, knobStyle), imageWidth * 0.8, imageHeight * 0.446666);
       }
       ctx.restore();
     }
@@ -285,12 +302,12 @@ var radialVertical = function(canvas, parameters) {
     backgroundColor.labelColor.setAlpha(1);
     ctx.save();
 
-    if (steelseries.Orientation.WEST === orientation) {
+    if (Orientation.WEST === orientation) {
       ctx.translate(centerX, centerX);
       ctx.rotate(-HALF_PI);
       ctx.translate(-centerX, -centerX);
     }
-    if (steelseries.Orientation.EAST === orientation) {
+    if (Orientation.EAST === orientation) {
       ctx.translate(centerX, centerX);
       ctx.rotate(HALF_PI);
       ctx.translate(-centerX, -centerX);
@@ -464,13 +481,13 @@ var radialVertical = function(canvas, parameters) {
 
     // Draw min measured value indicator in minMeasuredValueBuffer
     if (minMeasuredValueVisible) {
-      minMeasuredValueCtx.drawImage(createMeasuredValueImage(Math.ceil(size * 0.028037), steelseries.ColorDef.BLUE.dark.getRgbaColor(), true, true), 0, 0);
+      minMeasuredValueCtx.drawImage(createMeasuredValueImage(Math.ceil(size * 0.028037), ColorDef.BLUE.dark.getRgbaColor(), true, true), 0, 0);
       minMeasuredValueCtx.restore();
     }
 
     // Draw max measured value indicator in maxMeasuredValueBuffer
     if (maxMeasuredValueVisible) {
-      maxMeasuredValueCtx.drawImage(createMeasuredValueImage(Math.ceil(size * 0.028037), steelseries.ColorDef.RED.medium.getRgbaColor(), true), 0, 0);
+      maxMeasuredValueCtx.drawImage(createMeasuredValueImage(Math.ceil(size * 0.028037), ColorDef.RED.medium.getRgbaColor(), true), 0, 0);
       maxMeasuredValueCtx.restore();
     }
 
@@ -481,11 +498,11 @@ var radialVertical = function(canvas, parameters) {
       // Create section in background buffer (backgroundBuffer)
       if (null !== section && 0 < section.length) {
         backgroundContext.save();
-        if (steelseries.Orientation.WEST === orientation) {
+        if (Orientation.WEST === orientation) {
           backgroundContext.translate(centerX, centerX);
           backgroundContext.rotate(-HALF_PI);
           backgroundContext.translate(-centerX, -centerX);
-        } else if (steelseries.Orientation.EAST === orientation) {
+        } else if (Orientation.EAST === orientation) {
           backgroundContext.translate(centerX, centerX);
           backgroundContext.rotate(HALF_PI);
           backgroundContext.translate(-centerX, -centerX);
@@ -501,12 +518,12 @@ var radialVertical = function(canvas, parameters) {
 
       // Create area in background buffer (backgroundBuffer)
       if (null !== area && 0 < area.length) {
-        if (steelseries.Orientation.WEST === orientation) {
+        if (Orientation.WEST === orientation) {
           backgroundContext.translate(centerX, centerX);
           backgroundContext.rotate(-HALF_PI);
           backgroundContext.translate(-centerX, -centerX);
         }
-        if (steelseries.Orientation.EAST === orientation) {
+        if (Orientation.EAST === orientation) {
           backgroundContext.translate(centerX, centerX);
           backgroundContext.rotate(HALF_PI);
           backgroundContext.translate(-centerX, -centerX);
@@ -530,12 +547,12 @@ var radialVertical = function(canvas, parameters) {
     // Draw threshold image to background context
     if (thresholdVisible) {
       backgroundContext.save();
-      if (steelseries.Orientation.WEST === orientation) {
+      if (Orientation.WEST === orientation) {
         backgroundContext.translate(centerX, centerX);
         backgroundContext.rotate(-HALF_PI);
         backgroundContext.translate(-centerX, -centerX);
       }
-      if (steelseries.Orientation.EAST === orientation) {
+      if (Orientation.EAST === orientation) {
         backgroundContext.translate(centerX, centerX);
         backgroundContext.rotate(HALF_PI);
         backgroundContext.translate(-centerX, -centerX);
@@ -922,12 +939,12 @@ var radialVertical = function(canvas, parameters) {
       mainCtx.drawImage(ledBuffer, ledPosX, ledPosY);
     }
 
-    if (steelseries.Orientation.WEST === orientation) {
+    if (Orientation.WEST === orientation) {
       mainCtx.translate(centerX, centerX);
       mainCtx.rotate(-HALF_PI);
       mainCtx.translate(-centerX, -centerX);
     }
-    if (steelseries.Orientation.EAST === orientation) {
+    if (Orientation.EAST === orientation) {
       mainCtx.translate(centerX, centerX);
       mainCtx.rotate(HALF_PI);
       mainCtx.translate(-centerX, -centerX);
@@ -971,11 +988,11 @@ var radialVertical = function(canvas, parameters) {
 
     // Draw foreground
     if (foregroundVisible) {
-      if (steelseries.Orientation.WEST === orientation) {
+      if (Orientation.WEST === orientation) {
         mainCtx.translate(centerX, centerX);
         mainCtx.rotate(HALF_PI);
         mainCtx.translate(-centerX, -centerX);
-      } else if (steelseries.Orientation.EAST === orientation) {
+      } else if (Orientation.EAST === orientation) {
         mainCtx.translate(centerX, centerX);
         mainCtx.rotate(-HALF_PI);
         mainCtx.translate(-centerX, -centerX);
