@@ -13,7 +13,7 @@ This project is a re-packaging of [HanSolo's SteelSeries-Canvas](https://github.
 
 ## Installation
 
-### The modern way
+### Using npm
 
 ```bash
 npm install steelseries
@@ -23,9 +23,9 @@ npm install steelseries
 import * as steelseries from "steelseries";
 ```
 
-### The old school way
+### Using a CDN
 
-Download the code at https://unpkg.com/steelseries .
+Use unpkg: https://unpkg.com/steelseries .
 
 ## Documentation
 
