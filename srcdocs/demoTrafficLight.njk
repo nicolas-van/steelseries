@@ -5,19 +5,19 @@
 
 <form class="form-inline">
   <div class="form-check mr-2 mb-2">
-    <input id="traffic-red" class="form-check-input" type="checkbox" value="" onClick="setLights()">
+    <input id="traffic-red" class="form-check-input" type="checkbox" value="">
     <label class="form-check-label" for="traffic-red">
       Red
     </label>
   </div>
   <div class="form-check mr-2 mb-2">
-    <input id="traffic-yellow" class="form-check-input" type="checkbox" value="" onClick="setLights()">
+    <input id="traffic-yellow" class="form-check-input" type="checkbox" value="">
     <label class="form-check-label" for="traffic-yellow">
       Yellow
     </label>
   </div>
   <div class="form-check mr-2 mb-2">
-    <input id="traffic-green" class="form-check-input" type="checkbox" value="" onClick="setLights()">
+    <input id="traffic-green" class="form-check-input" type="checkbox" value="">
     <label class="form-check-label" for="traffic-green">
       Green
     </label>
@@ -33,6 +33,11 @@
 <script>
   (function() {
   "use strict";
+
+  document.querySelector('#traffic-red').addEventListener('click', setLights);
+  document.querySelector('#traffic-yellow').addEventListener('click', setLights);
+  document.querySelector('#traffic-green').addEventListener('click', setLights);
+
   var trafficLight;
 
   function init()
