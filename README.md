@@ -11,7 +11,9 @@ A collection of gauge components for JavaScript.
 
 This project is a re-packaging of [HanSolo's SteelSeries-Canvas](https://github.com/HanSolo/SteelSeries-Canvas).
 
-## Usage
+## Installation
+
+### Using npm
 
 ```bash
 npm install steelseries
@@ -20,6 +22,10 @@ npm install steelseries
 ```javascript
 import * as steelseries from "steelseries";
 ```
+
+### Using a CDN
+
+Use unpkg: https://unpkg.com/steelseries .
 
 ## Documentation
 
