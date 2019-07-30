@@ -25,7 +25,7 @@ import * as steelseries from "steelseries";
 
 ### The old school way
 
-Download this code at https://unpkg.com/steelseries .
+Download the code at https://unpkg.com/steelseries .
 
 ## Documentation
 
