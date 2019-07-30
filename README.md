@@ -13,7 +13,7 @@ This project is a re-packaging of [HanSolo's SteelSeries-Canvas](https://github.
 
 ## Usage
 
-### The Modern Way
+### The modern way
 
 ```bash
 npm install steelseries
