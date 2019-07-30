@@ -2,7 +2,7 @@
 {% block content %}
 <h1>LCD Sections</h1>
 <form class="form-inline">
-  <select class="form-control mr-2 mb-2" id="comboLcdColor" onchange="setLcdColor(this)">
+  <select class="form-control mr-2 mb-2" onchange="setLcdColor(this)">
     <option selected="selected" value="">LCD color</option>
     <option value="BEIGE">Beige</option>
     <option value="BLUE">Blue</option>
@@ -31,7 +31,7 @@
   </select>
 </form>
 <div class="text-center">
-  <canvas class="mt-3 mb-3" id="canvasSingle1" width="120" height="50"></canvas>
+  <canvas class="mt-3 mb-3" id="canvasSingle4" width="120" height="50"></canvas>
 </div>
 <script>
   var scroll = false;
@@ -46,7 +46,7 @@
       steelseries.Section(95, 100, 'rgba(0, 255, 0, 1.0)')
     ];
 
-    single1 = new steelseries.DisplaySingle('canvasSingle1',
+    single1 = new steelseries.DisplaySingle('canvasSingle4',
     {
       width: 120,
       height: 50,

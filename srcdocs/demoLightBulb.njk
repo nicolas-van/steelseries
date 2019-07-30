@@ -36,7 +36,7 @@
   <input class="form-control mr-2 mb-2" type="range" min="0" max="100" value="100" step="1" onchange="setAlpha(this.value)" />
 </form>
 <div class="text-center">
-  <canvas class="mt-3 mb-3" id='canvas' width='400' height='400'>
+  <canvas class="mt-3 mb-3" id='canvasLightBulb' width='400' height='400'>
     No canvas in your browser...sorry...
   </canvas>
 </div>
@@ -46,7 +46,7 @@
   function init()
   {
     // Initialzing
-    lightBulb = new steelseries.LightBulb('canvas',
+    lightBulb = new steelseries.LightBulb('canvasLightBulb',
     {
       width: 200,
       height: 200

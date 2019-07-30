@@ -5,27 +5,27 @@
 
 <form class="form-inline">
   <div class="form-check mr-2 mb-2">
-    <input id="red" class="form-check-input" type="checkbox" value="" onClick="setLights()">
-    <label class="form-check-label" for="red">
+    <input id="traffic-red" class="form-check-input" type="checkbox" value="" onClick="setLights()">
+    <label class="form-check-label" for="traffic-red">
       Red
     </label>
   </div>
   <div class="form-check mr-2 mb-2">
-    <input id="yellow" class="form-check-input" type="checkbox" value="" onClick="setLights()">
-    <label class="form-check-label" for="yellow">
+    <input id="traffic-yellow" class="form-check-input" type="checkbox" value="" onClick="setLights()">
+    <label class="form-check-label" for="traffic-yellow">
       Yellow
     </label>
   </div>
   <div class="form-check mr-2 mb-2">
-    <input id="green" class="form-check-input" type="checkbox" value="" onClick="setLights()">
-    <label class="form-check-label" for="green">
+    <input id="traffic-green" class="form-check-input" type="checkbox" value="" onClick="setLights()">
+    <label class="form-check-label" for="traffic-green">
       Green
     </label>
   </div>
 </form>
 
 <div class="text-center">
-  <canvas class="mt-3 mb-3" id='canvas' width='400' height='400'>
+  <canvas class="mt-3 mb-3" id='canvasTrafficLight' width='400' height='400'>
     No canvas in your browser...sorry...
   </canvas>
 </div>
@@ -36,7 +36,7 @@
   function init()
   {
     // Initialzing
-    trafficLight = steelseries.TrafficLight('canvas',
+    trafficLight = steelseries.TrafficLight('canvasTrafficLight',
     {
       width: 200,
       height: 200
@@ -45,9 +45,9 @@
 
   function setLights()
   {
-    trafficLight.setRedOn(document.getElementById('red').checked);
-    trafficLight.setYellowOn(document.getElementById('yellow').checked);
-    trafficLight.setGreenOn(document.getElementById('green').checked);
+    trafficLight.setRedOn(document.getElementById('traffic-red').checked);
+    trafficLight.setYellowOn(document.getElementById('traffic-yellow').checked);
+    trafficLight.setGreenOn(document.getElementById('traffic-green').checked);
   }
   init();
 </script>
