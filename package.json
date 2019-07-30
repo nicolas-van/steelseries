@@ -2,6 +2,7 @@
   "name": "steelseries",
   "version": "1.0.1",
   "description": "A collection of gauge components for JavaScript.",
+  "keywords": ["gauge", "canvas", "radial-gauge", "linear-gauge"],
   "main": "dist/steelseries.js",
   "scripts": {
     "build": "webpack",
