@@ -31,6 +31,8 @@
 </div>
 
 <script>
+  (function() {
+  "use strict";
   var trafficLight;
 
   function init()
@@ -50,5 +52,6 @@
     trafficLight.setGreenOn(document.getElementById('traffic-green').checked);
   }
   init();
+  })();
 </script>
 {% endblock %}

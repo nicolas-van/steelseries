@@ -41,6 +41,8 @@
   </canvas>
 </div>
 <script>
+  (function() {
+  "use strict";
   var lightBulb;
 
   function init()
@@ -69,5 +71,6 @@
     lightBulb.setGlowColor(color);
   }
   init();
+  })();
 </script>
 {% endblock %}
