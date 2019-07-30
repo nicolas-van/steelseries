@@ -2,7 +2,7 @@
 {% block content %}
 <h1>Extras</h1>
 <form class="form-inline">
-  <select class="form-control mr-2 mb-2" onchange="setFrameDesign(this)">
+  <select class="form-control mr-2 mb-2" id="extraFrameDesign">
     <option selected="selected" value="">Frame design</option>
     <option value="BLACK_METAL">BlackMetal</option>
     <option value="METAL">Metal</option>
@@ -16,7 +16,7 @@
     <option value="TILTED_BLACK">TiltedBlack</option>
     <option value="GLOSSY_METAL">GlossyMetal</option>
   </select>
-  <select class="form-control mr-2 mb-2" onchange="setBackgroundColor(this)">
+  <select class="form-control mr-2 mb-2" id="extraBackgroundColor">
     <option selected="selected" value="">Background</option>
     <option value="DARK_GRAY">DarkGray</option>
     <option value="SATIN_GRAY">SatinGray</option>
@@ -37,7 +37,7 @@
     <option value="BRUSHED_STAINLESS">BrushedStainless</option>
     <option value="TURNED">Turned</option>
   </select>
-  <select class="form-control mr-2 mb-2" onchange="setPointerColor(this)">
+  <select class="form-control mr-2 mb-2" id="extraPointerColor">
     <option selected="selected" value="">Pointer color</option>
     <option value="RED">Red</option>
     <option value="GREEN">Green</option>
@@ -53,7 +53,7 @@
     <option value="GREEN_LCD">Green LCD</option>
     <option value="JUG_GREEN">JUG Green</option>
   </select>
-  <select class="form-control mr-2 mb-2" onchange="setPointerType(this)">
+  <select class="form-control mr-2 mb-2" id="extraPointerType">
     <option selected="selected" value="">Pointer type</option>
     <option value="TYPE1">Type1</option>
     <option value="TYPE2">Type2</option>
@@ -72,7 +72,7 @@
     <option value="TYPE15">Type15</option>
     <option value="TYPE16">Type16</option>
   </select>
-  <select class="form-control mr-2 mb-2" onchange="setLcdColor(this)">
+  <select class="form-control mr-2 mb-2" id="extraLcdColor">
     <option selected="selected" value="">LCD color</option>
     <option value="BEIGE">Beige</option>
     <option value="BLUE">Blue</option>
@@ -99,7 +99,7 @@
     <option value="LIGHTBLUE">LightBlue</option>
     <option value="SECTIONS">Sections</option>
   </select>
-  <select class="form-control mr-2 mb-2" onchange="setLedColor(this)">
+  <select class="form-control mr-2 mb-2" id="extraLedColor">
     <option selected="selected" value="">Led color</option>
     <option value="RED_LED">Red</option>
     <option value="GREEN_LED">Green</option>
@@ -109,7 +109,7 @@
     <option value="CYAN_LED">Cyan</option>
     <option value="MAGENTA_LED">Magenta</option>
   </select>
-  <select class="form-control mr-2 mb-2" onchange="setForegroundType(this)">
+  <select class="form-control mr-2 mb-2" id="extraForegroundType">
     <option selected="selected" value="">Foreground</option>
     <option value="TYPE1">Type1</option>
     <option value="TYPE2">Type2</option>
@@ -118,7 +118,7 @@
     <option value="TYPE5">Type5</option>
   </select>
 
-  <select class="form-control mr-2 mb-2" onchange="setPointerColorAvg(this)">
+  <select class="form-control mr-2 mb-2" id="extraPointerColorAvg">
     <option selected="selected" value="">Wind Avg Pointer color</option>
     <option value="RED">Red</option>
     <option value="GREEN">Green</option>
@@ -134,7 +134,7 @@
     <option value="GREEN_LCD">Green LCD</option>
     <option value="JUG_GREEN">JUG Green</option>
   </select>
-  <select class="form-control mr-2 mb-2" onchange="setPointerAvg(this)">
+  <select class="form-control mr-2 mb-2" id="extraPointerAvg">
     <option selected="selected" value="">Wind Avg Pointer type</option>
     <option value="TYPE1">Type1</option>
     <option value="TYPE2">Type2</option>
@@ -207,6 +207,35 @@
 <script>
   (function() {
   "use strict";
+
+  document.querySelector('#extraFrameDesign').addEventListener('change', function() {
+    setFrameDesign(this);
+  });
+  document.querySelector('#extraBackgroundColor').addEventListener('change', function() {
+    setBackgroundColor(this);
+  });
+  document.querySelector('#extraPointerColor').addEventListener('change', function() {
+    setPointerColor(this);
+  });
+  document.querySelector('#extraPointerType').addEventListener('change', function() {
+    setPointerType(this);
+  });
+  document.querySelector('#extraLcdColor').addEventListener('change', function() {
+    setLcdColor(this);
+  });
+  document.querySelector('#extraLedColor').addEventListener('change', function() {
+    setLedColor(this);
+  });
+  document.querySelector('#extraForegroundType').addEventListener('change', function() {
+    setForegroundType(this);
+  });
+  document.querySelector('#extraPointerColorAvg').addEventListener('change', function() {
+    setPointerColorAvg(this);
+  });
+  document.querySelector('#extraPointerAvg').addEventListener('change', function() {
+    setPointerAvg(this);
+  });
+
   var scroll = false;
   var compass1;
   var compass2;
