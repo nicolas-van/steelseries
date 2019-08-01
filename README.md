@@ -7,7 +7,7 @@ A collection of gauge components for JavaScript.
 
 [See the demo here](https://nicolas-van.github.io/steelseries/).
 
-![gauges](./gauges.png)
+![gauges](./gauges.gif)
 
 This project is a re-packaging of [HanSolo's SteelSeries-Canvas](https://github.com/HanSolo/SteelSeries-Canvas).
 
