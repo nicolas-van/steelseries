@@ -293,7 +293,7 @@ export function getColorFromFraction(sourceColor, destinationColor, range, fract
   }
 }
 
-export function section(start, stop, color) {
+export function Section(start, stop, color) {
   return {
     start: start,
     stop: stop,

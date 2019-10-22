@@ -26,8 +26,8 @@ rgbaColor,
 ConicalGradient, 
 gradientWrapper, 
 setAlpha, 
-getColorFromFraction, 
-section,
+getColorFromFraction,
+Section,
 } from "./tools";
 
 import {
@@ -96,4 +96,4 @@ export {TickLabelOrientation};
 export {TrendState};
 
 // Other
-export {section as Section};
+export {Section};
