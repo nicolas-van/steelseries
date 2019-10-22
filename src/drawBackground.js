@@ -10,7 +10,7 @@ TWO_PI,
 RAD_FACTOR,
 } from "./tools";
 
-var drawRadialBackgroundImage = function(ctx, backgroundColor, centerX, centerY, imageWidth, imageHeight) {
+var drawBackground = function(ctx, backgroundColor, centerX, centerY, imageWidth, imageHeight) {
   var radBBuffer, radBCtx,
     grad, fractions, colors,
     backgroundOffsetX = imageWidth * 0.831775 / 2,
@@ -20,7 +20,7 @@ var drawRadialBackgroundImage = function(ctx, backgroundColor, centerX, centerY,
     cacheKey = imageWidth.toString() + imageHeight + backgroundColor.name;
 
   // check if we have already created and cached this buffer, if not create it
-  if (!drawRadialBackgroundImage.cache[cacheKey]) {
+  if (!drawBackground.cache[cacheKey]) {
     // Setup buffer
     radBBuffer = createBuffer(imageWidth, imageHeight);
     radBCtx = radBBuffer.getContext('2d');
@@ -167,11 +167,11 @@ var drawRadialBackgroundImage = function(ctx, backgroundColor, centerX, centerY,
     radBCtx.fill();
 
     // cache the buffer
-    drawRadialBackgroundImage.cache[cacheKey] = radBBuffer;
+    drawBackground.cache[cacheKey] = radBBuffer;
   }
-  ctx.drawImage(drawRadialBackgroundImage.cache[cacheKey], 0, 0);
+  ctx.drawImage(drawBackground.cache[cacheKey], 0, 0);
   return this;
 };
-drawRadialBackgroundImage.cache = {};
+drawBackground.cache = {};
 
-export default drawRadialBackgroundImage;
+export default drawBackground;

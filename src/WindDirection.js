@@ -1,9 +1,9 @@
 import Tween from "./tween.js";
 import drawPointerImage from "./drawPointerImage";
-import drawRadialFrameImage from "./drawRadialFrameImage";
-import drawRadialBackgroundImage from "./drawRadialBackgroundImage";
+import drawFrame from "./drawFrame";
+import drawBackground from "./drawBackground";
 import drawRadialCustomImage from "./drawRadialCustomImage";
-import drawRadialForegroundImage from "./drawRadialForegroundImage";
+import drawForeground from "./drawForeground";
 import createLcdBackgroundImage from "./createLcdBackgroundImage";
 import drawRoseImage from "./drawRoseImage";
 import {
@@ -448,19 +448,19 @@ var WindDirection = function(canvas, parameters) {
 
   var init = function(parameters) {
     parameters = parameters || {};
-    var drawBackground = (undefined === parameters.background ? false : parameters.background);
+    var drawBackground2 = (undefined === parameters.background ? false : parameters.background);
     var drawPointer = (undefined === parameters.pointer ? false : parameters.pointer);
-    var drawForeground = (undefined === parameters.foreground ? false : parameters.foreground);
+    var drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
 
     initialized = true;
 
-    if (drawBackground && frameVisible) {
-      drawRadialFrameImage(backgroundContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
+    if (drawBackground2 && frameVisible) {
+      drawFrame(backgroundContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
     }
 
-    if (drawBackground && backgroundVisible) {
+    if (drawBackground2 && backgroundVisible) {
       // Create background in background buffer (backgroundBuffer)
-      drawRadialBackgroundImage(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
+      drawBackground(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
 
       // Create custom layer in background buffer (backgroundBuffer)
       drawRadialCustomImage(backgroundContext, customLayer, centerX, centerY, imageWidth, imageHeight);
@@ -488,12 +488,12 @@ var WindDirection = function(canvas, parameters) {
       drawTickmarksImage(backgroundContext);
     }
 
-    if (drawBackground && roseVisible) {
+    if (drawBackground2 && roseVisible) {
       drawRoseImage(backgroundContext, centerX, centerY, imageWidth, imageHeight, backgroundColor);
     }
 
     // Create lcd background if selected in background buffer (backgroundBuffer)
-    if (drawBackground && lcdVisible) {
+    if (drawBackground2 && lcdVisible) {
       lcdBuffer = createLcdBackgroundImage(lcdWidth, lcdHeight, lcdColor);
       backgroundContext.drawImage(lcdBuffer, lcdPosX, lcdPosY1);
       backgroundContext.drawImage(lcdBuffer, lcdPosX, lcdPosY2);
@@ -506,9 +506,9 @@ var WindDirection = function(canvas, parameters) {
       drawPointerImage(pointerContextLatest, imageWidth, pointerTypeLatest, pointerColor, backgroundColor.labelColor);
     }
 
-    if (drawForeground && foregroundVisible) {
+    if (drawForeground2 && foregroundVisible) {
       var knobVisible = (pointerTypeLatest.type === 'type15' || pointerTypeLatest.type === 'type16' ? false : true);
-      drawRadialForegroundImage(foregroundContext, foregroundType, imageWidth, imageHeight, knobVisible, knobType, knobStyle);
+      drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, knobVisible, knobType, knobStyle);
     }
   };
 

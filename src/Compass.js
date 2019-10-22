@@ -1,9 +1,9 @@
 
 import Tween from "./tween.js";
-import drawRadialFrameImage from "./drawRadialFrameImage";
-import drawRadialBackgroundImage from "./drawRadialBackgroundImage";
+import drawFrame from "./drawFrame";
+import drawBackground from "./drawBackground";
 import drawRadialCustomImage from "./drawRadialCustomImage";
-import drawRadialForegroundImage from "./drawRadialForegroundImage";
+import drawForeground from "./drawForeground";
 import drawRoseImage from "./drawRoseImage";
 import {
 createBuffer, 
@@ -399,11 +399,11 @@ var Compass = function(canvas, parameters) {
     initialized = true;
 
     if (frameVisible) {
-      drawRadialFrameImage(backgroundContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
+      drawFrame(backgroundContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
     }
 
     if (backgroundVisible) {
-      drawRadialBackgroundImage(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
+      drawBackground(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
       drawRadialCustomImage(backgroundContext, customLayer, centerX, centerY, imageWidth, imageHeight);
 
       if (roseVisible) {
@@ -416,7 +416,7 @@ var Compass = function(canvas, parameters) {
     drawPointerImage(pointerContext, false);
 
     if (foregroundVisible) {
-      drawRadialForegroundImage(foregroundContext, foregroundType, imageWidth, imageHeight, true, knobType, knobStyle);
+      drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, true, knobType, knobStyle);
     }
   };
 

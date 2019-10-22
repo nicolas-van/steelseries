@@ -1,8 +1,8 @@
 
-import drawRadialFrameImage from "./drawRadialFrameImage";
-import drawRadialBackgroundImage from "./drawRadialBackgroundImage";
+import drawFrame from "./drawFrame";
+import drawBackground from "./drawBackground";
 import drawRadialCustomImage from "./drawRadialCustomImage";
-import drawRadialForegroundImage from "./drawRadialForegroundImage";
+import drawForeground from "./drawForeground";
 import {
 createBuffer, 
 getCanvasContext,
@@ -415,20 +415,20 @@ var clock = function(canvas, parameters) {
   // Draw all static painting code to background
   var init = function(parameters) {
     parameters = parameters || {};
-    var drawFrame = (undefined === parameters.frame ? false : parameters.frame);
-    var drawBackground = (undefined === parameters.background ? false : parameters.background);
+    var drawFrame2 = (undefined === parameters.frame ? false : parameters.frame);
+    var drawBackground2 = (undefined === parameters.background ? false : parameters.background);
     var drawPointers = (undefined === parameters.pointers ? false : parameters.pointers);
-    var drawForeground = (undefined === parameters.foreground ? false : parameters.foreground);
+    var drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
 
     initialized = true;
 
-    if (drawFrame && frameVisible) {
-      drawRadialFrameImage(frameContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
+    if (drawFrame2 && frameVisible) {
+      drawFrame(frameContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
     }
 
-    if (drawBackground && backgroundVisible) {
+    if (drawBackground2 && backgroundVisible) {
       // Create background in background buffer (backgroundBuffer)
-      drawRadialBackgroundImage(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
+      drawBackground(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
 
       // Create custom layer in background buffer (backgroundBuffer)
       drawRadialCustomImage(backgroundContext, customLayer, centerX, centerY, imageWidth, imageHeight);
@@ -442,9 +442,9 @@ var clock = function(canvas, parameters) {
       drawSecondPointer(secondContext, pointerType);
     }
 
-    if (drawForeground && foregroundVisible) {
+    if (drawForeground2 && foregroundVisible) {
       drawTopKnob(foregroundContext, pointerType);
-      drawRadialForegroundImage(foregroundContext, foregroundType, imageWidth, imageHeight, false);
+      drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, false);
     }
   };
 

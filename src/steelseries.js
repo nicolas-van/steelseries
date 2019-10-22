@@ -18,9 +18,9 @@ import Altimeter from "./Altimeter";
 import TrafficLight from "./TrafficLight";
 import LightBulb from "./LightBulb";
 import Odometer from "./Odometer";
-import drawRadialFrameImage from "./drawRadialFrameImage";
-import drawRadialBackgroundImage from "./drawRadialBackgroundImage";
-import drawRadialForegroundImage from "./drawRadialForegroundImage";
+import drawFrame from "./drawFrame";
+import drawBackground from "./drawBackground";
+import drawForeground from "./drawForeground";
 import {
 RgbaColor, 
 ConicalGradient, 
@@ -68,9 +68,9 @@ export {LightBulb};
 export {Odometer};
 
 // Images
-export {drawRadialFrameImage as drawFrame};
-export {drawRadialBackgroundImage as drawBackground};
-export {drawRadialForegroundImage as drawForeground};
+export {drawFrame};
+export {drawBackground};
+export {drawForeground};
 
 // Tools
 export {RgbaColor as rgbaColor};

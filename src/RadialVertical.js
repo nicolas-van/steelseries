@@ -1,8 +1,8 @@
 import Tween from "./tween.js";
 import drawPointerImage from "./drawPointerImage";
-import drawRadialFrameImage from "./drawRadialFrameImage";
-import drawRadialBackgroundImage from "./drawRadialBackgroundImage";
-import drawRadialForegroundImage from "./drawRadialForegroundImage";
+import drawFrame from "./drawFrame";
+import drawBackground from "./drawBackground";
+import drawForeground from "./drawForeground";
 import createKnobImage from "./createKnobImage";
 import createLedImage from "./createLedImage";
 import createMeasuredValueImage from "./createMeasuredValueImage";
@@ -450,11 +450,11 @@ var RadialVertical = function(canvas, parameters) {
   // Draw all static painting code to background
   var init = function(parameters) {
     parameters = parameters || {};
-    var drawFrame = (undefined === parameters.frame ? false : parameters.frame);
-    var drawBackground = (undefined === parameters.background ? false : parameters.background);
+    var drawFrame2 = (undefined === parameters.frame ? false : parameters.frame);
+    var drawBackground2 = (undefined === parameters.background ? false : parameters.background);
     var drawLed = (undefined === parameters.led ? false : parameters.led);
     var drawPointer = (undefined === parameters.pointer ? false : parameters.pointer);
-    var drawForeground = (undefined === parameters.foreground ? false : parameters.foreground);
+    var drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
 
     initialized = true;
 
@@ -462,13 +462,13 @@ var RadialVertical = function(canvas, parameters) {
     calculate();
 
     // Create frame in frame buffer (backgroundBuffer)
-    if (drawFrame && frameVisible) {
-      drawRadialFrameImage(frameContext, frameDesign, centerX, size / 2, imageWidth, imageHeight);
+    if (drawFrame2 && frameVisible) {
+      drawFrame(frameContext, frameDesign, centerX, size / 2, imageWidth, imageHeight);
     }
 
     // Create background in background buffer (backgroundBuffer)
-    if (drawBackground && backgroundVisible) {
-      drawRadialBackgroundImage(backgroundContext, backgroundColor, centerX, size / 2, imageWidth, imageHeight);
+    if (drawBackground2 && backgroundVisible) {
+      drawBackground(backgroundContext, backgroundColor, centerX, size / 2, imageWidth, imageHeight);
     }
 
     // Draw LED ON in ledBuffer_ON
@@ -492,7 +492,7 @@ var RadialVertical = function(canvas, parameters) {
     }
 
     // Create alignment posts in background buffer (backgroundBuffer)
-    if (drawBackground && backgroundVisible) {
+    if (drawBackground2 && backgroundVisible) {
       drawPostsImage(backgroundContext);
 
       // Create section in background buffer (backgroundBuffer)
@@ -571,9 +571,9 @@ var RadialVertical = function(canvas, parameters) {
     }
 
     // Create foreground in foreground buffer (foregroundBuffer)
-    if (drawForeground && foregroundVisible) {
+    if (drawForeground2 && foregroundVisible) {
       var knobVisible = (pointerType.type === 'type15' || pointerType.type === 'type16' ? false : true);
-      drawRadialForegroundImage(foregroundContext, foregroundType, imageWidth, imageHeight, knobVisible, knobType, knobStyle, gaugeType, orientation);
+      drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, knobVisible, knobType, knobStyle, gaugeType, orientation);
     }
   };
 

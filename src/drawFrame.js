@@ -6,13 +6,13 @@ createBuffer,
 TWO_PI,
 } from "./tools";
 
-var drawRadialFrameImage = function(ctx, frameDesign, centerX, centerY, imageWidth, imageHeight) {
+var drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, imageHeight) {
   var radFBuffer, radFCtx,
     grad, outerX, innerX, fractions, colors,
     cacheKey = imageWidth.toString() + imageHeight + frameDesign.design;
 
   // check if we have already created and cached this buffer, if not create it
-  if (!drawRadialFrameImage.cache[cacheKey]) {
+  if (!drawFrame.cache[cacheKey]) {
     // Setup buffer
     radFBuffer = createBuffer(imageWidth, imageHeight);
     radFCtx = radFBuffer.getContext('2d');
@@ -305,11 +305,11 @@ var drawRadialFrameImage = function(ctx, frameDesign, centerX, centerY, imageWid
     radFCtx.fill();
 
     // cache the buffer
-    drawRadialFrameImage.cache[cacheKey] = radFBuffer;
+    drawFrame.cache[cacheKey] = radFBuffer;
   }
-  ctx.drawImage(drawRadialFrameImage.cache[cacheKey], 0, 0);
+  ctx.drawImage(drawFrame.cache[cacheKey], 0, 0);
   return this;
 };
-drawRadialFrameImage.cache = {};
+drawFrame.cache = {};
 
-export default drawRadialFrameImage;
+export default drawFrame;

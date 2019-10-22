@@ -1,8 +1,8 @@
 import Tween from "./tween.js";
-import drawRadialFrameImage from "./drawRadialFrameImage";
-import drawRadialBackgroundImage from "./drawRadialBackgroundImage";
+import drawFrame from "./drawFrame";
+import drawBackground from "./drawBackground";
 import drawRadialCustomImage from "./drawRadialCustomImage";
-import drawRadialForegroundImage from "./drawRadialForegroundImage";
+import drawForeground from "./drawForeground";
 import createLcdBackgroundImage from "./createLcdBackgroundImage";
 import drawTitleImage from "./drawTitleImage";
 import {
@@ -313,23 +313,23 @@ var altimeter = function(canvas, parameters) {
   var init = function(parameters) {
     parameters = parameters || {};
     // Parameters
-    var drawFrame = (undefined === parameters.frame ? false : parameters.frame),
-      drawBackground = (undefined === parameters.background ? false : parameters.background),
+    var drawFrame2 = (undefined === parameters.frame ? false : parameters.frame),
+      drawBackground2 = (undefined === parameters.background ? false : parameters.background),
       drawPointers = (undefined === parameters.pointers ? false : parameters.pointers),
-      drawForeground = (undefined === parameters.foreground ? false : parameters.foreground);
+      drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
 
     initialized = true;
 
     calcAngleStep();
 
     // Create frame in frame buffer (backgroundBuffer)
-    if (drawFrame && frameVisible) {
-      drawRadialFrameImage(frameContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
+    if (drawFrame2 && frameVisible) {
+      drawFrame(frameContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
     }
 
-    if (drawBackground && backgroundVisible) {
+    if (drawBackground2 && backgroundVisible) {
       // Create background in background buffer (backgroundBuffer)
-      drawRadialBackgroundImage(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
+      drawBackground(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
 
       // Create custom layer in background buffer (backgroundBuffer)
       drawRadialCustomImage(backgroundContext, customLayer, centerX, centerY, imageWidth, imageHeight);
@@ -342,7 +342,7 @@ var altimeter = function(canvas, parameters) {
     }
 
     // Create lcd background if selected in background buffer (backgroundBuffer)
-    if (drawBackground && lcdVisible) {
+    if (drawBackground2 && lcdVisible) {
       lcdBuffer = createLcdBackgroundImage(imageWidth * 0.4, imageHeight * 0.09, lcdColor);
       backgroundContext.drawImage(lcdBuffer, (imageWidth - (imageWidth * 0.4)) / 2, imageHeight * 0.56);
     }
@@ -356,8 +356,8 @@ var altimeter = function(canvas, parameters) {
       draw10000ftPointer(pointer10000Context, false);
     }
 
-    if (drawForeground && foregroundVisible) {
-      drawRadialForegroundImage(foregroundContext, foregroundType, imageWidth, imageHeight, true, knobType, knobStyle);
+    if (drawForeground2 && foregroundVisible) {
+      drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, true, knobType, knobStyle);
     }
   };
 

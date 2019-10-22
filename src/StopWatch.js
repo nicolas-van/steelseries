@@ -1,8 +1,8 @@
 
-import drawRadialFrameImage from "./drawRadialFrameImage";
-import drawRadialBackgroundImage from "./drawRadialBackgroundImage";
+import drawFrame from "./drawFrame";
+import drawBackground from "./drawBackground";
 import drawRadialCustomImage from "./drawRadialCustomImage";
-import drawRadialForegroundImage from "./drawRadialForegroundImage";
+import drawForeground from "./drawForeground";
 import {
 createBuffer, 
 getCanvasContext,
@@ -288,20 +288,20 @@ var stopwatch = function(canvas, parameters) {
 
     init = function(parameters) {
       parameters = parameters || {};
-      var drawFrame = (undefined === parameters.frame ? false : parameters.frame),
-        drawBackground = (undefined === parameters.background ? false : parameters.background),
+      var drawFrame2 = (undefined === parameters.frame ? false : parameters.frame),
+        drawBackground2 = (undefined === parameters.background ? false : parameters.background),
         drawPointers = (undefined === parameters.pointers ? false : parameters.pointers),
-        drawForeground = (undefined === parameters.foreground ? false : parameters.foreground);
+        drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
 
       initialized = true;
 
-      if (drawFrame && frameVisible) {
-        drawRadialFrameImage(frameContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
+      if (drawFrame2 && frameVisible) {
+        drawFrame(frameContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
       }
 
-      if (drawBackground && backgroundVisible) {
+      if (drawBackground2 && backgroundVisible) {
         // Create background in background buffer (backgroundBuffer)
-        drawRadialBackgroundImage(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
+        drawBackground(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
 
         // Create custom layer in background buffer (backgroundBuffer)
         drawRadialCustomImage(backgroundContext, customLayer, centerX, centerY, imageWidth, imageHeight);
@@ -314,8 +314,8 @@ var stopwatch = function(canvas, parameters) {
         drawSmallPointer(smallPointerContext);
       }
 
-      if (drawForeground && foregroundVisible) {
-        drawRadialForegroundImage(foregroundContext, foregroundType, imageWidth, imageHeight, false);
+      if (drawForeground2 && foregroundVisible) {
+        drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, false);
       }
     },
 

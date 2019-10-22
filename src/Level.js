@@ -1,7 +1,7 @@
 import Tween from "./tween.js";
-import drawRadialFrameImage from "./drawRadialFrameImage";
-import drawRadialBackgroundImage from "./drawRadialBackgroundImage";
-import drawRadialForegroundImage from "./drawRadialForegroundImage";
+import drawFrame from "./drawFrame";
+import drawBackground from "./drawBackground";
+import drawForeground from "./drawForeground";
 import {
 createBuffer, 
 requestAnimFrame, 
@@ -418,11 +418,11 @@ var level = function(canvas, parameters) {
     initialized = true;
 
     if (frameVisible) {
-      drawRadialFrameImage(backgroundContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
+      drawFrame(backgroundContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
     }
 
     if (backgroundVisible) {
-      drawRadialBackgroundImage(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
+      drawBackground(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
       drawTickmarksImage(backgroundContext);
     }
 
@@ -433,7 +433,7 @@ var level = function(canvas, parameters) {
     drawStepPointerImage(stepPointerContext);
 
     if (foregroundVisible) {
-      drawRadialForegroundImage(foregroundContext, foregroundType, imageWidth, imageHeight, false);
+      drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, false);
     }
   };
 

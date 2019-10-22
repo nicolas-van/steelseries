@@ -1,8 +1,8 @@
 import Tween from "./tween.js";
-import drawRadialFrameImage from "./drawRadialFrameImage";
-import drawRadialBackgroundImage from "./drawRadialBackgroundImage";
+import drawFrame from "./drawFrame";
+import drawBackground from "./drawBackground";
 import drawRadialCustomImage from "./drawRadialCustomImage";
-import drawRadialForegroundImage from "./drawRadialForegroundImage";
+import drawForeground from "./drawForeground";
 import createLedImage from "./createLedImage";
 import createLcdBackgroundImage from "./createLcdBackgroundImage";
 import createTrendIndicator from "./createTrendIndicator";
@@ -324,12 +324,12 @@ var RadialBargraph = function(canvas, parameters) {
   // Draw all static painting code to background
   var init = function(parameters) {
     parameters = parameters || {};
-    var drawFrame = (undefined === parameters.frame ? false : parameters.frame);
-    var drawBackground = (undefined === parameters.background ? false : parameters.background);
+    var drawFrame2 = (undefined === parameters.frame ? false : parameters.frame);
+    var drawBackground2 = (undefined === parameters.background ? false : parameters.background);
     var drawLed = (undefined === parameters.led ? false : parameters.led);
     var drawUserLed = (undefined === parameters.userLed ? false : parameters.userLed);
     var drawValue = (undefined === parameters.value ? false : parameters.value);
-    var drawForeground = (undefined === parameters.foreground ? false : parameters.foreground);
+    var drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
     var drawTrend = (undefined === parameters.trend ? false : parameters.trend);
 
     initialized = true;
@@ -337,13 +337,13 @@ var RadialBargraph = function(canvas, parameters) {
     calculate();
 
     // Create frame in frame buffer (frameBuffer)
-    if (drawFrame && frameVisible) {
-      drawRadialFrameImage(frameContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
+    if (drawFrame2 && frameVisible) {
+      drawFrame(frameContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
     }
 
     // Create background in background buffer (backgroundBuffer)
-    if (drawBackground && backgroundVisible) {
-      drawRadialBackgroundImage(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
+    if (drawBackground2 && backgroundVisible) {
+      drawBackground(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
 
       // Create custom layer in background buffer (backgroundBuffer)
       drawRadialCustomImage(backgroundContext, customLayer, centerX, centerY, imageWidth, imageHeight);
@@ -368,13 +368,13 @@ var RadialBargraph = function(canvas, parameters) {
       userLedContextOff.drawImage(createLedImage(Math.ceil(LED_SIZE), 0, userLedColor), 0, 0);
     }
 
-    if (drawBackground) {
+    if (drawBackground2) {
       // Create bargraphtrack in background buffer (backgroundBuffer)
       drawBargraphTrackImage(backgroundContext);
     }
 
     // Create tickmarks in background buffer (backgroundBuffer)
-    if (drawBackground && backgroundVisible) {
+    if (drawBackground2 && backgroundVisible) {
       drawTickmarksImage(backgroundContext, labelNumberFormat);
 
       // Create title in background buffer (backgroundBuffer)
@@ -382,7 +382,7 @@ var RadialBargraph = function(canvas, parameters) {
     }
 
     // Create lcd background if selected in background buffer (backgroundBuffer)
-    if (drawBackground && lcdVisible) {
+    if (drawBackground2 && lcdVisible) {
       lcdBuffer = createLcdBackgroundImage(lcdWidth, lcdHeight, lcdColor);
       backgroundContext.drawImage(lcdBuffer, lcdPosX, lcdPosY);
     }
@@ -417,8 +417,8 @@ var RadialBargraph = function(canvas, parameters) {
     }
 
     // Create foreground in foreground buffer (foregroundBuffer)
-    if (drawForeground && foregroundVisible) {
-      drawRadialForegroundImage(foregroundContext, foregroundType, imageWidth, imageHeight, false);
+    if (drawForeground2 && foregroundVisible) {
+      drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, false);
     }
 
     // Create the trend indicator buffers

@@ -21,7 +21,7 @@ import {
   trendState as TrendState,
   } from "./definitions";
 
-var drawRadialForegroundImage = function(ctx, foregroundType, imageWidth, imageHeight, withCenterKnob, knob, style, gaugeType, orientation) {
+var drawForeground = function(ctx, foregroundType, imageWidth, imageHeight, withCenterKnob, knob, style, gaugeType, orientation) {
   var radFgBuffer, radFgCtx,
     knobSize = Math.ceil(imageHeight * 0.084112),
     knobX = imageWidth * 0.5 - knobSize / 2,
@@ -32,7 +32,7 @@ var drawRadialForegroundImage = function(ctx, foregroundType, imageWidth, imageH
     (style !== undefined ? style.style : '-') + (orientation !== undefined ? orientation.type : '-');
 
   // check if we have already created and cached this buffer, if so return it and exit
-  if (!drawRadialForegroundImage.cache[cacheKey]) {
+  if (!drawForeground.cache[cacheKey]) {
     // Setup buffer
     radFgBuffer = createBuffer(imageWidth, imageHeight);
     radFgCtx = radFgBuffer.getContext('2d');
@@ -161,11 +161,11 @@ var drawRadialForegroundImage = function(ctx, foregroundType, imageWidth, imageH
     radFgCtx.fill();
 
     // cache the buffer
-    drawRadialForegroundImage.cache[cacheKey] = radFgBuffer;
+    drawForeground.cache[cacheKey] = radFgBuffer;
   }
-  ctx.drawImage(drawRadialForegroundImage.cache[cacheKey], 0, 0);
+  ctx.drawImage(drawForeground.cache[cacheKey], 0, 0);
   return this;
 };
-drawRadialForegroundImage.cache = {};
+drawForeground.cache = {};
 
-export default drawRadialForegroundImage;
+export default drawForeground;

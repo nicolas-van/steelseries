@@ -1,6 +1,6 @@
 import Tween from "./tween.js";
-import drawRadialFrameImage from "./drawRadialFrameImage";
-import drawRadialForegroundImage from "./drawRadialForegroundImage";
+import drawFrame from "./drawFrame";
+import drawForeground from "./drawForeground";
 import {
 createBuffer, 
 requestAnimFrame, 
@@ -271,7 +271,7 @@ var Horizon = function(canvas, parameters) {
     initialized = true;
 
     if (frameVisible) {
-      drawRadialFrameImage(backgroundContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
+      drawFrame(backgroundContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
     }
 
     drawHorizonBackgroundImage(valueContext);
@@ -281,7 +281,7 @@ var Horizon = function(canvas, parameters) {
     drawHorizonForegroundImage(foregroundContext);
 
     if (foregroundVisible) {
-      drawRadialForegroundImage(foregroundContext, foregroundType, imageWidth, imageHeight, true, knobType, knobStyle, gaugeType);
+      drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, true, knobType, knobStyle, gaugeType);
     }
   };
 

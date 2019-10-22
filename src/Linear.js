@@ -442,10 +442,10 @@ var Linear = function(canvas, parameters) {
   // **************   Initialization  ********************
   var init = function(parameters) {
     parameters = parameters || {};
-    var drawFrame = (undefined === parameters.frame ? false : parameters.frame);
-    var drawBackground = (undefined === parameters.background ? false : parameters.background);
+    var drawFrame2 = (undefined === parameters.frame ? false : parameters.frame);
+    var drawBackground2 = (undefined === parameters.background ? false : parameters.background);
     var drawLed = (undefined === parameters.led ? false : parameters.led);
-    var drawForeground = (undefined === parameters.foreground ? false : parameters.foreground);
+    var drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
 
     var yOffset;
     var yRange;
@@ -457,17 +457,17 @@ var Linear = function(canvas, parameters) {
     calculate();
 
     // Create frame in frame buffer (backgroundBuffer)
-    if (drawFrame && frameVisible) {
+    if (drawFrame2 && frameVisible) {
       drawLinearFrameImage(frameContext, frameDesign, imageWidth, imageHeight, vertical);
     }
 
     // Create background in background buffer (backgroundBuffer)
-    if (drawBackground && backgroundVisible) {
+    if (drawBackground2 && backgroundVisible) {
       drawLinearBackgroundImage(backgroundContext, backgroundColor, imageWidth, imageHeight, vertical);
     }
 
     // draw Thermometer outline
-    if (drawBackground && gaugeType.type === 'type2') {
+    if (drawBackground2 && gaugeType.type === 'type2') {
       drawBackgroundImage(backgroundContext);
     }
 
@@ -506,7 +506,7 @@ var Linear = function(canvas, parameters) {
     }
 
     // Create alignment posts in background buffer (backgroundBuffer)
-    if (drawBackground && backgroundVisible) {
+    if (drawBackground2 && backgroundVisible) {
 
       // Create tickmarks in background buffer (backgroundBuffer)
       drawTickmarksImage(backgroundContext, labelNumberFormat, vertical);
@@ -520,7 +520,7 @@ var Linear = function(canvas, parameters) {
     }
 
     // Draw threshold image to background context
-    if (drawBackground && thresholdVisible) {
+    if (drawBackground2 && thresholdVisible) {
       backgroundContext.save();
       if (vertical) {
         // Vertical orientation
@@ -540,7 +540,7 @@ var Linear = function(canvas, parameters) {
     }
 
     // Create lcd background if selected in background buffer (backgroundBuffer)
-    if (drawBackground && lcdVisible) {
+    if (drawBackground2 && lcdVisible) {
       if (vertical) {
         lcdBuffer = createLcdBackgroundImage(imageWidth * 0.571428, imageHeight * 0.055, lcdColor);
         backgroundContext.drawImage(lcdBuffer, ((imageWidth - (imageWidth * 0.571428)) / 2), imageHeight * 0.88);
@@ -551,12 +551,12 @@ var Linear = function(canvas, parameters) {
     }
 
     // add thermometer stem foreground
-    if (drawForeground && gaugeType.type === 'type2') {
+    if (drawForeground2 && gaugeType.type === 'type2') {
       drawForegroundImage(foregroundContext);
     }
 
     // Create foreground in foreground buffer (foregroundBuffer)
-    if (drawForeground && foregroundVisible) {
+    if (drawForeground2 && foregroundVisible) {
       drawLinearForegroundImage(foregroundContext, imageWidth, imageHeight, vertical, false);
     }
   };
