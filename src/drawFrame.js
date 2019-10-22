@@ -1,6 +1,6 @@
 
 import {
-RgbaColor, 
+rgbaColor, 
 ConicalGradient, 
 createBuffer, 
 TWO_PI,
@@ -162,13 +162,13 @@ var drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, imageHe
           1
         ];
 
-        colors = [new RgbaColor(254, 254, 254, 1),
-          new RgbaColor(0, 0, 0, 1),
-          new RgbaColor(153, 153, 153, 1),
-          new RgbaColor(0, 0, 0, 1),
-          new RgbaColor(153, 153, 153, 1),
-          new RgbaColor(0, 0, 0, 1),
-          new RgbaColor(254, 254, 254, 1)
+        colors = [new rgbaColor(254, 254, 254, 1),
+          new rgbaColor(0, 0, 0, 1),
+          new rgbaColor(153, 153, 153, 1),
+          new rgbaColor(0, 0, 0, 1),
+          new rgbaColor(153, 153, 153, 1),
+          new rgbaColor(0, 0, 0, 1),
+          new rgbaColor(254, 254, 254, 1)
         ];
 
         radFCtx.save();
@@ -201,15 +201,15 @@ var drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, imageHe
           1
         ];
 
-        colors = [new RgbaColor(254, 254, 254, 1),
-          new RgbaColor(210, 210, 210, 1),
-          new RgbaColor(179, 179, 179, 1),
-          new RgbaColor(238, 238, 238, 1),
-          new RgbaColor(160, 160, 160, 1),
-          new RgbaColor(238, 238, 238, 1),
-          new RgbaColor(179, 179, 179, 1),
-          new RgbaColor(210, 210, 210, 1),
-          new RgbaColor(254, 254, 254, 1)
+        colors = [new rgbaColor(254, 254, 254, 1),
+          new rgbaColor(210, 210, 210, 1),
+          new rgbaColor(179, 179, 179, 1),
+          new rgbaColor(238, 238, 238, 1),
+          new rgbaColor(160, 160, 160, 1),
+          new rgbaColor(238, 238, 238, 1),
+          new rgbaColor(179, 179, 179, 1),
+          new rgbaColor(210, 210, 210, 1),
+          new rgbaColor(254, 254, 254, 1)
         ];
 
         radFCtx.save();
@@ -250,23 +250,23 @@ var drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, imageHe
           1
         ];
 
-        colors = [new RgbaColor(255, 255, 255, 1),
-          new RgbaColor(255, 255, 255, 1),
-          new RgbaColor(136, 136, 138, 1),
-          new RgbaColor(164, 185, 190, 1),
-          new RgbaColor(158, 179, 182, 1),
-          new RgbaColor(112, 112, 112, 1),
-          new RgbaColor(221, 227, 227, 1),
-          new RgbaColor(155, 176, 179, 1),
-          new RgbaColor(156, 176, 177, 1),
-          new RgbaColor(254, 255, 255, 1),
-          new RgbaColor(255, 255, 255, 1),
-          new RgbaColor(156, 180, 180, 1),
-          new RgbaColor(198, 209, 211, 1),
-          new RgbaColor(246, 248, 247, 1),
-          new RgbaColor(204, 216, 216, 1),
-          new RgbaColor(164, 188, 190, 1),
-          new RgbaColor(255, 255, 255, 1)
+        colors = [new rgbaColor(255, 255, 255, 1),
+          new rgbaColor(255, 255, 255, 1),
+          new rgbaColor(136, 136, 138, 1),
+          new rgbaColor(164, 185, 190, 1),
+          new rgbaColor(158, 179, 182, 1),
+          new rgbaColor(112, 112, 112, 1),
+          new rgbaColor(221, 227, 227, 1),
+          new rgbaColor(155, 176, 179, 1),
+          new rgbaColor(156, 176, 177, 1),
+          new rgbaColor(254, 255, 255, 1),
+          new rgbaColor(255, 255, 255, 1),
+          new rgbaColor(156, 180, 180, 1),
+          new rgbaColor(198, 209, 211, 1),
+          new rgbaColor(246, 248, 247, 1),
+          new rgbaColor(204, 216, 216, 1),
+          new rgbaColor(164, 188, 190, 1),
+          new rgbaColor(255, 255, 255, 1)
         ];
 
         radFCtx.save();

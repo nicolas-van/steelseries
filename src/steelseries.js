@@ -22,9 +22,9 @@ import drawFrame from "./drawFrame";
 import drawBackground from "./drawBackground";
 import drawForeground from "./drawForeground";
 import {
-RgbaColor, 
+rgbaColor, 
 ConicalGradient, 
-GradientWrapper, 
+gradientWrapper, 
 setAlpha, 
 getColorFromFraction, 
 section,
@@ -73,11 +73,11 @@ export {drawBackground};
 export {drawForeground};
 
 // Tools
-export {RgbaColor as rgbaColor};
+export {rgbaColor};
 export {ConicalGradient};
 export {setAlpha};
 export {getColorFromFraction};
-export {GradientWrapper as gradientWrapper};
+export {gradientWrapper};
 
 // Constants
 export {backgroundColor as BackgroundColor};

@@ -1,7 +1,7 @@
 
 import {
-RgbaColor, 
-GradientWrapper, 
+rgbaColor, 
+gradientWrapper, 
 getCanvasContext,
 } from "./tools";
 
@@ -64,29 +64,29 @@ var battery = function(canvas, parameters) {
     ctx.rect(imageWidth * 0.025, imageWidth * 0.025, end, imageHeight * 0.888888);
     ctx.closePath();
     var BORDER_FRACTIONS = [0, 0.4, 1];
-    var BORDER_COLORS = [new RgbaColor(177, 25, 2, 1), // 0xB11902
-      new RgbaColor(219, 167, 21, 1), // 0xDBA715
-      new RgbaColor(121, 162, 75, 1) // 0x79A24B
+    var BORDER_COLORS = [new rgbaColor(177, 25, 2, 1), // 0xB11902
+      new rgbaColor(219, 167, 21, 1), // 0xDBA715
+      new rgbaColor(121, 162, 75, 1) // 0x79A24B
     ];
-    var border = new GradientWrapper(0, 100, BORDER_FRACTIONS, BORDER_COLORS);
+    var border = new gradientWrapper(0, 100, BORDER_FRACTIONS, BORDER_COLORS);
     ctx.fillStyle = border.getColorAt(value / 100).getRgbColor();
     ctx.fill();
     ctx.beginPath();
     end = Math.max(end - imageWidth * 0.05, 0);
     ctx.rect(imageWidth * 0.05, imageWidth * 0.05, end, imageHeight * 0.777777);
     ctx.closePath();
-    var LIQUID_COLORS_DARK = [new RgbaColor(198, 39, 5, 1), // 0xC62705
-      new RgbaColor(228, 189, 32, 1), // 0xE4BD20
-      new RgbaColor(163, 216, 102, 1) // 0xA3D866
+    var LIQUID_COLORS_DARK = [new rgbaColor(198, 39, 5, 1), // 0xC62705
+      new rgbaColor(228, 189, 32, 1), // 0xE4BD20
+      new rgbaColor(163, 216, 102, 1) // 0xA3D866
     ];
 
-    var LIQUID_COLORS_LIGHT = [new RgbaColor(246, 121, 48, 1), // 0xF67930
-      new RgbaColor(246, 244, 157, 1), // 0xF6F49D
-      new RgbaColor(223, 233, 86, 1) // 0xDFE956
+    var LIQUID_COLORS_LIGHT = [new rgbaColor(246, 121, 48, 1), // 0xF67930
+      new rgbaColor(246, 244, 157, 1), // 0xF6F49D
+      new rgbaColor(223, 233, 86, 1) // 0xDFE956
     ];
     var LIQUID_GRADIENT_FRACTIONS = [0, 0.4, 1];
-    var liquidDark = new GradientWrapper(0, 100, LIQUID_GRADIENT_FRACTIONS, LIQUID_COLORS_DARK);
-    var liquidLight = new GradientWrapper(0, 100, LIQUID_GRADIENT_FRACTIONS, LIQUID_COLORS_LIGHT);
+    var liquidDark = new gradientWrapper(0, 100, LIQUID_GRADIENT_FRACTIONS, LIQUID_COLORS_DARK);
+    var liquidLight = new gradientWrapper(0, 100, LIQUID_GRADIENT_FRACTIONS, LIQUID_COLORS_LIGHT);
     grad = ctx.createLinearGradient(imageWidth * 0.05, 0, imageWidth * 0.875, 0);
     grad.addColorStop(0, liquidDark.getColorAt(value / 100).getRgbColor());
     grad.addColorStop(0.5, liquidLight.getColorAt(value / 100).getRgbColor());

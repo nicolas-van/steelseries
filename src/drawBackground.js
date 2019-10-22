@@ -3,7 +3,7 @@ import carbonBuffer from "./carbonBuffer";
 import punchedSheetBuffer from "./punchedSheetBuffer";
 import brushedMetalTexture from "./brushedMetalTexture";
 import {
-RgbaColor, 
+rgbaColor, 
 ConicalGradient, 
 createBuffer, 
 TWO_PI,
@@ -82,21 +82,21 @@ var drawBackground = function(ctx, backgroundColor, centerX, centerY, imageWidth
       ];
 
       // Define the colors of the conical gradient paint
-      colors = [new RgbaColor('#FDFDFD'),
-        new RgbaColor('#FDFDFD'),
-        new RgbaColor('#B2B2B4'),
-        new RgbaColor('#ACACAE'),
-        new RgbaColor('#FDFDFD'),
-        new RgbaColor('#8E8E8E'),
-        new RgbaColor('#8E8E8E'),
-        new RgbaColor('#FDFDFD'),
-        new RgbaColor('#8E8E8E'),
-        new RgbaColor('#8E8E8E'),
-        new RgbaColor('#FDFDFD'),
-        new RgbaColor('#ACACAE'),
-        new RgbaColor('#B2B2B4'),
-        new RgbaColor('#FDFDFD'),
-        new RgbaColor('#FDFDFD')
+      colors = [new rgbaColor('#FDFDFD'),
+        new rgbaColor('#FDFDFD'),
+        new rgbaColor('#B2B2B4'),
+        new rgbaColor('#ACACAE'),
+        new rgbaColor('#FDFDFD'),
+        new rgbaColor('#8E8E8E'),
+        new rgbaColor('#8E8E8E'),
+        new rgbaColor('#FDFDFD'),
+        new rgbaColor('#8E8E8E'),
+        new rgbaColor('#8E8E8E'),
+        new rgbaColor('#FDFDFD'),
+        new rgbaColor('#ACACAE'),
+        new rgbaColor('#B2B2B4'),
+        new rgbaColor('#FDFDFD'),
+        new rgbaColor('#FDFDFD')
       ];
 
       grad = new ConicalGradient(fractions, colors);

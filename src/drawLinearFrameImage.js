@@ -1,6 +1,6 @@
 
 import {
-RgbaColor, 
+rgbaColor, 
 ConicalGradient, 
 roundedRectangle, 
 createBuffer, 
@@ -144,9 +144,9 @@ var drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight, v
                                                 1
                                                 ];
                     var frameMainColors4 = [
-                                            new RgbaColor(244, 244, 244, 1),
-                                            new RgbaColor(207, 207, 207, 1),
-                                            new RgbaColor(207, 207, 207, 1)
+                                            new rgbaColor(244, 244, 244, 1),
+                                            new rgbaColor(207, 207, 207, 1),
+                                            new rgbaColor(207, 207, 207, 1)
                                             ];
                     var frameMainGradient4 = new contourGradient(linFCtx, 0, 0, imageWidth,  imageHeight, frameMainFractions4, frameMainColors4);
                     // Outer frame rim
@@ -207,13 +207,13 @@ var drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight, v
           1
         ];
 
-        colors = [new RgbaColor('#FFFFFF'),
-          new RgbaColor('#000000'),
-          new RgbaColor('#999999'),
-          new RgbaColor('#000000'),
-          new RgbaColor('#999999'),
-          new RgbaColor('#000000'),
-          new RgbaColor('#FFFFFF')
+        colors = [new rgbaColor('#FFFFFF'),
+          new rgbaColor('#000000'),
+          new rgbaColor('#999999'),
+          new rgbaColor('#000000'),
+          new rgbaColor('#999999'),
+          new rgbaColor('#000000'),
+          new rgbaColor('#FFFFFF')
         ];
         // Set the clip
         linFCtx.beginPath();
@@ -236,15 +236,15 @@ var drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight, v
           1
         ];
 
-        colors = [new RgbaColor('#FFFFFF'),
-          new RgbaColor('#D2D2D2'),
-          new RgbaColor('#B3B3B3'),
-          new RgbaColor('#EEEEEE'),
-          new RgbaColor('#A0A0A0'),
-          new RgbaColor('#EEEEEE'),
-          new RgbaColor('#B3B3B3'),
-          new RgbaColor('#D2D2D2'),
-          new RgbaColor('#FFFFFF')
+        colors = [new rgbaColor('#FFFFFF'),
+          new rgbaColor('#D2D2D2'),
+          new rgbaColor('#B3B3B3'),
+          new rgbaColor('#EEEEEE'),
+          new rgbaColor('#A0A0A0'),
+          new rgbaColor('#EEEEEE'),
+          new rgbaColor('#B3B3B3'),
+          new rgbaColor('#D2D2D2'),
+          new rgbaColor('#FFFFFF')
         ];
         // Set the clip
         linFCtx.beginPath();
@@ -275,23 +275,23 @@ var drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight, v
           1
         ];
 
-        colors = [new RgbaColor('#FFFFFF'),
-          new RgbaColor('#FFFFFF'),
-          new RgbaColor('#888890'),
-          new RgbaColor('#A4B9BE'),
-          new RgbaColor('#9EB3B6'),
-          new RgbaColor('#707070'),
-          new RgbaColor('#DDE3E3'),
-          new RgbaColor('#9BB0B3'),
-          new RgbaColor('#9CB0B1'),
-          new RgbaColor('#FEFFFF'),
-          new RgbaColor('#FFFFFF'),
-          new RgbaColor('#9CB4B4'),
-          new RgbaColor('#C6D1D3'),
-          new RgbaColor('#F6F8F7'),
-          new RgbaColor('#CCD8D8'),
-          new RgbaColor('#A4BCBE'),
-          new RgbaColor('#FFFFFF')
+        colors = [new rgbaColor('#FFFFFF'),
+          new rgbaColor('#FFFFFF'),
+          new rgbaColor('#888890'),
+          new rgbaColor('#A4B9BE'),
+          new rgbaColor('#9EB3B6'),
+          new rgbaColor('#707070'),
+          new rgbaColor('#DDE3E3'),
+          new rgbaColor('#9BB0B3'),
+          new rgbaColor('#9CB0B1'),
+          new rgbaColor('#FEFFFF'),
+          new rgbaColor('#FFFFFF'),
+          new rgbaColor('#9CB4B4'),
+          new rgbaColor('#C6D1D3'),
+          new rgbaColor('#F6F8F7'),
+          new rgbaColor('#CCD8D8'),
+          new rgbaColor('#A4BCBE'),
+          new rgbaColor('#FFFFFF')
         ];
         // Set the clip
         linFCtx.beginPath();

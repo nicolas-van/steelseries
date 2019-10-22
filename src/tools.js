@@ -13,7 +13,7 @@ doc = document,
 lcdFontName = 'LCDMono2Ultra,Arial,Verdana,sans-serif',
 stdFontName = 'Arial,Verdana,sans-serif';
 
-export var RgbaColor = function(r, g, b, a) {
+export var rgbaColor = function(r, g, b, a) {
   var red, green, blue, alpha;
 
   if (arguments.length === 1) {
@@ -220,7 +220,7 @@ export var ConicalGradient = function(fractions, colors) {
 
 };
 
-export var GradientWrapper = function(start, end, fractions, colors) {
+export var gradientWrapper = function(start, end, fractions, colors) {
 
   this.getColorAt = function(fraction) {
     var lowerLimit = 0,
@@ -289,7 +289,7 @@ export function getColorFromFraction(sourceColor, destinationColor, range, fract
   if (returnRawData) {
     return [(sourceRed + fractionRed).toFixed(0), (sourceGreen + fractionGreen).toFixed(0), (sourceBlue + fractionBlue).toFixed(0), sourceAlpha + fractionAlpha];
   } else {
-    return new RgbaColor((sourceRed + fractionRed).toFixed(0), (sourceGreen + fractionGreen).toFixed(0), (sourceBlue + fractionBlue).toFixed(0), sourceAlpha + fractionAlpha);
+    return new rgbaColor((sourceRed + fractionRed).toFixed(0), (sourceGreen + fractionGreen).toFixed(0), (sourceBlue + fractionBlue).toFixed(0), sourceAlpha + fractionAlpha);
   }
 }
 
@@ -396,7 +396,7 @@ export function customColorDef(color) {
     LIGHTER,
     VERY_LIGHT,
     values = getColorValues(color),
-    rgbaCol = new RgbaColor(values[0], values[1], values[2], values[3]);
+    rgbaCol = new rgbaColor(values[0], values[1], values[2], values[3]);
 
   VERY_DARK = darker(rgbaCol, 0.32);
   DARK = darker(rgbaCol, 0.62);
@@ -575,7 +575,7 @@ export function darker(color, fraction) {
   green = range(green, 255);
   blue = range(blue, 255);
 
-  return new RgbaColor(red, green, blue, color.getAlpha());
+  return new rgbaColor(red, green, blue, color.getAlpha());
 }
 
 export function lighter(color, fraction) {
@@ -587,7 +587,7 @@ export function lighter(color, fraction) {
   green = range(green, 255);
   blue = range(blue, 255);
 
-  return new RgbaColor(red, green, blue, color.getAlpha());
+  return new rgbaColor(red, green, blue, color.getAlpha());
 }
 
 export function wrap(value, lower, upper) {

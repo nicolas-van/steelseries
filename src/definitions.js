@@ -1,6 +1,6 @@
 
 import {
-RgbaColor, 
+rgbaColor, 
 } from "./tools";
 
 import {
@@ -21,24 +21,24 @@ TrendStateDef,
 } from "./constants";
 
 export var backgroundColor = {
-  DARK_GRAY: new BackgroundColorDef(new RgbaColor(0, 0, 0, 1), new RgbaColor(51, 51, 51, 1), new RgbaColor(153, 153, 153, 1), new RgbaColor(255, 255, 255, 1), new RgbaColor(180, 180, 180, 1), 'DARK_GRAY'),
-  SATIN_GRAY: new BackgroundColorDef(new RgbaColor(45, 57, 57, 1), new RgbaColor(45, 57, 57, 1), new RgbaColor(45, 57, 57, 1), new RgbaColor(167, 184, 180, 1), new RgbaColor(137, 154, 150, 1), 'SATIN_GRAY'),
-  LIGHT_GRAY: new BackgroundColorDef(new RgbaColor(130, 130, 130, 1), new RgbaColor(181, 181, 181, 1), new RgbaColor(253, 253, 253, 1), new RgbaColor(0, 0, 0, 1), new RgbaColor(80, 80, 80, 1), 'LIGHT_GRAY'),
-  WHITE: new BackgroundColorDef(new RgbaColor(255, 255, 255, 1), new RgbaColor(255, 255, 255, 1), new RgbaColor(255, 255, 255, 1), new RgbaColor(0, 0, 0, 1), new RgbaColor(80, 80, 80, 1), 'WHITE'),
-  BLACK: new BackgroundColorDef(new RgbaColor(0, 0, 0, 1), new RgbaColor(0, 0, 0, 1), new RgbaColor(0, 0, 0, 1), new RgbaColor(255, 255, 255, 1), new RgbaColor(150, 150, 150, 1), 'BLACK'),
-  BEIGE: new BackgroundColorDef(new RgbaColor(178, 172, 150, 1), new RgbaColor(204, 205, 184, 1), new RgbaColor(231, 231, 214, 1), new RgbaColor(0, 0, 0, 1), new RgbaColor(80, 80, 80, 1), 'BEIGE'),
-  BROWN: new BackgroundColorDef(new RgbaColor(245, 225, 193, 1), new RgbaColor(245, 225, 193, 1), new RgbaColor(255, 250, 240, 1), new RgbaColor(109, 73, 47, 1), new RgbaColor(89, 53, 27, 1), 'BROWN'),
-  RED: new BackgroundColorDef(new RgbaColor(198, 93, 95, 1), new RgbaColor(212, 132, 134, 1), new RgbaColor(242, 218, 218, 1), new RgbaColor(0, 0, 0, 1), new RgbaColor(90, 0, 0, 1), 'RED'),
-  GREEN: new BackgroundColorDef(new RgbaColor(65, 120, 40, 1), new RgbaColor(129, 171, 95, 1), new RgbaColor(218, 237, 202, 1), new RgbaColor(0, 0, 0, 1), new RgbaColor(0, 90, 0, 1), 'GREEN'),
-  BLUE: new BackgroundColorDef(new RgbaColor(45, 83, 122, 1), new RgbaColor(115, 144, 170, 1), new RgbaColor(227, 234, 238, 1), new RgbaColor(0, 0, 0, 1), new RgbaColor(0, 0, 90, 1), 'BLUE'),
-  ANTHRACITE: new BackgroundColorDef(new RgbaColor(50, 50, 54, 1), new RgbaColor(47, 47, 51, 1), new RgbaColor(69, 69, 74, 1), new RgbaColor(250, 250, 250, 1), new RgbaColor(180, 180, 180, 1), 'ANTHRACITE'),
-  MUD: new BackgroundColorDef(new RgbaColor(80, 86, 82, 1), new RgbaColor(70, 76, 72, 1), new RgbaColor(57, 62, 58, 1), new RgbaColor(255, 255, 240, 1), new RgbaColor(225, 225, 210, 1), 'MUD'),
-  PUNCHED_SHEET: new BackgroundColorDef(new RgbaColor(50, 50, 54, 1), new RgbaColor(47, 47, 51, 1), new RgbaColor(69, 69, 74, 1), new RgbaColor(255, 255, 255, 1), new RgbaColor(180, 180, 180, 1), 'PUNCHED_SHEET'),
-  CARBON: new BackgroundColorDef(new RgbaColor(50, 50, 54, 1), new RgbaColor(47, 47, 51, 1), new RgbaColor(69, 69, 74, 1), new RgbaColor(255, 255, 255, 1), new RgbaColor(180, 180, 180, 1), 'CARBON'),
-  STAINLESS: new BackgroundColorDef(new RgbaColor(130, 130, 130, 1), new RgbaColor(181, 181, 181, 1), new RgbaColor(253, 253, 253, 1), new RgbaColor(0, 0, 0, 1), new RgbaColor(80, 80, 80, 1), 'STAINLESS'),
-  BRUSHED_METAL: new BackgroundColorDef(new RgbaColor(50, 50, 54, 1), new RgbaColor(47, 47, 51, 1), new RgbaColor(69, 69, 74, 1), new RgbaColor(0, 0, 0, 1), new RgbaColor(80, 80, 80, 1), 'BRUSHED_METAL'),
-  BRUSHED_STAINLESS: new BackgroundColorDef(new RgbaColor(50, 50, 54, 1), new RgbaColor(47, 47, 51, 1), new RgbaColor(110, 110, 112, 1), new RgbaColor(0, 0, 0, 1), new RgbaColor(80, 80, 80, 1), 'BRUSHED_STAINLESS'),
-  TURNED: new BackgroundColorDef(new RgbaColor(130, 130, 130, 1), new RgbaColor(181, 181, 181, 1), new RgbaColor(253, 253, 253, 1), new RgbaColor(0, 0, 0, 1), new RgbaColor(80, 80, 80, 1), 'TURNED')
+  DARK_GRAY: new BackgroundColorDef(new rgbaColor(0, 0, 0, 1), new rgbaColor(51, 51, 51, 1), new rgbaColor(153, 153, 153, 1), new rgbaColor(255, 255, 255, 1), new rgbaColor(180, 180, 180, 1), 'DARK_GRAY'),
+  SATIN_GRAY: new BackgroundColorDef(new rgbaColor(45, 57, 57, 1), new rgbaColor(45, 57, 57, 1), new rgbaColor(45, 57, 57, 1), new rgbaColor(167, 184, 180, 1), new rgbaColor(137, 154, 150, 1), 'SATIN_GRAY'),
+  LIGHT_GRAY: new BackgroundColorDef(new rgbaColor(130, 130, 130, 1), new rgbaColor(181, 181, 181, 1), new rgbaColor(253, 253, 253, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(80, 80, 80, 1), 'LIGHT_GRAY'),
+  WHITE: new BackgroundColorDef(new rgbaColor(255, 255, 255, 1), new rgbaColor(255, 255, 255, 1), new rgbaColor(255, 255, 255, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(80, 80, 80, 1), 'WHITE'),
+  BLACK: new BackgroundColorDef(new rgbaColor(0, 0, 0, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(255, 255, 255, 1), new rgbaColor(150, 150, 150, 1), 'BLACK'),
+  BEIGE: new BackgroundColorDef(new rgbaColor(178, 172, 150, 1), new rgbaColor(204, 205, 184, 1), new rgbaColor(231, 231, 214, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(80, 80, 80, 1), 'BEIGE'),
+  BROWN: new BackgroundColorDef(new rgbaColor(245, 225, 193, 1), new rgbaColor(245, 225, 193, 1), new rgbaColor(255, 250, 240, 1), new rgbaColor(109, 73, 47, 1), new rgbaColor(89, 53, 27, 1), 'BROWN'),
+  RED: new BackgroundColorDef(new rgbaColor(198, 93, 95, 1), new rgbaColor(212, 132, 134, 1), new rgbaColor(242, 218, 218, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(90, 0, 0, 1), 'RED'),
+  GREEN: new BackgroundColorDef(new rgbaColor(65, 120, 40, 1), new rgbaColor(129, 171, 95, 1), new rgbaColor(218, 237, 202, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(0, 90, 0, 1), 'GREEN'),
+  BLUE: new BackgroundColorDef(new rgbaColor(45, 83, 122, 1), new rgbaColor(115, 144, 170, 1), new rgbaColor(227, 234, 238, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(0, 0, 90, 1), 'BLUE'),
+  ANTHRACITE: new BackgroundColorDef(new rgbaColor(50, 50, 54, 1), new rgbaColor(47, 47, 51, 1), new rgbaColor(69, 69, 74, 1), new rgbaColor(250, 250, 250, 1), new rgbaColor(180, 180, 180, 1), 'ANTHRACITE'),
+  MUD: new BackgroundColorDef(new rgbaColor(80, 86, 82, 1), new rgbaColor(70, 76, 72, 1), new rgbaColor(57, 62, 58, 1), new rgbaColor(255, 255, 240, 1), new rgbaColor(225, 225, 210, 1), 'MUD'),
+  PUNCHED_SHEET: new BackgroundColorDef(new rgbaColor(50, 50, 54, 1), new rgbaColor(47, 47, 51, 1), new rgbaColor(69, 69, 74, 1), new rgbaColor(255, 255, 255, 1), new rgbaColor(180, 180, 180, 1), 'PUNCHED_SHEET'),
+  CARBON: new BackgroundColorDef(new rgbaColor(50, 50, 54, 1), new rgbaColor(47, 47, 51, 1), new rgbaColor(69, 69, 74, 1), new rgbaColor(255, 255, 255, 1), new rgbaColor(180, 180, 180, 1), 'CARBON'),
+  STAINLESS: new BackgroundColorDef(new rgbaColor(130, 130, 130, 1), new rgbaColor(181, 181, 181, 1), new rgbaColor(253, 253, 253, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(80, 80, 80, 1), 'STAINLESS'),
+  BRUSHED_METAL: new BackgroundColorDef(new rgbaColor(50, 50, 54, 1), new rgbaColor(47, 47, 51, 1), new rgbaColor(69, 69, 74, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(80, 80, 80, 1), 'BRUSHED_METAL'),
+  BRUSHED_STAINLESS: new BackgroundColorDef(new rgbaColor(50, 50, 54, 1), new rgbaColor(47, 47, 51, 1), new rgbaColor(110, 110, 112, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(80, 80, 80, 1), 'BRUSHED_STAINLESS'),
+  TURNED: new BackgroundColorDef(new rgbaColor(130, 130, 130, 1), new rgbaColor(181, 181, 181, 1), new rgbaColor(253, 253, 253, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(80, 80, 80, 1), 'TURNED')
 };
 
 export var lcdColor = {
@@ -69,19 +69,19 @@ export var lcdColor = {
 };
 
 export var color = {
-  RED: new ColorDef(new RgbaColor(82, 0, 0, 1), new RgbaColor(158, 0, 19, 1), new RgbaColor(213, 0, 25, 1), new RgbaColor(240, 82, 88, 1), new RgbaColor(255, 171, 173, 1), new RgbaColor(255, 217, 218, 1)),
-  GREEN: new ColorDef(new RgbaColor(8, 54, 4, 1), new RgbaColor(0, 107, 14, 1), new RgbaColor(15, 148, 0, 1), new RgbaColor(121, 186, 37, 1), new RgbaColor(190, 231, 141, 1), new RgbaColor(234, 247, 218, 1)),
-  BLUE: new ColorDef(new RgbaColor(0, 11, 68, 1), new RgbaColor(0, 73, 135, 1), new RgbaColor(0, 108, 201, 1), new RgbaColor(0, 141, 242, 1), new RgbaColor(122, 200, 255, 1), new RgbaColor(204, 236, 255, 1)),
-  ORANGE: new ColorDef(new RgbaColor(118, 83, 30, 1), new RgbaColor(215, 67, 0, 1), new RgbaColor(240, 117, 0, 1), new RgbaColor(255, 166, 0, 1), new RgbaColor(255, 255, 128, 1), new RgbaColor(255, 247, 194, 1)),
-  YELLOW: new ColorDef(new RgbaColor(41, 41, 0, 1), new RgbaColor(102, 102, 0, 1), new RgbaColor(177, 165, 0, 1), new RgbaColor(255, 242, 0, 1), new RgbaColor(255, 250, 153, 1), new RgbaColor(255, 252, 204, 1)),
-  CYAN: new ColorDef(new RgbaColor(15, 109, 109, 1), new RgbaColor(0, 109, 144, 1), new RgbaColor(0, 144, 191, 1), new RgbaColor(0, 174, 239, 1), new RgbaColor(153, 223, 249, 1), new RgbaColor(204, 239, 252, 1)),
-  MAGENTA: new ColorDef(new RgbaColor(98, 0, 114, 1), new RgbaColor(128, 24, 72, 1), new RgbaColor(191, 36, 107, 1), new RgbaColor(255, 48, 143, 1), new RgbaColor(255, 172, 210, 1), new RgbaColor(255, 214, 23, 1)),
-  WHITE: new ColorDef(new RgbaColor(210, 210, 210, 1), new RgbaColor(220, 220, 220, 1), new RgbaColor(235, 235, 235, 1), new RgbaColor(255, 255, 255, 1), new RgbaColor(255, 255, 255, 1), new RgbaColor(255, 255, 255, 1)),
-  GRAY: new ColorDef(new RgbaColor(25, 25, 25, 1), new RgbaColor(51, 51, 51, 1), new RgbaColor(76, 76, 76, 1), new RgbaColor(128, 128, 128, 1), new RgbaColor(204, 204, 204, 1), new RgbaColor(243, 243, 243, 1)),
-  BLACK: new ColorDef(new RgbaColor(0, 0, 0, 1), new RgbaColor(5, 5, 5, 1), new RgbaColor(10, 10, 10, 1), new RgbaColor(15, 15, 15, 1), new RgbaColor(20, 20, 20, 1), new RgbaColor(25, 25, 25, 1)),
-  RAITH: new ColorDef(new RgbaColor(0, 32, 65, 1), new RgbaColor(0, 65, 125, 1), new RgbaColor(0, 106, 172, 1), new RgbaColor(130, 180, 214, 1), new RgbaColor(148, 203, 242, 1), new RgbaColor(191, 229, 255, 1)),
-  GREEN_LCD: new ColorDef(new RgbaColor(0, 55, 45, 1), new RgbaColor(15, 109, 93, 1), new RgbaColor(0, 185, 165, 1), new RgbaColor(48, 255, 204, 1), new RgbaColor(153, 255, 227, 1), new RgbaColor(204, 255, 241, 1)),
-  JUG_GREEN: new ColorDef(new RgbaColor(0, 56, 0, 1), new RgbaColor(32, 69, 36, 1), new RgbaColor(50, 161, 0, 1), new RgbaColor(129, 206, 0, 1), new RgbaColor(190, 231, 141, 1), new RgbaColor(234, 247, 218, 1))
+  RED: new ColorDef(new rgbaColor(82, 0, 0, 1), new rgbaColor(158, 0, 19, 1), new rgbaColor(213, 0, 25, 1), new rgbaColor(240, 82, 88, 1), new rgbaColor(255, 171, 173, 1), new rgbaColor(255, 217, 218, 1)),
+  GREEN: new ColorDef(new rgbaColor(8, 54, 4, 1), new rgbaColor(0, 107, 14, 1), new rgbaColor(15, 148, 0, 1), new rgbaColor(121, 186, 37, 1), new rgbaColor(190, 231, 141, 1), new rgbaColor(234, 247, 218, 1)),
+  BLUE: new ColorDef(new rgbaColor(0, 11, 68, 1), new rgbaColor(0, 73, 135, 1), new rgbaColor(0, 108, 201, 1), new rgbaColor(0, 141, 242, 1), new rgbaColor(122, 200, 255, 1), new rgbaColor(204, 236, 255, 1)),
+  ORANGE: new ColorDef(new rgbaColor(118, 83, 30, 1), new rgbaColor(215, 67, 0, 1), new rgbaColor(240, 117, 0, 1), new rgbaColor(255, 166, 0, 1), new rgbaColor(255, 255, 128, 1), new rgbaColor(255, 247, 194, 1)),
+  YELLOW: new ColorDef(new rgbaColor(41, 41, 0, 1), new rgbaColor(102, 102, 0, 1), new rgbaColor(177, 165, 0, 1), new rgbaColor(255, 242, 0, 1), new rgbaColor(255, 250, 153, 1), new rgbaColor(255, 252, 204, 1)),
+  CYAN: new ColorDef(new rgbaColor(15, 109, 109, 1), new rgbaColor(0, 109, 144, 1), new rgbaColor(0, 144, 191, 1), new rgbaColor(0, 174, 239, 1), new rgbaColor(153, 223, 249, 1), new rgbaColor(204, 239, 252, 1)),
+  MAGENTA: new ColorDef(new rgbaColor(98, 0, 114, 1), new rgbaColor(128, 24, 72, 1), new rgbaColor(191, 36, 107, 1), new rgbaColor(255, 48, 143, 1), new rgbaColor(255, 172, 210, 1), new rgbaColor(255, 214, 23, 1)),
+  WHITE: new ColorDef(new rgbaColor(210, 210, 210, 1), new rgbaColor(220, 220, 220, 1), new rgbaColor(235, 235, 235, 1), new rgbaColor(255, 255, 255, 1), new rgbaColor(255, 255, 255, 1), new rgbaColor(255, 255, 255, 1)),
+  GRAY: new ColorDef(new rgbaColor(25, 25, 25, 1), new rgbaColor(51, 51, 51, 1), new rgbaColor(76, 76, 76, 1), new rgbaColor(128, 128, 128, 1), new rgbaColor(204, 204, 204, 1), new rgbaColor(243, 243, 243, 1)),
+  BLACK: new ColorDef(new rgbaColor(0, 0, 0, 1), new rgbaColor(5, 5, 5, 1), new rgbaColor(10, 10, 10, 1), new rgbaColor(15, 15, 15, 1), new rgbaColor(20, 20, 20, 1), new rgbaColor(25, 25, 25, 1)),
+  RAITH: new ColorDef(new rgbaColor(0, 32, 65, 1), new rgbaColor(0, 65, 125, 1), new rgbaColor(0, 106, 172, 1), new rgbaColor(130, 180, 214, 1), new rgbaColor(148, 203, 242, 1), new rgbaColor(191, 229, 255, 1)),
+  GREEN_LCD: new ColorDef(new rgbaColor(0, 55, 45, 1), new rgbaColor(15, 109, 93, 1), new rgbaColor(0, 185, 165, 1), new rgbaColor(48, 255, 204, 1), new rgbaColor(153, 255, 227, 1), new rgbaColor(204, 255, 241, 1)),
+  JUG_GREEN: new ColorDef(new rgbaColor(0, 56, 0, 1), new rgbaColor(32, 69, 36, 1), new rgbaColor(50, 161, 0, 1), new rgbaColor(129, 206, 0, 1), new rgbaColor(190, 231, 141, 1), new rgbaColor(234, 247, 218, 1))
 };
 
 export var ledColor = {
