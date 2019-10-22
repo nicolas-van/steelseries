@@ -13,7 +13,7 @@
     "build": "webpack",
     "lint": "eslint \"src/**/*.js\"",
     "lint:fix": "eslint \"src/**/*.js\" --fix",
-    "test": "echo no tests defined",
+    "test": "npm run lint",
     "website": "rm -rf docs .cache && parcel build srcdocs/index.njk --public-url ./ --out-dir docs",
     "website-dev": "rm -rf docs .cache && parcel srcdocs/index.njk --out-dir docs"
   },
