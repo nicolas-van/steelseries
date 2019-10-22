@@ -1,18 +1,18 @@
 
-import Tween from "./tween.js";
-import drawFrame from "./drawFrame";
-import drawBackground from "./drawBackground";
-import drawRadialCustomImage from "./drawRadialCustomImage";
-import drawForeground from "./drawForeground";
-import drawRoseImage from "./drawRoseImage";
+import Tween from './tween.js';
+import drawFrame from './drawFrame';
+import drawBackground from './drawBackground';
+import drawRadialCustomImage from './drawRadialCustomImage';
+import drawForeground from './drawForeground';
+import drawRoseImage from './drawRoseImage';
 import {
-createBuffer, 
-getShortestAngle, 
-requestAnimFrame, 
-getCanvasContext,
-HALF_PI,
-RAD_FACTOR,
-} from "./tools";
+  createBuffer,
+  getShortestAngle,
+  requestAnimFrame,
+  getCanvasContext,
+  HALF_PI,
+  RAD_FACTOR,
+} from './tools';
 
 import {
   BackgroundColor,
@@ -29,36 +29,36 @@ import {
   LabelNumberFormat,
   TickLabelOrientation,
   TrendState,
-  } from "./definitions";
+} from './definitions';
 
-var Compass = function(canvas, parameters) {
+const Compass = function(canvas, parameters) {
   parameters = parameters || {};
-  var size = (undefined === parameters.size ? 0 : parameters.size),
-    frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
-    frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible),
-    backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor),
-    backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible),
-    pointerType = (undefined === parameters.pointerType ? PointerType.TYPE2 : parameters.pointerType),
-    pointerColor = (undefined === parameters.pointerColor ? ColorDef.RED : parameters.pointerColor),
-    knobType = (undefined === parameters.knobType ? KnobType.STANDARD_KNOB : parameters.knobType),
-    knobStyle = (undefined === parameters.knobStyle ? KnobStyle.SILVER : parameters.knobStyle),
-    foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType),
-    foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible),
-    pointSymbols = (undefined === parameters.pointSymbols ? ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'] : parameters.pointSymbols),
-    pointSymbolsVisible = (undefined === parameters.pointSymbolsVisible ? true : parameters.pointSymbolsVisible),
-    customLayer = (undefined === parameters.customLayer ? null : parameters.customLayer),
-    degreeScale = (undefined === parameters.degreeScale ? false : parameters.degreeScale),
-    roseVisible = (undefined === parameters.roseVisible ? true : parameters.roseVisible),
-    rotateFace = (undefined === parameters.rotateFace ? false : parameters.rotateFace);
+  let size = (undefined === parameters.size ? 0 : parameters.size);
+  let frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign);
+  const frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible);
+  let backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor);
+  const backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible);
+  let pointerType = (undefined === parameters.pointerType ? PointerType.TYPE2 : parameters.pointerType);
+  let pointerColor = (undefined === parameters.pointerColor ? ColorDef.RED : parameters.pointerColor);
+  const knobType = (undefined === parameters.knobType ? KnobType.STANDARD_KNOB : parameters.knobType);
+  const knobStyle = (undefined === parameters.knobStyle ? KnobStyle.SILVER : parameters.knobStyle);
+  let foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType);
+  const foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible);
+  let pointSymbols = (undefined === parameters.pointSymbols ? ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'] : parameters.pointSymbols);
+  const pointSymbolsVisible = (undefined === parameters.pointSymbolsVisible ? true : parameters.pointSymbolsVisible);
+  const customLayer = (undefined === parameters.customLayer ? null : parameters.customLayer);
+  const degreeScale = (undefined === parameters.degreeScale ? false : parameters.degreeScale);
+  const roseVisible = (undefined === parameters.roseVisible ? true : parameters.roseVisible);
+  const rotateFace = (undefined === parameters.rotateFace ? false : parameters.rotateFace);
 
-  var tween;
-  var repainting = false;
-  var value = 0;
-  var angleStep = RAD_FACTOR;
-  var angle = this.value;
+  let tween;
+  let repainting = false;
+  let value = 0;
+  const angleStep = RAD_FACTOR;
+  let angle = this.value;
 
   // Get the canvas context and clear it
-  var mainCtx = getCanvasContext(canvas);
+  const mainCtx = getCanvasContext(canvas);
   // Has a size been specified?
   if (size === 0) {
     size = Math.min(mainCtx.canvas.width, mainCtx.canvas.height);
@@ -68,40 +68,40 @@ var Compass = function(canvas, parameters) {
   mainCtx.canvas.width = size;
   mainCtx.canvas.height = size;
 
-  var imageWidth = size;
-  var imageHeight = size;
+  const imageWidth = size;
+  const imageHeight = size;
 
-  var centerX = imageWidth / 2;
-  var centerY = imageHeight / 2;
+  const centerX = imageWidth / 2;
+  const centerY = imageHeight / 2;
 
-  var shadowOffset = imageWidth * 0.006;
+  const shadowOffset = imageWidth * 0.006;
 
-  var initialized = false;
+  let initialized = false;
 
   // **************   Buffer creation  ********************
   // Buffer for all static background painting code
-  var backgroundBuffer = createBuffer(size, size);
-  var backgroundContext = backgroundBuffer.getContext('2d');
+  const backgroundBuffer = createBuffer(size, size);
+  let backgroundContext = backgroundBuffer.getContext('2d');
 
   // Buffer for symbol/rose painting code
-  var roseBuffer = createBuffer(size, size);
-  var roseContext = roseBuffer.getContext('2d');
+  const roseBuffer = createBuffer(size, size);
+  let roseContext = roseBuffer.getContext('2d');
 
   // Buffer for pointer image painting code
-  var pointerBuffer = createBuffer(size, size);
-  var pointerContext = pointerBuffer.getContext('2d');
+  const pointerBuffer = createBuffer(size, size);
+  let pointerContext = pointerBuffer.getContext('2d');
 
   // Buffer for static foreground painting code
-  var foregroundBuffer = createBuffer(size, size);
-  var foregroundContext = foregroundBuffer.getContext('2d');
+  const foregroundBuffer = createBuffer(size, size);
+  let foregroundContext = foregroundBuffer.getContext('2d');
 
   // **************   Image creation  ********************
-  var drawTickmarksImage = function(ctx) {
-    var val;
+  const drawTickmarksImage = function(ctx) {
+    let val;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
-    var stdFont, smlFont, i;
+    let stdFont; let smlFont; let i;
 
     ctx.save();
     ctx.strokeStyle = backgroundColor.labelColor.getRgbaColor();
@@ -109,12 +109,10 @@ var Compass = function(canvas, parameters) {
     ctx.translate(centerX, centerY);
 
     if (!degreeScale) {
-
       stdFont = 0.12 * imageWidth + 'px serif';
       smlFont = 0.06 * imageWidth + 'px serif';
 
       for (i = 0; 360 > i; i += 2.5) {
-
         if (0 === i % 5) {
           ctx.lineWidth = 1;
           ctx.beginPath();
@@ -186,7 +184,9 @@ var Compass = function(canvas, parameters) {
         }
         ctx.restore();
 
-        if (roseVisible && (0 === i || 22.5 === i || 45 === i || 67.5 === i || 90 === i || 112.5 === i || 135 === i || 157.5 === i || 180 === i || 202.5 === i || 225 === i || 247.5 === i || 270 === i || 292.5 === i || 315 === i || 337.5 === i || 360 === i)) {
+        if (roseVisible && (0 === i || 22.5 === i || 45 === i || 67.5 === i || 90 === i ||
+          112.5 === i || 135 === i || 157.5 === i || 180 === i || 202.5 === i || 225 === i ||
+          247.5 === i || 270 === i || 292.5 === i || 315 === i || 337.5 === i || 360 === i)) {
           // ROSE_LINE
           ctx.save();
           ctx.beginPath();
@@ -263,13 +263,12 @@ var Compass = function(canvas, parameters) {
         ctx.restore();
         ctx.rotate(angleStep * 10);
       }
-
     }
     ctx.translate(-centerX, -centerY);
     ctx.restore();
   };
 
-  var drawPointerImage = function(ctx) {
+  const drawPointerImage = function(ctx) {
     ctx.save();
 
     switch (pointerType.type) {
@@ -395,7 +394,7 @@ var Compass = function(canvas, parameters) {
 
   // **************   Initialization  ********************
   // Draw all static painting code to background
-  var init = function() {
+  const init = function() {
     initialized = true;
 
     if (frameVisible) {
@@ -420,7 +419,7 @@ var Compass = function(canvas, parameters) {
     }
   };
 
-  var resetBuffers = function() {
+  const resetBuffers = function() {
     // Buffer for all static background painting code
     backgroundBuffer.width = size;
     backgroundBuffer.height = size;
@@ -442,7 +441,7 @@ var Compass = function(canvas, parameters) {
     foregroundContext = foregroundBuffer.getContext('2d');
   };
 
-  //************************************ Public methods **************************************
+  //* *********************************** Public methods **************************************
   this.setValue = function(newValue) {
     newValue = parseFloat(newValue) % 360;
     if (value !== newValue) {
@@ -457,9 +456,9 @@ var Compass = function(canvas, parameters) {
   };
 
   this.setValueAnimated = function(newValue, callback) {
-    var targetValue = newValue % 360;
-    var gauge = this;
-    var diff;
+    const targetValue = newValue % 360;
+    const gauge = this;
+    let diff;
     if (value !== targetValue) {
       if (undefined !== tween && tween.isPlaying) {
         tween.stop();
@@ -480,7 +479,7 @@ var Compass = function(canvas, parameters) {
       };
 
       // do we have a callback function to process?
-      if (callback && typeof(callback) === "function") {
+      if (callback && typeof(callback) === 'function') {
         tween.onMotionFinished = callback;
       }
 

@@ -11,6 +11,8 @@
   "main": "dist/steelseries.js",
   "scripts": {
     "build": "webpack",
+    "lint": "eslint \"src/**/*.js\"",
+    "lint:fix": "eslint \"src/**/*.js\" --fix",
     "test": "echo no tests defined",
     "website": "rm -rf docs .cache && parcel build srcdocs/index.njk --public-url ./ --out-dir docs",
     "website-dev": "rm -rf docs .cache && parcel srcdocs/index.njk --out-dir docs"
@@ -26,6 +28,8 @@
   },
   "homepage": "https://github.com/nicolas-van/steelseries#readme",
   "devDependencies": {
+    "eslint": "^6.0.1",
+    "eslint-config-google": "^0.13.0",
     "nunjucks": "^3.2.0",
     "parcel-bundler": "^1.12.3",
     "parcel-plugin-nunjucks": "^1.1.0",

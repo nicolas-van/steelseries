@@ -1,14 +1,14 @@
 
 import {
-drawToBuffer, 
-} from "./tools";
+  drawToBuffer,
+} from './tools';
 
-var carbonBuffer = drawToBuffer(12, 12, function(ctx) {
-  var imageWidth = ctx.canvas.width,
-    imageHeight = ctx.canvas.height,
-    offsetX = 0,
-    offsetY = 0,
-    grad;
+const carbonBuffer = drawToBuffer(12, 12, function(ctx) {
+  const imageWidth = ctx.canvas.width;
+  const imageHeight = ctx.canvas.height;
+  let offsetX = 0;
+  let offsetY = 0;
+  let grad;
 
   ctx.save();
 

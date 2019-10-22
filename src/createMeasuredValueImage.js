@@ -1,11 +1,11 @@
 
 import {
-doc,
-} from "./tools";
+  doc,
+} from './tools';
 
 var createMeasuredValueImage = function(size, indicatorColor, radial, vertical) {
-  var indicatorBuffer, indicatorCtx,
-    cacheKey = size.toString() + indicatorColor + radial + vertical;
+  let indicatorBuffer; let indicatorCtx;
+  const cacheKey = size.toString() + indicatorColor + radial + vertical;
 
   // check if we have already created and cached this buffer, if so return it and exit
   if (!createMeasuredValueImage.cache[cacheKey]) {

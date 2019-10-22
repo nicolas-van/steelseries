@@ -1,16 +1,16 @@
 
-import createLcdBackgroundImage from "./createLcdBackgroundImage";
+import createLcdBackgroundImage from './createLcdBackgroundImage';
 import {
-roundedRectangle, 
-createBuffer, 
-getColorValues, 
-hsbToRgb, 
-rgbToHsb, 
-requestAnimFrame, 
-getCanvasContext,
-lcdFontName,
-stdFontName,
-} from "./tools";
+  roundedRectangle,
+  createBuffer,
+  getColorValues,
+  hsbToRgb,
+  rgbToHsb,
+  requestAnimFrame,
+  getCanvasContext,
+  lcdFontName,
+  stdFontName,
+} from './tools';
 
 import {
   BackgroundColor,
@@ -27,34 +27,34 @@ import {
   LabelNumberFormat,
   TickLabelOrientation,
   TrendState,
-  } from "./definitions";
+} from './definitions';
 
-var DisplaySingle = function(canvas, parameters) {
+const DisplaySingle = function(canvas, parameters) {
   parameters = parameters || {};
-  var width = (undefined === parameters.width ? 0 : parameters.width),
-    height = (undefined === parameters.height ? 0 : parameters.height),
-    lcdColor = (undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor),
-    lcdDecimals = (undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals),
-    unitString = (undefined === parameters.unitString ? '' : parameters.unitString),
-    unitStringVisible = (undefined === parameters.unitStringVisible ? false : parameters.unitStringVisible),
-    headerString = (undefined === parameters.headerString ? '' : parameters.headerString),
-    headerStringVisible = (undefined === parameters.headerStringVisible ? false : parameters.headerStringVisible),
-    digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont),
-    valuesNumeric = (undefined === parameters.valuesNumeric ? true : parameters.valuesNumeric),
-    value = (undefined === parameters.value ? 0 : parameters.value),
-    alwaysScroll = (undefined === parameters.alwaysScroll ? false : parameters.alwaysScroll),
-    autoScroll = (undefined === parameters.autoScroll ? false : parameters.autoScroll),
-    section = (undefined === parameters.section ? null : parameters.section);
+  let width = (undefined === parameters.width ? 0 : parameters.width);
+  let height = (undefined === parameters.height ? 0 : parameters.height);
+  let lcdColor = (undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor);
+  const lcdDecimals = (undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals);
+  const unitString = (undefined === parameters.unitString ? '' : parameters.unitString);
+  const unitStringVisible = (undefined === parameters.unitStringVisible ? false : parameters.unitStringVisible);
+  const headerString = (undefined === parameters.headerString ? '' : parameters.headerString);
+  const headerStringVisible = (undefined === parameters.headerStringVisible ? false : parameters.headerStringVisible);
+  const digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont);
+  const valuesNumeric = (undefined === parameters.valuesNumeric ? true : parameters.valuesNumeric);
+  let value = (undefined === parameters.value ? 0 : parameters.value);
+  const alwaysScroll = (undefined === parameters.alwaysScroll ? false : parameters.alwaysScroll);
+  const autoScroll = (undefined === parameters.autoScroll ? false : parameters.autoScroll);
+  let section = (undefined === parameters.section ? null : parameters.section);
 
-  var scrolling = false;
-  var scrollX = 0;
-  var scrollTimer;
-  var repainting = false;
+  let scrolling = false;
+  let scrollX = 0;
+  let scrollTimer;
+  let repainting = false;
 
-  var self = this;
+  const self = this;
 
   // Get the canvas context and clear it
-  var mainCtx = getCanvasContext(canvas);
+  const mainCtx = getCanvasContext(canvas);
   // Has a size been specified?
   if (width === 0) {
     width = mainCtx.canvas.width;
@@ -67,27 +67,27 @@ var DisplaySingle = function(canvas, parameters) {
   mainCtx.canvas.width = width;
   mainCtx.canvas.height = height;
 
-  var imageWidth = width;
-  var imageHeight = height;
-  var textWidth = 0;
+  const imageWidth = width;
+  const imageHeight = height;
+  let textWidth = 0;
 
-  var fontHeight = Math.floor(imageHeight / 1.5);
-  var stdFont = fontHeight + 'px ' + stdFontName;
-  var lcdFont = fontHeight + 'px ' + lcdFontName;
+  const fontHeight = Math.floor(imageHeight / 1.5);
+  const stdFont = fontHeight + 'px ' + stdFontName;
+  const lcdFont = fontHeight + 'px ' + lcdFontName;
 
-  var initialized = false;
+  let initialized = false;
 
   // **************   Buffer creation  ********************
   // Buffer for the lcd
-  var lcdBuffer;
-  var sectionBuffer = [];
-  var sectionForegroundColor = [];
+  let lcdBuffer;
+  const sectionBuffer = [];
+  const sectionForegroundColor = [];
 
   // **************   Image creation  ********************
-  var drawLcdText = function(value, color) {
+  const drawLcdText = function(value, color) {
     mainCtx.save();
     mainCtx.textAlign = 'right';
-    //mainCtx.textBaseline = 'top';
+    // mainCtx.textBaseline = 'top';
     mainCtx.strokeStyle = color;
     mainCtx.fillStyle = color;
 
@@ -108,16 +108,16 @@ var DisplaySingle = function(canvas, parameters) {
 
     if (valuesNumeric) {
       // Numeric value
-      var unitWidth = 0;
+      let unitWidth = 0;
       textWidth = 0;
       if (unitStringVisible) {
         mainCtx.font = Math.floor(imageHeight / 2.5) + 'px ' + stdFontName;
         unitWidth = mainCtx.measureText(unitString).width;
       }
       mainCtx.font = digitalFont ? lcdFont : stdFont;
-      var lcdText = value.toFixed(lcdDecimals);
+      const lcdText = value.toFixed(lcdDecimals);
       textWidth = mainCtx.measureText(lcdText).width;
-      var vPos = 0.38;
+      let vPos = 0.38;
       if (headerStringVisible) {
         vPos = 0.52;
       }
@@ -156,18 +156,18 @@ var DisplaySingle = function(canvas, parameters) {
     mainCtx.restore();
   };
 
-  var createLcdSectionImage = function(width, height, color, lcdColor) {
-    var lcdSectionBuffer = createBuffer(width, height);
-    var lcdCtx = lcdSectionBuffer.getContext('2d');
+  const createLcdSectionImage = function(width, height, color, lcdColor) {
+    const lcdSectionBuffer = createBuffer(width, height);
+    const lcdCtx = lcdSectionBuffer.getContext('2d');
 
     lcdCtx.save();
-    var xB = 0;
-    var yB = 0;
-    var wB = width;
-    var hB = height;
-    var rB = Math.min(width, height) * 0.095;
+    const xB = 0;
+    const yB = 0;
+    const wB = width;
+    const hB = height;
+    const rB = Math.min(width, height) * 0.095;
 
-    var lcdBackground = lcdCtx.createLinearGradient(0, yB, 0, yB + hB);
+    const lcdBackground = lcdCtx.createLinearGradient(0, yB, 0, yB + hB);
 
     lcdBackground.addColorStop(0, '#4c4c4c');
     lcdBackground.addColorStop(0.08, '#666666');
@@ -182,32 +182,32 @@ var DisplaySingle = function(canvas, parameters) {
 
     lcdCtx.save();
 
-    var rgb = getColorValues(color);
-    var hsb = rgbToHsb(rgb[0], rgb[1], rgb[2]);
+    const rgb = getColorValues(color);
+    const hsb = rgbToHsb(rgb[0], rgb[1], rgb[2]);
 
-    var rgbStart = getColorValues(lcdColor.gradientStartColor);
-    var hsbStart = rgbToHsb(rgbStart[0], rgbStart[1], rgbStart[2]);
-    var rgbFraction1 = getColorValues(lcdColor.gradientFraction1Color);
-    var hsbFraction1 = rgbToHsb(rgbFraction1[0], rgbFraction1[1], rgbFraction1[2]);
-    var rgbFraction2 = getColorValues(lcdColor.gradientFraction2Color);
-    var hsbFraction2 = rgbToHsb(rgbFraction2[0], rgbFraction2[1], rgbFraction2[2]);
-    var rgbFraction3 = getColorValues(lcdColor.gradientFraction3Color);
-    var hsbFraction3 = rgbToHsb(rgbFraction3[0], rgbFraction3[1], rgbFraction3[2]);
-    var rgbStop = getColorValues(lcdColor.gradientStopColor);
-    var hsbStop = rgbToHsb(rgbStop[0], rgbStop[1], rgbStop[2]);
+    const rgbStart = getColorValues(lcdColor.gradientStartColor);
+    const hsbStart = rgbToHsb(rgbStart[0], rgbStart[1], rgbStart[2]);
+    const rgbFraction1 = getColorValues(lcdColor.gradientFraction1Color);
+    const hsbFraction1 = rgbToHsb(rgbFraction1[0], rgbFraction1[1], rgbFraction1[2]);
+    const rgbFraction2 = getColorValues(lcdColor.gradientFraction2Color);
+    const hsbFraction2 = rgbToHsb(rgbFraction2[0], rgbFraction2[1], rgbFraction2[2]);
+    const rgbFraction3 = getColorValues(lcdColor.gradientFraction3Color);
+    const hsbFraction3 = rgbToHsb(rgbFraction3[0], rgbFraction3[1], rgbFraction3[2]);
+    const rgbStop = getColorValues(lcdColor.gradientStopColor);
+    const hsbStop = rgbToHsb(rgbStop[0], rgbStop[1], rgbStop[2]);
 
-    var startColor = hsbToRgb(hsb[0], hsb[1], hsbStart[2] - 0.31);
-    var fraction1Color = hsbToRgb(hsb[0], hsb[1], hsbFraction1[2] - 0.31);
-    var fraction2Color = hsbToRgb(hsb[0], hsb[1], hsbFraction2[2] - 0.31);
-    var fraction3Color = hsbToRgb(hsb[0], hsb[1], hsbFraction3[2] - 0.31);
-    var stopColor = hsbToRgb(hsb[0], hsb[1], hsbStop[2] - 0.31);
+    const startColor = hsbToRgb(hsb[0], hsb[1], hsbStart[2] - 0.31);
+    const fraction1Color = hsbToRgb(hsb[0], hsb[1], hsbFraction1[2] - 0.31);
+    const fraction2Color = hsbToRgb(hsb[0], hsb[1], hsbFraction2[2] - 0.31);
+    const fraction3Color = hsbToRgb(hsb[0], hsb[1], hsbFraction3[2] - 0.31);
+    const stopColor = hsbToRgb(hsb[0], hsb[1], hsbStop[2] - 0.31);
 
-    var xF = 1;
-    var yF = 1;
-    var wF = width - 2;
-    var hF = height - 2;
-    var rF = rB - 1;
-    var lcdForeground = lcdCtx.createLinearGradient(0, yF, 0, yF + hF);
+    const xF = 1;
+    const yF = 1;
+    const wF = width - 2;
+    const hF = height - 2;
+    const rF = rB - 1;
+    const lcdForeground = lcdCtx.createLinearGradient(0, yF, 0, yF + hF);
     lcdForeground.addColorStop(0, 'rgb(' + startColor[0] + ', ' + startColor[1] + ', ' + startColor[2] + ')');
     lcdForeground.addColorStop(0.03, 'rgb(' + fraction1Color[0] + ',' + fraction1Color[1] + ',' + fraction1Color[2] + ')');
     lcdForeground.addColorStop(0.49, 'rgb(' + fraction2Color[0] + ',' + fraction2Color[1] + ',' + fraction2Color[2] + ')');
@@ -223,10 +223,10 @@ var DisplaySingle = function(canvas, parameters) {
     return lcdSectionBuffer;
   };
 
-  var createSectionForegroundColor = function(sectionColor) {
-    var rgbSection = getColorValues(sectionColor);
-    var hsbSection = rgbToHsb(rgbSection[0], rgbSection[1], rgbSection[2]);
-    var sectionForegroundRgb = hsbToRgb(hsbSection[0], 0.57, 0.83);
+  const createSectionForegroundColor = function(sectionColor) {
+    const rgbSection = getColorValues(sectionColor);
+    const hsbSection = rgbToHsb(rgbSection[0], rgbSection[1], rgbSection[2]);
+    const sectionForegroundRgb = hsbToRgb(hsbSection[0], 0.57, 0.83);
     return 'rgb(' + sectionForegroundRgb[0] + ', ' + sectionForegroundRgb[1] + ', ' + sectionForegroundRgb[2] + ')';
   };
 
@@ -247,8 +247,8 @@ var DisplaySingle = function(canvas, parameters) {
   };
 
   // **************   Initialization  ********************
-  var init = function() {
-    var sectionIndex;
+  const init = function() {
+    let sectionIndex;
     initialized = true;
 
     // Create lcd background if selected in background buffer (backgroundBuffer)
@@ -260,7 +260,6 @@ var DisplaySingle = function(canvas, parameters) {
         sectionForegroundColor[sectionIndex] = createSectionForegroundColor(section[sectionIndex].color);
       }
     }
-
   };
 
   // **************   Public methods  ********************
@@ -283,7 +282,7 @@ var DisplaySingle = function(canvas, parameters) {
     section = newSection;
     init({
       background: true,
-      foreground: true
+      foreground: true,
     });
     this.repaint();
     return this;
@@ -297,7 +296,7 @@ var DisplaySingle = function(canvas, parameters) {
         scrolling = scroll;
         animate();
       }
-    } else { //disable scrolling
+    } else { // disable scrolling
       scrolling = scroll;
     }
     return this;
@@ -308,12 +307,12 @@ var DisplaySingle = function(canvas, parameters) {
       init();
     }
 
-    //mainCtx.save();
+    // mainCtx.save();
     mainCtx.clearRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
-    var lcdBackgroundBuffer = lcdBuffer;
-    var lcdTextColor = lcdColor.textColor;
-    var sectionIndex;
+    let lcdBackgroundBuffer = lcdBuffer;
+    let lcdTextColor = lcdColor.textColor;
+    let sectionIndex;
     // Draw sections
     if (null !== section && 0 < section.length) {
       for (sectionIndex = 0; sectionIndex < section.length; sectionIndex++) {

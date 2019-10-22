@@ -1,17 +1,17 @@
-import Tween from "./tween.js";
-import drawFrame from "./drawFrame";
-import drawBackground from "./drawBackground";
-import drawForeground from "./drawForeground";
+import Tween from './tween.js';
+import drawFrame from './drawFrame';
+import drawBackground from './drawBackground';
+import drawForeground from './drawForeground';
 import {
-createBuffer, 
-requestAnimFrame, 
-getCanvasContext,
-HALF_PI,
-TWO_PI,
-PI,
-RAD_FACTOR,
-stdFontName,
-} from "./tools";
+  createBuffer,
+  requestAnimFrame,
+  getCanvasContext,
+  HALF_PI,
+  TWO_PI,
+  PI,
+  RAD_FACTOR,
+  stdFontName,
+} from './tools';
 
 import {
   BackgroundColor,
@@ -28,24 +28,24 @@ import {
   LabelNumberFormat,
   TickLabelOrientation,
   TrendState,
-  } from "./definitions";
+} from './definitions';
 
-var level = function(canvas, parameters) {
+const level = function(canvas, parameters) {
   parameters = parameters || {};
-  var size = (undefined === parameters.size ? 0 : parameters.size),
-    decimalsVisible = (undefined === parameters.decimalsVisible ? false : parameters.decimalsVisible),
-    textOrientationFixed = (undefined === parameters.textOrientationFixed ? false : parameters.textOrientationFixed),
-    frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
-    frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible),
-    backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor),
-    backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible),
-    pointerColor = (undefined === parameters.pointerColor ? ColorDef.RED : parameters.pointerColor),
-    foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType),
-    foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible),
-    rotateFace = (undefined === parameters.rotateFace ? false : parameters.rotateFace);
+  let size = (undefined === parameters.size ? 0 : parameters.size);
+  const decimalsVisible = (undefined === parameters.decimalsVisible ? false : parameters.decimalsVisible);
+  const textOrientationFixed = (undefined === parameters.textOrientationFixed ? false : parameters.textOrientationFixed);
+  let frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign);
+  const frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible);
+  let backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor);
+  const backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible);
+  let pointerColor = (undefined === parameters.pointerColor ? ColorDef.RED : parameters.pointerColor);
+  let foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType);
+  const foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible);
+  const rotateFace = (undefined === parameters.rotateFace ? false : parameters.rotateFace);
 
   // Get the canvas context and clear it
-  var mainCtx = getCanvasContext(canvas);
+  const mainCtx = getCanvasContext(canvas);
   // Has a size been specified?
   if (size === 0) {
     size = Math.min(mainCtx.canvas.width, mainCtx.canvas.height);
@@ -55,44 +55,44 @@ var level = function(canvas, parameters) {
   mainCtx.canvas.width = size;
   mainCtx.canvas.height = size;
 
-  var tween;
-  var repainting = false;
+  let tween;
+  let repainting = false;
 
-  var value = 0;
-  var stepValue = 0;
-  var visibleValue = 0;
-  var angleStep = TWO_PI / 360;
-  var angle = this.value;
-  var decimals = decimalsVisible ? 1 : 0;
+  let value = 0;
+  let stepValue = 0;
+  let visibleValue = 0;
+  const angleStep = TWO_PI / 360;
+  let angle = this.value;
+  const decimals = decimalsVisible ? 1 : 0;
 
-  var imageWidth = size;
-  var imageHeight = size;
+  const imageWidth = size;
+  const imageHeight = size;
 
-  var centerX = imageWidth / 2;
-  var centerY = imageHeight / 2;
+  const centerX = imageWidth / 2;
+  const centerY = imageHeight / 2;
 
-  var initialized = false;
+  let initialized = false;
 
   // **************   Buffer creation  ********************
   // Buffer for all static background painting code
-  var backgroundBuffer = createBuffer(size, size);
-  var backgroundContext = backgroundBuffer.getContext('2d');
+  const backgroundBuffer = createBuffer(size, size);
+  let backgroundContext = backgroundBuffer.getContext('2d');
 
   // Buffer for pointer image painting code
-  var pointerBuffer = createBuffer(size, size);
-  var pointerContext = pointerBuffer.getContext('2d');
+  const pointerBuffer = createBuffer(size, size);
+  let pointerContext = pointerBuffer.getContext('2d');
 
   // Buffer for step pointer image painting code
-  var stepPointerBuffer = createBuffer(size, size);
-  var stepPointerContext = stepPointerBuffer.getContext('2d');
+  const stepPointerBuffer = createBuffer(size, size);
+  let stepPointerContext = stepPointerBuffer.getContext('2d');
 
   // Buffer for static foreground painting code
-  var foregroundBuffer = createBuffer(size, size);
-  var foregroundContext = foregroundBuffer.getContext('2d');
+  const foregroundBuffer = createBuffer(size, size);
+  let foregroundContext = foregroundBuffer.getContext('2d');
 
   // **************   Image creation  ********************
-  var drawTickmarksImage = function(ctx) {
-    var stdFont, smlFont, i;
+  const drawTickmarksImage = function(ctx) {
+    let stdFont; let smlFont; let i;
 
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -263,7 +263,7 @@ var level = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawMarkerImage = function(ctx) {
+  const drawMarkerImage = function(ctx) {
     ctx.save();
 
     ctx.strokeStyle = backgroundColor.labelColor.getRgbaColor();
@@ -316,7 +316,7 @@ var level = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawPointerImage = function(ctx) {
+  const drawPointerImage = function(ctx) {
     ctx.save();
 
     // POINTER_LEVEL
@@ -328,9 +328,9 @@ var level = function(canvas, parameters) {
     ctx.bezierCurveTo(imageWidth * 0.476635, imageHeight * 0.350467, imageWidth * 0.490654, imageHeight * 0.345794, imageWidth * 0.5, imageHeight * 0.345794);
     ctx.bezierCurveTo(imageWidth * 0.509345, imageHeight * 0.345794, imageWidth * 0.523364, imageHeight * 0.350467, imageWidth * 0.523364, imageHeight * 0.350467);
     ctx.closePath();
-    var POINTER_LEVEL_GRADIENT = ctx.createLinearGradient(0, 0.154205 * imageHeight, 0, 0.350466 * imageHeight);
-    var tmpDarkColor = pointerColor.dark;
-    var tmpLightColor = pointerColor.light;
+    const POINTER_LEVEL_GRADIENT = ctx.createLinearGradient(0, 0.154205 * imageHeight, 0, 0.350466 * imageHeight);
+    const tmpDarkColor = pointerColor.dark;
+    const tmpLightColor = pointerColor.light;
     tmpDarkColor.setAlpha(0.70588);
     tmpLightColor.setAlpha(0.70588);
     POINTER_LEVEL_GRADIENT.addColorStop(0, tmpDarkColor.getRgbaColor());
@@ -338,7 +338,7 @@ var level = function(canvas, parameters) {
     POINTER_LEVEL_GRADIENT.addColorStop(0.59, tmpLightColor.getRgbaColor());
     POINTER_LEVEL_GRADIENT.addColorStop(1, tmpDarkColor.getRgbaColor());
     ctx.fillStyle = POINTER_LEVEL_GRADIENT;
-    var strokeColor_POINTER_LEVEL = pointerColor.light.getRgbaColor();
+    const strokeColor_POINTER_LEVEL = pointerColor.light.getRgbaColor();
     ctx.lineWidth = 1;
     ctx.lineCap = 'square';
     ctx.lineJoin = 'miter';
@@ -352,11 +352,11 @@ var level = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawStepPointerImage = function(ctx) {
+  const drawStepPointerImage = function(ctx) {
     ctx.save();
 
-    var tmpDarkColor = pointerColor.dark;
-    var tmpLightColor = pointerColor.light;
+    const tmpDarkColor = pointerColor.dark;
+    const tmpLightColor = pointerColor.light;
     tmpDarkColor.setAlpha(0.70588);
     tmpLightColor.setAlpha(0.70588);
 
@@ -369,13 +369,13 @@ var level = function(canvas, parameters) {
     ctx.bezierCurveTo(imageWidth * 0.285046, imageHeight * 0.481308, imageWidth * 0.280373, imageHeight * 0.490654, imageWidth * 0.280373, imageHeight * 0.495327);
     ctx.bezierCurveTo(imageWidth * 0.280373, imageHeight * 0.504672, imageWidth * 0.285046, imageHeight * 0.514018, imageWidth * 0.285046, imageHeight * 0.514018);
     ctx.closePath();
-    var POINTER_LEVEL_LEFT_GRADIENT = ctx.createLinearGradient(0.224299 * imageWidth, 0, 0.289719 * imageWidth, 0);
+    const POINTER_LEVEL_LEFT_GRADIENT = ctx.createLinearGradient(0.224299 * imageWidth, 0, 0.289719 * imageWidth, 0);
     POINTER_LEVEL_LEFT_GRADIENT.addColorStop(0, tmpDarkColor.getRgbaColor());
     POINTER_LEVEL_LEFT_GRADIENT.addColorStop(0.3, tmpLightColor.getRgbaColor());
     POINTER_LEVEL_LEFT_GRADIENT.addColorStop(0.59, tmpLightColor.getRgbaColor());
     POINTER_LEVEL_LEFT_GRADIENT.addColorStop(1, tmpDarkColor.getRgbaColor());
     ctx.fillStyle = POINTER_LEVEL_LEFT_GRADIENT;
-    var strokeColor_POINTER_LEVEL_LEFT = pointerColor.light.getRgbaColor();
+    const strokeColor_POINTER_LEVEL_LEFT = pointerColor.light.getRgbaColor();
     ctx.lineWidth = 1;
     ctx.lineCap = 'square';
     ctx.lineJoin = 'miter';
@@ -392,13 +392,13 @@ var level = function(canvas, parameters) {
     ctx.bezierCurveTo(imageWidth * 0.714953, imageHeight * 0.481308, imageWidth * 0.719626, imageHeight * 0.490654, imageWidth * 0.719626, imageHeight * 0.495327);
     ctx.bezierCurveTo(imageWidth * 0.719626, imageHeight * 0.504672, imageWidth * 0.714953, imageHeight * 0.514018, imageWidth * 0.714953, imageHeight * 0.514018);
     ctx.closePath();
-    var POINTER_LEVEL_RIGHT_GRADIENT = ctx.createLinearGradient(0.775700 * imageWidth, 0, 0.71028 * imageWidth, 0);
+    const POINTER_LEVEL_RIGHT_GRADIENT = ctx.createLinearGradient(0.775700 * imageWidth, 0, 0.71028 * imageWidth, 0);
     POINTER_LEVEL_RIGHT_GRADIENT.addColorStop(0, tmpDarkColor.getRgbaColor());
     POINTER_LEVEL_RIGHT_GRADIENT.addColorStop(0.3, tmpLightColor.getRgbaColor());
     POINTER_LEVEL_RIGHT_GRADIENT.addColorStop(0.59, tmpLightColor.getRgbaColor());
     POINTER_LEVEL_RIGHT_GRADIENT.addColorStop(1, tmpDarkColor.getRgbaColor());
     ctx.fillStyle = POINTER_LEVEL_RIGHT_GRADIENT;
-    var strokeColor_POINTER_LEVEL_RIGHT = pointerColor.light.getRgbaColor();
+    const strokeColor_POINTER_LEVEL_RIGHT = pointerColor.light.getRgbaColor();
     ctx.lineWidth = 1;
     ctx.lineCap = 'square';
     ctx.lineJoin = 'miter';
@@ -414,7 +414,7 @@ var level = function(canvas, parameters) {
 
   // **************   Initialization  ********************
   // Draw all static painting code to background
-  var init = function() {
+  const init = function() {
     initialized = true;
 
     if (frameVisible) {
@@ -437,7 +437,7 @@ var level = function(canvas, parameters) {
     }
   };
 
-  var resetBuffers = function() {
+  const resetBuffers = function() {
     backgroundBuffer.width = size;
     backgroundBuffer.height = size;
     backgroundContext = backgroundBuffer.getContext('2d');
@@ -458,9 +458,9 @@ var level = function(canvas, parameters) {
     foregroundContext = foregroundBuffer.getContext('2d');
   };
 
-  //************************************ Public methods **************************************
+  //* *********************************** Public methods **************************************
   this.setValue = function(newValue) {
-    var targetValue;
+    let targetValue;
     newValue = parseFloat(newValue);
     targetValue = 0 > newValue ? (360 + newValue) : newValue;
     targetValue = 359.9 < newValue ? (newValue - 360) : newValue;
@@ -527,11 +527,11 @@ var level = function(canvas, parameters) {
         tween.stop();
       }
 
-      //tween = new Tween(new Object(),'',Tween.elasticEaseOut,this.value,targetValue, 1);
+      // tween = new Tween(new Object(),'',Tween.elasticEaseOut,this.value,targetValue, 1);
       tween = new Tween({}, '', Tween.regularEaseInOut, value, newValue, 1);
-      //tween = new Tween(new Object(), '', Tween.strongEaseInOut, this.value, targetValue, 1);
+      // tween = new Tween(new Object(), '', Tween.strongEaseInOut, this.value, targetValue, 1);
 
-      var gauge = this;
+      const gauge = this;
 
       tween.onMotionChanged = function(event) {
         value = event.target._pos;
@@ -583,7 +583,7 @@ var level = function(canvas, parameters) {
       };
 
       // do we have a callback function to process?
-      if (callback && typeof(callback) === "function") {
+      if (callback && typeof(callback) === 'function') {
         tween.onMotionFinished = callback;
       }
 

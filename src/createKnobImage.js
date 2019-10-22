@@ -1,15 +1,15 @@
 
 import {
-createBuffer, 
-TWO_PI,
-} from "./tools";
+  createBuffer,
+  TWO_PI,
+} from './tools';
 
 var createKnobImage = function(size, knob, style) {
-  var knobBuffer, knobCtx,
-    maxPostCenterX = size / 2,
-    maxPostCenterY = size / 2,
-    grad,
-    cacheKey = size.toString() + knob.type + style.style;
+  let knobBuffer; let knobCtx;
+  const maxPostCenterX = size / 2;
+  const maxPostCenterY = size / 2;
+  let grad;
+  const cacheKey = size.toString() + knob.type + style.style;
 
   // check if we have already created and cached this buffer, if not create it
   if (!createKnobImage.cache[cacheKey]) {

@@ -1,12 +1,12 @@
 
 import {
-drawToBuffer, 
-} from "./tools";
+  drawToBuffer,
+} from './tools';
 
-var punchedSheetBuffer = drawToBuffer(15, 15, function(ctx) {
-  var imageWidth = ctx.canvas.width,
-    imageHeight = ctx.canvas.height,
-    grad;
+const punchedSheetBuffer = drawToBuffer(15, 15, function(ctx) {
+  const imageWidth = ctx.canvas.width;
+  const imageHeight = ctx.canvas.height;
+  let grad;
 
   ctx.save();
 

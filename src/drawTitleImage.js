@@ -1,7 +1,7 @@
 
 import {
-stdFontName,
-} from "./tools";
+  stdFontName,
+} from './tools';
 
 import {
   BackgroundColor,
@@ -18,9 +18,9 @@ import {
   LabelNumberFormat,
   TickLabelOrientation,
   TrendState,
-  } from "./definitions";
+} from './definitions';
 
-var drawTitleImage = function(ctx, imageWidth, imageHeight, titleString, unitString, backgroundColor, vertical, radial, altPos, gaugeType) {
+const drawTitleImage = function(ctx, imageWidth, imageHeight, titleString, unitString, backgroundColor, vertical, radial, altPos, gaugeType) {
   gaugeType = (undefined === gaugeType ? gaugeType = GaugeType.TYPE1 : gaugeType);
   ctx.save();
   ctx.textAlign = (radial ? 'center' : 'left');
@@ -60,7 +60,7 @@ var drawTitleImage = function(ctx, imageWidth, imageHeight, titleString, unitStr
           ctx.fillText(unitString, imageWidth / 2, imageHeight * 0.89, imageWidth * 0.2);
         }
       }
-    } else { //linear horizontal
+    } else { // linear horizontal
       ctx.font = 0.035 * imageWidth + 'px ' + stdFontName;
       ctx.fillText(titleString, imageWidth * 0.15, imageHeight * 0.25, imageWidth * 0.3);
       ctx.font = 0.025 * imageWidth + 'px ' + stdFontName;

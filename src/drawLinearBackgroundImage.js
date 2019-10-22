@@ -1,30 +1,30 @@
 
-import carbonBuffer from "./carbonBuffer";
-import punchedSheetBuffer from "./punchedSheetBuffer";
-import brushedMetalTexture from "./brushedMetalTexture";
+import carbonBuffer from './carbonBuffer';
+import punchedSheetBuffer from './punchedSheetBuffer';
+import brushedMetalTexture from './brushedMetalTexture';
 import {
-rgbaColor, 
-ConicalGradient, 
-roundedRectangle, 
-createBuffer, 
-TWO_PI,
-} from "./tools";
+  rgbaColor,
+  ConicalGradient,
+  roundedRectangle,
+  createBuffer,
+  TWO_PI,
+} from './tools';
 
 var drawLinearBackgroundImage = function(ctx, backgroundColor, imageWidth, imageHeight, vertical) {
-  var i, end, grad, fractions, colors,
-    frameWidth,
-    linBBuffer, linBCtx, linBColor,
-    radius,
-    turnRadius, centerX, centerY, stepSize,
-    mono, textureColor, texture,
-    cacheKey = imageWidth.toString() + imageHeight + vertical + backgroundColor.name;
+  let i; let end; let grad; let fractions; let colors;
+  let frameWidth;
+  let linBBuffer; let linBCtx; let linBColor;
+  let radius;
+  let turnRadius; let centerX; let centerY; let stepSize;
+  let mono; let textureColor; let texture;
+  const cacheKey = imageWidth.toString() + imageHeight + vertical + backgroundColor.name;
 
   // check if we have already created and cached this buffer, if not create it
   if (!drawLinearBackgroundImage.cache[cacheKey]) {
     frameWidth = Math.sqrt(imageWidth * imageWidth + imageHeight * imageHeight) * 0.04;
     frameWidth = Math.ceil(Math.min(frameWidth, (vertical ? imageWidth : imageHeight) * 0.1)) - 1;
 
-    var CORNER_RADIUS = Math.floor((vertical ? imageWidth : imageHeight) * 0.028571);
+    const CORNER_RADIUS = Math.floor((vertical ? imageWidth : imageHeight) * 0.028571);
     // Setup buffer
     linBBuffer = createBuffer(imageWidth, imageHeight);
     linBCtx = linBBuffer.getContext('2d');
@@ -63,7 +63,7 @@ var drawLinearBackgroundImage = function(ctx, backgroundColor, imageWidth, image
           0.81,
           0.85,
           0.97,
-          1
+          1,
         ];
 
         // Define the colors of the conical gradient paint
@@ -81,7 +81,7 @@ var drawLinearBackgroundImage = function(ctx, backgroundColor, imageWidth, image
           new rgbaColor('#ACACAE'),
           new rgbaColor('#B2B2B4'),
           new rgbaColor('#FDFDFD'),
-          new rgbaColor('#FDFDFD')
+          new rgbaColor('#FDFDFD'),
         ];
         grad = new ConicalGradient(fractions, colors);
         // Set a clip as we will be drawing outside the required area
@@ -174,7 +174,7 @@ var drawLinearBackgroundImage = function(ctx, backgroundColor, imageWidth, image
       'rgba(0, 0, 0, 0.09)',
       'rgba(0, 0, 0, 0.06)',
       'rgba(0, 0, 0, 0.04)',
-      'rgba(0, 0, 0, 0.03)'
+      'rgba(0, 0, 0, 0.03)',
     ];
     for (i = 0; i < 7; i++) {
       linBCtx.strokeStyle = colors[i];

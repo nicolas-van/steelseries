@@ -1,41 +1,41 @@
 
 import {
-getCanvasContext,
-TWO_PI,
-doc,
-} from "./tools";
+  getCanvasContext,
+  TWO_PI,
+  doc,
+} from './tools';
 
-var trafficlight = function(canvas, parameters) {
+const trafficlight = function(canvas, parameters) {
   parameters = parameters || {};
-  var width = (undefined === parameters.width ? 0 : parameters.width),
-    height = (undefined === parameters.height ? 0 : parameters.height),
-    //
-    mainCtx = getCanvasContext(canvas),
-    prefHeight, imageWidth, imageHeight,
-    redOn = false,
-    yellowOn = false,
-    greenOn = false,
-    initialized = false,
-    housingBuffer = doc.createElement('canvas'),
-    housingCtx = housingBuffer.getContext('2d'),
-    lightGreenBuffer = doc.createElement('canvas'),
-    lightGreenCtx = lightGreenBuffer.getContext('2d'),
-    greenOnBuffer = doc.createElement('canvas'),
-    greenOnCtx = greenOnBuffer.getContext('2d'),
-    greenOffBuffer = doc.createElement('canvas'),
-    greenOffCtx = greenOffBuffer.getContext('2d'),
-    lightYellowBuffer = doc.createElement('canvas'),
-    lightYellowCtx = lightYellowBuffer.getContext('2d'),
-    yellowOnBuffer = doc.createElement('canvas'),
-    yellowOnCtx = yellowOnBuffer.getContext('2d'),
-    yellowOffBuffer = doc.createElement('canvas'),
-    yellowOffCtx = yellowOffBuffer.getContext('2d'),
-    lightRedBuffer = doc.createElement('canvas'),
-    lightRedCtx = lightRedBuffer.getContext('2d'),
-    redOnBuffer = doc.createElement('canvas'),
-    redOnCtx = redOnBuffer.getContext('2d'),
-    redOffBuffer = doc.createElement('canvas'),
-    redOffCtx = redOffBuffer.getContext('2d');
+  let width = (undefined === parameters.width ? 0 : parameters.width);
+  let height = (undefined === parameters.height ? 0 : parameters.height);
+  //
+  const mainCtx = getCanvasContext(canvas);
+  let prefHeight; let imageWidth; let imageHeight;
+  let redOn = false;
+  let yellowOn = false;
+  let greenOn = false;
+  let initialized = false;
+  const housingBuffer = doc.createElement('canvas');
+  const housingCtx = housingBuffer.getContext('2d');
+  const lightGreenBuffer = doc.createElement('canvas');
+  const lightGreenCtx = lightGreenBuffer.getContext('2d');
+  const greenOnBuffer = doc.createElement('canvas');
+  const greenOnCtx = greenOnBuffer.getContext('2d');
+  const greenOffBuffer = doc.createElement('canvas');
+  const greenOffCtx = greenOffBuffer.getContext('2d');
+  const lightYellowBuffer = doc.createElement('canvas');
+  const lightYellowCtx = lightYellowBuffer.getContext('2d');
+  const yellowOnBuffer = doc.createElement('canvas');
+  const yellowOnCtx = yellowOnBuffer.getContext('2d');
+  const yellowOffBuffer = doc.createElement('canvas');
+  const yellowOffCtx = yellowOffBuffer.getContext('2d');
+  const lightRedBuffer = doc.createElement('canvas');
+  const lightRedCtx = lightRedBuffer.getContext('2d');
+  const redOnBuffer = doc.createElement('canvas');
+  const redOnCtx = redOnBuffer.getContext('2d');
+  const redOffBuffer = doc.createElement('canvas');
+  const redOffCtx = redOffBuffer.getContext('2d');
   // End of variables
 
   // Has a size been specified?
@@ -84,8 +84,8 @@ var trafficlight = function(canvas, parameters) {
   redOffBuffer.width = imageWidth;
   redOffBuffer.height = imageHeight;
 
-  var drawHousing = function(ctx) {
-    var housingFill, housingFrontFill;
+  const drawHousing = function(ctx) {
+    let housingFill; let housingFrontFill;
 
     ctx.save();
 
@@ -118,15 +118,21 @@ var trafficlight = function(canvas, parameters) {
     ctx.beginPath();
     ctx.moveTo(0.030612 * imageWidth + 0.084183 * imageWidth, 0.010791 * imageHeight);
     ctx.lineTo(0.030612 * imageWidth + 0.938775 * imageWidth - 0.084183 * imageWidth, 0.010791 * imageHeight);
-    ctx.quadraticCurveTo(0.030612 * imageWidth + 0.938775 * imageWidth, 0.010791 * imageHeight, 0.030612 * imageWidth + 0.938775 * imageWidth, 0.010791 * imageHeight + 0.084183 * imageWidth);
+    ctx.quadraticCurveTo(0.030612 * imageWidth + 0.938775 * imageWidth, 0.010791 * imageHeight,
+        0.030612 * imageWidth + 0.938775 * imageWidth, 0.010791 * imageHeight + 0.084183 * imageWidth);
     ctx.lineTo(0.030612 * imageWidth + 0.938775 * imageWidth, 0.010791 * imageHeight + 0.978417 * imageHeight - 0.084183 * imageWidth);
-    ctx.quadraticCurveTo(0.030612 * imageWidth + 0.938775 * imageWidth, 0.010791 * imageHeight + 0.978417 * imageHeight, 0.030612 * imageWidth + 0.938775 * imageWidth - 0.084183 * imageWidth, 0.010791 * imageHeight + 0.978417 * imageHeight);
+    ctx.quadraticCurveTo(0.030612 * imageWidth + 0.938775 * imageWidth, 0.010791 * imageHeight +
+      0.978417 * imageHeight, 0.030612 * imageWidth + 0.938775 * imageWidth - 0.084183 * imageWidth,
+    0.010791 * imageHeight + 0.978417 * imageHeight);
     ctx.lineTo(0.030612 * imageWidth + 0.084183 * imageWidth, 0.010791 * imageHeight + 0.978417 * imageHeight);
-    ctx.quadraticCurveTo(0.030612 * imageWidth, 0.010791 * imageHeight + 0.978417 * imageHeight, 0.030612 * imageWidth, 0.010791 * imageHeight + 0.978417 * imageHeight - 0.084183 * imageWidth);
+    ctx.quadraticCurveTo(0.030612 * imageWidth, 0.010791 * imageHeight + 0.978417 * imageHeight, 0.030612 *
+      imageWidth, 0.010791 * imageHeight + 0.978417 * imageHeight - 0.084183 * imageWidth);
     ctx.lineTo(0.030612 * imageWidth, 0.010791 * imageHeight + 0.084183 * imageWidth);
-    ctx.quadraticCurveTo(0.030612 * imageWidth, 0.010791 * imageHeight, 0.030612 * imageWidth + 0.084183 * imageWidth, 0.010791 * imageHeight);
+    ctx.quadraticCurveTo(0.030612 * imageWidth, 0.010791 * imageHeight, 0.030612 * imageWidth + 0.084183 *
+      imageWidth, 0.010791 * imageHeight);
     ctx.closePath();
-    housingFrontFill = ctx.createLinearGradient(-0.132653 * imageWidth, -0.053956 * imageHeight, 2.061408 * imageWidth, 0.667293 * imageHeight);
+    housingFrontFill = ctx.createLinearGradient(-0.132653 * imageWidth, -0.053956 * imageHeight, 2.061408 *
+      imageWidth, 0.667293 * imageHeight);
     housingFrontFill.addColorStop(0, '#000000');
     housingFrontFill.addColorStop(0.01, '#000000');
     housingFrontFill.addColorStop(0.16, '#373735');
@@ -143,8 +149,8 @@ var trafficlight = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawLightGreen = function(ctx) {
-    var lightGreenFrameFill, lightGreenInnerFill, lightGreenEffectFill, lightGreenInnerShadowFill;
+  const drawLightGreen = function(ctx) {
+    let lightGreenFrameFill; let lightGreenInnerFill; let lightGreenEffectFill; let lightGreenInnerShadowFill;
 
     ctx.save();
 
@@ -202,8 +208,8 @@ var trafficlight = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawGreenOn = function(ctx) {
-    var greenOnFill, greenOnGlowFill;
+  const drawGreenOn = function(ctx) {
+    let greenOnFill; let greenOnGlowFill;
 
     ctx.save();
 
@@ -235,8 +241,8 @@ var trafficlight = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawGreenOff = function(ctx) {
-    var greenOffFill, greenOffInnerShadowFill;
+  const drawGreenOff = function(ctx) {
+    let greenOffFill; let greenOffInnerShadowFill;
 
     ctx.save();
 
@@ -272,8 +278,8 @@ var trafficlight = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawLightYellow = function(ctx) {
-    var lightYellowFrameFill, lightYellowInnerFill, lightYellowEffectFill, lightYellowInnerShadowFill;
+  const drawLightYellow = function(ctx) {
+    let lightYellowFrameFill; let lightYellowInnerFill; let lightYellowEffectFill; let lightYellowInnerShadowFill;
 
     ctx.save();
 
@@ -318,7 +324,7 @@ var trafficlight = function(canvas, parameters) {
     ctx.fill();
     ctx.restore();
 
-    //lIGHT_YELLOW_4_E_INNER_SHADOW_3_4
+    // lIGHT_YELLOW_4_E_INNER_SHADOW_3_4
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
@@ -332,8 +338,8 @@ var trafficlight = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawYellowOn = function(ctx) {
-    var yellowOnFill, yellowOnGlowFill;
+  const drawYellowOn = function(ctx) {
+    let yellowOnFill; let yellowOnGlowFill;
 
     ctx.save();
 
@@ -365,8 +371,8 @@ var trafficlight = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawYellowOff = function(ctx) {
-    var yellowOffFill, yellowOffInnerShadowFill;
+  const drawYellowOff = function(ctx) {
+    let yellowOffFill; let yellowOffInnerShadowFill;
 
     ctx.save();
 
@@ -402,12 +408,12 @@ var trafficlight = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawLightRed = function(ctx) {
-    var lightRedFrameFill, lightRedInnerFill, lightRedEffectFill, lightRedInnerShadowFill;
+  const drawLightRed = function(ctx) {
+    let lightRedFrameFill; let lightRedInnerFill; let lightRedEffectFill; let lightRedInnerShadowFill;
 
     ctx.save();
 
-    //lIGHT_RED_7_E_FRAME_0_1
+    // lIGHT_RED_7_E_FRAME_0_1
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
@@ -423,7 +429,7 @@ var trafficlight = function(canvas, parameters) {
     ctx.fill();
     ctx.restore();
 
-    //lIGHT_RED_7_E_INNER_CLIP_1_2
+    // lIGHT_RED_7_E_INNER_CLIP_1_2
     ctx.save();
     ctx.scale(1.083333, 1);
     ctx.beginPath();
@@ -437,7 +443,7 @@ var trafficlight = function(canvas, parameters) {
     ctx.fill();
     ctx.restore();
 
-    //lIGHT_RED_7_E_LIGHT_EFFECT_2_3
+    // lIGHT_RED_7_E_LIGHT_EFFECT_2_3
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
@@ -451,7 +457,7 @@ var trafficlight = function(canvas, parameters) {
     ctx.fill();
     ctx.restore();
 
-    //lIGHT_RED_7_E_INNER_SHADOW_3_4
+    // lIGHT_RED_7_E_INNER_SHADOW_3_4
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
@@ -465,8 +471,8 @@ var trafficlight = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawRedOn = function(ctx) {
-    var redOnFill, redOnGlowFill;
+  const drawRedOn = function(ctx) {
+    let redOnFill; let redOnGlowFill;
 
     ctx.save();
 
@@ -499,8 +505,8 @@ var trafficlight = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawRedOff = function(ctx) {
-    var redOffFill, redOffInnerShadowFill;
+  const drawRedOff = function(ctx) {
+    let redOffFill; let redOffInnerShadowFill;
 
     ctx.save();
 
@@ -537,7 +543,7 @@ var trafficlight = function(canvas, parameters) {
   };
 
   function drawToBuffer(width, height, drawFunction) {
-    var buffer = doc.createElement('canvas');
+    const buffer = doc.createElement('canvas');
     buffer.width = width;
     buffer.height = height;
     drawFunction(buffer.getContext('2d'));
@@ -554,7 +560,7 @@ var trafficlight = function(canvas, parameters) {
     ctx.restore();
   });
 
-  var init = function() {
+  const init = function() {
     initialized = true;
 
     drawHousing(housingCtx);

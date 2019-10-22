@@ -1,27 +1,27 @@
-import Tween from "./tween.js";
-import drawFrame from "./drawFrame";
-import drawBackground from "./drawBackground";
-import drawRadialCustomImage from "./drawRadialCustomImage";
-import drawForeground from "./drawForeground";
-import createLedImage from "./createLedImage";
-import createLcdBackgroundImage from "./createLcdBackgroundImage";
-import createTrendIndicator from "./createTrendIndicator";
-import drawTitleImage from "./drawTitleImage";
+import Tween from './tween.js';
+import drawFrame from './drawFrame';
+import drawBackground from './drawBackground';
+import drawRadialCustomImage from './drawRadialCustomImage';
+import drawForeground from './drawForeground';
+import createLedImage from './createLedImage';
+import createLcdBackgroundImage from './createLcdBackgroundImage';
+import createTrendIndicator from './createTrendIndicator';
+import drawTitleImage from './drawTitleImage';
 import {
-calcNiceNumber, 
-createBuffer, 
-customColorDef, 
-requestAnimFrame, 
-getCanvasContext,
-HALF_PI,
-TWO_PI,
-PI,
-RAD_FACTOR,
-DEG_FACTOR,
-doc,
-lcdFontName,
-stdFontName,
-} from "./tools";
+  calcNiceNumber,
+  createBuffer,
+  customColorDef,
+  requestAnimFrame,
+  getCanvasContext,
+  HALF_PI,
+  TWO_PI,
+  PI,
+  RAD_FACTOR,
+  DEG_FACTOR,
+  doc,
+  lcdFontName,
+  stdFontName,
+} from './tools';
 
 import {
   BackgroundColor,
@@ -38,50 +38,50 @@ import {
   LabelNumberFormat,
   TickLabelOrientation,
   TrendState,
-  } from "./definitions";
+} from './definitions';
 
-var RadialBargraph = function(canvas, parameters) {
+const RadialBargraph = function(canvas, parameters) {
   parameters = parameters || {};
-  var gaugeType = (undefined === parameters.gaugeType ? GaugeType.TYPE4 : parameters.gaugeType),
-    size = (undefined === parameters.size ? 0 : parameters.size),
-    minValue = (undefined === parameters.minValue ? 0 : parameters.minValue),
-    maxValue = (undefined === parameters.maxValue ? (minValue + 100) : parameters.maxValue),
-    niceScale = (undefined === parameters.niceScale ? true : parameters.niceScale),
-    threshold = (undefined === parameters.threshold ? (maxValue - minValue) / 2 + minValue : parameters.threshold),
-    thresholdRising = (undefined === parameters.thresholdRising ? true : parameters.thresholdRising),
-    section = (undefined === parameters.section ? null : parameters.section),
-    useSectionColors = (undefined === parameters.useSectionColors ? false : parameters.useSectionColors),
-    titleString = (undefined === parameters.titleString ? '' : parameters.titleString),
-    unitString = (undefined === parameters.unitString ? '' : parameters.unitString),
-    frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
-    frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible),
-    backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor),
-    backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible),
-    valueColor = (undefined === parameters.valueColor ? ColorDef.RED : parameters.valueColor),
-    lcdColor = (undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor),
-    lcdVisible = (undefined === parameters.lcdVisible ? true : parameters.lcdVisible),
-    lcdDecimals = (undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals),
-    digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont),
-    fractionalScaleDecimals = (undefined === parameters.fractionalScaleDecimals ? 1 : parameters.fractionalScaleDecimals),
-    customLayer = (undefined === parameters.customLayer ? null : parameters.customLayer),
-    ledColor = (undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor),
-    ledVisible = (undefined === parameters.ledVisible ? true : parameters.ledVisible),
-    userLedColor = (undefined === parameters.userLedColor ? LedColor.GREEN_LED : parameters.userLedColor),
-    userLedVisible = (undefined === parameters.userLedVisible ? false : parameters.userLedVisible),
-    labelNumberFormat = (undefined === parameters.labelNumberFormat ? LabelNumberFormat.STANDARD : parameters.labelNumberFormat),
-    foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType),
-    foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible),
-    playAlarm = (undefined === parameters.playAlarm ? false : parameters.playAlarm),
-    alarmSound = (undefined === parameters.alarmSound ? false : parameters.alarmSound),
-    valueGradient = (undefined === parameters.valueGradient ? null : parameters.valueGradient),
-    useValueGradient = (undefined === parameters.useValueGradient ? false : parameters.useValueGradient),
-    tickLabelOrientation = (undefined === parameters.tickLabelOrientation ? (gaugeType === GaugeType.TYPE1 ? TickLabelOrientation.TANGENT : TickLabelOrientation.NORMAL) : parameters.tickLabelOrientation),
-    trendVisible = (undefined === parameters.trendVisible ? false : parameters.trendVisible),
-    trendColors = (undefined === parameters.trendColors ? [LedColor.RED_LED, LedColor.GREEN_LED, LedColor.CYAN_LED] : parameters.trendColors),
-    fullScaleDeflectionTime = (undefined === parameters.fullScaleDeflectionTime ? 2.5 : parameters.fullScaleDeflectionTime);
+  const gaugeType = (undefined === parameters.gaugeType ? GaugeType.TYPE4 : parameters.gaugeType);
+  let size = (undefined === parameters.size ? 0 : parameters.size);
+  let minValue = (undefined === parameters.minValue ? 0 : parameters.minValue);
+  let maxValue = (undefined === parameters.maxValue ? (minValue + 100) : parameters.maxValue);
+  const niceScale = (undefined === parameters.niceScale ? true : parameters.niceScale);
+  let threshold = (undefined === parameters.threshold ? (maxValue - minValue) / 2 + minValue : parameters.threshold);
+  let thresholdRising = (undefined === parameters.thresholdRising ? true : parameters.thresholdRising);
+  let section = (undefined === parameters.section ? null : parameters.section);
+  let useSectionColors = (undefined === parameters.useSectionColors ? false : parameters.useSectionColors);
+  let titleString = (undefined === parameters.titleString ? '' : parameters.titleString);
+  let unitString = (undefined === parameters.unitString ? '' : parameters.unitString);
+  let frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign);
+  const frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible);
+  let backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor);
+  const backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible);
+  let valueColor = (undefined === parameters.valueColor ? ColorDef.RED : parameters.valueColor);
+  let lcdColor = (undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor);
+  const lcdVisible = (undefined === parameters.lcdVisible ? true : parameters.lcdVisible);
+  let lcdDecimals = (undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals);
+  const digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont);
+  let fractionalScaleDecimals = (undefined === parameters.fractionalScaleDecimals ? 1 : parameters.fractionalScaleDecimals);
+  const customLayer = (undefined === parameters.customLayer ? null : parameters.customLayer);
+  let ledColor = (undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor);
+  let ledVisible = (undefined === parameters.ledVisible ? true : parameters.ledVisible);
+  let userLedColor = (undefined === parameters.userLedColor ? LedColor.GREEN_LED : parameters.userLedColor);
+  let userLedVisible = (undefined === parameters.userLedVisible ? false : parameters.userLedVisible);
+  let labelNumberFormat = (undefined === parameters.labelNumberFormat ? LabelNumberFormat.STANDARD : parameters.labelNumberFormat);
+  let foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType);
+  const foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible);
+  const playAlarm = (undefined === parameters.playAlarm ? false : parameters.playAlarm);
+  const alarmSound = (undefined === parameters.alarmSound ? false : parameters.alarmSound);
+  let valueGradient = (undefined === parameters.valueGradient ? null : parameters.valueGradient);
+  let useValueGradient = (undefined === parameters.useValueGradient ? false : parameters.useValueGradient);
+  const tickLabelOrientation = (undefined === parameters.tickLabelOrientation ? (gaugeType === GaugeType.TYPE1 ? TickLabelOrientation.TANGENT : TickLabelOrientation.NORMAL) : parameters.tickLabelOrientation);
+  let trendVisible = (undefined === parameters.trendVisible ? false : parameters.trendVisible);
+  const trendColors = (undefined === parameters.trendColors ? [LedColor.RED_LED, LedColor.GREEN_LED, LedColor.CYAN_LED] : parameters.trendColors);
+  const fullScaleDeflectionTime = (undefined === parameters.fullScaleDeflectionTime ? 2.5 : parameters.fullScaleDeflectionTime);
 
   // Get the canvas context and clear it
-  var mainCtx = getCanvasContext(canvas);
+  const mainCtx = getCanvasContext(canvas);
   // Has a size been specified?
   if (size === 0) {
     size = Math.min(mainCtx.canvas.width, mainCtx.canvas.height);
@@ -98,61 +98,61 @@ var RadialBargraph = function(canvas, parameters) {
     audioElement.setAttribute('preload', 'auto');
   }
 
-  var value = minValue;
-  var minMeasuredValue = minValue;
-  var maxMeasuredValue = maxValue;
-  var range = maxValue - minValue;
-  var ledBlinking = false;
-  var ledTimerId = 0;
-  var userLedBlinking = false;
-  var userLedTimerId = 0;
-  var tween;
-  var self = this;
-  var repainting = false;
+  let value = minValue;
+  let minMeasuredValue = minValue;
+  let maxMeasuredValue = maxValue;
+  let range = maxValue - minValue;
+  let ledBlinking = false;
+  let ledTimerId = 0;
+  let userLedBlinking = false;
+  let userLedTimerId = 0;
+  let tween;
+  const self = this;
+  let repainting = false;
 
   // GaugeType specific private variables
-  var freeAreaAngle;
-  var rotationOffset;
-  var bargraphOffset;
-  var tickmarkOffset;
-  var angleRange;
-  var degAngleRange;
-  var angleStep;
-  var angle;
+  let freeAreaAngle;
+  let rotationOffset;
+  let bargraphOffset;
+  let tickmarkOffset;
+  let angleRange;
+  let degAngleRange;
+  let angleStep;
+  let angle;
 
-  var sectionAngles = [];
-  var isSectionsVisible = false;
-  var isGradientVisible = false;
+  let sectionAngles = [];
+  let isSectionsVisible = false;
+  let isGradientVisible = false;
 
-  var imageWidth = size;
-  var imageHeight = size;
+  const imageWidth = size;
+  const imageHeight = size;
 
-  var centerX = imageWidth / 2;
-  var centerY = imageHeight / 2;
+  const centerX = imageWidth / 2;
+  const centerY = imageHeight / 2;
 
   // Misc
-  var lcdFontHeight = Math.floor(imageWidth / 10);
-  var stdFont = lcdFontHeight + 'px ' + stdFontName;
-  var lcdFont = lcdFontHeight + 'px ' + lcdFontName;
-  var lcdHeight = imageHeight * 0.13;
-  var lcdWidth = imageWidth * 0.4;
-  var lcdPosX = (imageWidth - lcdWidth) / 2;
-  var lcdPosY = imageHeight / 2 - lcdHeight / 2;
+  const lcdFontHeight = Math.floor(imageWidth / 10);
+  const stdFont = lcdFontHeight + 'px ' + stdFontName;
+  const lcdFont = lcdFontHeight + 'px ' + lcdFontName;
+  const lcdHeight = imageHeight * 0.13;
+  const lcdWidth = imageWidth * 0.4;
+  const lcdPosX = (imageWidth - lcdWidth) / 2;
+  const lcdPosY = imageHeight / 2 - lcdHeight / 2;
 
   // Constants
-  var ACTIVE_LED_POS_X = imageWidth * 0.116822;
-  var ACTIVE_LED_POS_Y = imageWidth * 0.485981;
-  var LED_SIZE = Math.ceil(size * 0.093457);
-  //var LED_POS_X = imageWidth * 0.453271;
-  var LED_POS_X = imageWidth * 0.53;
-  var LED_POS_Y = imageHeight * 0.61;
-  var USER_LED_POS_X = gaugeType === GaugeType.TYPE3 ? 0.7 * imageWidth : centerX - LED_SIZE / 2;
-  var USER_LED_POS_Y = gaugeType === GaugeType.TYPE3 ? 0.61 * imageHeight : 0.75 * imageHeight;
+  const ACTIVE_LED_POS_X = imageWidth * 0.116822;
+  const ACTIVE_LED_POS_Y = imageWidth * 0.485981;
+  const LED_SIZE = Math.ceil(size * 0.093457);
+  // var LED_POS_X = imageWidth * 0.453271;
+  const LED_POS_X = imageWidth * 0.53;
+  const LED_POS_Y = imageHeight * 0.61;
+  const USER_LED_POS_X = gaugeType === GaugeType.TYPE3 ? 0.7 * imageWidth : centerX - LED_SIZE / 2;
+  const USER_LED_POS_Y = gaugeType === GaugeType.TYPE3 ? 0.61 * imageHeight : 0.75 * imageHeight;
 
-  var trendIndicator = TrendState.OFF;
-  var trendSize = size * 0.06;
-  var trendPosX = size * 0.38;
-  var trendPosY = size * 0.57;
+  let trendIndicator = TrendState.OFF;
+  const trendSize = size * 0.06;
+  const trendPosX = size * 0.38;
+  const trendPosY = size * 0.57;
 
   switch (gaugeType.type) {
     case 'type1':
@@ -199,64 +199,64 @@ var RadialBargraph = function(canvas, parameters) {
   }
 
   // Buffer for the frame
-  var frameBuffer = createBuffer(size, size);
-  var frameContext = frameBuffer.getContext('2d');
+  const frameBuffer = createBuffer(size, size);
+  let frameContext = frameBuffer.getContext('2d');
 
   // Buffer for static background painting code
-  var backgroundBuffer = createBuffer(size, size);
-  var backgroundContext = backgroundBuffer.getContext('2d');
+  const backgroundBuffer = createBuffer(size, size);
+  let backgroundContext = backgroundBuffer.getContext('2d');
 
-  var lcdBuffer;
+  let lcdBuffer;
 
   // Buffer for active bargraph led
-  var activeLedBuffer = createBuffer(Math.ceil(size * 0.060747), Math.ceil(size * 0.023364));
-  var activeLedContext = activeLedBuffer.getContext('2d');
+  const activeLedBuffer = createBuffer(Math.ceil(size * 0.060747), Math.ceil(size * 0.023364));
+  let activeLedContext = activeLedBuffer.getContext('2d');
 
   // Buffer for led on painting code
-  var ledBufferOn = createBuffer(LED_SIZE, LED_SIZE);
-  var ledContextOn = ledBufferOn.getContext('2d');
+  const ledBufferOn = createBuffer(LED_SIZE, LED_SIZE);
+  let ledContextOn = ledBufferOn.getContext('2d');
 
   // Buffer for led off painting code
-  var ledBufferOff = createBuffer(LED_SIZE, LED_SIZE);
-  var ledContextOff = ledBufferOff.getContext('2d');
+  const ledBufferOff = createBuffer(LED_SIZE, LED_SIZE);
+  let ledContextOff = ledBufferOff.getContext('2d');
 
   // Buffer for current led painting code
-  var ledBuffer = ledBufferOff;
+  let ledBuffer = ledBufferOff;
 
   // Buffer for user led on painting code
-  var userLedBufferOn = createBuffer(LED_SIZE, LED_SIZE);
-  var userLedContextOn = userLedBufferOn.getContext('2d');
+  const userLedBufferOn = createBuffer(LED_SIZE, LED_SIZE);
+  let userLedContextOn = userLedBufferOn.getContext('2d');
 
   // Buffer for user led off painting code
-  var userLedBufferOff = createBuffer(LED_SIZE, LED_SIZE);
-  var userLedContextOff = userLedBufferOff.getContext('2d');
+  const userLedBufferOff = createBuffer(LED_SIZE, LED_SIZE);
+  let userLedContextOff = userLedBufferOff.getContext('2d');
 
   // Buffer for current user led painting code
-  var userLedBuffer = userLedBufferOff;
+  let userLedBuffer = userLedBufferOff;
   // Buffer for the background of the led
-  var ledBackground;
+  let ledBackground;
 
   // Buffer for static foreground painting code
-  var foregroundBuffer = createBuffer(size, size);
-  var foregroundContext = foregroundBuffer.getContext('2d');
+  const foregroundBuffer = createBuffer(size, size);
+  let foregroundContext = foregroundBuffer.getContext('2d');
 
   // Buffers for trend indicators
-  var trendUpBuffer, trendSteadyBuffer, trendDownBuffer, trendOffBuffer;
+  let trendUpBuffer; let trendSteadyBuffer; let trendDownBuffer; let trendOffBuffer;
 
-  var initialized = false;
+  let initialized = false;
 
   // Tickmark specific private variables
-  var niceMinValue = minValue;
-  var niceMaxValue = maxValue;
-  var niceRange = maxValue - minValue;
+  let niceMinValue = minValue;
+  let niceMaxValue = maxValue;
+  let niceRange = maxValue - minValue;
   range = niceMaxValue - niceMinValue;
-  var minorTickSpacing = 0;
-  var majorTickSpacing = 0;
-  var maxNoOfMinorTicks = 10;
-  var maxNoOfMajorTicks = 10;
+  let minorTickSpacing = 0;
+  let majorTickSpacing = 0;
+  const maxNoOfMinorTicks = 10;
+  const maxNoOfMajorTicks = 10;
 
   // Method to calculate nice values for min, max and range for the tickmarks
-  var calculate = function calculate() {
+  const calculate = function calculate() {
     if (niceScale) {
       niceRange = calcNiceNumber(maxValue - minValue, false);
       majorTickSpacing = calcNiceNumber(niceRange / (maxNoOfMajorTicks - 1), true);
@@ -271,8 +271,8 @@ var RadialBargraph = function(canvas, parameters) {
       niceMinValue = minValue;
       niceMaxValue = maxValue;
       range = niceRange;
-      //minorTickSpacing = 1;
-      //majorTickSpacing = 10;
+      // minorTickSpacing = 1;
+      // majorTickSpacing = 10;
       majorTickSpacing = calcNiceNumber(niceRange / (maxNoOfMajorTicks - 1), true);
       minorTickSpacing = calcNiceNumber(majorTickSpacing / (maxNoOfMinorTicks - 1), true);
     }
@@ -320,17 +320,17 @@ var RadialBargraph = function(canvas, parameters) {
     angle = rotationOffset + (value - minValue) * angleStep;
   };
 
-  //********************************* Private methods *********************************
+  //* ******************************** Private methods *********************************
   // Draw all static painting code to background
-  var init = function(parameters) {
+  const init = function(parameters) {
     parameters = parameters || {};
-    var drawFrame2 = (undefined === parameters.frame ? false : parameters.frame);
-    var drawBackground2 = (undefined === parameters.background ? false : parameters.background);
-    var drawLed = (undefined === parameters.led ? false : parameters.led);
-    var drawUserLed = (undefined === parameters.userLed ? false : parameters.userLed);
-    var drawValue = (undefined === parameters.value ? false : parameters.value);
-    var drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
-    var drawTrend = (undefined === parameters.trend ? false : parameters.trend);
+    const drawFrame2 = (undefined === parameters.frame ? false : parameters.frame);
+    const drawBackground2 = (undefined === parameters.background ? false : parameters.background);
+    const drawLed = (undefined === parameters.led ? false : parameters.led);
+    const drawUserLed = (undefined === parameters.userLed ? false : parameters.userLed);
+    const drawValue = (undefined === parameters.value ? false : parameters.value);
+    const drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
+    const drawTrend = (undefined === parameters.trend ? false : parameters.trend);
 
     initialized = true;
 
@@ -391,14 +391,14 @@ var RadialBargraph = function(canvas, parameters) {
     isSectionsVisible = false;
     if (useSectionColors && null !== section && 0 < section.length) {
       isSectionsVisible = true;
-      var sectionIndex = section.length;
+      let sectionIndex = section.length;
       sectionAngles = [];
       do {
         sectionIndex--;
         sectionAngles.push({
           start: (((section[sectionIndex].start + Math.abs(minValue)) / (maxValue - minValue)) * degAngleRange),
           stop: (((section[sectionIndex].stop + Math.abs(minValue)) / (maxValue - minValue)) * degAngleRange),
-          color: customColorDef(section[sectionIndex].color)
+          color: customColorDef(section[sectionIndex].color),
         });
       } while (0 < sectionIndex);
     }
@@ -430,14 +430,14 @@ var RadialBargraph = function(canvas, parameters) {
     }
   };
 
-  var resetBuffers = function(buffers) {
+  const resetBuffers = function(buffers) {
     buffers = buffers || {};
-    var resetFrame = (undefined === buffers.frame ? false : buffers.frame);
-    var resetBackground = (undefined === buffers.background ? false : buffers.background);
-    var resetLed = (undefined === buffers.led ? false : buffers.led);
-    var resetUserLed = (undefined === buffers.userLed ? false : buffers.userLed);
-    var resetValue = (undefined === buffers.value ? false : buffers.value);
-    var resetForeground = (undefined === buffers.foreground ? false : buffers.foreground);
+    const resetFrame = (undefined === buffers.frame ? false : buffers.frame);
+    const resetBackground = (undefined === buffers.background ? false : buffers.background);
+    const resetLed = (undefined === buffers.led ? false : buffers.led);
+    const resetUserLed = (undefined === buffers.userLed ? false : buffers.userLed);
+    const resetValue = (undefined === buffers.value ? false : buffers.value);
+    const resetForeground = (undefined === buffers.foreground ? false : buffers.foreground);
 
     // Buffer for the frame
     if (resetFrame) {
@@ -497,7 +497,6 @@ var RadialBargraph = function(canvas, parameters) {
   };
 
   var drawBargraphTrackImage = function(ctx) {
-
     ctx.save();
 
     // Bargraphtrack
@@ -511,7 +510,7 @@ var RadialBargraph = function(canvas, parameters) {
     ctx.translate(-centerX, -centerY);
     ctx.arc(centerX, centerY, imageWidth * 0.355140, 0, angleRange + 8 * RAD_FACTOR, false);
     ctx.rotate(-rotationOffset);
-    var ledTrackFrameGradient = ctx.createLinearGradient(0, 0.107476 * imageHeight, 0, 0.897195 * imageHeight);
+    const ledTrackFrameGradient = ctx.createLinearGradient(0, 0.107476 * imageHeight, 0, 0.897195 * imageHeight);
     ledTrackFrameGradient.addColorStop(0, '#000000');
     ledTrackFrameGradient.addColorStop(0.22, '#333333');
     ledTrackFrameGradient.addColorStop(0.76, '#333333');
@@ -529,7 +528,7 @@ var RadialBargraph = function(canvas, parameters) {
     ctx.translate(-centerX, -centerY);
     ctx.arc(centerX, centerY, imageWidth * 0.355140, 0, angleRange + 8 * RAD_FACTOR, false);
     ctx.rotate(-rotationOffset);
-    var ledTrackMainGradient = ctx.createLinearGradient(0, 0.112149 * imageHeight, 0, 0.892523 * imageHeight);
+    const ledTrackMainGradient = ctx.createLinearGradient(0, 0.112149 * imageHeight, 0, 0.892523 * imageHeight);
     ledTrackMainGradient.addColorStop(0, '#111111');
     ledTrackMainGradient.addColorStop(1, '#333333');
     ctx.strokeStyle = ledTrackMainGradient;
@@ -537,12 +536,12 @@ var RadialBargraph = function(canvas, parameters) {
     ctx.restore();
 
     // Draw inactive leds
-    var ledCenterX = (imageWidth * 0.116822 + imageWidth * 0.060747) / 2;
-    var ledCenterY = (imageWidth * 0.485981 + imageWidth * 0.023364) / 2;
-    var ledOffGradient = ctx.createRadialGradient(ledCenterX, ledCenterY, 0, ledCenterX, ledCenterY, 0.030373 * imageWidth);
+    const ledCenterX = (imageWidth * 0.116822 + imageWidth * 0.060747) / 2;
+    const ledCenterY = (imageWidth * 0.485981 + imageWidth * 0.023364) / 2;
+    const ledOffGradient = ctx.createRadialGradient(ledCenterX, ledCenterY, 0, ledCenterX, ledCenterY, 0.030373 * imageWidth);
     ledOffGradient.addColorStop(0, '#3c3c3c');
     ledOffGradient.addColorStop(1, '#323232');
-    var angle = 0;
+    let angle = 0;
     for (angle = 0; angle <= degAngleRange; angle += 5) {
       ctx.save();
       ctx.translate(centerX, centerY);
@@ -564,9 +563,9 @@ var RadialBargraph = function(canvas, parameters) {
     ctx.beginPath();
     ctx.rect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.closePath();
-    var ledCenterX = (ctx.canvas.width / 2);
-    var ledCenterY = (ctx.canvas.height / 2);
-    var ledGradient = mainCtx.createRadialGradient(ledCenterX, ledCenterY, 0, ledCenterX, ledCenterY, ctx.canvas.width / 2);
+    const ledCenterX = (ctx.canvas.width / 2);
+    const ledCenterY = (ctx.canvas.height / 2);
+    const ledGradient = mainCtx.createRadialGradient(ledCenterX, ledCenterY, 0, ledCenterX, ledCenterY, ctx.canvas.width / 2);
     ledGradient.addColorStop(0, color.light.getRgbaColor());
     ledGradient.addColorStop(1, color.dark.getRgbaColor());
     ctx.fillStyle = ledGradient;
@@ -574,8 +573,7 @@ var RadialBargraph = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawLcdText = function(ctx, value) {
-
+  const drawLcdText = function(ctx, value) {
     ctx.save();
     ctx.textAlign = 'right';
     ctx.strokeStyle = lcdColor.textColor;
@@ -599,16 +597,16 @@ var RadialBargraph = function(canvas, parameters) {
   };
 
   var drawTickmarksImage = function(ctx, labelNumberFormat) {
-    var alpha = rotationOffset, // Tracks total rotation
-      rotationStep = angleStep * minorTickSpacing,
-      textRotationAngle,
-      fontSize = Math.ceil(imageWidth * 0.04),
-      valueCounter = minValue,
-      majorTickCounter = maxNoOfMinorTicks - 1,
-      TEXT_TRANSLATE_X = imageWidth * 0.28,
-      TEXT_WIDTH = imageWidth * 0.1,
-      MAX_VALUE_ROUNDED = parseFloat(maxValue.toFixed(2)),
-      i;
+    let alpha = rotationOffset; // Tracks total rotation
+    const rotationStep = angleStep * minorTickSpacing;
+    let textRotationAngle;
+    const fontSize = Math.ceil(imageWidth * 0.04);
+    let valueCounter = minValue;
+    let majorTickCounter = maxNoOfMinorTicks - 1;
+    const TEXT_TRANSLATE_X = imageWidth * 0.28;
+    let TEXT_WIDTH = imageWidth * 0.1;
+    const MAX_VALUE_ROUNDED = parseFloat(maxValue.toFixed(2));
+    let i;
 
     backgroundColor.labelColor.setAlpha(1);
     ctx.save();
@@ -681,7 +679,7 @@ var RadialBargraph = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var blink = function(blinking) {
+  const blink = function(blinking) {
     if (blinking) {
       ledTimerId = setInterval(toggleAndRepaintLed, 1000);
     } else {
@@ -690,7 +688,7 @@ var RadialBargraph = function(canvas, parameters) {
     }
   };
 
-  var blinkUser = function(blinking) {
+  const blinkUser = function(blinking) {
     if (blinking) {
       userLedTimerId = setInterval(toggleAndRepaintUserLed, 1000);
     } else {
@@ -727,10 +725,10 @@ var RadialBargraph = function(canvas, parameters) {
     }
   };
 
-  //********************************* Public methods *********************************
+  //* ******************************** Public methods *********************************
   this.setValue = function(newValue) {
     newValue = parseFloat(newValue);
-    var targetValue = (newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue));
+    const targetValue = (newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue));
     if (value !== targetValue) {
       value = targetValue;
       if ((value >= threshold && !ledBlinking && thresholdRising) ||
@@ -759,9 +757,9 @@ var RadialBargraph = function(canvas, parameters) {
 
   this.setValueAnimated = function(newValue, callback) {
     newValue = parseFloat(newValue);
-    var targetValue = (newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue)),
-      gauge = this,
-      time;
+    const targetValue = (newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue));
+    const gauge = this;
+    let time;
 
     if (value !== targetValue) {
       if (undefined !== tween && tween.isPlaying) {
@@ -771,8 +769,8 @@ var RadialBargraph = function(canvas, parameters) {
       time = fullScaleDeflectionTime * Math.abs(targetValue - value) / (maxValue - minValue);
       time = Math.max(time, fullScaleDeflectionTime / 5);
       tween = new Tween({}, '', Tween.regularEaseInOut, value, targetValue, time);
-      //tween = new Tween({}, '', Tween.regularEaseInOut, value, targetValue, 1);
-      //tween = new Tween(new Object(), '', Tween.strongEaseInOut, this.value, targetValue, 1);
+      // tween = new Tween({}, '', Tween.regularEaseInOut, value, targetValue, 1);
+      // tween = new Tween(new Object(), '', Tween.strongEaseInOut, this.value, targetValue, 1);
       tween.onMotionChanged = function(event) {
         value = event.target._pos;
 
@@ -798,7 +796,7 @@ var RadialBargraph = function(canvas, parameters) {
       };
 
       // do we have a callback function to process?
-      if (callback && typeof(callback) === "function") {
+      if (callback && typeof(callback) === 'function') {
         tween.onMotionFinished = callback;
       }
 
@@ -809,11 +807,11 @@ var RadialBargraph = function(canvas, parameters) {
 
   this.setFrameDesign = function(newFrameDesign) {
     resetBuffers({
-      frame: true
+      frame: true,
     });
     frameDesign = newFrameDesign;
     init({
-      frame: true
+      frame: true,
     });
     this.repaint();
     return this;
@@ -822,12 +820,12 @@ var RadialBargraph = function(canvas, parameters) {
   this.setBackgroundColor = function(newBackgroundColor) {
     resetBuffers({
       background: true,
-      led: true
+      led: true,
     });
     backgroundColor = newBackgroundColor;
     init({
       background: true,
-      led: true
+      led: true,
     });
     this.repaint();
     return this;
@@ -835,11 +833,11 @@ var RadialBargraph = function(canvas, parameters) {
 
   this.setForegroundType = function(newForegroundType) {
     resetBuffers({
-      foreground: true
+      foreground: true,
     });
     foregroundType = newForegroundType;
     init({
-      foreground: true
+      foreground: true,
     });
     this.repaint();
     return this;
@@ -847,11 +845,11 @@ var RadialBargraph = function(canvas, parameters) {
 
   this.setValueColor = function(newValueColor) {
     resetBuffers({
-      value: true
+      value: true,
     });
     valueColor = newValueColor;
     init({
-      value: true
+      value: true,
     });
     this.repaint();
     return this;
@@ -859,11 +857,11 @@ var RadialBargraph = function(canvas, parameters) {
 
   this.setLedColor = function(newLedColor) {
     resetBuffers({
-      led: true
+      led: true,
     });
     ledColor = newLedColor;
     init({
-      led: true
+      led: true,
     });
     this.repaint();
     return this;
@@ -871,11 +869,11 @@ var RadialBargraph = function(canvas, parameters) {
 
   this.setUserLedColor = function(newLedColor) {
     resetBuffers({
-      userLed: true
+      userLed: true,
     });
     userLedColor = newLedColor;
     init({
-      userLed: true
+      userLed: true,
     });
     this.repaint();
     return this;
@@ -931,10 +929,10 @@ var RadialBargraph = function(canvas, parameters) {
   this.setLcdColor = function(newLcdColor) {
     lcdColor = newLcdColor;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -977,10 +975,10 @@ var RadialBargraph = function(canvas, parameters) {
   this.setMinValue = function(newValue) {
     minValue = newValue;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -993,10 +991,10 @@ var RadialBargraph = function(canvas, parameters) {
   this.setMaxValue = function(newValue) {
     maxValue = newValue;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -1008,13 +1006,13 @@ var RadialBargraph = function(canvas, parameters) {
 
   this.setThreshold = function(newValue) {
     newValue = parseFloat(newValue);
-    var targetValue = newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue);
+    const targetValue = newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue);
     threshold = targetValue;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -1032,10 +1030,10 @@ var RadialBargraph = function(canvas, parameters) {
   this.setTitleString = function(title) {
     titleString = title;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -1044,10 +1042,10 @@ var RadialBargraph = function(canvas, parameters) {
   this.setUnitString = function(unit) {
     unitString = unit;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -1068,10 +1066,10 @@ var RadialBargraph = function(canvas, parameters) {
   this.setFractionalScaleDecimals = function(decimals) {
     fractionalScaleDecimals = parseInt(decimals, 10);
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
   };
@@ -1079,23 +1077,23 @@ var RadialBargraph = function(canvas, parameters) {
   this.setLabelNumberFormat = function(format) {
     labelNumberFormat = format;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
   };
 
   this.repaint = function() {
-    var activeLedAngle = ((value - minValue) / (maxValue - minValue)) * degAngleRange,
-      activeLedColor,
-      lastActiveLedColor = valueColor,
-      angle, i,
-      currentValue,
-      gradRange,
-      fraction;
+    const activeLedAngle = ((value - minValue) / (maxValue - minValue)) * degAngleRange;
+    let activeLedColor;
+    let lastActiveLedColor = valueColor;
+    let angle; let i;
+    let currentValue;
+    let gradRange;
+    let fraction;
 
     if (!initialized) {
       init({
@@ -1105,7 +1103,7 @@ var RadialBargraph = function(canvas, parameters) {
         userLed: true,
         value: true,
         trend: true,
-        foreground: true
+        foreground: true,
       });
     }
 
@@ -1121,7 +1119,7 @@ var RadialBargraph = function(canvas, parameters) {
 
     // Draw active leds
     for (angle = 0; angle <= activeLedAngle; angle += 5) {
-      //check for LED color
+      // check for LED color
       activeLedColor = valueColor;
       // Use a gradient for value colors?
       if (isGradientVisible) {

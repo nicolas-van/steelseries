@@ -1,13 +1,13 @@
 
 import {
-TWO_PI,
-} from "./tools";
+  TWO_PI,
+} from './tools';
 
-var drawRadialCustomImage = function(ctx, img, centerX, centerY, imageWidth, imageHeight) {
-  var drawWidth = imageWidth * 0.831775,
-    drawHeight = imageHeight * 0.831775,
-    x = (imageWidth - drawWidth) / 2,
-    y = (imageHeight - drawHeight) / 2;
+const drawRadialCustomImage = function(ctx, img, centerX, centerY, imageWidth, imageHeight) {
+  const drawWidth = imageWidth * 0.831775;
+  const drawHeight = imageHeight * 0.831775;
+  const x = (imageWidth - drawWidth) / 2;
+  const y = (imageHeight - drawHeight) / 2;
 
   if (img !== null && img.height > 0 && img.width > 0) {
     ctx.save();

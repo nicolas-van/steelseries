@@ -1,16 +1,16 @@
 
-import drawFrame from "./drawFrame";
-import drawBackground from "./drawBackground";
-import drawRadialCustomImage from "./drawRadialCustomImage";
-import drawForeground from "./drawForeground";
+import drawFrame from './drawFrame';
+import drawBackground from './drawBackground';
+import drawRadialCustomImage from './drawRadialCustomImage';
+import drawForeground from './drawForeground';
 import {
-createBuffer, 
-getCanvasContext,
-TWO_PI,
-PI,
-RAD_FACTOR,
-stdFontName,
-} from "./tools";
+  createBuffer,
+  getCanvasContext,
+  TWO_PI,
+  PI,
+  RAD_FACTOR,
+  stdFontName,
+} from './tools';
 
 import {
   BackgroundColor,
@@ -27,346 +27,345 @@ import {
   LabelNumberFormat,
   TickLabelOrientation,
   TrendState,
-  } from "./definitions";
+} from './definitions';
 
-var stopwatch = function(canvas, parameters) {
+const stopwatch = function(canvas, parameters) {
   parameters = parameters || {};
-  var size = (undefined === parameters.size ? 0 : parameters.size),
-    frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
-    frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible),
-    pointerColor = (undefined === parameters.pointerColor ? ColorDef.BLACK : parameters.pointerColor),
-    backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.LIGHT_GRAY : parameters.backgroundColor),
-    backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible),
-    foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType),
-    foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible),
-    customLayer = (undefined === parameters.customLayer ? null : parameters.customLayer),
+  let size = (undefined === parameters.size ? 0 : parameters.size);
+  let frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign);
+  const frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible);
+  let pointerColor = (undefined === parameters.pointerColor ? ColorDef.BLACK : parameters.pointerColor);
+  let backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.LIGHT_GRAY : parameters.backgroundColor);
+  const backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible);
+  let foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType);
+  const foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible);
+  const customLayer = (undefined === parameters.customLayer ? null : parameters.customLayer);
 
-    minutePointerAngle = 0,
-    secondPointerAngle = 0,
-    tickTimer,
-    ANGLE_STEP = 6,
-    self = this,
+  let minutePointerAngle = 0;
+  let secondPointerAngle = 0;
+  let tickTimer;
+  const ANGLE_STEP = 6;
+  const self = this;
 
-    start = 0,
-    currentMilliSeconds = 0,
-    minutes = 0,
-    seconds = 0,
-    milliSeconds = 0,
-    running = false,
-    lap = false,
-    // Get the canvas context
-    mainCtx = getCanvasContext(canvas),
+  let start = 0;
+  let currentMilliSeconds = 0;
+  let minutes = 0;
+  let seconds = 0;
+  let milliSeconds = 0;
+  let running = false;
+  let lap = false;
+  // Get the canvas context
+  const mainCtx = getCanvasContext(canvas);
 
-    imageWidth, imageHeight,
-    centerX, centerY,
+  let imageWidth; let imageHeight;
+  let centerX; let centerY;
 
-    smallPointerSize, smallPointerX_Offset, smallPointerY_Offset,
+  let smallPointerSize; let smallPointerX_Offset; let smallPointerY_Offset;
 
-    initialized = false,
+  let initialized = false;
 
-    // Buffer for the frame
-    frameBuffer, frameContext,
+  // Buffer for the frame
+  let frameBuffer; let frameContext;
 
-    // Buffer for static background painting code
-    backgroundBuffer, backgroundContext,
+  // Buffer for static background painting code
+  let backgroundBuffer; let backgroundContext;
 
-    // Buffer for small pointer image painting code
-    smallPointerBuffer, smallPointerContext,
+  // Buffer for small pointer image painting code
+  let smallPointerBuffer; let smallPointerContext;
 
-    // Buffer for large pointer image painting code
-    largePointerBuffer, largePointerContext,
+  // Buffer for large pointer image painting code
+  let largePointerBuffer; let largePointerContext;
 
-    // Buffer for static foreground painting code
-    foregroundBuffer, foregroundContext,
+  // Buffer for static foreground painting code
+  let foregroundBuffer; let foregroundContext;
 
-    drawTickmarksImage = function(ctx, width, range, text_scale, text_dist_factor, x_offset, y_offset) {
-      var STD_FONT_SIZE = text_scale * width,
-        STD_FONT = STD_FONT_SIZE + 'px ' + stdFontName,
-        TEXT_WIDTH = width * 0.15,
-        THIN_STROKE = 0.5,
-        MEDIUM_STROKE = 1,
-        THICK_STROKE = 1.5,
-        TEXT_DISTANCE = text_dist_factor * width,
-        MIN_LENGTH = Math.round(0.025 * width),
-        MED_LENGTH = Math.round(0.035 * width),
-        MAX_LENGTH = Math.round(0.045 * width),
-        TEXT_COLOR = backgroundColor.labelColor.getRgbaColor(),
-        TICK_COLOR = backgroundColor.labelColor.getRgbaColor(),
-        CENTER = width / 2,
-        // Create the ticks itself
-        RADIUS = width * 0.4,
-        innerPoint, outerPoint, textPoint,
-        counter = 0,
-        numberCounter = 0,
-        tickCounter = 0,
-        valueCounter, // value for the tickmarks
-        sinValue = 0,
-        cosValue = 0,
-        alpha, // angle for the tickmarks
-        ALPHA_START = -PI,
-        ANGLE_STEPSIZE = TWO_PI / (range);
+  const drawTickmarksImage = function(ctx, width, range, text_scale, text_dist_factor, x_offset, y_offset) {
+    const STD_FONT_SIZE = text_scale * width;
+    const STD_FONT = STD_FONT_SIZE + 'px ' + stdFontName;
+    const TEXT_WIDTH = width * 0.15;
+    const THIN_STROKE = 0.5;
+    const MEDIUM_STROKE = 1;
+    const THICK_STROKE = 1.5;
+    const TEXT_DISTANCE = text_dist_factor * width;
+    const MIN_LENGTH = Math.round(0.025 * width);
+    const MED_LENGTH = Math.round(0.035 * width);
+    const MAX_LENGTH = Math.round(0.045 * width);
+    const TEXT_COLOR = backgroundColor.labelColor.getRgbaColor();
+    const TICK_COLOR = backgroundColor.labelColor.getRgbaColor();
+    const CENTER = width / 2;
+    // Create the ticks itself
+    const RADIUS = width * 0.4;
+    let innerPoint; let outerPoint; let textPoint;
+    let counter = 0;
+    let numberCounter = 0;
+    let tickCounter = 0;
+    let valueCounter; // value for the tickmarks
+    let sinValue = 0;
+    let cosValue = 0;
+    let alpha; // angle for the tickmarks
+    const ALPHA_START = -PI;
+    const ANGLE_STEPSIZE = TWO_PI / (range);
 
-      ctx.width = ctx.height = width;
-      ctx.save();
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.font = STD_FONT;
+    ctx.width = ctx.height = width;
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = STD_FONT;
 
-      for (alpha = ALPHA_START, valueCounter = 0; valueCounter <= range + 1; alpha -= ANGLE_STEPSIZE * 0.1, valueCounter += 0.1) {
-        ctx.lineWidth = THIN_STROKE;
-        sinValue = Math.sin(alpha);
-        cosValue = Math.cos(alpha);
+    for (alpha = ALPHA_START, valueCounter = 0; valueCounter <= range + 1; alpha -= ANGLE_STEPSIZE * 0.1, valueCounter += 0.1) {
+      ctx.lineWidth = THIN_STROKE;
+      sinValue = Math.sin(alpha);
+      cosValue = Math.cos(alpha);
 
-        // tickmark every 2 units
-        if (counter % 2 === 0) {
-          //ctx.lineWidth = THIN_STROKE;
-          innerPoint = [CENTER + (RADIUS - MIN_LENGTH) * sinValue + x_offset, CENTER + (RADIUS - MIN_LENGTH) * cosValue + y_offset];
-          outerPoint = [CENTER + RADIUS * sinValue + x_offset, CENTER + RADIUS * cosValue + y_offset];
-          // Draw ticks
-          ctx.strokeStyle = TICK_COLOR;
-          ctx.beginPath();
-          ctx.moveTo(innerPoint[0], innerPoint[1]);
-          ctx.lineTo(outerPoint[0], outerPoint[1]);
-          ctx.closePath();
-          ctx.stroke();
-        }
+      // tickmark every 2 units
+      if (counter % 2 === 0) {
+        // ctx.lineWidth = THIN_STROKE;
+        innerPoint = [CENTER + (RADIUS - MIN_LENGTH) * sinValue + x_offset, CENTER + (RADIUS - MIN_LENGTH) * cosValue + y_offset];
+        outerPoint = [CENTER + RADIUS * sinValue + x_offset, CENTER + RADIUS * cosValue + y_offset];
+        // Draw ticks
+        ctx.strokeStyle = TICK_COLOR;
+        ctx.beginPath();
+        ctx.moveTo(innerPoint[0], innerPoint[1]);
+        ctx.lineTo(outerPoint[0], outerPoint[1]);
+        ctx.closePath();
+        ctx.stroke();
+      }
 
-        // Different tickmark every 10 units
-        if (counter === 10 || counter === 0) {
-          ctx.fillStyle = TEXT_COLOR;
-          ctx.lineWidth = MEDIUM_STROKE;
-          outerPoint = [CENTER + RADIUS * sinValue + x_offset, CENTER + RADIUS * cosValue + y_offset];
-          textPoint = [CENTER + (RADIUS - TEXT_DISTANCE) * sinValue + x_offset, CENTER + (RADIUS - TEXT_DISTANCE) * cosValue + y_offset];
+      // Different tickmark every 10 units
+      if (counter === 10 || counter === 0) {
+        ctx.fillStyle = TEXT_COLOR;
+        ctx.lineWidth = MEDIUM_STROKE;
+        outerPoint = [CENTER + RADIUS * sinValue + x_offset, CENTER + RADIUS * cosValue + y_offset];
+        textPoint = [CENTER + (RADIUS - TEXT_DISTANCE) * sinValue + x_offset, CENTER + (RADIUS - TEXT_DISTANCE) * cosValue + y_offset];
 
-          // Draw text
-          if (numberCounter === 5) {
-            if (valueCounter !== range) {
-              if (Math.round(valueCounter) !== 60) {
-                ctx.fillText(Math.round(valueCounter), textPoint[0], textPoint[1], TEXT_WIDTH);
-              }
+        // Draw text
+        if (numberCounter === 5) {
+          if (valueCounter !== range) {
+            if (Math.round(valueCounter) !== 60) {
+              ctx.fillText(Math.round(valueCounter), textPoint[0], textPoint[1], TEXT_WIDTH);
             }
-            ctx.lineWidth = THICK_STROKE;
-            innerPoint = [CENTER + (RADIUS - MAX_LENGTH) * sinValue + x_offset, CENTER + (RADIUS - MAX_LENGTH) * cosValue + y_offset];
-            numberCounter = 0;
-          } else {
-            ctx.lineWidth = MEDIUM_STROKE;
-            innerPoint = [CENTER + (RADIUS - MED_LENGTH) * sinValue + x_offset, CENTER + (RADIUS - MED_LENGTH) * cosValue + y_offset];
           }
-
-          // Draw ticks
-          ctx.strokeStyle = TICK_COLOR;
-          ctx.beginPath();
-          ctx.moveTo(innerPoint[0], innerPoint[1]);
-          ctx.lineTo(outerPoint[0], outerPoint[1]);
-          ctx.closePath();
-          ctx.stroke();
-
-          counter = 0;
-          tickCounter++;
-          numberCounter++;
+          ctx.lineWidth = THICK_STROKE;
+          innerPoint = [CENTER + (RADIUS - MAX_LENGTH) * sinValue + x_offset, CENTER + (RADIUS - MAX_LENGTH) * cosValue + y_offset];
+          numberCounter = 0;
+        } else {
+          ctx.lineWidth = MEDIUM_STROKE;
+          innerPoint = [CENTER + (RADIUS - MED_LENGTH) * sinValue + x_offset, CENTER + (RADIUS - MED_LENGTH) * cosValue + y_offset];
         }
-        counter++;
+
+        // Draw ticks
+        ctx.strokeStyle = TICK_COLOR;
+        ctx.beginPath();
+        ctx.moveTo(innerPoint[0], innerPoint[1]);
+        ctx.lineTo(outerPoint[0], outerPoint[1]);
+        ctx.closePath();
+        ctx.stroke();
+
+        counter = 0;
+        tickCounter++;
+        numberCounter++;
       }
-      ctx.restore();
-    },
+      counter++;
+    }
+    ctx.restore();
+  };
 
-    drawLargePointer = function(ctx) {
-      var grad, radius;
+  const drawLargePointer = function(ctx) {
+    let grad; let radius;
 
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(imageWidth * 0.509345, imageWidth * 0.457943);
-      ctx.lineTo(imageWidth * 0.5, imageWidth * 0.102803);
-      ctx.lineTo(imageWidth * 0.490654, imageWidth * 0.457943);
-      ctx.bezierCurveTo(imageWidth * 0.490654, imageWidth * 0.457943, imageWidth * 0.490654, imageWidth * 0.457943, imageWidth * 0.490654, imageWidth * 0.457943);
-      ctx.bezierCurveTo(imageWidth * 0.471962, imageWidth * 0.462616, imageWidth * 0.457943, imageWidth * 0.481308, imageWidth * 0.457943, imageWidth * 0.5);
-      ctx.bezierCurveTo(imageWidth * 0.457943, imageWidth * 0.518691, imageWidth * 0.471962, imageWidth * 0.537383, imageWidth * 0.490654, imageWidth * 0.542056);
-      ctx.bezierCurveTo(imageWidth * 0.490654, imageWidth * 0.542056, imageWidth * 0.490654, imageWidth * 0.542056, imageWidth * 0.490654, imageWidth * 0.542056);
-      ctx.lineTo(imageWidth * 0.490654, imageWidth * 0.621495);
-      ctx.lineTo(imageWidth * 0.509345, imageWidth * 0.621495);
-      ctx.lineTo(imageWidth * 0.509345, imageWidth * 0.542056);
-      ctx.bezierCurveTo(imageWidth * 0.509345, imageWidth * 0.542056, imageWidth * 0.509345, imageWidth * 0.542056, imageWidth * 0.509345, imageWidth * 0.542056);
-      ctx.bezierCurveTo(imageWidth * 0.528037, imageWidth * 0.537383, imageWidth * 0.542056, imageWidth * 0.518691, imageWidth * 0.542056, imageWidth * 0.5);
-      ctx.bezierCurveTo(imageWidth * 0.542056, imageWidth * 0.481308, imageWidth * 0.528037, imageWidth * 0.462616, imageWidth * 0.509345, imageWidth * 0.457943);
-      ctx.bezierCurveTo(imageWidth * 0.509345, imageWidth * 0.457943, imageWidth * 0.509345, imageWidth * 0.457943, imageWidth * 0.509345, imageWidth * 0.457943);
-      ctx.closePath();
-      grad = ctx.createLinearGradient(0, 0, 0, imageWidth * 0.621495);
-      grad.addColorStop(0, pointerColor.medium.getRgbaColor());
-      grad.addColorStop(0.388888, pointerColor.medium.getRgbaColor());
-      grad.addColorStop(0.5, pointerColor.light.getRgbaColor());
-      grad.addColorStop(0.611111, pointerColor.medium.getRgbaColor());
-      grad.addColorStop(1, pointerColor.medium.getRgbaColor());
-      ctx.fillStyle = grad;
-      ctx.strokeStyle = pointerColor.dark.getRgbaColor();
-      ctx.fill();
-      ctx.stroke();
-      // Draw the rings
-      ctx.beginPath();
-      radius = imageWidth * 0.065420 / 2;
-      ctx.arc(centerX, centerY, radius, 0, TWO_PI);
-      grad = ctx.createLinearGradient(centerX - radius, centerX + radius, 0, centerX + radius);
-      grad.addColorStop(0, '#e6b35c');
-      grad.addColorStop(0.01, '#e6b35c');
-      grad.addColorStop(0.99, '#c48200');
-      grad.addColorStop(1, '#c48200');
-      ctx.fillStyle = grad;
-      ctx.closePath();
-      ctx.fill();
-      ctx.beginPath();
-      radius = imageWidth * 0.046728 / 2;
-      ctx.arc(centerX, centerY, radius, 0, TWO_PI);
-      grad = ctx.createRadialGradient(centerX, centerX, 0, centerX, centerX, radius);
-      grad.addColorStop(0, '#c5c5c5');
-      grad.addColorStop(0.19, '#c5c5c5');
-      grad.addColorStop(0.22, '#000000');
-      grad.addColorStop(0.8, '#000000');
-      grad.addColorStop(0.99, '#707070');
-      grad.addColorStop(1, '#707070');
-      ctx.fillStyle = grad;
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-    },
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(imageWidth * 0.509345, imageWidth * 0.457943);
+    ctx.lineTo(imageWidth * 0.5, imageWidth * 0.102803);
+    ctx.lineTo(imageWidth * 0.490654, imageWidth * 0.457943);
+    ctx.bezierCurveTo(imageWidth * 0.490654, imageWidth * 0.457943, imageWidth * 0.490654, imageWidth * 0.457943, imageWidth * 0.490654, imageWidth * 0.457943);
+    ctx.bezierCurveTo(imageWidth * 0.471962, imageWidth * 0.462616, imageWidth * 0.457943, imageWidth * 0.481308, imageWidth * 0.457943, imageWidth * 0.5);
+    ctx.bezierCurveTo(imageWidth * 0.457943, imageWidth * 0.518691, imageWidth * 0.471962, imageWidth * 0.537383, imageWidth * 0.490654, imageWidth * 0.542056);
+    ctx.bezierCurveTo(imageWidth * 0.490654, imageWidth * 0.542056, imageWidth * 0.490654, imageWidth * 0.542056, imageWidth * 0.490654, imageWidth * 0.542056);
+    ctx.lineTo(imageWidth * 0.490654, imageWidth * 0.621495);
+    ctx.lineTo(imageWidth * 0.509345, imageWidth * 0.621495);
+    ctx.lineTo(imageWidth * 0.509345, imageWidth * 0.542056);
+    ctx.bezierCurveTo(imageWidth * 0.509345, imageWidth * 0.542056, imageWidth * 0.509345, imageWidth * 0.542056, imageWidth * 0.509345, imageWidth * 0.542056);
+    ctx.bezierCurveTo(imageWidth * 0.528037, imageWidth * 0.537383, imageWidth * 0.542056, imageWidth * 0.518691, imageWidth * 0.542056, imageWidth * 0.5);
+    ctx.bezierCurveTo(imageWidth * 0.542056, imageWidth * 0.481308, imageWidth * 0.528037, imageWidth * 0.462616, imageWidth * 0.509345, imageWidth * 0.457943);
+    ctx.bezierCurveTo(imageWidth * 0.509345, imageWidth * 0.457943, imageWidth * 0.509345, imageWidth * 0.457943, imageWidth * 0.509345, imageWidth * 0.457943);
+    ctx.closePath();
+    grad = ctx.createLinearGradient(0, 0, 0, imageWidth * 0.621495);
+    grad.addColorStop(0, pointerColor.medium.getRgbaColor());
+    grad.addColorStop(0.388888, pointerColor.medium.getRgbaColor());
+    grad.addColorStop(0.5, pointerColor.light.getRgbaColor());
+    grad.addColorStop(0.611111, pointerColor.medium.getRgbaColor());
+    grad.addColorStop(1, pointerColor.medium.getRgbaColor());
+    ctx.fillStyle = grad;
+    ctx.strokeStyle = pointerColor.dark.getRgbaColor();
+    ctx.fill();
+    ctx.stroke();
+    // Draw the rings
+    ctx.beginPath();
+    radius = imageWidth * 0.065420 / 2;
+    ctx.arc(centerX, centerY, radius, 0, TWO_PI);
+    grad = ctx.createLinearGradient(centerX - radius, centerX + radius, 0, centerX + radius);
+    grad.addColorStop(0, '#e6b35c');
+    grad.addColorStop(0.01, '#e6b35c');
+    grad.addColorStop(0.99, '#c48200');
+    grad.addColorStop(1, '#c48200');
+    ctx.fillStyle = grad;
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    radius = imageWidth * 0.046728 / 2;
+    ctx.arc(centerX, centerY, radius, 0, TWO_PI);
+    grad = ctx.createRadialGradient(centerX, centerX, 0, centerX, centerX, radius);
+    grad.addColorStop(0, '#c5c5c5');
+    grad.addColorStop(0.19, '#c5c5c5');
+    grad.addColorStop(0.22, '#000000');
+    grad.addColorStop(0.8, '#000000');
+    grad.addColorStop(0.99, '#707070');
+    grad.addColorStop(1, '#707070');
+    ctx.fillStyle = grad;
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  };
 
-    drawSmallPointer = function(ctx) {
-      var grad, radius;
+  const drawSmallPointer = function(ctx) {
+    let grad; let radius;
 
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(imageWidth * 0.476635, imageWidth * 0.313084);
-      ctx.bezierCurveTo(imageWidth * 0.476635, imageWidth * 0.322429, imageWidth * 0.485981, imageWidth * 0.331775, imageWidth * 0.495327, imageWidth * 0.336448);
-      ctx.bezierCurveTo(imageWidth * 0.495327, imageWidth * 0.336448, imageWidth * 0.495327, imageWidth * 0.350467, imageWidth * 0.495327, imageWidth * 0.350467);
-      ctx.lineTo(imageWidth * 0.504672, imageWidth * 0.350467);
-      ctx.bezierCurveTo(imageWidth * 0.504672, imageWidth * 0.350467, imageWidth * 0.504672, imageWidth * 0.336448, imageWidth * 0.504672, imageWidth * 0.336448);
-      ctx.bezierCurveTo(imageWidth * 0.514018, imageWidth * 0.331775, imageWidth * 0.523364, imageWidth * 0.322429, imageWidth * 0.523364, imageWidth * 0.313084);
-      ctx.bezierCurveTo(imageWidth * 0.523364, imageWidth * 0.303738, imageWidth * 0.514018, imageWidth * 0.294392, imageWidth * 0.504672, imageWidth * 0.289719);
-      ctx.bezierCurveTo(imageWidth * 0.504672, imageWidth * 0.289719, imageWidth * 0.5, imageWidth * 0.200934, imageWidth * 0.5, imageWidth * 0.200934);
-      ctx.bezierCurveTo(imageWidth * 0.5, imageWidth * 0.200934, imageWidth * 0.495327, imageWidth * 0.289719, imageWidth * 0.495327, imageWidth * 0.289719);
-      ctx.bezierCurveTo(imageWidth * 0.485981, imageWidth * 0.294392, imageWidth * 0.476635, imageWidth * 0.303738, imageWidth * 0.476635, imageWidth * 0.313084);
-      ctx.closePath();
-      grad = ctx.createLinearGradient(0, 0, imageWidth, 0);
-      grad.addColorStop(0, pointerColor.medium.getRgbaColor());
-      grad.addColorStop(0.388888, pointerColor.medium.getRgbaColor());
-      grad.addColorStop(0.5, pointerColor.light.getRgbaColor());
-      grad.addColorStop(0.611111, pointerColor.medium.getRgbaColor());
-      grad.addColorStop(1, pointerColor.medium.getRgbaColor());
-      ctx.fillStyle = grad;
-      ctx.strokeStyle = pointerColor.dark.getRgbaColor();
-      ctx.fill();
-      ctx.stroke();
-      // Draw the rings
-      ctx.beginPath();
-      radius = imageWidth * 0.037383 / 2;
-      ctx.arc(centerX, smallPointerY_Offset + smallPointerSize / 2, radius, 0, TWO_PI);
-      ctx.fillStyle = '#C48200';
-      ctx.closePath();
-      ctx.fill();
-      ctx.beginPath();
-      radius = imageWidth * 0.028037 / 2;
-      ctx.arc(centerX, smallPointerY_Offset + smallPointerSize / 2, radius, 0, TWO_PI);
-      ctx.fillStyle = '#999999';
-      ctx.closePath();
-      ctx.fill();
-      ctx.beginPath();
-      radius = imageWidth * 0.018691 / 2;
-      ctx.arc(centerX, smallPointerY_Offset + smallPointerSize / 2, radius, 0, TWO_PI);
-      ctx.fillStyle = '#000000';
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-    },
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(imageWidth * 0.476635, imageWidth * 0.313084);
+    ctx.bezierCurveTo(imageWidth * 0.476635, imageWidth * 0.322429, imageWidth * 0.485981, imageWidth * 0.331775, imageWidth * 0.495327, imageWidth * 0.336448);
+    ctx.bezierCurveTo(imageWidth * 0.495327, imageWidth * 0.336448, imageWidth * 0.495327, imageWidth * 0.350467, imageWidth * 0.495327, imageWidth * 0.350467);
+    ctx.lineTo(imageWidth * 0.504672, imageWidth * 0.350467);
+    ctx.bezierCurveTo(imageWidth * 0.504672, imageWidth * 0.350467, imageWidth * 0.504672, imageWidth * 0.336448, imageWidth * 0.504672, imageWidth * 0.336448);
+    ctx.bezierCurveTo(imageWidth * 0.514018, imageWidth * 0.331775, imageWidth * 0.523364, imageWidth * 0.322429, imageWidth * 0.523364, imageWidth * 0.313084);
+    ctx.bezierCurveTo(imageWidth * 0.523364, imageWidth * 0.303738, imageWidth * 0.514018, imageWidth * 0.294392, imageWidth * 0.504672, imageWidth * 0.289719);
+    ctx.bezierCurveTo(imageWidth * 0.504672, imageWidth * 0.289719, imageWidth * 0.5, imageWidth * 0.200934, imageWidth * 0.5, imageWidth * 0.200934);
+    ctx.bezierCurveTo(imageWidth * 0.5, imageWidth * 0.200934, imageWidth * 0.495327, imageWidth * 0.289719, imageWidth * 0.495327, imageWidth * 0.289719);
+    ctx.bezierCurveTo(imageWidth * 0.485981, imageWidth * 0.294392, imageWidth * 0.476635, imageWidth * 0.303738, imageWidth * 0.476635, imageWidth * 0.313084);
+    ctx.closePath();
+    grad = ctx.createLinearGradient(0, 0, imageWidth, 0);
+    grad.addColorStop(0, pointerColor.medium.getRgbaColor());
+    grad.addColorStop(0.388888, pointerColor.medium.getRgbaColor());
+    grad.addColorStop(0.5, pointerColor.light.getRgbaColor());
+    grad.addColorStop(0.611111, pointerColor.medium.getRgbaColor());
+    grad.addColorStop(1, pointerColor.medium.getRgbaColor());
+    ctx.fillStyle = grad;
+    ctx.strokeStyle = pointerColor.dark.getRgbaColor();
+    ctx.fill();
+    ctx.stroke();
+    // Draw the rings
+    ctx.beginPath();
+    radius = imageWidth * 0.037383 / 2;
+    ctx.arc(centerX, smallPointerY_Offset + smallPointerSize / 2, radius, 0, TWO_PI);
+    ctx.fillStyle = '#C48200';
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    radius = imageWidth * 0.028037 / 2;
+    ctx.arc(centerX, smallPointerY_Offset + smallPointerSize / 2, radius, 0, TWO_PI);
+    ctx.fillStyle = '#999999';
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    radius = imageWidth * 0.018691 / 2;
+    ctx.arc(centerX, smallPointerY_Offset + smallPointerSize / 2, radius, 0, TWO_PI);
+    ctx.fillStyle = '#000000';
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  };
 
-    calculateAngles = function() {
-      currentMilliSeconds = new Date().getTime() - start;
-      secondPointerAngle = (currentMilliSeconds * ANGLE_STEP / 1000);
-      minutePointerAngle = (secondPointerAngle % 10800) / 30;
+  const calculateAngles = function() {
+    currentMilliSeconds = new Date().getTime() - start;
+    secondPointerAngle = (currentMilliSeconds * ANGLE_STEP / 1000);
+    minutePointerAngle = (secondPointerAngle % 10800) / 30;
 
-      minutes = (currentMilliSeconds / 60000) % 30;
-      seconds = (currentMilliSeconds / 1000) % 60;
-      milliSeconds = (currentMilliSeconds) % 1000;
-    },
+    minutes = (currentMilliSeconds / 60000) % 30;
+    seconds = (currentMilliSeconds / 1000) % 60;
+    milliSeconds = (currentMilliSeconds) % 1000;
+  };
 
-    init = function(parameters) {
-      parameters = parameters || {};
-      var drawFrame2 = (undefined === parameters.frame ? false : parameters.frame),
-        drawBackground2 = (undefined === parameters.background ? false : parameters.background),
-        drawPointers = (undefined === parameters.pointers ? false : parameters.pointers),
-        drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
+  const init = function(parameters) {
+    parameters = parameters || {};
+    const drawFrame2 = (undefined === parameters.frame ? false : parameters.frame);
+    const drawBackground2 = (undefined === parameters.background ? false : parameters.background);
+    const drawPointers = (undefined === parameters.pointers ? false : parameters.pointers);
+    const drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
 
-      initialized = true;
+    initialized = true;
 
-      if (drawFrame2 && frameVisible) {
-        drawFrame(frameContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
-      }
+    if (drawFrame2 && frameVisible) {
+      drawFrame(frameContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
+    }
 
-      if (drawBackground2 && backgroundVisible) {
-        // Create background in background buffer (backgroundBuffer)
-        drawBackground(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
+    if (drawBackground2 && backgroundVisible) {
+      // Create background in background buffer (backgroundBuffer)
+      drawBackground(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
 
-        // Create custom layer in background buffer (backgroundBuffer)
-        drawRadialCustomImage(backgroundContext, customLayer, centerX, centerY, imageWidth, imageHeight);
+      // Create custom layer in background buffer (backgroundBuffer)
+      drawRadialCustomImage(backgroundContext, customLayer, centerX, centerY, imageWidth, imageHeight);
 
-        drawTickmarksImage(backgroundContext, imageWidth, 60, 0.075, 0.1, 0, 0);
-        drawTickmarksImage(backgroundContext, smallPointerSize, 30, 0.095, 0.13, smallPointerX_Offset, smallPointerY_Offset);
-      }
-      if (drawPointers) {
-        drawLargePointer(largePointerContext);
-        drawSmallPointer(smallPointerContext);
-      }
+      drawTickmarksImage(backgroundContext, imageWidth, 60, 0.075, 0.1, 0, 0);
+      drawTickmarksImage(backgroundContext, smallPointerSize, 30, 0.095, 0.13, smallPointerX_Offset, smallPointerY_Offset);
+    }
+    if (drawPointers) {
+      drawLargePointer(largePointerContext);
+      drawSmallPointer(smallPointerContext);
+    }
 
-      if (drawForeground2 && foregroundVisible) {
-        drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, false);
-      }
-    },
+    if (drawForeground2 && foregroundVisible) {
+      drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, false);
+    }
+  };
 
-    resetBuffers = function(buffers) {
-      buffers = buffers || {};
-      var resetFrame = (undefined === buffers.frame ? false : buffers.frame),
-        resetBackground = (undefined === buffers.background ? false : buffers.background),
-        resetPointers = (undefined === buffers.pointers ? false : buffers.pointers),
-        resetForeground = (undefined === buffers.foreground ? false : buffers.foreground);
+  const resetBuffers = function(buffers) {
+    buffers = buffers || {};
+    const resetFrame = (undefined === buffers.frame ? false : buffers.frame);
+    const resetBackground = (undefined === buffers.background ? false : buffers.background);
+    const resetPointers = (undefined === buffers.pointers ? false : buffers.pointers);
+    const resetForeground = (undefined === buffers.foreground ? false : buffers.foreground);
 
-      if (resetFrame) {
-        frameBuffer.width = size;
-        frameBuffer.height = size;
-        frameContext = frameBuffer.getContext('2d');
-      }
+    if (resetFrame) {
+      frameBuffer.width = size;
+      frameBuffer.height = size;
+      frameContext = frameBuffer.getContext('2d');
+    }
 
-      if (resetBackground) {
-        backgroundBuffer.width = size;
-        backgroundBuffer.height = size;
-        backgroundContext = backgroundBuffer.getContext('2d');
-      }
+    if (resetBackground) {
+      backgroundBuffer.width = size;
+      backgroundBuffer.height = size;
+      backgroundContext = backgroundBuffer.getContext('2d');
+    }
 
-      if (resetPointers) {
-        smallPointerBuffer.width = size;
-        smallPointerBuffer.height = size;
-        smallPointerContext = smallPointerBuffer.getContext('2d');
+    if (resetPointers) {
+      smallPointerBuffer.width = size;
+      smallPointerBuffer.height = size;
+      smallPointerContext = smallPointerBuffer.getContext('2d');
 
-        largePointerBuffer.width = size;
-        largePointerBuffer.height = size;
-        largePointerContext = largePointerBuffer.getContext('2d');
-      }
+      largePointerBuffer.width = size;
+      largePointerBuffer.height = size;
+      largePointerContext = largePointerBuffer.getContext('2d');
+    }
 
-      if (resetForeground) {
-        foregroundBuffer.width = size;
-        foregroundBuffer.height = size;
-        foregroundContext = foregroundBuffer.getContext('2d');
-      }
-    },
+    if (resetForeground) {
+      foregroundBuffer.width = size;
+      foregroundBuffer.height = size;
+      foregroundContext = foregroundBuffer.getContext('2d');
+    }
+  };
 
-    tickTock = function() {
-      if (!lap) {
-        calculateAngles();
-        self.repaint();
-      }
-      if (running) {
-        tickTimer = setTimeout(tickTock, 200);
-      }
+  var tickTock = function() {
+    if (!lap) {
+      calculateAngles();
+      self.repaint();
+    }
+    if (running) {
+      tickTimer = setTimeout(tickTock, 200);
+    }
+  };
 
-    };
-
-  //************************************ Public methods **************************************
+  //* *********************************** Public methods **************************************
   // Returns true if the stopwatch is running
   this.isRunning = function() {
     return running;
@@ -387,7 +386,7 @@ var stopwatch = function(canvas, parameters) {
     if (running) {
       running = false;
       clearTimeout(tickTimer);
-      //calculateAngles();
+      // calculateAngles();
     }
     if (lap) {
       lap = false;
@@ -426,11 +425,11 @@ var stopwatch = function(canvas, parameters) {
 
   this.setFrameDesign = function(newFrameDesign) {
     resetBuffers({
-      frame: true
+      frame: true,
     });
     frameDesign = newFrameDesign;
     init({
-      frame: true
+      frame: true,
     });
     this.repaint();
     return this;
@@ -438,11 +437,11 @@ var stopwatch = function(canvas, parameters) {
 
   this.setBackgroundColor = function(newBackgroundColor) {
     resetBuffers({
-      background: true
+      background: true,
     });
     backgroundColor = newBackgroundColor;
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -450,11 +449,11 @@ var stopwatch = function(canvas, parameters) {
 
   this.setForegroundType = function(newForegroundType) {
     resetBuffers({
-      foreground: true
+      foreground: true,
     });
     foregroundType = newForegroundType;
     init({
-      foreground: true
+      foreground: true,
     });
     this.repaint();
     return this;
@@ -462,11 +461,11 @@ var stopwatch = function(canvas, parameters) {
 
   this.setPointerColor = function(newPointerColor) {
     resetBuffers({
-      pointers: true
+      pointers: true,
     });
     pointerColor = newPointerColor;
     init({
-      pointers: true
+      pointers: true,
     });
     this.repaint();
     return this;
@@ -478,7 +477,7 @@ var stopwatch = function(canvas, parameters) {
         frame: true,
         background: true,
         pointers: true,
-        foreground: true
+        foreground: true,
       });
     }
 
@@ -496,10 +495,10 @@ var stopwatch = function(canvas, parameters) {
 
     // have to draw to a rotated temporary image area so we can translate in
     // absolute x, y values when drawing to main context
-    var shadowOffset = imageWidth * 0.006;
+    const shadowOffset = imageWidth * 0.006;
 
-    var rotationAngle = (minutePointerAngle + (2 * Math.sin(minutePointerAngle * RAD_FACTOR))) * RAD_FACTOR;
-    var secRotationAngle = (secondPointerAngle + (2 * Math.sin(secondPointerAngle * RAD_FACTOR))) * RAD_FACTOR;
+    const rotationAngle = (minutePointerAngle + (2 * Math.sin(minutePointerAngle * RAD_FACTOR))) * RAD_FACTOR;
+    const secRotationAngle = (secondPointerAngle + (2 * Math.sin(secondPointerAngle * RAD_FACTOR))) * RAD_FACTOR;
 
     // Draw the minute pointer
     // Define rotation center

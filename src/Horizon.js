@@ -1,16 +1,16 @@
-import Tween from "./tween.js";
-import drawFrame from "./drawFrame";
-import drawForeground from "./drawForeground";
+import Tween from './tween.js';
+import drawFrame from './drawFrame';
+import drawForeground from './drawForeground';
 import {
-createBuffer, 
-requestAnimFrame, 
-getCanvasContext,
-HALF_PI,
-TWO_PI,
-PI,
-RAD_FACTOR,
-stdFontName,
-} from "./tools";
+  createBuffer,
+  requestAnimFrame,
+  getCanvasContext,
+  HALF_PI,
+  TWO_PI,
+  PI,
+  RAD_FACTOR,
+  stdFontName,
+} from './tools';
 
 import {
   BackgroundColor,
@@ -27,28 +27,28 @@ import {
   LabelNumberFormat,
   TickLabelOrientation,
   TrendState,
-  } from "./definitions";
+} from './definitions';
 
-var Horizon = function(canvas, parameters) {
+const Horizon = function(canvas, parameters) {
   parameters = parameters || {};
-  var size = (undefined === parameters.size ? 0 : parameters.size),
-    frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
-    frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible),
-    foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType),
-    foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible),
-    pointerColor = (undefined === parameters.pointerColor ? ColorDef.WHITE : parameters.pointerColor);
+  let size = (undefined === parameters.size ? 0 : parameters.size);
+  let frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign);
+  const frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible);
+  let foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType);
+  const foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible);
+  const pointerColor = (undefined === parameters.pointerColor ? ColorDef.WHITE : parameters.pointerColor);
 
-  var tweenRoll;
-  var tweenPitch;
-  var repainting = false;
-  var roll = 0;
-  var pitch = 0;
-  var pitchPixel = (PI * size) / 360;
-  var pitchOffset = 0;
-  var upsidedown = false;
+  let tweenRoll;
+  let tweenPitch;
+  let repainting = false;
+  let roll = 0;
+  let pitch = 0;
+  const pitchPixel = (PI * size) / 360;
+  let pitchOffset = 0;
+  let upsidedown = false;
 
   // Get the canvas context and clear it
-  var mainCtx = getCanvasContext(canvas);
+  const mainCtx = getCanvasContext(canvas);
   // Has a size been specified?
   if (size === 0) {
     size = Math.min(mainCtx.canvas.width, mainCtx.canvas.height);
@@ -58,44 +58,44 @@ var Horizon = function(canvas, parameters) {
   mainCtx.canvas.width = size;
   mainCtx.canvas.height = size;
 
-  var imageWidth = size;
-  var imageHeight = size;
+  const imageWidth = size;
+  const imageHeight = size;
 
-  var centerX = imageWidth / 2;
-  var centerY = imageHeight / 2;
+  const centerX = imageWidth / 2;
+  const centerY = imageHeight / 2;
 
-  var initialized = false;
+  let initialized = false;
 
   // **************   Buffer creation  ********************
   // Buffer for all static background painting code
-  var backgroundBuffer = createBuffer(size, size);
-  var backgroundContext = backgroundBuffer.getContext('2d');
+  const backgroundBuffer = createBuffer(size, size);
+  let backgroundContext = backgroundBuffer.getContext('2d');
 
   // Buffer for pointer image painting code
-  var valueBuffer = createBuffer(size, size * PI);
-  var valueContext = valueBuffer.getContext('2d');
+  const valueBuffer = createBuffer(size, size * PI);
+  let valueContext = valueBuffer.getContext('2d');
 
   // Buffer for indicator painting code
-  var indicatorBuffer = createBuffer(size * 0.037383, size * 0.056074);
-  var indicatorContext = indicatorBuffer.getContext('2d');
+  const indicatorBuffer = createBuffer(size * 0.037383, size * 0.056074);
+  let indicatorContext = indicatorBuffer.getContext('2d');
 
   // Buffer for static foreground painting code
-  var foregroundBuffer = createBuffer(size, size);
-  var foregroundContext = foregroundBuffer.getContext('2d');
+  const foregroundBuffer = createBuffer(size, size);
+  let foregroundContext = foregroundBuffer.getContext('2d');
 
   // **************   Image creation  ********************
-  var drawHorizonBackgroundImage = function(ctx) {
+  const drawHorizonBackgroundImage = function(ctx) {
     ctx.save();
 
-    var imgWidth = size;
-    var imgHeight = size * PI;
-    var y;
+    const imgWidth = size;
+    const imgHeight = size * PI;
+    let y;
 
     // HORIZON
     ctx.beginPath();
     ctx.rect(0, 0, imgWidth, imgHeight);
     ctx.closePath();
-    var HORIZON_GRADIENT = ctx.createLinearGradient(0, 0, 0, imgHeight);
+    const HORIZON_GRADIENT = ctx.createLinearGradient(0, 0, 0, imgHeight);
     HORIZON_GRADIENT.addColorStop(0, '#7fd5f0');
     HORIZON_GRADIENT.addColorStop(0.5, '#7fd5f0');
     HORIZON_GRADIENT.addColorStop(0.5, '#3c4439');
@@ -104,13 +104,13 @@ var Horizon = function(canvas, parameters) {
     ctx.fill();
 
     ctx.lineWidth = 1;
-    var stepSizeY = imgHeight / 360 * 5;
-    var stepTen = false;
-    var step = 10;
+    const stepSizeY = imgHeight / 360 * 5;
+    let stepTen = false;
+    let step = 10;
 
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    var fontSize = imgWidth * 0.04;
+    const fontSize = imgWidth * 0.04;
     ctx.font = fontSize + 'px ' + stdFontName;
     ctx.fillStyle = '#37596e';
     for (y = imgHeight / 2 - stepSizeY; y > 0; y -= stepSizeY) {
@@ -168,7 +168,7 @@ var Horizon = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawHorizonForegroundImage = function(ctx) {
+  const drawHorizonForegroundImage = function(ctx) {
     ctx.save();
 
     ctx.fillStyle = pointerColor.light.getRgbaColor();
@@ -199,12 +199,12 @@ var Horizon = function(canvas, parameters) {
     ctx.fill();
 
     // Tickmarks
-    var step = 5;
-    var stepRad = 5 * RAD_FACTOR;
+    const step = 5;
+    const stepRad = 5 * RAD_FACTOR;
     ctx.translate(centerX, centerY);
     ctx.rotate(-HALF_PI);
     ctx.translate(-centerX, -centerY);
-    var angle;
+    let angle;
     for (angle = -90; angle <= 90; angle += step) {
       if (angle % 45 === 0 || angle === 0) {
         ctx.strokeStyle = pointerColor.medium.getRgbaColor();
@@ -239,11 +239,11 @@ var Horizon = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawIndicatorImage = function(ctx) {
+  const drawIndicatorImage = function(ctx) {
     ctx.save();
 
-    var imgWidth = imageWidth * 0.037383;
-    var imgHeight = imageHeight * 0.056074;
+    const imgWidth = imageWidth * 0.037383;
+    const imgHeight = imageHeight * 0.056074;
 
     ctx.beginPath();
     ctx.moveTo(imgWidth * 0.5, 0);
@@ -261,7 +261,7 @@ var Horizon = function(canvas, parameters) {
 
   // **************   Initialization  ********************
   // Draw all static painting code to background
-  var init = function() {
+  const init = function() {
     initialized = true;
 
     if (frameVisible) {
@@ -279,7 +279,7 @@ var Horizon = function(canvas, parameters) {
     }
   };
 
-  var resetBuffers = function() {
+  const resetBuffers = function() {
     // Buffer for all static background painting code
     backgroundBuffer.width = size;
     backgroundBuffer.height = size;
@@ -301,7 +301,7 @@ var Horizon = function(canvas, parameters) {
     foregroundContext = foregroundBuffer.getContext('2d');
   };
 
-  //************************************ Public methods **************************************
+  //* *********************************** Public methods **************************************
   this.setRoll = function(newRoll) {
     newRoll = parseFloat(newRoll) % 360;
     if (roll !== newRoll) {
@@ -316,10 +316,9 @@ var Horizon = function(canvas, parameters) {
   };
 
   this.setRollAnimated = function(newRoll, callback) {
-    var gauge = this;
+    const gauge = this;
     newRoll = parseFloat(newRoll) % 360;
     if (roll !== newRoll) {
-
       if (undefined !== tweenRoll && tweenRoll.isPlaying) {
         tweenRoll.stop();
       }
@@ -335,7 +334,7 @@ var Horizon = function(canvas, parameters) {
       };
 
       // do we have a callback function to process?
-      if (callback && typeof(callback) === "function") {
+      if (callback && typeof(callback) === 'function') {
         tweenRoll.onMotionFinished = callback;
       }
 
@@ -348,7 +347,7 @@ var Horizon = function(canvas, parameters) {
     // constrain to range -180..180
     // normal range -90..90 and -180..-90/90..180 indicate inverted
     newPitch = ((parseFloat(newPitch) + 180 - pitchOffset) % 360) - 180;
-    //pitch = -(newPitch + pitchOffset) % 180;
+    // pitch = -(newPitch + pitchOffset) % 180;
     if (pitch !== newPitch) {
       pitch = newPitch;
       if (pitch > 90) {
@@ -376,7 +375,7 @@ var Horizon = function(canvas, parameters) {
   };
 
   this.setPitchAnimated = function(newPitch, callback) {
-    var gauge = this;
+    const gauge = this;
     newPitch = parseFloat(newPitch);
     // perform all range checking in setPitch()
     if (pitch !== newPitch) {
@@ -409,7 +408,7 @@ var Horizon = function(canvas, parameters) {
       };
 
       // do we have a callback function to process?
-      if (callback && typeof(callback) === "function") {
+      if (callback && typeof(callback) === 'function') {
         tweenPitch.onMotionFinished = callback;
       }
 

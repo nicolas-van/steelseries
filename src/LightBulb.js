@@ -1,27 +1,27 @@
 
 import {
-rgbToHsl, 
-doc,
-} from "./tools";
+  rgbToHsl,
+  doc,
+} from './tools';
 
-var lightbulb = function(canvas, parameters) {
+const lightbulb = function(canvas, parameters) {
   parameters = parameters || {};
-  var mainCtx,
-    // parameters
-    width = (undefined === parameters.width ? 0 : parameters.width),
-    height = (undefined === parameters.height ? 0 : parameters.height),
-    glowColor = (undefined === parameters.glowColor ? '#ffff00' : parameters.glowColor),
-    //
-    size, imageWidth, imageHeight,
-    initialized = false,
-    lightOn = false,
-    alpha = 1,
-    offBuffer = doc.createElement('canvas'),
-    offCtx = offBuffer.getContext('2d'),
-    onBuffer = doc.createElement('canvas'),
-    onCtx = onBuffer.getContext('2d'),
-    bulbBuffer = doc.createElement('canvas'),
-    bulbCtx = bulbBuffer.getContext('2d');
+  let mainCtx;
+  // parameters
+  let width = (undefined === parameters.width ? 0 : parameters.width);
+  let height = (undefined === parameters.height ? 0 : parameters.height);
+  let glowColor = (undefined === parameters.glowColor ? '#ffff00' : parameters.glowColor);
+  //
+  let size; let imageWidth; let imageHeight;
+  let initialized = false;
+  let lightOn = false;
+  let alpha = 1;
+  const offBuffer = doc.createElement('canvas');
+  const offCtx = offBuffer.getContext('2d');
+  const onBuffer = doc.createElement('canvas');
+  const onCtx = onBuffer.getContext('2d');
+  const bulbBuffer = doc.createElement('canvas');
+  const bulbCtx = bulbBuffer.getContext('2d');
   // End of variables
 
   // Get the canvas context and clear it
@@ -43,21 +43,21 @@ var lightbulb = function(canvas, parameters) {
   imageHeight = size;
 
   function drawToBuffer(width, height, drawFunction) {
-    var buffer = doc.createElement('canvas');
+    const buffer = doc.createElement('canvas');
     buffer.width = width;
     buffer.height = height;
     drawFunction(buffer.getContext('2d'));
     return buffer;
   }
 
-  var getColorValues = function(color) {
-    var colorData,
-      lookupBuffer = drawToBuffer(1, 1, function(ctx) {
-        ctx.fillStyle = color;
-        ctx.beginPath();
-        ctx.rect(0, 0, 1, 1);
-        ctx.fill();
-      });
+  const getColorValues = function(color) {
+    let colorData;
+    const lookupBuffer = drawToBuffer(1, 1, function(ctx) {
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.rect(0, 0, 1, 1);
+      ctx.fill();
+    });
 
     colorData = lookupBuffer.getContext('2d').getImageData(0, 0, 2, 2).data;
     return [colorData[0], colorData[1], colorData[2]];
@@ -72,8 +72,8 @@ var lightbulb = function(canvas, parameters) {
   bulbBuffer.width = imageWidth;
   bulbBuffer.height = imageHeight;
 
-  var drawOff = function(ctx) {
-    var glassOffFill;
+  const drawOff = function(ctx) {
+    let glassOffFill;
 
     ctx.save();
 
@@ -103,13 +103,13 @@ var lightbulb = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawOn = function(ctx) {
-    var glassOnFill,
-      data = getColorValues(glowColor),
-      red = data[0],
-      green = data[1],
-      blue = data[2],
-      hsl = rgbToHsl(red, green, blue);
+  const drawOn = function(ctx) {
+    let glassOnFill;
+    const data = getColorValues(glowColor);
+    const red = data[0];
+    const green = data[1];
+    const blue = data[2];
+    const hsl = rgbToHsl(red, green, blue);
 
     ctx.save();
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -153,8 +153,8 @@ var lightbulb = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawBulb = function(ctx) {
-    var highlight, winding, winding1, contactPlate;
+  const drawBulb = function(ctx) {
+    let highlight; let winding; let winding1; let contactPlate;
 
     ctx.save();
 
@@ -176,7 +176,7 @@ var lightbulb = function(canvas, parameters) {
     ctx.fill();
     ctx.restore();
 
-    //winding
+    // winding
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(0.377192 * imageWidth, 0.745614 * imageHeight);
@@ -287,7 +287,7 @@ var lightbulb = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var clearCanvas = function(ctx) {
+  const clearCanvas = function(ctx) {
     // Store the current transformation matrix
     ctx.save();
 
@@ -299,7 +299,7 @@ var lightbulb = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var init = function() {
+  const init = function() {
     initialized = true;
     drawOff(offCtx);
     drawOn(onCtx);

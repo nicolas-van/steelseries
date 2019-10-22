@@ -1,13 +1,13 @@
 
 import {
-TWO_PI,
-RAD_FACTOR,
-} from "./tools";
+  TWO_PI,
+  RAD_FACTOR,
+} from './tools';
 
-var drawRoseImage = function(ctx, centerX, centerY, imageWidth, imageHeight, backgroundColor) {
-  var fill = true,
-    i, grad,
-    symbolColor = backgroundColor.symbolColor.getRgbaColor();
+const drawRoseImage = function(ctx, centerX, centerY, imageWidth, imageHeight, backgroundColor) {
+  let fill = true;
+  let i; let grad;
+  const symbolColor = backgroundColor.symbolColor.getRgbaColor();
 
   ctx.save();
   ctx.lineWidth = 1;
@@ -217,7 +217,6 @@ var drawRoseImage = function(ctx, centerX, centerY, imageWidth, imageHeight, bac
   ctx.translate(-centerX, -centerY);
 
   ctx.restore();
-
 };
 
 export default drawRoseImage;

@@ -1,9 +1,9 @@
 
-import createLedImage from "./createLedImage";
+import createLedImage from './createLedImage';
 import {
-getCanvasContext,
-doc,
-} from "./tools";
+  getCanvasContext,
+  doc,
+} from './tools';
 
 import {
   BackgroundColor,
@@ -20,18 +20,18 @@ import {
   LabelNumberFormat,
   TickLabelOrientation,
   TrendState,
-  } from "./definitions";
+} from './definitions';
 
-var Led = function(canvas, parameters) {
+const Led = function(canvas, parameters) {
   parameters = parameters || {};
-  var size = (undefined === parameters.size ? 0 : parameters.size),
-    ledColor = (undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor);
+  let size = (undefined === parameters.size ? 0 : parameters.size);
+  let ledColor = (undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor);
 
-  var ledBlinking = false;
-  var ledTimerId = 0;
+  let ledBlinking = false;
+  let ledTimerId = 0;
 
   // Get the canvas context and clear it
-  var mainCtx = getCanvasContext(canvas);
+  const mainCtx = getCanvasContext(canvas);
   // Has a size been specified?
   if (size === 0) {
     size = Math.min(mainCtx.canvas.width, mainCtx.canvas.height);
@@ -41,24 +41,24 @@ var Led = function(canvas, parameters) {
   mainCtx.canvas.width = size;
   mainCtx.canvas.height = size;
 
-  var initialized = false;
+  let initialized = false;
 
   // Buffer for led on painting code
-  var ledBufferOn = doc.createElement('canvas');
+  const ledBufferOn = doc.createElement('canvas');
   ledBufferOn.width = size;
   ledBufferOn.height = size;
-  var ledContextOn = ledBufferOn.getContext('2d');
+  const ledContextOn = ledBufferOn.getContext('2d');
 
   // Buffer for led off painting code
-  var ledBufferOff = doc.createElement('canvas');
+  const ledBufferOff = doc.createElement('canvas');
   ledBufferOff.width = size;
   ledBufferOff.height = size;
-  var ledContextOff = ledBufferOff.getContext('2d');
+  const ledContextOff = ledBufferOff.getContext('2d');
 
   // Buffer for current led painting code
-  var ledBuffer = ledBufferOff;
+  let ledBuffer = ledBufferOff;
 
-  var init = function() {
+  const init = function() {
     initialized = true;
 
     // Draw LED ON in ledBuffer_ON

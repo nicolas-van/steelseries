@@ -1,22 +1,22 @@
-import Tween from "./tween.js";
-import drawPointerImage from "./drawPointerImage";
-import drawFrame from "./drawFrame";
-import drawBackground from "./drawBackground";
-import drawRadialCustomImage from "./drawRadialCustomImage";
-import drawForeground from "./drawForeground";
-import createLcdBackgroundImage from "./createLcdBackgroundImage";
-import drawRoseImage from "./drawRoseImage";
+import Tween from './tween.js';
+import drawPointerImage from './drawPointerImage';
+import drawFrame from './drawFrame';
+import drawBackground from './drawBackground';
+import drawRadialCustomImage from './drawRadialCustomImage';
+import drawForeground from './drawForeground';
+import createLcdBackgroundImage from './createLcdBackgroundImage';
+import drawRoseImage from './drawRoseImage';
 import {
-createBuffer, 
-getShortestAngle, 
-requestAnimFrame, 
-getCanvasContext,
-HALF_PI,
-TWO_PI,
-RAD_FACTOR,
-lcdFontName,
-stdFontName,
-} from "./tools";
+  createBuffer,
+  getShortestAngle,
+  requestAnimFrame,
+  getCanvasContext,
+  HALF_PI,
+  TWO_PI,
+  RAD_FACTOR,
+  lcdFontName,
+  stdFontName,
+} from './tools';
 
 import {
   BackgroundColor,
@@ -33,53 +33,53 @@ import {
   LabelNumberFormat,
   TickLabelOrientation,
   TrendState,
-  } from "./definitions";
+} from './definitions';
 
-var WindDirection = function(canvas, parameters) {
+const WindDirection = function(canvas, parameters) {
   parameters = parameters || {};
-  var size = (undefined === parameters.size ? 0 : parameters.size),
-    frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
-    frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible),
-    backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor),
-    backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible),
-    pointerTypeLatest = (undefined === parameters.pointerTypeLatest ? PointerType.TYPE1 : parameters.pointerTypeLatest),
-    pointerTypeAverage = (undefined === parameters.pointerTypeAverage ? PointerType.TYPE8 : parameters.pointerTypeAverage),
-    pointerColor = (undefined === parameters.pointerColor ? ColorDef.RED : parameters.pointerColor),
-    pointerColorAverage = (undefined === parameters.pointerColorAverage ? ColorDef.BLUE : parameters.pointerColorAverage),
-    knobType = (undefined === parameters.knobType ? KnobType.STANDARD_KNOB : parameters.knobType),
-    knobStyle = (undefined === parameters.knobStyle ? KnobStyle.SILVER : parameters.knobStyle),
-    foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType),
-    foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible),
-    pointSymbols = (undefined === parameters.pointSymbols ? ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'] : parameters.pointSymbols),
-    pointSymbolsVisible = (undefined === parameters.pointSymbolsVisible ? true : parameters.pointSymbolsVisible),
-    customLayer = (undefined === parameters.customLayer ? null : parameters.customLayer),
-    degreeScale = (undefined === parameters.degreeScale ? true : parameters.degreeScale),
-    degreeScaleHalf = (undefined === parameters.degreeScaleHalf ? false : parameters.degreeScaleHalf),
-    roseVisible = (undefined === parameters.roseVisible ? false : parameters.roseVisible),
-    lcdColor = (undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor),
-    lcdVisible = (undefined === parameters.lcdVisible ? true : parameters.lcdVisible),
-    digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont),
-    section = (undefined === parameters.section ? null : parameters.section),
-    area = (undefined === parameters.area ? null : parameters.area),
-    lcdTitleStrings = (undefined === parameters.lcdTitleStrings ? ['Latest', 'Average'] : parameters.lcdTitleStrings),
-    titleString = (undefined === parameters.titleString ? '' : parameters.titleString),
-    useColorLabels = (undefined === parameters.useColorLabels ? false : parameters.useColorLabels),
-    fullScaleDeflectionTime = (undefined === parameters.fullScaleDeflectionTime ? 2.5 : parameters.fullScaleDeflectionTime);
+  let size = (undefined === parameters.size ? 0 : parameters.size);
+  let frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign);
+  const frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible);
+  let backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor);
+  const backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible);
+  let pointerTypeLatest = (undefined === parameters.pointerTypeLatest ? PointerType.TYPE1 : parameters.pointerTypeLatest);
+  let pointerTypeAverage = (undefined === parameters.pointerTypeAverage ? PointerType.TYPE8 : parameters.pointerTypeAverage);
+  let pointerColor = (undefined === parameters.pointerColor ? ColorDef.RED : parameters.pointerColor);
+  let pointerColorAverage = (undefined === parameters.pointerColorAverage ? ColorDef.BLUE : parameters.pointerColorAverage);
+  const knobType = (undefined === parameters.knobType ? KnobType.STANDARD_KNOB : parameters.knobType);
+  const knobStyle = (undefined === parameters.knobStyle ? KnobStyle.SILVER : parameters.knobStyle);
+  let foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType);
+  const foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible);
+  let pointSymbols = (undefined === parameters.pointSymbols ? ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'] : parameters.pointSymbols);
+  const pointSymbolsVisible = (undefined === parameters.pointSymbolsVisible ? true : parameters.pointSymbolsVisible);
+  const customLayer = (undefined === parameters.customLayer ? null : parameters.customLayer);
+  const degreeScale = (undefined === parameters.degreeScale ? true : parameters.degreeScale);
+  const degreeScaleHalf = (undefined === parameters.degreeScaleHalf ? false : parameters.degreeScaleHalf);
+  const roseVisible = (undefined === parameters.roseVisible ? false : parameters.roseVisible);
+  let lcdColor = (undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor);
+  const lcdVisible = (undefined === parameters.lcdVisible ? true : parameters.lcdVisible);
+  const digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont);
+  let section = (undefined === parameters.section ? null : parameters.section);
+  let area = (undefined === parameters.area ? null : parameters.area);
+  let lcdTitleStrings = (undefined === parameters.lcdTitleStrings ? ['Latest', 'Average'] : parameters.lcdTitleStrings);
+  const titleString = (undefined === parameters.titleString ? '' : parameters.titleString);
+  const useColorLabels = (undefined === parameters.useColorLabels ? false : parameters.useColorLabels);
+  const fullScaleDeflectionTime = (undefined === parameters.fullScaleDeflectionTime ? 2.5 : parameters.fullScaleDeflectionTime);
 
-  var tweenLatest;
-  var tweenAverage;
-  var valueLatest = 0;
-  var valueAverage = 0;
-  var angleStep = RAD_FACTOR;
-  var angleLatest = this.valueLatest;
-  var angleAverage = this.valueAverage;
-  var rotationOffset = -HALF_PI;
-  var angleRange = TWO_PI;
-  var range = 360;
-  var repainting = false;
+  let tweenLatest;
+  let tweenAverage;
+  let valueLatest = 0;
+  let valueAverage = 0;
+  const angleStep = RAD_FACTOR;
+  let angleLatest = this.valueLatest;
+  let angleAverage = this.valueAverage;
+  const rotationOffset = -HALF_PI;
+  const angleRange = TWO_PI;
+  const range = 360;
+  let repainting = false;
 
   // Get the canvas context and clear it
-  var mainCtx = getCanvasContext(canvas);
+  const mainCtx = getCanvasContext(canvas);
   // Has a size been specified?
   if (size === 0) {
     size = Math.min(mainCtx.canvas.width, mainCtx.canvas.height);
@@ -89,51 +89,51 @@ var WindDirection = function(canvas, parameters) {
   mainCtx.canvas.width = size;
   mainCtx.canvas.height = size;
 
-  var imageWidth = size;
-  var imageHeight = size;
+  const imageWidth = size;
+  const imageHeight = size;
 
-  var centerX = imageWidth / 2;
-  var centerY = imageHeight / 2;
+  const centerX = imageWidth / 2;
+  const centerY = imageHeight / 2;
 
-  var lcdFontHeight = Math.floor(imageWidth / 10);
-  var stdFont = lcdFontHeight + 'px ' + stdFontName;
-  var lcdFont = lcdFontHeight + 'px ' + lcdFontName;
-  var lcdWidth = imageWidth * 0.3;
-  var lcdHeight = imageHeight * 0.12;
-  var lcdPosX = (imageWidth - lcdWidth) / 2;
-  var lcdPosY1 = imageHeight * 0.32;
-  var lcdPosY2 = imageHeight * 0.565;
+  const lcdFontHeight = Math.floor(imageWidth / 10);
+  const stdFont = lcdFontHeight + 'px ' + stdFontName;
+  const lcdFont = lcdFontHeight + 'px ' + lcdFontName;
+  const lcdWidth = imageWidth * 0.3;
+  const lcdHeight = imageHeight * 0.12;
+  const lcdPosX = (imageWidth - lcdWidth) / 2;
+  const lcdPosY1 = imageHeight * 0.32;
+  const lcdPosY2 = imageHeight * 0.565;
 
-  var initialized = false;
+  let initialized = false;
 
   // **************   Buffer creation  ********************
   // Buffer for all static background painting code
-  var backgroundBuffer = createBuffer(size, size);
-  var backgroundContext = backgroundBuffer.getContext('2d');
+  const backgroundBuffer = createBuffer(size, size);
+  let backgroundContext = backgroundBuffer.getContext('2d');
 
   // Buffer for LCD displays
-  var lcdBuffer;
+  let lcdBuffer;
 
   // Buffer for latest pointer images painting code
-  var pointerBufferLatest = createBuffer(size, size);
-  var pointerContextLatest = pointerBufferLatest.getContext('2d');
+  const pointerBufferLatest = createBuffer(size, size);
+  let pointerContextLatest = pointerBufferLatest.getContext('2d');
 
   // Buffer for average pointer image
-  var pointerBufferAverage = createBuffer(size, size);
-  var pointerContextAverage = pointerBufferAverage.getContext('2d');
+  const pointerBufferAverage = createBuffer(size, size);
+  let pointerContextAverage = pointerBufferAverage.getContext('2d');
 
   // Buffer for static foreground painting code
-  var foregroundBuffer = createBuffer(size, size);
-  var foregroundContext = foregroundBuffer.getContext('2d');
+  const foregroundBuffer = createBuffer(size, size);
+  let foregroundContext = foregroundBuffer.getContext('2d');
 
   // **************   Image creation  ********************
-  var drawLcdText = function(value, bLatest) {
+  const drawLcdText = function(value, bLatest) {
     mainCtx.save();
     mainCtx.textAlign = 'center';
     mainCtx.strokeStyle = lcdColor.textColor;
     mainCtx.fillStyle = lcdColor.textColor;
 
-    //convert value from -180,180 range into 0-360 range
+    // convert value from -180,180 range into 0-360 range
     while (value < -180) {
       value += 360;
     }
@@ -165,14 +165,13 @@ var WindDirection = function(canvas, parameters) {
     mainCtx.restore();
   };
 
-  var drawAreaSectionImage = function(ctx, start, stop, color, filled) {
-
+  const drawAreaSectionImage = function(ctx, start, stop, color, filled) {
     ctx.save();
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
     ctx.lineWidth = imageWidth * 0.035;
-    var startAngle = (angleRange / range * start);
-    var stopAngle = startAngle + (stop - start) / (range / angleRange);
+    const startAngle = (angleRange / range * start);
+    const stopAngle = startAngle + (stop - start) / (range / angleRange);
     ctx.translate(centerX, centerY);
     ctx.rotate(rotationOffset);
     ctx.beginPath();
@@ -193,16 +192,16 @@ var WindDirection = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawTickmarksImage = function(ctx) {
-    var OUTER_POINT = imageWidth * 0.38,
-      MAJOR_INNER_POINT = imageWidth * 0.35,
-      //MED_INNER_POINT = imageWidth * 0.355,
-      MINOR_INNER_POINT = imageWidth * 0.36,
-      TEXT_WIDTH = imageWidth * 0.1,
-      TEXT_TRANSLATE_X = imageWidth * 0.31,
-      CARDINAL_TRANSLATE_X = imageWidth * 0.36,
-      stdFont, smlFont,
-      i, val, to;
+  const drawTickmarksImage = function(ctx) {
+    const OUTER_POINT = imageWidth * 0.38;
+    const MAJOR_INNER_POINT = imageWidth * 0.35;
+    // MED_INNER_POINT = imageWidth * 0.355,
+    const MINOR_INNER_POINT = imageWidth * 0.36;
+    const TEXT_WIDTH = imageWidth * 0.1;
+    const TEXT_TRANSLATE_X = imageWidth * 0.31;
+    const CARDINAL_TRANSLATE_X = imageWidth * 0.36;
+    let stdFont; let smlFont;
+    let i; let val; let to;
 
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -213,16 +212,14 @@ var WindDirection = function(canvas, parameters) {
     ctx.translate(centerX, centerY);
 
     if (!degreeScale) {
-
       stdFont = 0.12 * imageWidth + 'px serif';
       smlFont = 0.06 * imageWidth + 'px serif';
 
-      //var angleStep = RAD_FACTOR;
+      // var angleStep = RAD_FACTOR;
       ctx.lineWidth = 1;
       ctx.strokeStyle = backgroundColor.symbolColor.getRgbaColor();
 
       for (i = 0; 360 > i; i += 2.5) {
-
         if (0 === i % 5) {
           ctx.beginPath();
           ctx.moveTo(imageWidth * 0.38, 0);
@@ -234,56 +231,56 @@ var WindDirection = function(canvas, parameters) {
         // Draw the labels
         ctx.save();
         switch (i) {
-          case 0: //E
+          case 0: // E
             ctx.translate(imageWidth * 0.35, 0);
             ctx.rotate(HALF_PI);
             ctx.font = stdFont;
             ctx.fillText(pointSymbols[2], 0, 0);
             ctx.translate(-imageWidth * 0.35, 0);
             break;
-          case 45: //SE
+          case 45: // SE
             ctx.translate(imageWidth * 0.29, 0);
             ctx.rotate(HALF_PI);
             ctx.font = smlFont;
             ctx.fillText(pointSymbols[3], 0, 0);
             ctx.translate(-imageWidth * 0.29, 0);
             break;
-          case 90: //S
+          case 90: // S
             ctx.translate(imageWidth * 0.35, 0);
             ctx.rotate(HALF_PI);
             ctx.font = stdFont;
             ctx.fillText(pointSymbols[4], 0, 0);
             ctx.translate(-imageWidth * 0.35, 0);
             break;
-          case 135: //SW
+          case 135: // SW
             ctx.translate(imageWidth * 0.29, 0);
             ctx.rotate(HALF_PI);
             ctx.font = smlFont;
             ctx.fillText(pointSymbols[5], 0, 0);
             ctx.translate(-imageWidth * 0.29, 0);
             break;
-          case 180: //W
+          case 180: // W
             ctx.translate(imageWidth * 0.35, 0);
             ctx.rotate(HALF_PI);
             ctx.font = stdFont;
             ctx.fillText(pointSymbols[6], 0, 0);
             ctx.translate(-imageWidth * 0.35, 0);
             break;
-          case 225: //NW
+          case 225: // NW
             ctx.translate(imageWidth * 0.29, 0);
             ctx.rotate(HALF_PI);
             ctx.font = smlFont;
             ctx.fillText(pointSymbols[7], 0, 0);
             ctx.translate(-imageWidth * 0.29, 0);
             break;
-          case 270: //N
+          case 270: // N
             ctx.translate(imageWidth * 0.35, 0);
             ctx.rotate(HALF_PI);
             ctx.font = stdFont;
             ctx.fillText(pointSymbols[0], 0, 0);
             ctx.translate(-imageWidth * 0.35, 0);
             break;
-          case 315: //NE
+          case 315: // NE
             ctx.translate(imageWidth * 0.29, 0);
             ctx.rotate(HALF_PI);
             ctx.font = smlFont;
@@ -293,7 +290,9 @@ var WindDirection = function(canvas, parameters) {
         }
         ctx.restore();
 
-        if (roseVisible && (0 === i || 22.5 === i || 45 === i || 67.5 === i || 90 === i || 112.5 === i || 135 === i || 157.5 === i || 180 === i || 202.5 === i || 225 === i || 247.5 === i || 270 === i || 292.5 === i || 315 === i || 337.5 === i || 360 === i)) {
+        if (roseVisible && (0 === i || 22.5 === i || 45 === i || 67.5 === i ||
+          90 === i || 112.5 === i || 135 === i || 157.5 === i || 180 === i || 202.5 === i ||
+          225 === i || 247.5 === i || 270 === i || 292.5 === i || 315 === i || 337.5 === i || 360 === i)) {
           // ROSE_LINE
           ctx.save();
           ctx.beginPath();
@@ -319,7 +318,6 @@ var WindDirection = function(canvas, parameters) {
         // Draw the labels
         ctx.save();
         if (pointSymbolsVisible) {
-
           switch (i) {
             case 360:
               ctx.translate(CARDINAL_TRANSLATE_X, 0);
@@ -358,7 +356,7 @@ var WindDirection = function(canvas, parameters) {
             case 265:
             case 275:
             case 355:
-              //leave room for ordinal labels
+              // leave room for ordinal labels
               break;
 
             default:
@@ -386,7 +384,6 @@ var WindDirection = function(canvas, parameters) {
               }
           }
         } else {
-
           if ((i + 90) % 20) {
             ctx.lineWidth = ((i + 90) % 5) ? 1.5 : 1;
             ctx.beginPath();
@@ -404,7 +401,7 @@ var WindDirection = function(canvas, parameters) {
             ctx.stroke();
             val = (i + 90) % 360;
             if (degreeScaleHalf) {
-              //invert 180-360
+              // invert 180-360
               if (val > 180) {
                 val = -(360 - val);
               }
@@ -419,13 +416,12 @@ var WindDirection = function(canvas, parameters) {
         ctx.restore();
         ctx.rotate(angleStep * 5);
       }
-
     }
     ctx.translate(-centerX, -centerY);
     ctx.restore();
   };
 
-  var drawLcdTitles = function(ctx) {
+  const drawLcdTitles = function(ctx) {
     if (lcdTitleStrings.length > 0) {
       ctx.save();
       ctx.textAlign = 'center';
@@ -446,11 +442,11 @@ var WindDirection = function(canvas, parameters) {
   // **************   Initialization  ********************
   // Draw all static painting code to background
 
-  var init = function(parameters) {
+  const init = function(parameters) {
     parameters = parameters || {};
-    var drawBackground2 = (undefined === parameters.background ? false : parameters.background);
-    var drawPointer = (undefined === parameters.pointer ? false : parameters.pointer);
-    var drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
+    const drawBackground2 = (undefined === parameters.background ? false : parameters.background);
+    const drawPointer = (undefined === parameters.pointer ? false : parameters.pointer);
+    const drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
 
     initialized = true;
 
@@ -467,7 +463,7 @@ var WindDirection = function(canvas, parameters) {
 
       // Create section in background buffer (backgroundBuffer)
       if (null !== section && 0 < section.length) {
-        var sectionIndex = section.length;
+        let sectionIndex = section.length;
         do {
           sectionIndex--;
           drawAreaSectionImage(backgroundContext, section[sectionIndex].start, section[sectionIndex].stop, section[sectionIndex].color, false);
@@ -477,7 +473,7 @@ var WindDirection = function(canvas, parameters) {
 
       // Create area in background buffer (backgroundBuffer)
       if (null !== area && 0 < area.length) {
-        var areaIndex = area.length;
+        let areaIndex = area.length;
         do {
           areaIndex--;
           drawAreaSectionImage(backgroundContext, area[areaIndex].start, area[areaIndex].stop, area[areaIndex].color, true);
@@ -507,16 +503,16 @@ var WindDirection = function(canvas, parameters) {
     }
 
     if (drawForeground2 && foregroundVisible) {
-      var knobVisible = (pointerTypeLatest.type === 'type15' || pointerTypeLatest.type === 'type16' ? false : true);
+      const knobVisible = (pointerTypeLatest.type === 'type15' || pointerTypeLatest.type === 'type16' ? false : true);
       drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, knobVisible, knobType, knobStyle);
     }
   };
 
-  var resetBuffers = function(buffers) {
+  const resetBuffers = function(buffers) {
     buffers = buffers || {};
-    var resetBackground = (undefined === buffers.background ? false : buffers.background);
-    var resetPointer = (undefined === buffers.pointer ? false : buffers.pointer);
-    var resetForeground = (undefined === buffers.foreground ? false : buffers.foreground);
+    const resetBackground = (undefined === buffers.background ? false : buffers.background);
+    const resetPointer = (undefined === buffers.pointer ? false : buffers.pointer);
+    const resetForeground = (undefined === buffers.foreground ? false : buffers.foreground);
 
     // Buffer for all static background painting code
     if (resetBackground) {
@@ -542,7 +538,7 @@ var WindDirection = function(canvas, parameters) {
     }
   };
 
-  //************************************ Public methods **************************************
+  //* *********************************** Public methods **************************************
   this.setValueLatest = function(newValue) {
     // Actually need to handle 0-360 rather than 0-359
     // 1-360 are used for directions
@@ -578,10 +574,10 @@ var WindDirection = function(canvas, parameters) {
   };
 
   this.setValueAnimatedLatest = function(newValue, callback) {
-    var targetValue,
-      gauge = this,
-      diff,
-      time;
+    let targetValue;
+    const gauge = this;
+    let diff;
+    let time;
     // Actually need to handle 0-360 rather than 0-359
     // 1-360 are used for directions
     // 0 is used as a special case to indicate 'calm'
@@ -614,7 +610,7 @@ var WindDirection = function(canvas, parameters) {
             requestAnimFrame(gauge.repaint);
           }
           // do we have a callback function to process?
-          if (callback && typeof(callback) === "function") {
+          if (callback && typeof(callback) === 'function') {
             callback();
           }
         };
@@ -633,9 +629,9 @@ var WindDirection = function(canvas, parameters) {
   };
 
   this.setValueAnimatedAverage = function(newValue, callback) {
-    var targetValue,
-      gauge = this,
-      diff, time;
+    let targetValue;
+    const gauge = this;
+    let diff; let time;
     // Actually need to handle 0-360 rather than 0-359
     // 1-360 are used for directions
     // 0 is used as a special case to indicate 'calm'
@@ -666,7 +662,7 @@ var WindDirection = function(canvas, parameters) {
             requestAnimFrame(gauge.repaint);
           }
           // do we have a callback function to process?
-          if (callback && typeof(callback) === "function") {
+          if (callback && typeof(callback) === 'function') {
             callback();
           }
         };
@@ -687,10 +683,10 @@ var WindDirection = function(canvas, parameters) {
   this.setArea = function(areaVal) {
     area = areaVal;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -699,10 +695,10 @@ var WindDirection = function(canvas, parameters) {
   this.setSection = function(areaSec) {
     section = areaSec;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -711,10 +707,10 @@ var WindDirection = function(canvas, parameters) {
   this.setFrameDesign = function(newFrameDesign) {
     frameDesign = newFrameDesign;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -723,10 +719,10 @@ var WindDirection = function(canvas, parameters) {
   this.setBackgroundColor = function(newBackgroundColor) {
     backgroundColor = newBackgroundColor;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -734,11 +730,11 @@ var WindDirection = function(canvas, parameters) {
 
   this.setForegroundType = function(newForegroundType) {
     resetBuffers({
-      foreground: true
+      foreground: true,
     });
     foregroundType = newForegroundType;
     init({
-      foreground: true
+      foreground: true,
     });
     this.repaint();
     return this;
@@ -746,11 +742,11 @@ var WindDirection = function(canvas, parameters) {
 
   this.setPointerColor = function(newPointerColor) {
     resetBuffers({
-      pointer: true
+      pointer: true,
     });
     pointerColor = newPointerColor;
     init({
-      pointer: true
+      pointer: true,
     });
     this.repaint();
     return this;
@@ -758,11 +754,11 @@ var WindDirection = function(canvas, parameters) {
 
   this.setPointerColorAverage = function(newPointerColor) {
     resetBuffers({
-      pointer: true
+      pointer: true,
     });
     pointerColorAverage = newPointerColor;
     init({
-      pointer: true
+      pointer: true,
     });
     this.repaint();
     return this;
@@ -772,11 +768,11 @@ var WindDirection = function(canvas, parameters) {
     pointerTypeLatest = newPointerType;
     resetBuffers({
       pointer: true,
-      foreground: true
+      foreground: true,
     });
     init({
       pointer: true,
-      foreground: true
+      foreground: true,
     });
     this.repaint();
     return this;
@@ -786,11 +782,11 @@ var WindDirection = function(canvas, parameters) {
     pointerTypeAverage = newPointerType;
     resetBuffers({
       pointer: true,
-      foreground: true
+      foreground: true,
     });
     init({
       pointer: true,
-      foreground: true
+      foreground: true,
     });
     this.repaint();
     return this;
@@ -799,10 +795,10 @@ var WindDirection = function(canvas, parameters) {
   this.setPointSymbols = function(newPointSymbols) {
     pointSymbols = newPointSymbols;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -811,10 +807,10 @@ var WindDirection = function(canvas, parameters) {
   this.setLcdColor = function(newLcdColor) {
     lcdColor = newLcdColor;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -823,10 +819,10 @@ var WindDirection = function(canvas, parameters) {
   this.setLcdTitleStrings = function(titles) {
     lcdTitleStrings = titles;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -839,7 +835,7 @@ var WindDirection = function(canvas, parameters) {
         background: true,
         led: true,
         pointer: true,
-        foreground: true
+        foreground: true,
       });
     }
 
@@ -860,7 +856,7 @@ var WindDirection = function(canvas, parameters) {
 
     // we have to draw to a rotated temporary image area so we can translate in
     // absolute x, y values when drawing to main context
-    var shadowOffset = imageWidth * 0.006;
+    const shadowOffset = imageWidth * 0.006;
 
     // Define rotation center
     mainCtx.save();

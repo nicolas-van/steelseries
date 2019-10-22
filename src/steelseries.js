@@ -1,51 +1,51 @@
 
-import Radial from "./Radial";
-import RadialBargraph from "./RadialBargraph";
-import RadialVertical from "./RadialVertical";
-import Linear from "./Linear";
-import LinearBargraph from "./LinearBargraph";
-import DisplaySingle from "./DisplaySingle";
-import DisplayMulti from "./DisplayMulti";
-import Level from "./Level";
-import Compass from "./Compass";
-import WindDirection from "./WindDirection";
-import Horizon from "./Horizon";
-import Led from "./Led";
-import Clock from "./Clock";
-import Battery from "./Battery";
-import StopWatch from "./StopWatch";
-import Altimeter from "./Altimeter";
-import TrafficLight from "./TrafficLight";
-import LightBulb from "./LightBulb";
-import Odometer from "./Odometer";
-import drawFrame from "./drawFrame";
-import drawBackground from "./drawBackground";
-import drawForeground from "./drawForeground";
+import Radial from './Radial';
+import RadialBargraph from './RadialBargraph';
+import RadialVertical from './RadialVertical';
+import Linear from './Linear';
+import LinearBargraph from './LinearBargraph';
+import DisplaySingle from './DisplaySingle';
+import DisplayMulti from './DisplayMulti';
+import Level from './Level';
+import Compass from './Compass';
+import WindDirection from './WindDirection';
+import Horizon from './Horizon';
+import Led from './Led';
+import Clock from './Clock';
+import Battery from './Battery';
+import StopWatch from './StopWatch';
+import Altimeter from './Altimeter';
+import TrafficLight from './TrafficLight';
+import LightBulb from './LightBulb';
+import Odometer from './Odometer';
+import drawFrame from './drawFrame';
+import drawBackground from './drawBackground';
+import drawForeground from './drawForeground';
 import {
-rgbaColor, 
-ConicalGradient, 
-gradientWrapper, 
-setAlpha, 
-getColorFromFraction,
-Section,
-} from "./tools";
+  rgbaColor,
+  ConicalGradient,
+  gradientWrapper,
+  setAlpha,
+  getColorFromFraction,
+  Section,
+} from './tools';
 
 import {
-BackgroundColor,
-LcdColor,
-ColorDef,
-LedColor,
-GaugeType,
-Orientation,
-KnobType,
-KnobStyle,
-FrameDesign,
-PointerType,
-ForegroundType,
-LabelNumberFormat,
-TickLabelOrientation,
-TrendState,
-} from "./definitions";
+  BackgroundColor,
+  LcdColor,
+  ColorDef,
+  LedColor,
+  GaugeType,
+  Orientation,
+  KnobType,
+  KnobStyle,
+  FrameDesign,
+  PointerType,
+  ForegroundType,
+  LabelNumberFormat,
+  TickLabelOrientation,
+  TrendState,
+} from './definitions';
 
 export {Radial};
 export {RadialBargraph};

@@ -1,28 +1,28 @@
-import Tween from "./tween.js";
-import drawPointerImage from "./drawPointerImage";
-import drawFrame from "./drawFrame";
-import drawBackground from "./drawBackground";
-import drawRadialCustomImage from "./drawRadialCustomImage";
-import drawForeground from "./drawForeground";
-import createKnobImage from "./createKnobImage";
-import createLedImage from "./createLedImage";
-import createLcdBackgroundImage from "./createLcdBackgroundImage";
-import createMeasuredValueImage from "./createMeasuredValueImage";
-import createTrendIndicator from "./createTrendIndicator";
-import drawTitleImage from "./drawTitleImage";
+import Tween from './tween.js';
+import drawPointerImage from './drawPointerImage';
+import drawFrame from './drawFrame';
+import drawBackground from './drawBackground';
+import drawRadialCustomImage from './drawRadialCustomImage';
+import drawForeground from './drawForeground';
+import createKnobImage from './createKnobImage';
+import createLedImage from './createLedImage';
+import createLcdBackgroundImage from './createLcdBackgroundImage';
+import createMeasuredValueImage from './createMeasuredValueImage';
+import createTrendIndicator from './createTrendIndicator';
+import drawTitleImage from './drawTitleImage';
 import {
-calcNiceNumber, 
-createBuffer, 
-requestAnimFrame, 
-getCanvasContext,
-HALF_PI,
-TWO_PI,
-PI,
-RAD_FACTOR,
-doc,
-lcdFontName,
-stdFontName,
-} from "./tools";
+  calcNiceNumber,
+  createBuffer,
+  requestAnimFrame,
+  getCanvasContext,
+  HALF_PI,
+  TWO_PI,
+  PI,
+  RAD_FACTOR,
+  doc,
+  lcdFontName,
+  stdFontName,
+} from './tools';
 
 import {
   BackgroundColor,
@@ -39,59 +39,59 @@ import {
   LabelNumberFormat,
   TickLabelOrientation,
   TrendState,
-  } from "./definitions";
+} from './definitions';
 
 import Odometer from './Odometer';
 
-var Radial = function(canvas, parameters) {
+const Radial = function(canvas, parameters) {
   parameters = parameters || {};
-  var gaugeType = (undefined === parameters.gaugeType ? GaugeType.TYPE4 : parameters.gaugeType),
-    size = (undefined === parameters.size ? 0 : parameters.size),
-    minValue = (undefined === parameters.minValue ? 0 : parameters.minValue),
-    maxValue = (undefined === parameters.maxValue ? (minValue + 100) : parameters.maxValue),
-    niceScale = (undefined === parameters.niceScale ? true : parameters.niceScale),
-    threshold = (undefined === parameters.threshold ? (maxValue - minValue) / 2 + minValue : parameters.threshold),
-    thresholdRising = (undefined === parameters.thresholdRising ? true : parameters.thresholdRising),
-    section = (undefined === parameters.section ? null : parameters.section),
-    area = (undefined === parameters.area ? null : parameters.area),
-    titleString = (undefined === parameters.titleString ? '' : parameters.titleString),
-    unitString = (undefined === parameters.unitString ? '' : parameters.unitString),
-    frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
-    frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible),
-    backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor),
-    backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible),
-    pointerType = (undefined === parameters.pointerType ? PointerType.TYPE1 : parameters.pointerType),
-    pointerColor = (undefined === parameters.pointerColor ? ColorDef.RED : parameters.pointerColor),
-    knobType = (undefined === parameters.knobType ? KnobType.STANDARD_KNOB : parameters.knobType),
-    knobStyle = (undefined === parameters.knobStyle ? KnobStyle.SILVER : parameters.knobStyle),
-    lcdColor = (undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor),
-    lcdVisible = (undefined === parameters.lcdVisible ? true : parameters.lcdVisible),
-    lcdDecimals = (undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals),
-    digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont),
-    fractionalScaleDecimals = (undefined === parameters.fractionalScaleDecimals ? 1 : parameters.fractionalScaleDecimals),
-    ledColor = (undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor),
-    ledVisible = (undefined === parameters.ledVisible ? true : parameters.ledVisible),
-    userLedColor = (undefined === parameters.userLedColor ? LedColor.GREEN_LED : parameters.userLedColor),
-    userLedVisible = (undefined === parameters.userLedVisible ? false : parameters.userLedVisible),
-    thresholdVisible = (undefined === parameters.thresholdVisible ? true : parameters.thresholdVisible),
-    minMeasuredValueVisible = (undefined === parameters.minMeasuredValueVisible ? false : parameters.minMeasuredValueVisible),
-    maxMeasuredValueVisible = (undefined === parameters.maxMeasuredValueVisible ? false : parameters.maxMeasuredValueVisible),
-    foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType),
-    foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible),
-    labelNumberFormat = (undefined === parameters.labelNumberFormat ? LabelNumberFormat.STANDARD : parameters.labelNumberFormat),
-    playAlarm = (undefined === parameters.playAlarm ? false : parameters.playAlarm),
-    alarmSound = (undefined === parameters.alarmSound ? false : parameters.alarmSound),
-    customLayer = (undefined === parameters.customLayer ? null : parameters.customLayer),
-    tickLabelOrientation = (undefined === parameters.tickLabelOrientation ? (gaugeType === GaugeType.TYPE1 ? TickLabelOrientation.TANGENT : TickLabelOrientation.NORMAL) : parameters.tickLabelOrientation),
-    trendVisible = (undefined === parameters.trendVisible ? false : parameters.trendVisible),
-    trendColors = (undefined === parameters.trendColors ? [LedColor.RED_LED, LedColor.GREEN_LED, LedColor.CYAN_LED] : parameters.trendColors),
-    useOdometer = (undefined === parameters.useOdometer ? false : parameters.useOdometer),
-    odometerParams = (undefined === parameters.odometerParams ? {} : parameters.odometerParams),
-    odometerUseValue = (undefined === parameters.odometerUseValue ? false : parameters.odometerUseValue),
-    fullScaleDeflectionTime = (undefined === parameters.fullScaleDeflectionTime ? 2.5 : parameters.fullScaleDeflectionTime);
+  const gaugeType = (undefined === parameters.gaugeType ? GaugeType.TYPE4 : parameters.gaugeType);
+  let size = (undefined === parameters.size ? 0 : parameters.size);
+  let minValue = (undefined === parameters.minValue ? 0 : parameters.minValue);
+  let maxValue = (undefined === parameters.maxValue ? (minValue + 100) : parameters.maxValue);
+  const niceScale = (undefined === parameters.niceScale ? true : parameters.niceScale);
+  let threshold = (undefined === parameters.threshold ? (maxValue - minValue) / 2 + minValue : parameters.threshold);
+  let thresholdRising = (undefined === parameters.thresholdRising ? true : parameters.thresholdRising);
+  let section = (undefined === parameters.section ? null : parameters.section);
+  let area = (undefined === parameters.area ? null : parameters.area);
+  let titleString = (undefined === parameters.titleString ? '' : parameters.titleString);
+  let unitString = (undefined === parameters.unitString ? '' : parameters.unitString);
+  let frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign);
+  const frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible);
+  let backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor);
+  const backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible);
+  let pointerType = (undefined === parameters.pointerType ? PointerType.TYPE1 : parameters.pointerType);
+  let pointerColor = (undefined === parameters.pointerColor ? ColorDef.RED : parameters.pointerColor);
+  const knobType = (undefined === parameters.knobType ? KnobType.STANDARD_KNOB : parameters.knobType);
+  const knobStyle = (undefined === parameters.knobStyle ? KnobStyle.SILVER : parameters.knobStyle);
+  let lcdColor = (undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor);
+  const lcdVisible = (undefined === parameters.lcdVisible ? true : parameters.lcdVisible);
+  let lcdDecimals = (undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals);
+  const digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont);
+  let fractionalScaleDecimals = (undefined === parameters.fractionalScaleDecimals ? 1 : parameters.fractionalScaleDecimals);
+  let ledColor = (undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor);
+  let ledVisible = (undefined === parameters.ledVisible ? true : parameters.ledVisible);
+  let userLedColor = (undefined === parameters.userLedColor ? LedColor.GREEN_LED : parameters.userLedColor);
+  let userLedVisible = (undefined === parameters.userLedVisible ? false : parameters.userLedVisible);
+  let thresholdVisible = (undefined === parameters.thresholdVisible ? true : parameters.thresholdVisible);
+  let minMeasuredValueVisible = (undefined === parameters.minMeasuredValueVisible ? false : parameters.minMeasuredValueVisible);
+  let maxMeasuredValueVisible = (undefined === parameters.maxMeasuredValueVisible ? false : parameters.maxMeasuredValueVisible);
+  let foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType);
+  const foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible);
+  let labelNumberFormat = (undefined === parameters.labelNumberFormat ? LabelNumberFormat.STANDARD : parameters.labelNumberFormat);
+  const playAlarm = (undefined === parameters.playAlarm ? false : parameters.playAlarm);
+  const alarmSound = (undefined === parameters.alarmSound ? false : parameters.alarmSound);
+  const customLayer = (undefined === parameters.customLayer ? null : parameters.customLayer);
+  const tickLabelOrientation = (undefined === parameters.tickLabelOrientation ? (gaugeType === GaugeType.TYPE1 ? TickLabelOrientation.TANGENT : TickLabelOrientation.NORMAL) : parameters.tickLabelOrientation);
+  let trendVisible = (undefined === parameters.trendVisible ? false : parameters.trendVisible);
+  const trendColors = (undefined === parameters.trendColors ? [LedColor.RED_LED, LedColor.GREEN_LED, LedColor.CYAN_LED] : parameters.trendColors);
+  const useOdometer = (undefined === parameters.useOdometer ? false : parameters.useOdometer);
+  const odometerParams = (undefined === parameters.odometerParams ? {} : parameters.odometerParams);
+  const odometerUseValue = (undefined === parameters.odometerUseValue ? false : parameters.odometerUseValue);
+  const fullScaleDeflectionTime = (undefined === parameters.fullScaleDeflectionTime ? 2.5 : parameters.fullScaleDeflectionTime);
 
   // Get the canvas context and clear it
-  var mainCtx = getCanvasContext(canvas);
+  const mainCtx = getCanvasContext(canvas);
   // Has a size been specified?
   if (size === 0) {
     size = Math.min(mainCtx.canvas.width, mainCtx.canvas.height);
@@ -102,80 +102,80 @@ var Radial = function(canvas, parameters) {
   mainCtx.canvas.height = size;
 
   // Create audio tag for alarm sound
-  var audioElement;
+  let audioElement;
   if (playAlarm && alarmSound !== false) {
     audioElement = doc.createElement('audio');
     audioElement.setAttribute('src', alarmSound);
     audioElement.setAttribute('preload', 'auto');
   }
 
-  var value = minValue;
-  var odoValue = minValue;
-  var self = this;
+  let value = minValue;
+  let odoValue = minValue;
+  const self = this;
 
   // Properties
-  var minMeasuredValue = maxValue;
-  var maxMeasuredValue = minValue;
+  let minMeasuredValue = maxValue;
+  let maxMeasuredValue = minValue;
 
-  var ledBlinking = false;
-  var userLedBlinking = false;
+  let ledBlinking = false;
+  let userLedBlinking = false;
 
-  var ledTimerId = 0;
-  var userLedTimerId = 0;
-  var tween;
-  var repainting = false;
+  let ledTimerId = 0;
+  let userLedTimerId = 0;
+  let tween;
+  let repainting = false;
 
-  var trendIndicator = TrendState.OFF;
-  var trendSize = size * 0.06;
-  var trendPosX = size * 0.29;
-  var trendPosY = size * 0.36;
+  let trendIndicator = TrendState.OFF;
+  const trendSize = size * 0.06;
+  const trendPosX = size * 0.29;
+  const trendPosY = size * 0.36;
 
   // GaugeType specific private variables
-  var freeAreaAngle;
-  var rotationOffset;
-  var tickmarkOffset;
-  var angleRange;
-  var angleStep;
+  let freeAreaAngle;
+  let rotationOffset;
+  let tickmarkOffset;
+  let angleRange;
+  let angleStep;
 
-  var angle = rotationOffset + (value - minValue) * angleStep;
+  let angle = rotationOffset + (value - minValue) * angleStep;
 
-  var imageWidth = size;
-  var imageHeight = size;
+  const imageWidth = size;
+  const imageHeight = size;
 
-  var centerX = imageWidth / 2;
-  var centerY = imageHeight / 2;
+  const centerX = imageWidth / 2;
+  const centerY = imageHeight / 2;
 
   // Misc
-  var ledSize = size * 0.093457;
-  var ledPosX = 0.6 * imageWidth;
-  var ledPosY = 0.4 * imageHeight;
-  var userLedPosX = gaugeType === GaugeType.TYPE3 ? 0.6 * imageWidth : centerX - ledSize / 2;
-  var userLedPosY = gaugeType === GaugeType.TYPE3 ? 0.72 * imageHeight : 0.75 * imageHeight;
-  var lcdFontHeight = Math.floor(imageWidth / 10);
-  var stdFont = lcdFontHeight + 'px ' + stdFontName;
-  var lcdFont = lcdFontHeight + 'px ' + lcdFontName;
-  var lcdHeight = imageHeight * 0.13;
-  var lcdWidth = imageWidth * 0.4;
-  var lcdPosX = (imageWidth - lcdWidth) / 2;
-  var lcdPosY = imageHeight * 0.57;
-  var odoPosX, odoPosY = imageHeight * 0.61;
-  var shadowOffset = imageWidth * 0.006;
+  const ledSize = size * 0.093457;
+  const ledPosX = 0.6 * imageWidth;
+  const ledPosY = 0.4 * imageHeight;
+  const userLedPosX = gaugeType === GaugeType.TYPE3 ? 0.6 * imageWidth : centerX - ledSize / 2;
+  const userLedPosY = gaugeType === GaugeType.TYPE3 ? 0.72 * imageHeight : 0.75 * imageHeight;
+  const lcdFontHeight = Math.floor(imageWidth / 10);
+  const stdFont = lcdFontHeight + 'px ' + stdFontName;
+  const lcdFont = lcdFontHeight + 'px ' + lcdFontName;
+  const lcdHeight = imageHeight * 0.13;
+  const lcdWidth = imageWidth * 0.4;
+  const lcdPosX = (imageWidth - lcdWidth) / 2;
+  const lcdPosY = imageHeight * 0.57;
+  let odoPosX; const odoPosY = imageHeight * 0.61;
+  const shadowOffset = imageWidth * 0.006;
 
   // Constants
-  var initialized = false;
+  let initialized = false;
 
   // Tickmark specific private variables
-  var niceMinValue = minValue;
-  var niceMaxValue = maxValue;
-  var niceRange = maxValue - minValue;
-  var range = niceMaxValue - niceMinValue;
-  var minorTickSpacing = 0;
-  var majorTickSpacing = 0;
-  var maxNoOfMinorTicks = 10;
-  var maxNoOfMajorTicks = 10;
+  let niceMinValue = minValue;
+  let niceMaxValue = maxValue;
+  let niceRange = maxValue - minValue;
+  let range = niceMaxValue - niceMinValue;
+  let minorTickSpacing = 0;
+  let majorTickSpacing = 0;
+  const maxNoOfMinorTicks = 10;
+  const maxNoOfMajorTicks = 10;
 
   // Method to calculate nice values for min, max and range for the tickmarks
-  var calculate = function calculate() {
+  const calculate = function calculate() {
     if (niceScale) {
       niceRange = calcNiceNumber(maxValue - minValue, false);
       majorTickSpacing = calcNiceNumber(niceRange / (maxNoOfMajorTicks - 1), true);
@@ -239,65 +239,65 @@ var Radial = function(canvas, parameters) {
 
   // **************   Buffer creation  ********************
   // Buffer for the frame
-  var frameBuffer = createBuffer(size, size);
-  var frameContext = frameBuffer.getContext('2d');
+  const frameBuffer = createBuffer(size, size);
+  let frameContext = frameBuffer.getContext('2d');
 
   // Buffer for the background
-  var backgroundBuffer = createBuffer(size, size);
-  var backgroundContext = backgroundBuffer.getContext('2d');
+  const backgroundBuffer = createBuffer(size, size);
+  let backgroundContext = backgroundBuffer.getContext('2d');
 
-  var lcdBuffer;
+  let lcdBuffer;
 
   // Buffer for led on painting code
-  var ledBufferOn = createBuffer(ledSize, ledSize);
-  var ledContextOn = ledBufferOn.getContext('2d');
+  const ledBufferOn = createBuffer(ledSize, ledSize);
+  let ledContextOn = ledBufferOn.getContext('2d');
 
   // Buffer for led off painting code
-  var ledBufferOff = createBuffer(ledSize, ledSize);
-  var ledContextOff = ledBufferOff.getContext('2d');
+  const ledBufferOff = createBuffer(ledSize, ledSize);
+  let ledContextOff = ledBufferOff.getContext('2d');
 
   // Buffer for current led painting code
-  var ledBuffer = ledBufferOff;
+  let ledBuffer = ledBufferOff;
 
   // Buffer for user led on painting code
-  var userLedBufferOn = createBuffer(ledSize, ledSize);
-  var userLedContextOn = userLedBufferOn.getContext('2d');
+  const userLedBufferOn = createBuffer(ledSize, ledSize);
+  let userLedContextOn = userLedBufferOn.getContext('2d');
 
   // Buffer for user led off painting code
-  var userLedBufferOff = createBuffer(ledSize, ledSize);
-  var userLedContextOff = userLedBufferOff.getContext('2d');
+  const userLedBufferOff = createBuffer(ledSize, ledSize);
+  let userLedContextOff = userLedBufferOff.getContext('2d');
 
   // Buffer for current user led painting code
-  var userLedBuffer = userLedBufferOff;
+  let userLedBuffer = userLedBufferOff;
 
   // Buffer for the minMeasuredValue indicator
-  var minMeasuredValueBuffer = createBuffer(Math.ceil(size * 0.028037), Math.ceil(size * 0.028037));
-  var minMeasuredValueCtx = minMeasuredValueBuffer.getContext('2d');
+  const minMeasuredValueBuffer = createBuffer(Math.ceil(size * 0.028037), Math.ceil(size * 0.028037));
+  const minMeasuredValueCtx = minMeasuredValueBuffer.getContext('2d');
 
   // Buffer for the maxMeasuredValue indicator
-  var maxMeasuredValueBuffer = createBuffer(Math.ceil(size * 0.028037), Math.ceil(size * 0.028037));
-  var maxMeasuredValueCtx = maxMeasuredValueBuffer.getContext('2d');
+  const maxMeasuredValueBuffer = createBuffer(Math.ceil(size * 0.028037), Math.ceil(size * 0.028037));
+  const maxMeasuredValueCtx = maxMeasuredValueBuffer.getContext('2d');
 
   // Buffer for pointer image painting code
-  var pointerBuffer = createBuffer(size, size);
-  var pointerContext = pointerBuffer.getContext('2d');
+  const pointerBuffer = createBuffer(size, size);
+  let pointerContext = pointerBuffer.getContext('2d');
 
   // Buffer for static foreground painting code
-  var foregroundBuffer = createBuffer(size, size);
-  var foregroundContext = foregroundBuffer.getContext('2d');
+  const foregroundBuffer = createBuffer(size, size);
+  let foregroundContext = foregroundBuffer.getContext('2d');
 
   // Buffers for trend indicators
-  var trendUpBuffer, trendSteadyBuffer, trendDownBuffer, trendOffBuffer;
+  let trendUpBuffer; let trendSteadyBuffer; let trendDownBuffer; let trendOffBuffer;
 
   // Buffer for odometer
-  var odoGauge, odoBuffer, odoContext;
+  let odoGauge; let odoBuffer; let odoContext;
   if (useOdometer && lcdVisible) {
     odoBuffer = createBuffer(10, 10); // size doesn't matter, it will get reset by odometer code
     odoContext = odoBuffer.getContext('2d');
   }
 
   // **************   Image creation  ********************
-  var drawLcdText = function(ctx, value) {
+  const drawLcdText = function(ctx, value) {
     ctx.restore();
     ctx.save();
     ctx.textAlign = 'right';
@@ -320,7 +320,7 @@ var Radial = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawPostsImage = function(ctx) {
+  const drawPostsImage = function(ctx) {
     ctx.save();
 
     if ('type1' === gaugeType.type) {
@@ -352,17 +352,16 @@ var Radial = function(canvas, parameters) {
     }
 
     ctx.restore();
-
   };
 
-  var createThresholdImage = function() {
-    var thresholdBuffer = doc.createElement('canvas');
+  const createThresholdImage = function() {
+    const thresholdBuffer = doc.createElement('canvas');
     thresholdBuffer.width = Math.ceil(size * 0.046728);
     thresholdBuffer.height = Math.ceil(thresholdBuffer.width * 0.9);
-    var thresholdCtx = thresholdBuffer.getContext('2d');
+    const thresholdCtx = thresholdBuffer.getContext('2d');
 
     thresholdCtx.save();
-    var gradThreshold = thresholdCtx.createLinearGradient(0, 0.1, 0, thresholdBuffer.height * 0.9);
+    const gradThreshold = thresholdCtx.createLinearGradient(0, 0.1, 0, thresholdBuffer.height * 0.9);
     gradThreshold.addColorStop(0, '#520000');
     gradThreshold.addColorStop(0.3, '#fc1d00');
     gradThreshold.addColorStop(0.59, '#fc1d00');
@@ -385,7 +384,7 @@ var Radial = function(canvas, parameters) {
     return thresholdBuffer;
   };
 
-  var drawAreaSectionImage = function(ctx, start, stop, color, filled) {
+  const drawAreaSectionImage = function(ctx, start, stop, color, filled) {
     if (start < minValue) {
       start = minValue;
     } else if (start > maxValue) {
@@ -403,8 +402,8 @@ var Radial = function(canvas, parameters) {
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
     ctx.lineWidth = imageWidth * 0.035;
-    var startAngle = (angleRange / range * start - angleRange / range * minValue);
-    var stopAngle = startAngle + (stop - start) / (range / angleRange);
+    const startAngle = (angleRange / range * start - angleRange / range * minValue);
+    const stopAngle = startAngle + (stop - start) / (range / angleRange);
     ctx.translate(centerX, centerY);
     ctx.rotate(rotationOffset);
     ctx.beginPath();
@@ -425,22 +424,22 @@ var Radial = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawTickmarksImage = function(ctx, labelNumberFormat) {
-    var fontSize = Math.ceil(imageWidth * 0.04),
-      alpha = rotationOffset, // Tracks total rotation
-      rotationStep = angleStep * minorTickSpacing,
-      textRotationAngle,
-      valueCounter = minValue,
-      majorTickCounter = maxNoOfMinorTicks - 1,
-      OUTER_POINT = imageWidth * 0.38,
-      MAJOR_INNER_POINT = imageWidth * 0.35,
-      MED_INNER_POINT = imageWidth * 0.355,
-      MINOR_INNER_POINT = imageWidth * 0.36,
-      TEXT_TRANSLATE_X = imageWidth * 0.3,
-      TEXT_WIDTH = imageWidth * 0.1,
-      HALF_MAX_NO_OF_MINOR_TICKS = maxNoOfMinorTicks / 2,
-      MAX_VALUE_ROUNDED = parseFloat(maxValue.toFixed(2)),
-      i;
+  const drawTickmarksImage = function(ctx, labelNumberFormat) {
+    const fontSize = Math.ceil(imageWidth * 0.04);
+    let alpha = rotationOffset; // Tracks total rotation
+    const rotationStep = angleStep * minorTickSpacing;
+    let textRotationAngle;
+    let valueCounter = minValue;
+    let majorTickCounter = maxNoOfMinorTicks - 1;
+    const OUTER_POINT = imageWidth * 0.38;
+    const MAJOR_INNER_POINT = imageWidth * 0.35;
+    const MED_INNER_POINT = imageWidth * 0.355;
+    const MINOR_INNER_POINT = imageWidth * 0.36;
+    const TEXT_TRANSLATE_X = imageWidth * 0.3;
+    let TEXT_WIDTH = imageWidth * 0.1;
+    const HALF_MAX_NO_OF_MINOR_TICKS = maxNoOfMinorTicks / 2;
+    const MAX_VALUE_ROUNDED = parseFloat(maxValue.toFixed(2));
+    let i;
 
     backgroundColor.labelColor.setAlpha(1);
     ctx.save();
@@ -586,16 +585,16 @@ var Radial = function(canvas, parameters) {
 
   // **************   Initialization  ********************
   // Draw all static painting code to background
-  var init = function(parameters) {
+  const init = function(parameters) {
     parameters = parameters || {};
-    var drawFrame2 = (undefined === parameters.frame ? false : parameters.frame);
-    var drawBackground2 = (undefined === parameters.background ? false : parameters.background);
-    var drawLed = (undefined === parameters.led ? false : parameters.led);
-    var drawUserLed = (undefined === parameters.userLed ? false : parameters.userLed);
-    var drawPointer = (undefined === parameters.pointer ? false : parameters.pointer);
-    var drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
-    var drawTrend = (undefined === parameters.trend ? false : parameters.trend);
-    var drawOdo = (undefined === parameters.odo ? false : parameters.odo);
+    const drawFrame2 = (undefined === parameters.frame ? false : parameters.frame);
+    const drawBackground2 = (undefined === parameters.background ? false : parameters.background);
+    const drawLed = (undefined === parameters.led ? false : parameters.led);
+    const drawUserLed = (undefined === parameters.userLed ? false : parameters.userLed);
+    const drawPointer = (undefined === parameters.pointer ? false : parameters.pointer);
+    const drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
+    const drawTrend = (undefined === parameters.trend ? false : parameters.trend);
+    const drawOdo = (undefined === parameters.odo ? false : parameters.odo);
 
     initialized = true;
 
@@ -647,7 +646,7 @@ var Radial = function(canvas, parameters) {
 
       // Create section in background buffer (backgroundBuffer)
       if (null !== section && 0 < section.length) {
-        var sectionIndex = section.length;
+        let sectionIndex = section.length;
         do {
           sectionIndex--;
           drawAreaSectionImage(backgroundContext, section[sectionIndex].start, section[sectionIndex].stop, section[sectionIndex].color, false);
@@ -657,7 +656,7 @@ var Radial = function(canvas, parameters) {
 
       // Create area in background buffer (backgroundBuffer)
       if (null !== area && 0 < area.length) {
-        var areaIndex = area.length;
+        let areaIndex = area.length;
         do {
           areaIndex--;
           drawAreaSectionImage(backgroundContext, area[areaIndex].start, area[areaIndex].stop, area[areaIndex].color, true);
@@ -696,7 +695,7 @@ var Radial = function(canvas, parameters) {
           decimalForeColor: odometerParams.decimalForeColor,
           decimalBackColor: odometerParams.decimalBackColor,
           font: odometerParams.font,
-          value: value
+          value: value,
         });
         odoPosX = (imageWidth - odoBuffer.width) / 2;
       } else if (!useOdometer) {
@@ -712,7 +711,7 @@ var Radial = function(canvas, parameters) {
 
     // Create foreground in foreground buffer (foregroundBuffer)
     if (drawForeground2 && foregroundVisible) {
-      var knobVisible = (pointerType.type === 'type15' || pointerType.type === 'type16' ? false : true);
+      const knobVisible = (pointerType.type === 'type15' || pointerType.type === 'type16' ? false : true);
       drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, knobVisible, knobType, knobStyle, gaugeType);
     }
 
@@ -725,14 +724,14 @@ var Radial = function(canvas, parameters) {
     }
   };
 
-  var resetBuffers = function(buffers) {
+  const resetBuffers = function(buffers) {
     buffers = buffers || {};
-    var resetFrame = (undefined === buffers.frame ? false : buffers.frame);
-    var resetBackground = (undefined === buffers.background ? false : buffers.background);
-    var resetLed = (undefined === buffers.led ? false : buffers.led);
-    var resetUserLed = (undefined === buffers.userLed ? false : buffers.userLed);
-    var resetPointer = (undefined === buffers.pointer ? false : buffers.pointer);
-    var resetForeground = (undefined === buffers.foreground ? false : buffers.foreground);
+    const resetFrame = (undefined === buffers.frame ? false : buffers.frame);
+    const resetBackground = (undefined === buffers.background ? false : buffers.background);
+    const resetLed = (undefined === buffers.led ? false : buffers.led);
+    const resetUserLed = (undefined === buffers.userLed ? false : buffers.userLed);
+    const resetPointer = (undefined === buffers.pointer ? false : buffers.pointer);
+    const resetForeground = (undefined === buffers.foreground ? false : buffers.foreground);
 
     if (resetFrame) {
       frameBuffer.width = size;
@@ -785,7 +784,7 @@ var Radial = function(canvas, parameters) {
     }
   };
 
-  var toggleAndRepaintLed = function() {
+  const toggleAndRepaintLed = function() {
     if (ledVisible) {
       if (ledBuffer === ledBufferOn) {
         ledBuffer = ledBufferOff;
@@ -799,7 +798,7 @@ var Radial = function(canvas, parameters) {
     }
   };
 
-  var toggleAndRepaintUserLed = function() {
+  const toggleAndRepaintUserLed = function() {
     if (userLedVisible) {
       if (userLedBuffer === userLedBufferOn) {
         userLedBuffer = userLedBufferOff;
@@ -813,7 +812,7 @@ var Radial = function(canvas, parameters) {
     }
   };
 
-  var blink = function(blinking) {
+  const blink = function(blinking) {
     if (blinking) {
       ledTimerId = setInterval(toggleAndRepaintLed, 1000);
     } else {
@@ -822,7 +821,7 @@ var Radial = function(canvas, parameters) {
     }
   };
 
-  var blinkUser = function(blinking) {
+  const blinkUser = function(blinking) {
     if (blinking) {
       userLedTimerId = setInterval(toggleAndRepaintUserLed, 1000);
     } else {
@@ -831,10 +830,10 @@ var Radial = function(canvas, parameters) {
     }
   };
 
-  //************************************ Public methods **************************************
+  //* *********************************** Public methods **************************************
   this.setValue = function(newValue) {
     newValue = parseFloat(newValue);
-    var targetValue = newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue);
+    const targetValue = newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue);
     if (value !== targetValue) {
       value = targetValue;
 
@@ -871,7 +870,7 @@ var Radial = function(canvas, parameters) {
 
   this.setOdoValue = function(newValue) {
     newValue = parseFloat(newValue);
-    var targetValue = (newValue < 0 ? 0 : newValue);
+    const targetValue = (newValue < 0 ? 0 : newValue);
     if (odoValue !== targetValue) {
       odoValue = targetValue;
       this.repaint();
@@ -885,9 +884,9 @@ var Radial = function(canvas, parameters) {
 
   this.setValueAnimated = function(newValue, callback) {
     newValue = parseFloat(newValue);
-    var targetValue = (newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue)),
-      gauge = this,
-      time;
+    const targetValue = (newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue));
+    const gauge = this;
+    let time;
 
     if (value !== targetValue) {
       if (undefined !== tween && tween.isPlaying) {
@@ -896,8 +895,8 @@ var Radial = function(canvas, parameters) {
       time = fullScaleDeflectionTime * Math.abs(targetValue - value) / (maxValue - minValue);
       time = Math.max(time, fullScaleDeflectionTime / 5);
       tween = new Tween({}, '', Tween.regularEaseInOut, value, targetValue, time);
-      //tween = new Tween({}, '', Tween.regularEaseInOut, value, targetValue, 1);
-      //tween = new Tween(new Object(), '', Tween.strongEaseInOut, value, targetValue, 1);
+      // tween = new Tween({}, '', Tween.regularEaseInOut, value, targetValue, 1);
+      // tween = new Tween(new Object(), '', Tween.strongEaseInOut, value, targetValue, 1);
 
       tween.onMotionChanged = function(event) {
         value = event.target._pos;
@@ -931,7 +930,7 @@ var Radial = function(canvas, parameters) {
       };
 
       // do we have a callback function to process?
-      if (callback && typeof(callback) === "function") {
+      if (callback && typeof(callback) === 'function') {
         tween.onMotionFinished = callback;
       }
 
@@ -965,7 +964,7 @@ var Radial = function(canvas, parameters) {
 
   this.setMaxMeasuredValue = function(newValue) {
     newValue = parseFloat(newValue);
-    var targetValue = newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue);
+    const targetValue = newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue);
     maxMeasuredValue = targetValue;
     this.repaint();
     return this;
@@ -973,7 +972,7 @@ var Radial = function(canvas, parameters) {
 
   this.setMinMeasuredValue = function(newValue) {
     newValue = parseFloat(newValue);
-    var targetValue = newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue);
+    const targetValue = newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue);
     minMeasuredValue = targetValue;
     this.repaint();
     return this;
@@ -982,10 +981,10 @@ var Radial = function(canvas, parameters) {
   this.setTitleString = function(title) {
     titleString = title;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -994,10 +993,10 @@ var Radial = function(canvas, parameters) {
   this.setUnitString = function(unit) {
     unitString = unit;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -1006,10 +1005,10 @@ var Radial = function(canvas, parameters) {
   this.setMinValue = function(newValue) {
     minValue = parseFloat(newValue);
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -1022,10 +1021,10 @@ var Radial = function(canvas, parameters) {
   this.setMaxValue = function(newValue) {
     maxValue = parseFloat(newValue);
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -1037,13 +1036,13 @@ var Radial = function(canvas, parameters) {
 
   this.setThreshold = function(newValue) {
     newValue = parseFloat(newValue);
-    var targetValue = newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue);
+    const targetValue = newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue);
     threshold = targetValue;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -1052,10 +1051,10 @@ var Radial = function(canvas, parameters) {
   this.setArea = function(areaVal) {
     area = areaVal;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -1064,10 +1063,10 @@ var Radial = function(canvas, parameters) {
   this.setSection = function(areaSec) {
     section = areaSec;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -1096,11 +1095,11 @@ var Radial = function(canvas, parameters) {
 
   this.setFrameDesign = function(newFrameDesign) {
     resetBuffers({
-      frame: true
+      frame: true,
     });
     frameDesign = newFrameDesign;
     init({
-      frame: true
+      frame: true,
     });
     this.repaint();
     return this;
@@ -1109,12 +1108,12 @@ var Radial = function(canvas, parameters) {
   this.setBackgroundColor = function(newBackgroundColor) {
     resetBuffers({
       background: true,
-      pointer: (pointerType.type === 'type2' || pointerType.type === 'type13' ? true : false) // type2 & 13 depend on background
+      pointer: (pointerType.type === 'type2' || pointerType.type === 'type13' ? true : false), // type2 & 13 depend on background
     });
     backgroundColor = newBackgroundColor;
     init({
       background: true, // type2 & 13 depend on background
-      pointer: (pointerType.type === 'type2' || pointerType.type === 'type13' ? true : false)
+      pointer: (pointerType.type === 'type2' || pointerType.type === 'type13' ? true : false),
     });
     this.repaint();
     return this;
@@ -1122,11 +1121,11 @@ var Radial = function(canvas, parameters) {
 
   this.setForegroundType = function(newForegroundType) {
     resetBuffers({
-      foreground: true
+      foreground: true,
     });
     foregroundType = newForegroundType;
     init({
-      foreground: true
+      foreground: true,
     });
     this.repaint();
     return this;
@@ -1135,12 +1134,12 @@ var Radial = function(canvas, parameters) {
   this.setPointerType = function(newPointerType) {
     resetBuffers({
       pointer: true,
-      foreground: true
+      foreground: true,
     });
     pointerType = newPointerType;
     init({
       pointer: true,
-      foreground: true
+      foreground: true,
     });
     this.repaint();
     return this;
@@ -1148,11 +1147,11 @@ var Radial = function(canvas, parameters) {
 
   this.setPointerColor = function(newPointerColor) {
     resetBuffers({
-      pointer: true
+      pointer: true,
     });
     pointerColor = newPointerColor;
     init({
-      pointer: true
+      pointer: true,
     });
     this.repaint();
     return this;
@@ -1160,11 +1159,11 @@ var Radial = function(canvas, parameters) {
 
   this.setLedColor = function(newLedColor) {
     resetBuffers({
-      led: true
+      led: true,
     });
     ledColor = newLedColor;
     init({
-      led: true
+      led: true,
     });
     this.repaint();
     return this;
@@ -1172,11 +1171,11 @@ var Radial = function(canvas, parameters) {
 
   this.setUserLedColor = function(newLedColor) {
     resetBuffers({
-      userLed: true
+      userLed: true,
     });
     userLedColor = newLedColor;
     init({
-      userLed: true
+      userLed: true,
     });
     this.repaint();
     return this;
@@ -1232,10 +1231,10 @@ var Radial = function(canvas, parameters) {
   this.setLcdColor = function(newLcdColor) {
     lcdColor = newLcdColor;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -1256,10 +1255,10 @@ var Radial = function(canvas, parameters) {
   this.setFractionalScaleDecimals = function(decimals) {
     fractionalScaleDecimals = parseInt(decimals, 10);
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -1268,10 +1267,10 @@ var Radial = function(canvas, parameters) {
   this.setLabelNumberFormat = function(format) {
     labelNumberFormat = format;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -1287,7 +1286,7 @@ var Radial = function(canvas, parameters) {
         pointer: true,
         trend: true,
         foreground: true,
-        odo: true
+        odo: true,
       });
     }
     mainCtx.clearRect(0, 0, size, size);

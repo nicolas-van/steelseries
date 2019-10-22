@@ -1,19 +1,19 @@
-import Tween from "./tween.js";
-import drawFrame from "./drawFrame";
-import drawBackground from "./drawBackground";
-import drawRadialCustomImage from "./drawRadialCustomImage";
-import drawForeground from "./drawForeground";
-import createLcdBackgroundImage from "./createLcdBackgroundImage";
-import drawTitleImage from "./drawTitleImage";
+import Tween from './tween.js';
+import drawFrame from './drawFrame';
+import drawBackground from './drawBackground';
+import drawRadialCustomImage from './drawRadialCustomImage';
+import drawForeground from './drawForeground';
+import createLcdBackgroundImage from './createLcdBackgroundImage';
+import drawTitleImage from './drawTitleImage';
 import {
-createBuffer,
-requestAnimFrame, 
-getCanvasContext,
-TWO_PI,
-PI,
-lcdFontName,
-stdFontName,
-} from "./tools";
+  createBuffer,
+  requestAnimFrame,
+  getCanvasContext,
+  TWO_PI,
+  PI,
+  lcdFontName,
+  stdFontName,
+} from './tools';
 
 import {
   BackgroundColor,
@@ -30,72 +30,72 @@ import {
   LabelNumberFormat,
   TickLabelOrientation,
   TrendState,
-  } from "./definitions";
+} from './definitions';
 
 
-var altimeter = function(canvas, parameters) {
+const altimeter = function(canvas, parameters) {
   parameters = parameters || {};
   // parameters
-  var size = (undefined === parameters.size ? 0 : parameters.size),
-    frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
-    frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible),
-    backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor),
-    backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible),
-    titleString = (undefined === parameters.titleString ? '' : parameters.titleString),
-    unitString = (undefined === parameters.unitString ? '' : parameters.unitString),
-    unitAltPos = (undefined === parameters.unitAltPos ? false : true),
-    knobType = (undefined === parameters.knobType ? KnobType.METAL_KNOB : parameters.knobType),
-    knobStyle = (undefined === parameters.knobStyle ? KnobStyle.BLACK : parameters.knobStyle),
-    lcdColor = (undefined === parameters.lcdColor ? LcdColor.BLACK : parameters.lcdColor),
-    lcdVisible = (undefined === parameters.lcdVisible ? true : parameters.lcdVisible),
-    digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont),
-    foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType),
-    foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible),
-    customLayer = (undefined === parameters.customLayer ? null : parameters.customLayer),
-    //
-    minValue = 0,
-    maxValue = 10,
-    value = minValue,
-    value100 = 0,
-    value1000 = 0,
-    value10000 = 0,
-    angleStep100ft, angleStep1000ft, angleStep10000ft,
-    tickLabelPeriod = 1, // Draw value at every 10th tickmark
-    tween,
-    repainting = false,
-    imageWidth, imageHeight,
-    centerX, centerY,
-    stdFont,
-    mainCtx = getCanvasContext(canvas), // Get the canvas context
-    // Constants
-    TICKMARK_OFFSET = PI,
-    //
-    initialized = false,
-    // **************   Buffer creation  ********************
-    // Buffer for the frame
-    frameBuffer = createBuffer(size, size),
-    frameContext = frameBuffer.getContext('2d'),
-    // Buffer for the background
-    backgroundBuffer = createBuffer(size, size),
-    backgroundContext = backgroundBuffer.getContext('2d'),
+  let size = (undefined === parameters.size ? 0 : parameters.size);
+  let frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign);
+  const frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible);
+  let backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor);
+  const backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible);
+  let titleString = (undefined === parameters.titleString ? '' : parameters.titleString);
+  let unitString = (undefined === parameters.unitString ? '' : parameters.unitString);
+  const unitAltPos = (undefined === parameters.unitAltPos ? false : true);
+  const knobType = (undefined === parameters.knobType ? KnobType.METAL_KNOB : parameters.knobType);
+  const knobStyle = (undefined === parameters.knobStyle ? KnobStyle.BLACK : parameters.knobStyle);
+  let lcdColor = (undefined === parameters.lcdColor ? LcdColor.BLACK : parameters.lcdColor);
+  const lcdVisible = (undefined === parameters.lcdVisible ? true : parameters.lcdVisible);
+  const digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont);
+  let foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType);
+  const foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible);
+  const customLayer = (undefined === parameters.customLayer ? null : parameters.customLayer);
+  //
+  const minValue = 0;
+  const maxValue = 10;
+  let value = minValue;
+  let value100 = 0;
+  let value1000 = 0;
+  let value10000 = 0;
+  let angleStep100ft; let angleStep1000ft; let angleStep10000ft;
+  const tickLabelPeriod = 1; // Draw value at every 10th tickmark
+  let tween;
+  let repainting = false;
+  let imageWidth; let imageHeight;
+  let centerX; let centerY;
+  let stdFont;
+  const mainCtx = getCanvasContext(canvas); // Get the canvas context
+  // Constants
+  const TICKMARK_OFFSET = PI;
+  //
+  let initialized = false;
+  // **************   Buffer creation  ********************
+  // Buffer for the frame
+  const frameBuffer = createBuffer(size, size);
+  let frameContext = frameBuffer.getContext('2d');
+  // Buffer for the background
+  const backgroundBuffer = createBuffer(size, size);
+  let backgroundContext = backgroundBuffer.getContext('2d');
 
-    lcdBuffer,
+  let lcdBuffer;
 
-    // Buffer for 10000ft pointer image painting code
-    pointer10000Buffer = createBuffer(size, size),
-    pointer10000Context = pointer10000Buffer.getContext('2d'),
+  // Buffer for 10000ft pointer image painting code
+  const pointer10000Buffer = createBuffer(size, size);
+  let pointer10000Context = pointer10000Buffer.getContext('2d');
 
-    // Buffer for 1000ft pointer image painting code
-    pointer1000Buffer = createBuffer(size, size),
-    pointer1000Context = pointer1000Buffer.getContext('2d'),
+  // Buffer for 1000ft pointer image painting code
+  const pointer1000Buffer = createBuffer(size, size);
+  let pointer1000Context = pointer1000Buffer.getContext('2d');
 
-    // Buffer for 100ft pointer image painting code
-    pointer100Buffer = createBuffer(size, size),
-    pointer100Context = pointer100Buffer.getContext('2d'),
+  // Buffer for 100ft pointer image painting code
+  const pointer100Buffer = createBuffer(size, size);
+  let pointer100Context = pointer100Buffer.getContext('2d');
 
-    // Buffer for static foreground painting code
-    foregroundBuffer = createBuffer(size, size),
-    foregroundContext = foregroundBuffer.getContext('2d');
+  // Buffer for static foreground painting code
+  const foregroundBuffer = createBuffer(size, size);
+  let foregroundContext = foregroundBuffer.getContext('2d');
   // End of variables
 
   // Get the canvas context and clear it
@@ -113,13 +113,13 @@ var altimeter = function(canvas, parameters) {
   centerX = imageWidth / 2;
   centerY = imageHeight / 2;
 
-  var unitStringPosY = unitAltPos ? imageHeight * 0.68 : false;
+  const unitStringPosY = unitAltPos ? imageHeight * 0.68 : false;
 
 
   stdFont = Math.floor(imageWidth * 0.09) + 'px ' + stdFontName;
 
   // **************   Image creation  ********************
-  var drawLcdText = function(value) {
+  const drawLcdText = function(value) {
     mainCtx.save();
     mainCtx.textAlign = 'right';
     mainCtx.textBaseline = 'middle';
@@ -141,20 +141,20 @@ var altimeter = function(canvas, parameters) {
     mainCtx.restore();
   };
 
-  var drawTickmarksImage = function(ctx, freeAreaAngle, offset, minVal, maxVal, angleStep) {
-    var MEDIUM_STROKE = Math.max(imageWidth * 0.012, 2),
-      THIN_STROKE = Math.max(imageWidth * 0.007, 1.5),
-      TEXT_DISTANCE = imageWidth * 0.13,
-      MED_LENGTH = imageWidth * 0.05,
-      MAX_LENGTH = imageWidth * 0.07,
-      RADIUS = imageWidth * 0.4,
-      counter = 0,
-      tickCounter = 0,
-      sinValue = 0,
-      cosValue = 0,
-      alpha, // angle for tickmarks
-      valueCounter, // value for tickmarks
-      ALPHA_START = -offset - (freeAreaAngle / 2);
+  const drawTickmarksImage = function(ctx, freeAreaAngle, offset, minVal, maxVal, angleStep) {
+    const MEDIUM_STROKE = Math.max(imageWidth * 0.012, 2);
+    const THIN_STROKE = Math.max(imageWidth * 0.007, 1.5);
+    const TEXT_DISTANCE = imageWidth * 0.13;
+    const MED_LENGTH = imageWidth * 0.05;
+    const MAX_LENGTH = imageWidth * 0.07;
+    const RADIUS = imageWidth * 0.4;
+    let counter = 0;
+    let tickCounter = 0;
+    let sinValue = 0;
+    let cosValue = 0;
+    let alpha; // angle for tickmarks
+    let valueCounter; // value for tickmarks
+    const ALPHA_START = -offset - (freeAreaAngle / 2);
 
     ctx.save();
     ctx.textAlign = 'center';
@@ -203,8 +203,8 @@ var altimeter = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var draw100ftPointer = function(ctx, shadow) {
-    var grad;
+  const draw100ftPointer = function(ctx, shadow) {
+    let grad;
 
     if (shadow) {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
@@ -243,8 +243,8 @@ var altimeter = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var draw1000ftPointer = function(ctx) {
-    var grad;
+  const draw1000ftPointer = function(ctx) {
+    let grad;
 
     grad = ctx.createLinearGradient(0, imageHeight * 0.401869, 0, imageHeight * 0.616822);
     grad.addColorStop(0, '#ffffff');
@@ -273,7 +273,7 @@ var altimeter = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var draw10000ftPointer = function(ctx) {
+  const draw10000ftPointer = function(ctx) {
     ctx.fillStyle = '#ffffff';
     ctx.beginPath();
     ctx.moveTo(imageWidth * 0.518691, imageHeight * 0.471962);
@@ -310,13 +310,13 @@ var altimeter = function(canvas, parameters) {
 
   // **************   Initialization  ********************
   // Draw all static painting code to background
-  var init = function(parameters) {
+  const init = function(parameters) {
     parameters = parameters || {};
     // Parameters
-    var drawFrame2 = (undefined === parameters.frame ? false : parameters.frame),
-      drawBackground2 = (undefined === parameters.background ? false : parameters.background),
-      drawPointers = (undefined === parameters.pointers ? false : parameters.pointers),
-      drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
+    const drawFrame2 = (undefined === parameters.frame ? false : parameters.frame);
+    const drawBackground2 = (undefined === parameters.background ? false : parameters.background);
+    const drawPointers = (undefined === parameters.pointers ? false : parameters.pointers);
+    const drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
 
     initialized = true;
 
@@ -361,12 +361,12 @@ var altimeter = function(canvas, parameters) {
     }
   };
 
-  var resetBuffers = function(buffers) {
+  const resetBuffers = function(buffers) {
     buffers = buffers || {};
-    var resetFrame = (undefined === buffers.frame ? false : buffers.frame),
-      resetBackground = (undefined === buffers.background ? false : buffers.background),
-      resetPointers = (undefined === buffers.pointers ? false : buffers.pointers),
-      resetForeground = (undefined === buffers.foreground ? false : buffers.foreground);
+    const resetFrame = (undefined === buffers.frame ? false : buffers.frame);
+    const resetBackground = (undefined === buffers.background ? false : buffers.background);
+    const resetPointers = (undefined === buffers.pointers ? false : buffers.pointers);
+    const resetForeground = (undefined === buffers.foreground ? false : buffers.foreground);
 
     if (resetFrame) {
       frameBuffer.width = size;
@@ -401,7 +401,7 @@ var altimeter = function(canvas, parameters) {
     }
   };
 
-  //************************************ Public methods **************************************
+  //* *********************************** Public methods **************************************
   this.setValue = function(newValue) {
     value = parseFloat(newValue);
     this.repaint();
@@ -413,9 +413,9 @@ var altimeter = function(canvas, parameters) {
 
   this.setValueAnimated = function(newValue, callback) {
     newValue = parseFloat(newValue);
-    var targetValue = (newValue < minValue ? minValue : newValue),
-      gauge = this,
-      time;
+    const targetValue = (newValue < minValue ? minValue : newValue);
+    const gauge = this;
+    let time;
 
     if (value !== targetValue) {
       if (undefined !== tween && tween.isPlaying) {
@@ -424,7 +424,7 @@ var altimeter = function(canvas, parameters) {
       // Allow 5 secs per 10,000ft
       time = Math.max(Math.abs(value - targetValue) / 10000 * 5, 1);
       tween = new Tween({}, '', Tween.regularEaseInOut, value, targetValue, time);
-      //tween = new Tween(new Object(), '', Tween.strongEaseInOut, value, targetValue, 1);
+      // tween = new Tween(new Object(), '', Tween.strongEaseInOut, value, targetValue, 1);
       tween.onMotionChanged = function(event) {
         value = event.target._pos;
         if (!repainting) {
@@ -434,7 +434,7 @@ var altimeter = function(canvas, parameters) {
       };
 
       // do we have a callback function to process?
-      if (callback && typeof(callback) === "function") {
+      if (callback && typeof(callback) === 'function') {
         tween.onMotionFinished = callback;
       }
 
@@ -445,11 +445,11 @@ var altimeter = function(canvas, parameters) {
 
   this.setFrameDesign = function(newFrameDesign) {
     resetBuffers({
-      frame: true
+      frame: true,
     });
     frameDesign = newFrameDesign;
     init({
-      frame: true
+      frame: true,
     });
     this.repaint();
     return this;
@@ -458,12 +458,12 @@ var altimeter = function(canvas, parameters) {
   this.setBackgroundColor = function(newBackgroundColor) {
     resetBuffers({
       background: true,
-      pointer: true // type2 & 13 depend on background
+      pointer: true, // type2 & 13 depend on background
     });
     backgroundColor = newBackgroundColor;
     init({
       background: true, // type2 & 13 depend on background
-      pointer: true
+      pointer: true,
     });
     this.repaint();
     return this;
@@ -471,11 +471,11 @@ var altimeter = function(canvas, parameters) {
 
   this.setForegroundType = function(newForegroundType) {
     resetBuffers({
-      foreground: true
+      foreground: true,
     });
     foregroundType = newForegroundType;
     init({
-      foreground: true
+      foreground: true,
     });
     this.repaint();
     return this;
@@ -484,10 +484,10 @@ var altimeter = function(canvas, parameters) {
   this.setLcdColor = function(newLcdColor) {
     lcdColor = newLcdColor;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -496,10 +496,10 @@ var altimeter = function(canvas, parameters) {
   this.setTitleString = function(title) {
     titleString = title;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -508,10 +508,10 @@ var altimeter = function(canvas, parameters) {
   this.setUnitString = function(unit) {
     unitString = unit;
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -524,11 +524,11 @@ var altimeter = function(canvas, parameters) {
         background: true,
         led: true,
         pointers: true,
-        foreground: true
+        foreground: true,
       });
     }
 
-    //mainCtx.save();
+    // mainCtx.save();
     mainCtx.clearRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height);
 
     // Draw frame
@@ -547,10 +547,10 @@ var altimeter = function(canvas, parameters) {
     // re-calculate the spearate pointer values
     calcValues();
 
-    var shadowOffset = imageWidth * 0.006 * 0.5;
+    let shadowOffset = imageWidth * 0.006 * 0.5;
 
     mainCtx.save();
-    //Draw 10000ft pointer
+    // Draw 10000ft pointer
     // Define rotation center
     mainCtx.translate(centerX, centerY);
     mainCtx.rotate((value10000 - minValue) * angleStep10000ft);
@@ -565,7 +565,7 @@ var altimeter = function(canvas, parameters) {
     shadowOffset = imageWidth * 0.006 * 0.75;
     mainCtx.shadowOffsetX = mainCtx.shadowOffsetY = shadowOffset;
 
-    //Draw 1000ft pointer
+    // Draw 1000ft pointer
     mainCtx.translate(centerX, centerY);
     mainCtx.rotate((value1000 - minValue) * angleStep1000ft - (value10000 - minValue) * angleStep10000ft);
     mainCtx.translate(-centerX, -centerY);
@@ -574,14 +574,14 @@ var altimeter = function(canvas, parameters) {
     shadowOffset = imageWidth * 0.006;
     mainCtx.shadowOffsetX = mainCtx.shadowOffsetY = shadowOffset;
 
-    //Draw 100ft pointer
+    // Draw 100ft pointer
     mainCtx.translate(centerX, centerY);
     mainCtx.rotate((value100 - minValue) * angleStep100ft - (value1000 - minValue) * angleStep1000ft);
     mainCtx.translate(-centerX, -centerY);
     mainCtx.drawImage(pointer100Buffer, 0, 0);
     mainCtx.restore();
 
-    //Draw the foregound
+    // Draw the foregound
     if (foregroundVisible) {
       mainCtx.drawImage(foregroundBuffer, 0, 0);
     }

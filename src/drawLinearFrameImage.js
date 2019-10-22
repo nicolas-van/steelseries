@@ -1,21 +1,21 @@
 
 import {
-rgbaColor, 
-ConicalGradient, 
-roundedRectangle, 
-createBuffer, 
-} from "./tools";
+  rgbaColor,
+  ConicalGradient,
+  roundedRectangle,
+  createBuffer,
+} from './tools';
 
 var drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight, vertical) {
-  var frameWidth,
-    linFBuffer, linFCtx,
-    OUTER_FRAME_CORNER_RADIUS,
-    FRAME_MAIN_CORNER_RADIUS,
-    SUBTRACT_CORNER_RADIUS,
-    grad,
-    fractions = [],
-    colors = [],
-    cacheKey = imageWidth.toString() + imageHeight + frameDesign.design + vertical;
+  let frameWidth;
+  let linFBuffer; let linFCtx;
+  let OUTER_FRAME_CORNER_RADIUS;
+  let FRAME_MAIN_CORNER_RADIUS;
+  let SUBTRACT_CORNER_RADIUS;
+  let grad;
+  let fractions = [];
+  let colors = [];
+  const cacheKey = imageWidth.toString() + imageHeight + frameDesign.design + vertical;
 
   // check if we have already created and cached this buffer, if not create it
   if (!drawLinearFrameImage.cache[cacheKey]) {
@@ -204,7 +204,7 @@ var drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight, v
           0.5,
           0.680555,
           0.875,
-          1
+          1,
         ];
 
         colors = [new rgbaColor('#FFFFFF'),
@@ -213,7 +213,7 @@ var drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight, v
           new rgbaColor('#000000'),
           new rgbaColor('#999999'),
           new rgbaColor('#000000'),
-          new rgbaColor('#FFFFFF')
+          new rgbaColor('#FFFFFF'),
         ];
         // Set the clip
         linFCtx.beginPath();
@@ -233,7 +233,7 @@ var drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight, v
           0.652777,
           0.75,
           0.875,
-          1
+          1,
         ];
 
         colors = [new rgbaColor('#FFFFFF'),
@@ -244,7 +244,7 @@ var drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight, v
           new rgbaColor('#EEEEEE'),
           new rgbaColor('#B3B3B3'),
           new rgbaColor('#D2D2D2'),
-          new rgbaColor('#FFFFFF')
+          new rgbaColor('#FFFFFF'),
         ];
         // Set the clip
         linFCtx.beginPath();
@@ -272,7 +272,7 @@ var drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight, v
           0.83,
           0.87,
           0.97,
-          1
+          1,
         ];
 
         colors = [new rgbaColor('#FFFFFF'),
@@ -291,7 +291,7 @@ var drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight, v
           new rgbaColor('#F6F8F7'),
           new rgbaColor('#CCD8D8'),
           new rgbaColor('#A4BCBE'),
-          new rgbaColor('#FFFFFF')
+          new rgbaColor('#FFFFFF'),
         ];
         // Set the clip
         linFCtx.beginPath();

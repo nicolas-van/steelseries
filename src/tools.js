@@ -1,20 +1,20 @@
 
 
 import {
-ColorDef,
-} from "./constants";
+  ColorDef,
+} from './constants';
 
-export var HALF_PI = Math.PI * 0.5,
-TWO_PI = Math.PI * 2,
-PI = Math.PI,
-RAD_FACTOR = Math.PI / 180,
-DEG_FACTOR = 180 / Math.PI,
-doc = document,
-lcdFontName = 'LCDMono2Ultra,Arial,Verdana,sans-serif',
-stdFontName = 'Arial,Verdana,sans-serif';
+export const HALF_PI = Math.PI * 0.5;
+export const TWO_PI = Math.PI * 2;
+export const PI = Math.PI;
+export const RAD_FACTOR = Math.PI / 180;
+export const DEG_FACTOR = 180 / Math.PI;
+export const doc = document;
+export const lcdFontName = 'LCDMono2Ultra,Arial,Verdana,sans-serif';
+export const stdFontName = 'Arial,Verdana,sans-serif';
 
 export var rgbaColor = function(r, g, b, a) {
-  var red, green, blue, alpha;
+  let red; let green; let blue; let alpha;
 
   if (arguments.length === 1) {
     // hexadecimal input #112233
@@ -81,8 +81,8 @@ export var rgbaColor = function(r, g, b, a) {
 };
 
 export var ConicalGradient = function(fractions, colors) {
-  var limit = fractions.length - 1,
-    i;
+  const limit = fractions.length - 1;
+  let i;
 
   // Pre-multipy fractions array into range -PI to PI
   for (i = 0; i <= limit; i++) {
@@ -90,13 +90,13 @@ export var ConicalGradient = function(fractions, colors) {
   }
 
   this.fillCircle = function(ctx, centerX, centerY, innerX, outerX) {
-    var angle,
-      radius = Math.ceil(outerX),
-      diameter = radius * 2,
-      pixels, alpha,
-      x, y, dx, dy, dy2, distance,
-      indx, pixColor,
-      buffer, bufferCtx;
+    let angle;
+    const radius = Math.ceil(outerX);
+    const diameter = radius * 2;
+    let pixels; let alpha;
+    let x; let y; let dx; let dy; let dy2; let distance;
+    let indx; let pixColor;
+    let buffer; let bufferCtx;
 
     // Original Version using rotated lines
     /*
@@ -164,14 +164,14 @@ export var ConicalGradient = function(fractions, colors) {
   };
 
   this.fillRect = function(ctx, centerX, centerY, width, height, thicknessX, thicknessY) {
-    var angle,
-      width2,
-      height2,
-      pixels, alpha,
-      x, y, dx, dy,
-      indx,
-      pixColor,
-      buffer, bufferCtx;
+    let angle;
+    let width2;
+    let height2;
+    let pixels; let alpha;
+    let x; let y; let dx; let dy;
+    let indx;
+    let pixColor;
+    let buffer; let bufferCtx;
 
     width = Math.ceil(width);
     height = Math.ceil(height);
@@ -217,18 +217,16 @@ export var ConicalGradient = function(fractions, colors) {
     // draw the buffer back to the canvas
     ctx.drawImage(buffer, centerX - width2, centerY - height2);
   };
-
 };
 
 export var gradientWrapper = function(start, end, fractions, colors) {
-
   this.getColorAt = function(fraction) {
-    var lowerLimit = 0,
-      lowerIndex = 0,
-      upperLimit = 1,
-      upperIndex = 1,
-      i,
-      interpolationFraction;
+    let lowerLimit = 0;
+    let lowerIndex = 0;
+    let upperLimit = 1;
+    let upperIndex = 1;
+    let i;
+    let interpolationFraction;
 
     fraction = (fraction < 0 ? 0 : (fraction > 1 ? 1 : fraction));
 
@@ -259,31 +257,31 @@ export var gradientWrapper = function(start, end, fractions, colors) {
 };
 
 export function setAlpha(hex, alpha) {
-  var hexColor = ('#' === hex.charAt(0)) ? hex.substring(1, 7) : hex,
-    red = parseInt((hexColor).substring(0, 2), 16),
-    green = parseInt((hexColor).substring(2, 4), 16),
-    blue = parseInt((hexColor).substring(4, 6), 16),
-    color = 'rgba(' + red + ',' + green + ',' + blue + ',' + alpha + ')';
+  const hexColor = ('#' === hex.charAt(0)) ? hex.substring(1, 7) : hex;
+  const red = parseInt((hexColor).substring(0, 2), 16);
+  const green = parseInt((hexColor).substring(2, 4), 16);
+  const blue = parseInt((hexColor).substring(4, 6), 16);
+  const color = 'rgba(' + red + ',' + green + ',' + blue + ',' + alpha + ')';
 
   return color;
 }
 
 export function getColorFromFraction(sourceColor, destinationColor, range, fraction, returnRawData) {
-  var INT_TO_FLOAT = 1 / 255,
-    sourceRed = sourceColor.getRed(),
-    sourceGreen = sourceColor.getGreen(),
-    sourceBlue = sourceColor.getBlue(),
-    sourceAlpha = sourceColor.getAlpha(),
+  const INT_TO_FLOAT = 1 / 255;
+  const sourceRed = sourceColor.getRed();
+  const sourceGreen = sourceColor.getGreen();
+  const sourceBlue = sourceColor.getBlue();
+  const sourceAlpha = sourceColor.getAlpha();
 
-    deltaRed = destinationColor.getRed() - sourceRed,
-    deltaGreen = destinationColor.getGreen() - sourceGreen,
-    deltaBlue = destinationColor.getBlue() - sourceBlue,
-    deltaAlpha = destinationColor.getAlpha() * INT_TO_FLOAT - sourceAlpha * INT_TO_FLOAT,
+  const deltaRed = destinationColor.getRed() - sourceRed;
+  const deltaGreen = destinationColor.getGreen() - sourceGreen;
+  const deltaBlue = destinationColor.getBlue() - sourceBlue;
+  const deltaAlpha = destinationColor.getAlpha() * INT_TO_FLOAT - sourceAlpha * INT_TO_FLOAT;
 
-    fractionRed = deltaRed / range * fraction,
-    fractionGreen = deltaGreen / range * fraction,
-    fractionBlue = deltaBlue / range * fraction,
-    fractionAlpha = deltaAlpha / range * fraction;
+  const fractionRed = deltaRed / range * fraction;
+  const fractionGreen = deltaGreen / range * fraction;
+  const fractionBlue = deltaBlue / range * fraction;
+  const fractionAlpha = deltaAlpha / range * fraction;
 
   returnRawData = returnRawData || false;
   if (returnRawData) {
@@ -297,7 +295,7 @@ export function Section(start, stop, color) {
   return {
     start: start,
     stop: stop,
-    color: color
+    color: color,
   };
 }
 
@@ -306,9 +304,9 @@ Math.log10 = function(value) {
 };
 
 export function calcNiceNumber(range, round) {
-  var exponent = Math.floor(Math.log10(range)), // exponent of range
-    fraction = range / Math.pow(10, exponent), // fractional part of range
-    niceFraction; // nice, rounded fraction
+  const exponent = Math.floor(Math.log10(range)); // exponent of range
+  const fraction = range / Math.pow(10, exponent); // fractional part of range
+  let niceFraction; // nice, rounded fraction
 
   if (round) {
     if (1.5 > fraction) {
@@ -335,8 +333,8 @@ export function calcNiceNumber(range, round) {
 }
 
 export function roundedRectangle(ctx, x, y, w, h, radius) {
-  var r = x + w,
-    b = y + h;
+  const r = x + w;
+  const b = y + h;
   ctx.beginPath();
   ctx.moveTo(x + radius, y);
   ctx.lineTo(r - radius, y);
@@ -352,14 +350,14 @@ export function roundedRectangle(ctx, x, y, w, h, radius) {
 }
 
 export function createBuffer(width, height) {
-  var buffer = doc.createElement('canvas');
+  const buffer = doc.createElement('canvas');
   buffer.width = width;
   buffer.height = height;
   return buffer;
 }
 
 export function drawToBuffer(width, height, drawFunction) {
-  var buffer = doc.createElement('canvas');
+  const buffer = doc.createElement('canvas');
   buffer.width = width;
   buffer.height = height;
   drawFunction(buffer.getContext('2d'));
@@ -367,13 +365,13 @@ export function drawToBuffer(width, height, drawFunction) {
 }
 
 export function getColorValues(color) {
-  var colorData,
-    lookupBuffer = drawToBuffer(1, 1, function(ctx) {
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.rect(0, 0, 1, 1);
-      ctx.fill();
-    });
+  let colorData;
+  const lookupBuffer = drawToBuffer(1, 1, function(ctx) {
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.rect(0, 0, 1, 1);
+    ctx.fill();
+  });
   colorData = lookupBuffer.getContext('2d').getImageData(0, 0, 2, 2).data;
 
   /*
@@ -390,13 +388,13 @@ export function getColorValues(color) {
 }
 
 export function customColorDef(color) {
-  var VERY_DARK,
-    DARK,
-    LIGHT,
-    LIGHTER,
-    VERY_LIGHT,
-    values = getColorValues(color),
-    rgbaCol = new rgbaColor(values[0], values[1], values[2], values[3]);
+  let VERY_DARK;
+  let DARK;
+  let LIGHT;
+  let LIGHTER;
+  let VERY_LIGHT;
+  const values = getColorValues(color);
+  const rgbaCol = new rgbaColor(values[0], values[1], values[2], values[3]);
 
   VERY_DARK = darker(rgbaCol, 0.32);
   DARK = darker(rgbaCol, 0.62);
@@ -408,7 +406,7 @@ export function customColorDef(color) {
 }
 
 export function rgbToHsl(red, green, blue) {
-  var min, max, hue, saturation, lightness, delta;
+  let min; let max; let hue; let saturation; let lightness; let delta;
 
   red /= 255;
   green /= 255;
@@ -488,12 +486,12 @@ export function rgbToHsl(red, green, blue) {
 */
 
 export function hsbToRgb(hue, saturation, brightness) {
-  var r, g, b,
-    i = Math.floor(hue * 6),
-    f = hue * 6 - i,
-    p = brightness * (1 - saturation),
-    q = brightness * (1 - f * saturation),
-    t = brightness * (1 - (1 - f) * saturation);
+  let r; let g; let b;
+  const i = Math.floor(hue * 6);
+  const f = hue * 6 - i;
+  const p = brightness * (1 - saturation);
+  const q = brightness * (1 - f * saturation);
+  const t = brightness * (1 - (1 - f) * saturation);
 
   switch (i % 6) {
     case 0:
@@ -532,7 +530,7 @@ export function hsbToRgb(hue, saturation, brightness) {
 }
 
 export function rgbToHsb(r, g, b) {
-  var min, max, hue, saturation, brightness, delta;
+  let min; let max; let hue; let saturation; let brightness; let delta;
 
   r = r / 255;
   g = g / 255;
@@ -567,9 +565,9 @@ export function range(value, limit) {
 }
 
 export function darker(color, fraction) {
-  var red = Math.floor(color.getRed() * (1 - fraction)),
-    green = Math.floor(color.getGreen() * (1 - fraction)),
-    blue = Math.floor(color.getBlue() * (1 - fraction));
+  let red = Math.floor(color.getRed() * (1 - fraction));
+  let green = Math.floor(color.getGreen() * (1 - fraction));
+  let blue = Math.floor(color.getBlue() * (1 - fraction));
 
   red = range(red, 255);
   green = range(green, 255);
@@ -579,9 +577,9 @@ export function darker(color, fraction) {
 }
 
 export function lighter(color, fraction) {
-  var red = Math.round(color.getRed() * (1 + fraction)),
-    green = Math.round(color.getGreen() * (1 + fraction)),
-    blue = Math.round(color.getBlue() * (1 + fraction));
+  let red = Math.round(color.getRed() * (1 + fraction));
+  let green = Math.round(color.getGreen() * (1 + fraction));
+  let blue = Math.round(color.getBlue() * (1 + fraction));
 
   red = range(red, 255);
   green = range(green, 255);
@@ -591,9 +589,9 @@ export function lighter(color, fraction) {
 }
 
 export function wrap(value, lower, upper) {
-  var distance, times;
+  let distance; let times;
   if (upper <= lower) {
-    throw 'Rotary bounds are of negative or zero size';
+    throw new Error('Rotary bounds are of negative or zero size');
   }
 
   distance = upper - lower;
@@ -619,7 +617,7 @@ export var requestAnimFrame = (function() {
 }());
 
 export function getCanvasContext(elementOrId) {
-  var element = (typeof elementOrId === 'string' || elementOrId instanceof String) ?
+  const element = (typeof elementOrId === 'string' || elementOrId instanceof String) ?
     doc.getElementById(elementOrId) : elementOrId;
   return element.getContext('2d');
 }

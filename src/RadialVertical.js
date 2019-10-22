@@ -1,21 +1,21 @@
-import Tween from "./tween.js";
-import drawPointerImage from "./drawPointerImage";
-import drawFrame from "./drawFrame";
-import drawBackground from "./drawBackground";
-import drawForeground from "./drawForeground";
-import createKnobImage from "./createKnobImage";
-import createLedImage from "./createLedImage";
-import createMeasuredValueImage from "./createMeasuredValueImage";
+import Tween from './tween.js';
+import drawPointerImage from './drawPointerImage';
+import drawFrame from './drawFrame';
+import drawBackground from './drawBackground';
+import drawForeground from './drawForeground';
+import createKnobImage from './createKnobImage';
+import createLedImage from './createLedImage';
+import createMeasuredValueImage from './createMeasuredValueImage';
 import {
-calcNiceNumber, 
-createBuffer, 
-requestAnimFrame, 
-getCanvasContext,
-HALF_PI,
-PI,
-doc,
-stdFontName,
-} from "./tools";
+  calcNiceNumber,
+  createBuffer,
+  requestAnimFrame,
+  getCanvasContext,
+  HALF_PI,
+  PI,
+  doc,
+  stdFontName,
+} from './tools';
 
 import {
   BackgroundColor,
@@ -32,43 +32,43 @@ import {
   LabelNumberFormat,
   TickLabelOrientation,
   TrendState,
-  } from "./definitions";
+} from './definitions';
 
-var RadialVertical = function(canvas, parameters) {
+const RadialVertical = function(canvas, parameters) {
   parameters = parameters || {};
-  var orientation = (undefined === parameters.orientation ? Orientation.NORTH : parameters.orientation),
-    size = (undefined === parameters.size ? 0 : parameters.size),
-    minValue = (undefined === parameters.minValue ? 0 : parameters.minValue),
-    maxValue = (undefined === parameters.maxValue ? (minValue + 100) : parameters.maxValue),
-    niceScale = (undefined === parameters.niceScale ? true : parameters.niceScale),
-    threshold = (undefined === parameters.threshold ? (maxValue - minValue) / 2 + minValue : parameters.threshold),
-    section = (undefined === parameters.section ? null : parameters.section),
-    area = (undefined === parameters.area ? null : parameters.area),
-    titleString = (undefined === parameters.titleString ? '' : parameters.titleString),
-    unitString = (undefined === parameters.unitString ? '' : parameters.unitString),
-    frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
-    frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible),
-    backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor),
-    backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible),
-    pointerType = (undefined === parameters.pointerType ? PointerType.TYPE1 : parameters.pointerType),
-    pointerColor = (undefined === parameters.pointerColor ? ColorDef.RED : parameters.pointerColor),
-    knobType = (undefined === parameters.knobType ? KnobType.STANDARD_KNOB : parameters.knobType),
-    knobStyle = (undefined === parameters.knobStyle ? KnobStyle.SILVER : parameters.knobStyle),
-    ledColor = (undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor),
-    ledVisible = (undefined === parameters.ledVisible ? true : parameters.ledVisible),
-    thresholdVisible = (undefined === parameters.thresholdVisible ? true : parameters.thresholdVisible),
-    thresholdRising = (undefined === parameters.thresholdRising ? true : parameters.thresholdRising),
-    minMeasuredValueVisible = (undefined === parameters.minMeasuredValueVisible ? false : parameters.minMeasuredValueVisible),
-    maxMeasuredValueVisible = (undefined === parameters.maxMeasuredValueVisible ? false : parameters.maxMeasuredValueVisible),
-    foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType),
-    foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible),
-    labelNumberFormat = (undefined === parameters.labelNumberFormat ? LabelNumberFormat.STANDARD : parameters.labelNumberFormat),
-    playAlarm = (undefined === parameters.playAlarm ? false : parameters.playAlarm),
-    alarmSound = (undefined === parameters.alarmSound ? false : parameters.alarmSound),
-    fullScaleDeflectionTime = (undefined === parameters.fullScaleDeflectionTime ? 2.5 : parameters.fullScaleDeflectionTime);
+  const orientation = (undefined === parameters.orientation ? Orientation.NORTH : parameters.orientation);
+  let size = (undefined === parameters.size ? 0 : parameters.size);
+  let minValue = (undefined === parameters.minValue ? 0 : parameters.minValue);
+  let maxValue = (undefined === parameters.maxValue ? (minValue + 100) : parameters.maxValue);
+  const niceScale = (undefined === parameters.niceScale ? true : parameters.niceScale);
+  let threshold = (undefined === parameters.threshold ? (maxValue - minValue) / 2 + minValue : parameters.threshold);
+  const section = (undefined === parameters.section ? null : parameters.section);
+  const area = (undefined === parameters.area ? null : parameters.area);
+  const titleString = (undefined === parameters.titleString ? '' : parameters.titleString);
+  const unitString = (undefined === parameters.unitString ? '' : parameters.unitString);
+  let frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign);
+  const frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible);
+  let backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor);
+  const backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible);
+  let pointerType = (undefined === parameters.pointerType ? PointerType.TYPE1 : parameters.pointerType);
+  let pointerColor = (undefined === parameters.pointerColor ? ColorDef.RED : parameters.pointerColor);
+  const knobType = (undefined === parameters.knobType ? KnobType.STANDARD_KNOB : parameters.knobType);
+  const knobStyle = (undefined === parameters.knobStyle ? KnobStyle.SILVER : parameters.knobStyle);
+  let ledColor = (undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor);
+  let ledVisible = (undefined === parameters.ledVisible ? true : parameters.ledVisible);
+  let thresholdVisible = (undefined === parameters.thresholdVisible ? true : parameters.thresholdVisible);
+  let thresholdRising = (undefined === parameters.thresholdRising ? true : parameters.thresholdRising);
+  let minMeasuredValueVisible = (undefined === parameters.minMeasuredValueVisible ? false : parameters.minMeasuredValueVisible);
+  let maxMeasuredValueVisible = (undefined === parameters.maxMeasuredValueVisible ? false : parameters.maxMeasuredValueVisible);
+  let foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType);
+  const foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible);
+  const labelNumberFormat = (undefined === parameters.labelNumberFormat ? LabelNumberFormat.STANDARD : parameters.labelNumberFormat);
+  const playAlarm = (undefined === parameters.playAlarm ? false : parameters.playAlarm);
+  const alarmSound = (undefined === parameters.alarmSound ? false : parameters.alarmSound);
+  const fullScaleDeflectionTime = (undefined === parameters.fullScaleDeflectionTime ? 2.5 : parameters.fullScaleDeflectionTime);
 
   // Get the canvas context and clear it
-  var mainCtx = getCanvasContext(canvas);
+  const mainCtx = getCanvasContext(canvas);
   // Has a size been specified?
   if (size === 0) {
     size = Math.min(mainCtx.canvas.width, mainCtx.canvas.height);
@@ -84,54 +84,54 @@ var RadialVertical = function(canvas, parameters) {
     audioElement.setAttribute('src', alarmSound);
     audioElement.setAttribute('preload', 'auto');
   }
-  var gaugeType = GaugeType.TYPE5;
+  const gaugeType = GaugeType.TYPE5;
 
-  var self = this;
-  var value = minValue;
+  const self = this;
+  let value = minValue;
 
   // Properties
-  var minMeasuredValue = maxValue;
-  var maxMeasuredValue = minValue;
-  var imageWidth = size;
-  var imageHeight = size;
+  let minMeasuredValue = maxValue;
+  let maxMeasuredValue = minValue;
+  const imageWidth = size;
+  const imageHeight = size;
 
-  var ledBlinking = false;
+  let ledBlinking = false;
 
-  var ledTimerId = 0;
-  var tween;
-  var repainting = false;
+  let ledTimerId = 0;
+  let tween;
+  let repainting = false;
 
   // Tickmark specific private variables
-  var niceMinValue = minValue;
-  var niceMaxValue = maxValue;
-  var niceRange = maxValue - minValue;
-  var range = niceMaxValue - niceMinValue;
-  var minorTickSpacing = 0;
-  var majorTickSpacing = 0;
-  var maxNoOfMinorTicks = 10;
-  var maxNoOfMajorTicks = 10;
+  let niceMinValue = minValue;
+  let niceMaxValue = maxValue;
+  let niceRange = maxValue - minValue;
+  let range = niceMaxValue - niceMinValue;
+  let minorTickSpacing = 0;
+  let majorTickSpacing = 0;
+  const maxNoOfMinorTicks = 10;
+  const maxNoOfMajorTicks = 10;
 
-  var freeAreaAngle = 0;
-  var rotationOffset = 1.25 * PI;
-  var tickmarkOffset = 1.25 * PI;
-  var angleRange = HALF_PI;
-  var angleStep = angleRange / range;
-  var shadowOffset = imageWidth * 0.006;
-  var pointerOffset = imageWidth * 1.17 / 2;
+  let freeAreaAngle = 0;
+  let rotationOffset = 1.25 * PI;
+  let tickmarkOffset = 1.25 * PI;
+  let angleRange = HALF_PI;
+  let angleStep = angleRange / range;
+  const shadowOffset = imageWidth * 0.006;
+  const pointerOffset = imageWidth * 1.17 / 2;
 
-  var initialized = false;
+  let initialized = false;
 
-  var angle = rotationOffset + (value - minValue) * angleStep;
+  let angle = rotationOffset + (value - minValue) * angleStep;
 
-  var centerX = imageWidth / 2;
-  var centerY = imageHeight * 0.733644;
+  const centerX = imageWidth / 2;
+  const centerY = imageHeight * 0.733644;
 
   // Misc
-  var ledPosX = 0.455 * imageWidth;
-  var ledPosY = 0.51 * imageHeight;
+  const ledPosX = 0.455 * imageWidth;
+  const ledPosY = 0.51 * imageHeight;
 
   // Method to calculate nice values for min, max and range for the tickmarks
-  var calculate = function calculate() {
+  const calculate = function calculate() {
     if (niceScale) {
       niceRange = calcNiceNumber(maxValue - minValue, false);
       majorTickSpacing = calcNiceNumber(niceRange / (maxNoOfMajorTicks - 1), true);
@@ -166,42 +166,42 @@ var RadialVertical = function(canvas, parameters) {
 
   // **************   Buffer creation  ********************
   // Buffer for the frame
-  var frameBuffer = createBuffer(size, size);
-  var frameContext = frameBuffer.getContext('2d');
+  const frameBuffer = createBuffer(size, size);
+  let frameContext = frameBuffer.getContext('2d');
 
   // Buffer for the background
-  var backgroundBuffer = createBuffer(size, size);
-  var backgroundContext = backgroundBuffer.getContext('2d');
+  const backgroundBuffer = createBuffer(size, size);
+  let backgroundContext = backgroundBuffer.getContext('2d');
 
   // Buffer for led on painting code
-  var ledBufferOn = createBuffer(size * 0.093457, size * 0.093457);
-  var ledContextOn = ledBufferOn.getContext('2d');
+  const ledBufferOn = createBuffer(size * 0.093457, size * 0.093457);
+  let ledContextOn = ledBufferOn.getContext('2d');
 
   // Buffer for led off painting code
-  var ledBufferOff = createBuffer(size * 0.093457, size * 0.093457);
-  var ledContextOff = ledBufferOff.getContext('2d');
+  const ledBufferOff = createBuffer(size * 0.093457, size * 0.093457);
+  let ledContextOff = ledBufferOff.getContext('2d');
 
   // Buffer for current led painting code
-  var ledBuffer = ledBufferOff;
+  let ledBuffer = ledBufferOff;
 
   // Buffer for the minMeasuredValue indicator
-  var minMeasuredValueBuffer = createBuffer(Math.ceil(size * 0.028037), Math.ceil(size * 0.028037));
-  var minMeasuredValueCtx = minMeasuredValueBuffer.getContext('2d');
+  const minMeasuredValueBuffer = createBuffer(Math.ceil(size * 0.028037), Math.ceil(size * 0.028037));
+  const minMeasuredValueCtx = minMeasuredValueBuffer.getContext('2d');
 
   // Buffer for the maxMeasuredValue indicator
-  var maxMeasuredValueBuffer = createBuffer(Math.ceil(size * 0.028037), Math.ceil(size * 0.028037));
-  var maxMeasuredValueCtx = maxMeasuredValueBuffer.getContext('2d');
+  const maxMeasuredValueBuffer = createBuffer(Math.ceil(size * 0.028037), Math.ceil(size * 0.028037));
+  const maxMeasuredValueCtx = maxMeasuredValueBuffer.getContext('2d');
 
   // Buffer for pointer image painting code
-  var pointerBuffer = createBuffer(size, size);
-  var pointerContext = pointerBuffer.getContext('2d');
+  const pointerBuffer = createBuffer(size, size);
+  let pointerContext = pointerBuffer.getContext('2d');
 
   // Buffer for static foreground painting code
-  var foregroundBuffer = createBuffer(size, size);
-  var foregroundContext = foregroundBuffer.getContext('2d');
+  const foregroundBuffer = createBuffer(size, size);
+  let foregroundContext = foregroundBuffer.getContext('2d');
 
   // **************   Image creation  ********************
-  var drawPostsImage = function(ctx) {
+  const drawPostsImage = function(ctx) {
     if ('type5' === gaugeType.type) {
       ctx.save();
       if (orientation.type === 'west') {
@@ -224,14 +224,14 @@ var RadialVertical = function(canvas, parameters) {
     }
   };
 
-  var createThresholdImage = function() {
-    var thresholdBuffer = doc.createElement('canvas');
+  const createThresholdImage = function() {
+    const thresholdBuffer = doc.createElement('canvas');
     thresholdBuffer.width = Math.ceil(size * 0.046728);
     thresholdBuffer.height = Math.ceil(thresholdBuffer.width * 0.9);
-    var thresholdCtx = thresholdBuffer.getContext('2d');
+    const thresholdCtx = thresholdBuffer.getContext('2d');
 
     thresholdCtx.save();
-    var gradThreshold = thresholdCtx.createLinearGradient(0, 0.1, 0, thresholdBuffer.height * 0.9);
+    const gradThreshold = thresholdCtx.createLinearGradient(0, 0.1, 0, thresholdBuffer.height * 0.9);
     gradThreshold.addColorStop(0, '#520000');
     gradThreshold.addColorStop(0.3, '#fc1d00');
     gradThreshold.addColorStop(0.59, '#fc1d00');
@@ -254,13 +254,13 @@ var RadialVertical = function(canvas, parameters) {
     return thresholdBuffer;
   };
 
-  var drawAreaSectionImage = function(ctx, start, stop, color, filled) {
+  const drawAreaSectionImage = function(ctx, start, stop, color, filled) {
     ctx.save();
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
     ctx.lineWidth = imageWidth * 0.035;
-    var startAngle = (angleRange / range * start - angleRange / range * minValue);
-    var stopAngle = startAngle + (stop - start) / (range / angleRange);
+    const startAngle = (angleRange / range * start - angleRange / range * minValue);
+    const stopAngle = startAngle + (stop - start) / (range / angleRange);
     ctx.translate(centerX, centerY);
     ctx.rotate(rotationOffset);
     ctx.beginPath();
@@ -281,8 +281,8 @@ var RadialVertical = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawTitleImage = function(ctx) {
-    var titleWidth, unitWidth;
+  const drawTitleImage = function(ctx) {
+    let titleWidth; let unitWidth;
     ctx.save();
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
@@ -298,7 +298,7 @@ var RadialVertical = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawTickmarksImage = function(ctx, labelNumberFormat) {
+  const drawTickmarksImage = function(ctx, labelNumberFormat) {
     backgroundColor.labelColor.setAlpha(1);
     ctx.save();
 
@@ -315,27 +315,27 @@ var RadialVertical = function(canvas, parameters) {
 
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    var fontSize = Math.ceil(imageWidth * 0.04);
+    const fontSize = Math.ceil(imageWidth * 0.04);
     ctx.font = fontSize + 'px ' + stdFontName;
     ctx.strokeStyle = backgroundColor.labelColor.getRgbaColor();
     ctx.fillStyle = backgroundColor.labelColor.getRgbaColor();
     ctx.translate(centerX, centerY);
     ctx.rotate(rotationOffset);
-    var rotationStep = angleStep * minorTickSpacing;
-    var textRotationAngle;
+    const rotationStep = angleStep * minorTickSpacing;
+    let textRotationAngle;
 
-    var valueCounter = minValue;
-    var majorTickCounter = maxNoOfMinorTicks - 1;
+    let valueCounter = minValue;
+    let majorTickCounter = maxNoOfMinorTicks - 1;
 
-    var OUTER_POINT = imageWidth * 0.44;
-    var MAJOR_INNER_POINT = imageWidth * 0.41;
-    var MED_INNER_POINT = imageWidth * 0.415;
-    var MINOR_INNER_POINT = imageWidth * 0.42;
-    var TEXT_TRANSLATE_X = imageWidth * 0.48;
-    var TEXT_WIDTH = imageWidth * 0.04;
-    var HALF_MAX_NO_OF_MINOR_TICKS = maxNoOfMinorTicks / 2;
-    var MAX_VALUE_ROUNDED = parseFloat(maxValue.toFixed(2));
-    var i;
+    const OUTER_POINT = imageWidth * 0.44;
+    const MAJOR_INNER_POINT = imageWidth * 0.41;
+    const MED_INNER_POINT = imageWidth * 0.415;
+    const MINOR_INNER_POINT = imageWidth * 0.42;
+    const TEXT_TRANSLATE_X = imageWidth * 0.48;
+    const TEXT_WIDTH = imageWidth * 0.04;
+    const HALF_MAX_NO_OF_MINOR_TICKS = maxNoOfMinorTicks / 2;
+    const MAX_VALUE_ROUNDED = parseFloat(maxValue.toFixed(2));
+    let i;
 
     for (i = minValue; parseFloat(i.toFixed(2)) <= MAX_VALUE_ROUNDED; i += minorTickSpacing) {
       textRotationAngle = +rotationStep + HALF_PI;
@@ -448,13 +448,13 @@ var RadialVertical = function(canvas, parameters) {
 
   // **************   Initialization  ********************
   // Draw all static painting code to background
-  var init = function(parameters) {
+  const init = function(parameters) {
     parameters = parameters || {};
-    var drawFrame2 = (undefined === parameters.frame ? false : parameters.frame);
-    var drawBackground2 = (undefined === parameters.background ? false : parameters.background);
-    var drawLed = (undefined === parameters.led ? false : parameters.led);
-    var drawPointer = (undefined === parameters.pointer ? false : parameters.pointer);
-    var drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
+    const drawFrame2 = (undefined === parameters.frame ? false : parameters.frame);
+    const drawBackground2 = (undefined === parameters.background ? false : parameters.background);
+    const drawLed = (undefined === parameters.led ? false : parameters.led);
+    const drawPointer = (undefined === parameters.pointer ? false : parameters.pointer);
+    const drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
 
     initialized = true;
 
@@ -507,7 +507,7 @@ var RadialVertical = function(canvas, parameters) {
           backgroundContext.rotate(HALF_PI);
           backgroundContext.translate(-centerX, -centerX);
         }
-        var sectionIndex = section.length;
+        let sectionIndex = section.length;
         do {
           sectionIndex--;
           drawAreaSectionImage(backgroundContext, section[sectionIndex].start, section[sectionIndex].stop, section[sectionIndex].color, false);
@@ -528,7 +528,7 @@ var RadialVertical = function(canvas, parameters) {
           backgroundContext.rotate(HALF_PI);
           backgroundContext.translate(-centerX, -centerX);
         }
-        var areaIndex = area.length;
+        let areaIndex = area.length;
         do {
           areaIndex--;
           drawAreaSectionImage(backgroundContext, area[areaIndex].start, area[areaIndex].stop, area[areaIndex].color, true);
@@ -567,23 +567,22 @@ var RadialVertical = function(canvas, parameters) {
     // Create pointer image in pointer buffer (contentBuffer)
     if (drawPointer) {
       drawPointerImage(pointerContext, imageWidth * 1.17, pointerType, pointerColor, backgroundColor.labelColor);
-
     }
 
     // Create foreground in foreground buffer (foregroundBuffer)
     if (drawForeground2 && foregroundVisible) {
-      var knobVisible = (pointerType.type === 'type15' || pointerType.type === 'type16' ? false : true);
+      const knobVisible = (pointerType.type === 'type15' || pointerType.type === 'type16' ? false : true);
       drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, knobVisible, knobType, knobStyle, gaugeType, orientation);
     }
   };
 
-  var resetBuffers = function(buffers) {
+  const resetBuffers = function(buffers) {
     buffers = buffers || {};
-    var resetFrame = (undefined === buffers.frame ? false : buffers.frame);
-    var resetBackground = (undefined === buffers.background ? false : buffers.background);
-    var resetLed = (undefined === buffers.led ? false : buffers.led);
-    var resetPointer = (undefined === buffers.pointer ? false : buffers.pointer);
-    var resetForeground = (undefined === buffers.foreground ? false : buffers.foreground);
+    const resetFrame = (undefined === buffers.frame ? false : buffers.frame);
+    const resetBackground = (undefined === buffers.background ? false : buffers.background);
+    const resetLed = (undefined === buffers.led ? false : buffers.led);
+    const resetPointer = (undefined === buffers.pointer ? false : buffers.pointer);
+    const resetForeground = (undefined === buffers.foreground ? false : buffers.foreground);
 
     if (resetFrame) {
       frameBuffer.width = size;
@@ -623,7 +622,7 @@ var RadialVertical = function(canvas, parameters) {
     }
   };
 
-  var blink = function(blinking) {
+  const blink = function(blinking) {
     if (blinking) {
       ledTimerId = setInterval(toggleAndRepaintLed, 1000);
     } else {
@@ -646,10 +645,10 @@ var RadialVertical = function(canvas, parameters) {
     }
   };
 
-  //************************************ Public methods **************************************
+  //* *********************************** Public methods **************************************
   this.setValue = function(newValue) {
     newValue = parseFloat(newValue);
-    var targetValue = (newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue));
+    const targetValue = (newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue));
     if (value !== targetValue) {
       value = targetValue;
 
@@ -687,9 +686,9 @@ var RadialVertical = function(canvas, parameters) {
 
   this.setValueAnimated = function(newValue, callback) {
     newValue = parseFloat(newValue);
-    var targetValue = (newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue)),
-      gauge = this,
-      time;
+    const targetValue = (newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue));
+    const gauge = this;
+    let time;
 
     if (value !== targetValue) {
       if (undefined !== tween && tween.isPlaying) {
@@ -699,8 +698,8 @@ var RadialVertical = function(canvas, parameters) {
       time = fullScaleDeflectionTime * Math.abs(targetValue - value) / (maxValue - minValue);
       time = Math.max(time, fullScaleDeflectionTime / 5);
       tween = new Tween({}, '', Tween.regularEaseInOut, value, targetValue, time);
-      //tween = new Tween({}, '', Tween.regularEaseInOut, value, targetValue, 1);
-      //tween = new Tween(new Object(), '', Tween.strongEaseInOut, value, targetValue, 1);
+      // tween = new Tween({}, '', Tween.regularEaseInOut, value, targetValue, 1);
+      // tween = new Tween(new Object(), '', Tween.strongEaseInOut, value, targetValue, 1);
       tween.onMotionChanged = function(event) {
         value = event.target._pos;
 
@@ -734,7 +733,7 @@ var RadialVertical = function(canvas, parameters) {
       };
 
       // do we have a callback function to process?
-      if (callback && typeof(callback) === "function") {
+      if (callback && typeof(callback) === 'function') {
         tween.onMotionFinished = callback;
       }
 
@@ -746,10 +745,10 @@ var RadialVertical = function(canvas, parameters) {
   this.setMinValue = function(newValue) {
     minValue = parseFloat(newValue);
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -762,10 +761,10 @@ var RadialVertical = function(canvas, parameters) {
   this.setMaxValue = function(newValue) {
     maxValue = parseFloat(newValue);
     resetBuffers({
-      background: true
+      background: true,
     });
     init({
-      background: true
+      background: true,
     });
     this.repaint();
     return this;
@@ -777,7 +776,7 @@ var RadialVertical = function(canvas, parameters) {
 
   this.setMaxMeasuredValue = function(newValue) {
     newValue = parseFloat(newValue);
-    var targetValue = newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue);
+    const targetValue = newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue);
     maxMeasuredValue = targetValue;
     this.repaint();
     return this;
@@ -785,7 +784,7 @@ var RadialVertical = function(canvas, parameters) {
 
   this.setMinMeasuredValue = function(newValue) {
     newValue = parseFloat(newValue);
-    var targetValue = newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue);
+    const targetValue = newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue);
     minMeasuredValue = targetValue;
     this.repaint();
     return this;
@@ -832,11 +831,11 @@ var RadialVertical = function(canvas, parameters) {
 
   this.setFrameDesign = function(newFrameDesign) {
     resetBuffers({
-      frame: true
+      frame: true,
     });
     frameDesign = newFrameDesign;
     init({
-      frame: true
+      frame: true,
     });
     this.repaint();
     return this;
@@ -845,12 +844,12 @@ var RadialVertical = function(canvas, parameters) {
   this.setBackgroundColor = function(newBackgroundColor) {
     resetBuffers({
       background: true,
-      pointer: (pointerType.type === 'type2' || pointerType.type === 'type13' ? true : false) // type2 & 13 depend on background
+      pointer: (pointerType.type === 'type2' || pointerType.type === 'type13' ? true : false), // type2 & 13 depend on background
     });
     backgroundColor = newBackgroundColor;
     init({
       background: true,
-      pointer: (pointerType.type === 'type2' || pointerType.type === 'type13' ? true : false) // type2 & 13 depend on background
+      pointer: (pointerType.type === 'type2' || pointerType.type === 'type13' ? true : false), // type2 & 13 depend on background
     });
     this.repaint();
     return this;
@@ -858,11 +857,11 @@ var RadialVertical = function(canvas, parameters) {
 
   this.setForegroundType = function(newForegroundType) {
     resetBuffers({
-      foreground: true
+      foreground: true,
     });
     foregroundType = newForegroundType;
     init({
-      foreground: true
+      foreground: true,
     });
     this.repaint();
     return this;
@@ -871,12 +870,12 @@ var RadialVertical = function(canvas, parameters) {
   this.setPointerType = function(newPointerType) {
     resetBuffers({
       pointer: true,
-      foreground: true // Required as type15 does not need a knob
+      foreground: true, // Required as type15 does not need a knob
     });
     pointerType = newPointerType;
     init({
       pointer: true,
-      foreground: true
+      foreground: true,
     });
     this.repaint();
     return this;
@@ -884,11 +883,11 @@ var RadialVertical = function(canvas, parameters) {
 
   this.setPointerColor = function(newPointerColor) {
     resetBuffers({
-      pointer: true
+      pointer: true,
     });
     pointerColor = newPointerColor;
     init({
-      pointer: true
+      pointer: true,
     });
     this.repaint();
     return this;
@@ -896,11 +895,11 @@ var RadialVertical = function(canvas, parameters) {
 
   this.setLedColor = function(newLedColor) {
     resetBuffers({
-      led: true
+      led: true,
     });
     ledColor = newLedColor;
     init({
-      led: true
+      led: true,
     });
     this.repaint();
     return this;
@@ -919,7 +918,7 @@ var RadialVertical = function(canvas, parameters) {
         background: true,
         led: true,
         pointer: true,
-        foreground: true
+        foreground: true,
       });
     }
 

@@ -1,8 +1,8 @@
 
-import createKnobImage from "./createKnobImage";
+import createKnobImage from './createKnobImage';
 import {
-createBuffer, 
-} from "./tools";
+  createBuffer,
+} from './tools';
 
 import {
   BackgroundColor,
@@ -19,16 +19,16 @@ import {
   LabelNumberFormat,
   TickLabelOrientation,
   TrendState,
-  } from "./definitions";
+} from './definitions';
 
 var drawForeground = function(ctx, foregroundType, imageWidth, imageHeight, withCenterKnob, knob, style, gaugeType, orientation) {
-  var radFgBuffer, radFgCtx,
-    knobSize = Math.ceil(imageHeight * 0.084112),
-    knobX = imageWidth * 0.5 - knobSize / 2,
-    knobY = imageHeight * 0.5 - knobSize / 2,
-    shadowOffset = imageWidth * 0.008,
-    gradHighlight, gradHighlight2,
-    cacheKey = foregroundType.type + imageWidth + imageHeight + withCenterKnob + (knob !== undefined ? knob.type : '-') +
+  let radFgBuffer; let radFgCtx;
+  const knobSize = Math.ceil(imageHeight * 0.084112);
+  let knobX = imageWidth * 0.5 - knobSize / 2;
+  let knobY = imageHeight * 0.5 - knobSize / 2;
+  const shadowOffset = imageWidth * 0.008;
+  let gradHighlight; let gradHighlight2;
+  const cacheKey = foregroundType.type + imageWidth + imageHeight + withCenterKnob + (knob !== undefined ? knob.type : '-') +
     (style !== undefined ? style.style : '-') + (orientation !== undefined ? orientation.type : '-');
 
   // check if we have already created and cached this buffer, if so return it and exit

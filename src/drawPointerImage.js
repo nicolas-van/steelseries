@@ -1,14 +1,14 @@
 
 import {
-createBuffer, 
-TWO_PI,
-} from "./tools";
+  createBuffer,
+  TWO_PI,
+} from './tools';
 
 
 var drawPointerImage = function(ctx, size, ptrType, ptrColor, lblColor) {
-  var ptrBuffer, ptrCtx,
-    grad, radius,
-    cacheKey = size.toString() + ptrType.type + ptrColor.light.getHexColor() + ptrColor.medium.getHexColor();
+  let ptrBuffer; let ptrCtx;
+  let grad; let radius;
+  const cacheKey = size.toString() + ptrType.type + ptrColor.light.getHexColor() + ptrColor.medium.getHexColor();
 
   // check if we have already created and cached this buffer, if not create it
   if (!drawPointerImage.cache[cacheKey]) {

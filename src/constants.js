@@ -1,5 +1,5 @@
 
-var BackgroundColorDef;
+let BackgroundColorDef;
 (function() {
   BackgroundColorDef = function(gradientStart, gradientFraction, gradientStop, labelColor, symbolColor, name) {
     this.gradientStart = gradientStart;
@@ -12,7 +12,7 @@ var BackgroundColorDef;
 }());
 export {BackgroundColorDef};
 
-var LcdColorDef;
+let LcdColorDef;
 (function() {
   LcdColorDef = function(gradientStartColor, gradientFraction1Color, gradientFraction2Color, gradientFraction3Color, gradientStopColor, textColor) {
     this.gradientStartColor = gradientStartColor;
@@ -25,7 +25,7 @@ var LcdColorDef;
 }());
 export {LcdColorDef};
 
-var ColorDef;
+let ColorDef;
 (function() {
   ColorDef = function(veryDark, dark, medium, light, lighter, veryLight) {
     this.veryDark = veryDark;
@@ -38,7 +38,7 @@ var ColorDef;
 }());
 export {ColorDef};
 
-var LedColorDef;
+let LedColorDef;
 (function() {
   LedColorDef = function(innerColor1_ON, innerColor2_ON, outerColor_ON, coronaColor, innerColor1_OFF, innerColor2_OFF, outerColor_OFF) {
     this.innerColor1_ON = innerColor1_ON;
@@ -52,7 +52,7 @@ var LedColorDef;
 }());
 export {LedColorDef};
 
-var GaugeTypeDef;
+let GaugeTypeDef;
 (function() {
   GaugeTypeDef = function(type) {
     this.type = type;
@@ -60,7 +60,7 @@ var GaugeTypeDef;
 }());
 export {GaugeTypeDef};
 
-var OrientationDef;
+let OrientationDef;
 (function() {
   OrientationDef = function(type) {
     this.type = type;
@@ -68,7 +68,7 @@ var OrientationDef;
 }());
 export {OrientationDef};
 
-var KnobTypeDef;
+let KnobTypeDef;
 (function() {
   KnobTypeDef = function(type) {
     this.type = type;
@@ -76,7 +76,7 @@ var KnobTypeDef;
 }());
 export {KnobTypeDef};
 
-var KnobStyleDef;
+let KnobStyleDef;
 (function() {
   KnobStyleDef = function(style) {
     this.style = style;
@@ -84,7 +84,7 @@ var KnobStyleDef;
 }());
 export {KnobStyleDef};
 
-var FrameDesignDef;
+let FrameDesignDef;
 (function() {
   FrameDesignDef = function(design) {
     this.design = design;
@@ -92,7 +92,7 @@ var FrameDesignDef;
 }());
 export {FrameDesignDef};
 
-var PointerTypeDef;
+let PointerTypeDef;
 (function() {
   PointerTypeDef = function(type) {
     this.type = type;
@@ -100,7 +100,7 @@ var PointerTypeDef;
 }());
 export {PointerTypeDef};
 
-var ForegroundTypeDef;
+let ForegroundTypeDef;
 (function() {
   ForegroundTypeDef = function(type) {
     this.type = type;
@@ -108,7 +108,7 @@ var ForegroundTypeDef;
 }());
 export {ForegroundTypeDef};
 
-var LabelNumberFormatDef;
+let LabelNumberFormatDef;
 (function() {
   LabelNumberFormatDef = function(format) {
     this.format = format;
@@ -116,7 +116,7 @@ var LabelNumberFormatDef;
 }());
 export {LabelNumberFormatDef};
 
-var TickLabelOrientationDef;
+let TickLabelOrientationDef;
 (function() {
   TickLabelOrientationDef = function(type) {
     this.type = type;
@@ -124,7 +124,7 @@ var TickLabelOrientationDef;
 }());
 export {TickLabelOrientationDef};
 
-var TrendStateDef;
+let TrendStateDef;
 (function() {
   TrendStateDef = function(state) {
     this.state = state;

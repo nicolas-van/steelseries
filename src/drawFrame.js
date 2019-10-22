@@ -1,15 +1,15 @@
 
 import {
-rgbaColor, 
-ConicalGradient, 
-createBuffer, 
-TWO_PI,
-} from "./tools";
+  rgbaColor,
+  ConicalGradient,
+  createBuffer,
+  TWO_PI,
+} from './tools';
 
 var drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, imageHeight) {
-  var radFBuffer, radFCtx,
-    grad, outerX, innerX, fractions, colors,
-    cacheKey = imageWidth.toString() + imageHeight + frameDesign.design;
+  let radFBuffer; let radFCtx;
+  let grad; let outerX; let innerX; let fractions; let colors;
+  const cacheKey = imageWidth.toString() + imageHeight + frameDesign.design;
 
   // check if we have already created and cached this buffer, if not create it
   if (!drawFrame.cache[cacheKey]) {
@@ -159,7 +159,7 @@ var drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, imageHe
           0.5,
           0.680555,
           0.875,
-          1
+          1,
         ];
 
         colors = [new rgbaColor(254, 254, 254, 1),
@@ -168,7 +168,7 @@ var drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, imageHe
           new rgbaColor(0, 0, 0, 1),
           new rgbaColor(153, 153, 153, 1),
           new rgbaColor(0, 0, 0, 1),
-          new rgbaColor(254, 254, 254, 1)
+          new rgbaColor(254, 254, 254, 1),
         ];
 
         radFCtx.save();
@@ -198,7 +198,7 @@ var drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, imageHe
           0.652777,
           0.75,
           0.875,
-          1
+          1,
         ];
 
         colors = [new rgbaColor(254, 254, 254, 1),
@@ -209,7 +209,7 @@ var drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, imageHe
           new rgbaColor(238, 238, 238, 1),
           new rgbaColor(179, 179, 179, 1),
           new rgbaColor(210, 210, 210, 1),
-          new rgbaColor(254, 254, 254, 1)
+          new rgbaColor(254, 254, 254, 1),
         ];
 
         radFCtx.save();
@@ -247,7 +247,7 @@ var drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, imageHe
           0.83,
           0.87,
           0.97,
-          1
+          1,
         ];
 
         colors = [new rgbaColor(255, 255, 255, 1),
@@ -266,7 +266,7 @@ var drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, imageHe
           new rgbaColor(246, 248, 247, 1),
           new rgbaColor(204, 216, 216, 1),
           new rgbaColor(164, 188, 190, 1),
-          new rgbaColor(255, 255, 255, 1)
+          new rgbaColor(255, 255, 255, 1),
         ];
 
         radFCtx.save();

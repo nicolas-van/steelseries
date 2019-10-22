@@ -1,26 +1,25 @@
 
 import {
-createBuffer, 
-PI,
-} from "./tools";
+  createBuffer,
+  PI,
+} from './tools';
 
-var brushedMetalTexture = function(color, radius, amount, monochrome, shine) {
-
+const brushedMetalTexture = function(color, radius, amount, monochrome, shine) {
   this.fill = function(startX, startY, endX, endY) {
-    var i, x, y, // loop counters
-      sinArr,
-      width, height,
-      outCanvas, outCanvasContext, // output canvas
-      inPixels, outPixels, // pixel arrays
-      //alpha = color & 0xff000000;
-      alpha = 255,
-      red = (color >> 16) & 0xff,
-      green = (color >> 8) & 0xff,
-      blue = color & 0xff,
-      n = 0,
-      variation = 255 * amount,
-      totR, totG, totB,
-      indx, tr, tg, tb, f;
+    let i; let x; let y; // loop counters
+    let sinArr;
+    let width; let height;
+    let outCanvas; let outCanvasContext; // output canvas
+    let inPixels; let outPixels; // pixel arrays
+    // alpha = color & 0xff000000;
+    const alpha = 255;
+    const red = (color >> 16) & 0xff;
+    const green = (color >> 8) & 0xff;
+    const blue = color & 0xff;
+    let n = 0;
+    const variation = 255 * amount;
+    let totR; let totG; let totB;
+    let indx; let tr; let tg; let tb; let f;
 
     startX = Math.floor(startX);
     startY = Math.floor(startY);
@@ -97,9 +96,9 @@ var brushedMetalTexture = function(color, radius, amount, monochrome, shine) {
   }
 
   function horizontalBlur(inPix, outPix, width, height, radius, alpha) {
-    var x, y, // loop counters
-      i, mul, indx,
-      totR, totG, totB;
+    let x; let y; // loop counters
+    let i; let mul; let indx;
+    let totR; let totG; let totB;
 
     if (radius >= width) {
       radius = width - 1;

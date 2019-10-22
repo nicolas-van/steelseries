@@ -1,24 +1,24 @@
 
 import {
-rgbaColor, 
-} from "./tools";
+  rgbaColor,
+} from './tools';
 
 import {
-BackgroundColorDef,
-LcdColorDef,
-ColorDef,
-LedColorDef,
-GaugeTypeDef,
-OrientationDef,
-KnobTypeDef,
-KnobStyleDef,
-FrameDesignDef,
-PointerTypeDef,
-ForegroundTypeDef,
-LabelNumberFormatDef,
-TickLabelOrientationDef,
-TrendStateDef,
-} from "./constants";
+  BackgroundColorDef,
+  LcdColorDef,
+  ColorDef,
+  LedColorDef,
+  GaugeTypeDef,
+  OrientationDef,
+  KnobTypeDef,
+  KnobStyleDef,
+  FrameDesignDef,
+  PointerTypeDef,
+  ForegroundTypeDef,
+  LabelNumberFormatDef,
+  TickLabelOrientationDef,
+  TrendStateDef,
+} from './constants';
 
 export var BackgroundColor = {
   DARK_GRAY: new BackgroundColorDef(new rgbaColor(0, 0, 0, 1), new rgbaColor(51, 51, 51, 1), new rgbaColor(153, 153, 153, 1), new rgbaColor(255, 255, 255, 1), new rgbaColor(180, 180, 180, 1), 'DARK_GRAY'),
@@ -38,7 +38,7 @@ export var BackgroundColor = {
   STAINLESS: new BackgroundColorDef(new rgbaColor(130, 130, 130, 1), new rgbaColor(181, 181, 181, 1), new rgbaColor(253, 253, 253, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(80, 80, 80, 1), 'STAINLESS'),
   BRUSHED_METAL: new BackgroundColorDef(new rgbaColor(50, 50, 54, 1), new rgbaColor(47, 47, 51, 1), new rgbaColor(69, 69, 74, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(80, 80, 80, 1), 'BRUSHED_METAL'),
   BRUSHED_STAINLESS: new BackgroundColorDef(new rgbaColor(50, 50, 54, 1), new rgbaColor(47, 47, 51, 1), new rgbaColor(110, 110, 112, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(80, 80, 80, 1), 'BRUSHED_STAINLESS'),
-  TURNED: new BackgroundColorDef(new rgbaColor(130, 130, 130, 1), new rgbaColor(181, 181, 181, 1), new rgbaColor(253, 253, 253, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(80, 80, 80, 1), 'TURNED')
+  TURNED: new BackgroundColorDef(new rgbaColor(130, 130, 130, 1), new rgbaColor(181, 181, 181, 1), new rgbaColor(253, 253, 253, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(80, 80, 80, 1), 'TURNED'),
 };
 
 export var LcdColor = {
@@ -65,10 +65,10 @@ export var LcdColor = {
   DARKGREEN: new LcdColorDef('rgb(25, 85, 0)', 'rgb(47, 154, 0)', 'rgb(30, 101, 0)', 'rgb(30, 101, 0)', 'rgb(25, 85, 0)', '#233123'),
   AMBER: new LcdColorDef('rgb(182, 71, 0)', 'rgb(236, 155, 25)', 'rgb(212, 93, 5)', 'rgb(212, 93, 5)', 'rgb(182, 71, 0)', '#593A0A'),
   LIGHTBLUE: new LcdColorDef('rgb(125, 146, 184)', 'rgb(197, 212, 231)', 'rgb(138, 155, 194)', 'rgb(138, 155, 194)', 'rgb(125, 146, 184)', '#090051'),
-  SECTIONS: new LcdColorDef('#b2b2b2', '#ffffff', '#c4c4c4', '#c4c4c4', '#b2b2b2', '#000000')
+  SECTIONS: new LcdColorDef('#b2b2b2', '#ffffff', '#c4c4c4', '#c4c4c4', '#b2b2b2', '#000000'),
 };
 
-var Color = {
+const Color = {
   RED: new ColorDef(new rgbaColor(82, 0, 0, 1), new rgbaColor(158, 0, 19, 1), new rgbaColor(213, 0, 25, 1), new rgbaColor(240, 82, 88, 1), new rgbaColor(255, 171, 173, 1), new rgbaColor(255, 217, 218, 1)),
   GREEN: new ColorDef(new rgbaColor(8, 54, 4, 1), new rgbaColor(0, 107, 14, 1), new rgbaColor(15, 148, 0, 1), new rgbaColor(121, 186, 37, 1), new rgbaColor(190, 231, 141, 1), new rgbaColor(234, 247, 218, 1)),
   BLUE: new ColorDef(new rgbaColor(0, 11, 68, 1), new rgbaColor(0, 73, 135, 1), new rgbaColor(0, 108, 201, 1), new rgbaColor(0, 141, 242, 1), new rgbaColor(122, 200, 255, 1), new rgbaColor(204, 236, 255, 1)),
@@ -81,7 +81,7 @@ var Color = {
   BLACK: new ColorDef(new rgbaColor(0, 0, 0, 1), new rgbaColor(5, 5, 5, 1), new rgbaColor(10, 10, 10, 1), new rgbaColor(15, 15, 15, 1), new rgbaColor(20, 20, 20, 1), new rgbaColor(25, 25, 25, 1)),
   RAITH: new ColorDef(new rgbaColor(0, 32, 65, 1), new rgbaColor(0, 65, 125, 1), new rgbaColor(0, 106, 172, 1), new rgbaColor(130, 180, 214, 1), new rgbaColor(148, 203, 242, 1), new rgbaColor(191, 229, 255, 1)),
   GREEN_LCD: new ColorDef(new rgbaColor(0, 55, 45, 1), new rgbaColor(15, 109, 93, 1), new rgbaColor(0, 185, 165, 1), new rgbaColor(48, 255, 204, 1), new rgbaColor(153, 255, 227, 1), new rgbaColor(204, 255, 241, 1)),
-  JUG_GREEN: new ColorDef(new rgbaColor(0, 56, 0, 1), new rgbaColor(32, 69, 36, 1), new rgbaColor(50, 161, 0, 1), new rgbaColor(129, 206, 0, 1), new rgbaColor(190, 231, 141, 1), new rgbaColor(234, 247, 218, 1))
+  JUG_GREEN: new ColorDef(new rgbaColor(0, 56, 0, 1), new rgbaColor(32, 69, 36, 1), new rgbaColor(50, 161, 0, 1), new rgbaColor(129, 206, 0, 1), new rgbaColor(190, 231, 141, 1), new rgbaColor(234, 247, 218, 1)),
 };
 export {Color as ColorDef};
 
@@ -92,7 +92,7 @@ export var LedColor = {
   ORANGE_LED: new LedColorDef('#FEA23F', '#FEA23F', '#FD6C00', '#FD6C00', '#592800', '#592800', '#421F00'),
   YELLOW_LED: new LedColorDef('#FFFF62', '#FFFF62', '#FFFF00', '#FFFF00', '#6B6D00', '#6B6D00', '#515300'),
   CYAN_LED: new LedColorDef('#00FFFF', '#00FFFF', '#1BC3C3', '#00FFFF', '#083B3B', '#083B3B', '#052727'),
-  MAGENTA_LED: new LedColorDef('#D300FF', '#D300FF', '#8600CB', '#C300FF', '#38004B', '#38004B', '#280035')
+  MAGENTA_LED: new LedColorDef('#D300FF', '#D300FF', '#8600CB', '#C300FF', '#38004B', '#38004B', '#280035'),
 };
 
 export var GaugeType = {
@@ -100,25 +100,25 @@ export var GaugeType = {
   TYPE2: new GaugeTypeDef('type2'),
   TYPE3: new GaugeTypeDef('type3'),
   TYPE4: new GaugeTypeDef('type4'),
-  TYPE5: new GaugeTypeDef('type5')
+  TYPE5: new GaugeTypeDef('type5'),
 };
 
 export var Orientation = {
   NORTH: new OrientationDef('north'),
   SOUTH: new OrientationDef('south'),
   EAST: new OrientationDef('east'),
-  WEST: new OrientationDef('west')
+  WEST: new OrientationDef('west'),
 };
 
 export var KnobType = {
   STANDARD_KNOB: new KnobTypeDef('standardKnob'),
-  METAL_KNOB: new KnobTypeDef('metalKnob')
+  METAL_KNOB: new KnobTypeDef('metalKnob'),
 };
 
 export var KnobStyle = {
   BLACK: new KnobStyleDef('black'),
   BRASS: new KnobStyleDef('brass'),
-  SILVER: new KnobStyleDef('silver')
+  SILVER: new KnobStyleDef('silver'),
 };
 
 export var FrameDesign = {
@@ -132,7 +132,7 @@ export var FrameDesign = {
   ANTHRACITE: new FrameDesignDef('anthracite'),
   TILTED_GRAY: new FrameDesignDef('tiltedGray'),
   TILTED_BLACK: new FrameDesignDef('tiltedBlack'),
-  GLOSSY_METAL: new FrameDesignDef('glossyMetal')
+  GLOSSY_METAL: new FrameDesignDef('glossyMetal'),
 };
 
 export var PointerType = {
@@ -151,7 +151,7 @@ export var PointerType = {
   TYPE13: new PointerTypeDef('type13'),
   TYPE14: new PointerTypeDef('type14'),
   TYPE15: new PointerTypeDef('type15'),
-  TYPE16: new PointerTypeDef('type16')
+  TYPE16: new PointerTypeDef('type16'),
 };
 
 export var ForegroundType = {
@@ -159,24 +159,24 @@ export var ForegroundType = {
   TYPE2: new ForegroundTypeDef('type2'),
   TYPE3: new ForegroundTypeDef('type3'),
   TYPE4: new ForegroundTypeDef('type4'),
-  TYPE5: new ForegroundTypeDef('type5')
+  TYPE5: new ForegroundTypeDef('type5'),
 };
 
 export var LabelNumberFormat = {
   STANDARD: new LabelNumberFormatDef('standard'),
   FRACTIONAL: new LabelNumberFormatDef('fractional'),
-  SCIENTIFIC: new LabelNumberFormatDef('scientific')
+  SCIENTIFIC: new LabelNumberFormatDef('scientific'),
 };
 
 export var TickLabelOrientation = {
   NORMAL: new TickLabelOrientationDef('normal'),
   HORIZONTAL: new TickLabelOrientationDef('horizontal'),
-  TANGENT: new TickLabelOrientationDef('tangent')
+  TANGENT: new TickLabelOrientationDef('tangent'),
 };
 
 export var TrendState = {
   UP: new TrendStateDef('up'),
   STEADY: new TrendStateDef('steady'),
   DOWN: new TrendStateDef('down'),
-  OFF: new TrendStateDef('off')
+  OFF: new TrendStateDef('off'),
 };

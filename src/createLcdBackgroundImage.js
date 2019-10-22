@@ -1,23 +1,23 @@
 
 import {
-roundedRectangle, 
-createBuffer, 
-} from "./tools";
+  roundedRectangle,
+  createBuffer,
+} from './tools';
 
 var createLcdBackgroundImage = function(width, height, lcdColor) {
-  var lcdBuffer, lcdCtx,
-    xB = 0,
-    yB = 0,
-    wB = width,
-    hB = height,
-    rB = Math.min(width, height) * 0.095,
-    grad,
-    xF = 1,
-    yF = 1,
-    wF = width - 2,
-    hF = height - 2,
-    rF = rB - 1,
-    cacheKey = width.toString() + height + JSON.stringify(lcdColor);
+  let lcdBuffer; let lcdCtx;
+  const xB = 0;
+  const yB = 0;
+  const wB = width;
+  const hB = height;
+  const rB = Math.min(width, height) * 0.095;
+  let grad;
+  const xF = 1;
+  const yF = 1;
+  const wF = width - 2;
+  const hF = height - 2;
+  const rF = rB - 1;
+  const cacheKey = width.toString() + height + JSON.stringify(lcdColor);
 
   // check if we have already created and cached this buffer, if not create it
   if (!createLcdBackgroundImage.cache[cacheKey]) {

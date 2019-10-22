@@ -1,39 +1,39 @@
-import Tween from "./tween.js";
+import Tween from './tween.js';
 import {
-createBuffer, 
-requestAnimFrame, 
-getCanvasContext,
-TWO_PI,
-RAD_FACTOR,
-} from "./tools";
+  createBuffer,
+  requestAnimFrame,
+  getCanvasContext,
+  TWO_PI,
+  RAD_FACTOR,
+} from './tools';
 
-var odometer = function(canvas, parameters) {
+const odometer = function(canvas, parameters) {
   parameters = parameters || {};
 
   // parameters
-  var _context = (undefined === parameters._context ? null : parameters._context),
-    height = (undefined === parameters.height ? 0 : parameters.height),
-    digits = (undefined === parameters.digits ? 6 : parameters.digits),
-    decimals = (undefined === parameters.decimals ? 1 : parameters.decimals),
-    decimalBackColor = (undefined === parameters.decimalBackColor ? '#F0F0F0' : parameters.decimalBackColor),
-    decimalForeColor = (undefined === parameters.decimalForeColor ? '#F01010' : parameters.decimalForeColor),
-    font = (undefined === parameters.font ? 'sans-serif' : parameters.font),
-    value = (undefined === parameters.value ? 0 : parameters.value),
-    valueBackColor = (undefined === parameters.valueBackColor ? '#050505' : parameters.valueBackColor),
-    valueForeColor = (undefined === parameters.valueForeColor ? '#F8F8F8' : parameters.valueForeColor),
-    wobbleFactor = (undefined === parameters.wobbleFactor ? 0.07 : parameters.wobbleFactor),
-    //
-    initialized = false,
-    tween, ctx,
-    repainting = false,
-    digitHeight, digitWidth, stdFont,
-    width, columnHeight, verticalSpace, zeroOffset,
-    wobble = [],
-    //buffers
-    backgroundBuffer, backgroundContext,
-    foregroundBuffer, foregroundContext,
-    digitBuffer, digitContext,
-    decimalBuffer, decimalContext;
+  const _context = (undefined === parameters._context ? null : parameters._context);
+  let height = (undefined === parameters.height ? 0 : parameters.height);
+  const digits = (undefined === parameters.digits ? 6 : parameters.digits);
+  const decimals = (undefined === parameters.decimals ? 1 : parameters.decimals);
+  const decimalBackColor = (undefined === parameters.decimalBackColor ? '#F0F0F0' : parameters.decimalBackColor);
+  const decimalForeColor = (undefined === parameters.decimalForeColor ? '#F01010' : parameters.decimalForeColor);
+  const font = (undefined === parameters.font ? 'sans-serif' : parameters.font);
+  let value = (undefined === parameters.value ? 0 : parameters.value);
+  const valueBackColor = (undefined === parameters.valueBackColor ? '#050505' : parameters.valueBackColor);
+  const valueForeColor = (undefined === parameters.valueForeColor ? '#F8F8F8' : parameters.valueForeColor);
+  const wobbleFactor = (undefined === parameters.wobbleFactor ? 0.07 : parameters.wobbleFactor);
+  //
+  let initialized = false;
+  let tween; let ctx;
+  let repainting = false;
+  let digitHeight; let digitWidth; let stdFont;
+  let width; let columnHeight; let verticalSpace; let zeroOffset;
+  const wobble = [];
+  // buffers
+  let backgroundBuffer; let backgroundContext;
+  let foregroundBuffer; let foregroundContext;
+  let digitBuffer; let digitContext;
+  let decimalBuffer; let decimalContext;
   // End of variables
 
   // Get the canvas context and clear it
@@ -80,7 +80,7 @@ var odometer = function(canvas, parameters) {
   decimalContext = decimalBuffer.getContext('2d');
 
   function init() {
-    var grad, i;
+    let grad; let i;
 
     initialized = true;
 
@@ -103,7 +103,7 @@ var odometer = function(canvas, parameters) {
     digitContext.fill();
     // edges
     digitContext.strokeStyle = '#f0f0f0';
-    digitContext.lineWidth = '1px'; //height * 0.1 + 'px';
+    digitContext.lineWidth = '1px'; // height * 0.1 + 'px';
     digitContext.moveTo(0, 0);
     digitContext.lineTo(0, columnHeight * 1.1);
     digitContext.stroke();
@@ -129,7 +129,7 @@ var odometer = function(canvas, parameters) {
       decimalContext.fill();
       // edges
       decimalContext.strokeStyle = '#f0f0f0';
-      decimalContext.lineWidth = '1px'; //height * 0.1 + 'px';
+      decimalContext.lineWidth = '1px'; // height * 0.1 + 'px';
       decimalContext.moveTo(0, 0);
       decimalContext.lineTo(0, columnHeight * 1.1);
       decimalContext.stroke();
@@ -151,13 +151,12 @@ var odometer = function(canvas, parameters) {
     for (i = 0; i < (digits + decimals); i++) {
       wobble[i] = Math.random() * wobbleFactor * height - wobbleFactor * height / 2;
     }
-
   }
 
   function drawDigits() {
-    var pos = 1,
-      val = value,
-      i, num, numb, frac, prevNum;
+    let pos = 1;
+    let val = value;
+    let i; let num; let numb; let frac; let prevNum;
 
     // do not use Math.pow() - rounding errors!
     for (i = 0; i < decimals; i++) {
@@ -185,7 +184,7 @@ var odometer = function(canvas, parameters) {
   }
 
   this.setValueAnimated = function(newVal, callback) {
-    var gauge = this;
+    const gauge = this;
     newVal = parseFloat(newVal);
 
     if (newVal < 0) {
@@ -206,7 +205,7 @@ var odometer = function(canvas, parameters) {
       };
 
       // do we have a callback function to process?
-      if (callback && typeof(callback) === "function") {
+      if (callback && typeof(callback) === 'function') {
         tween.onMotionFinished = callback;
       }
 

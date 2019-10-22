@@ -1,14 +1,14 @@
 
 import {
-createBuffer, 
-} from "./tools";
+  createBuffer,
+} from './tools';
 
 
 var drawLinearForegroundImage = function(ctx, imageWidth, imageHeight, vertical) {
-  var linFgBuffer, linFgCtx,
-    foregroundGradient,
-    frameWidth, fgOffset, fgOffset2,
-    cacheKey = imageWidth.toString() + imageHeight + vertical;
+  let linFgBuffer; let linFgCtx;
+  let foregroundGradient;
+  let frameWidth; let fgOffset; let fgOffset2;
+  const cacheKey = imageWidth.toString() + imageHeight + vertical;
 
   // check if we have already created and cached this buffer, if not create it
   if (!drawLinearForegroundImage.cache[cacheKey]) {

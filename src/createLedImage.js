@@ -1,17 +1,17 @@
 
 import {
-setAlpha, 
-createBuffer, 
-TWO_PI,
-} from "./tools";
+  setAlpha,
+  createBuffer,
+  TWO_PI,
+} from './tools';
 
 var createLedImage = function(size, state, ledColor) {
-  var ledBuffer, ledCtx,
-    // Bug in Chrome browser, radialGradients do not draw correctly if the center is not an integer value
-    ledCenterX = 2 * Math.round(size / 4),
-    ledCenterY = 2 * Math.round(size / 4),
-    grad,
-    cacheKey = size.toString() + state + ledColor.outerColor_ON;
+  let ledBuffer; let ledCtx;
+  // Bug in Chrome browser, radialGradients do not draw correctly if the center is not an integer value
+  const ledCenterX = 2 * Math.round(size / 4);
+  const ledCenterY = 2 * Math.round(size / 4);
+  let grad;
+  const cacheKey = size.toString() + state + ledColor.outerColor_ON;
 
   // check if we have already created and cached this buffer, if not create it
   if (!createLedImage.cache[cacheKey]) {

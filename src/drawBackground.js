@@ -1,23 +1,23 @@
 
-import carbonBuffer from "./carbonBuffer";
-import punchedSheetBuffer from "./punchedSheetBuffer";
-import brushedMetalTexture from "./brushedMetalTexture";
+import carbonBuffer from './carbonBuffer';
+import punchedSheetBuffer from './punchedSheetBuffer';
+import brushedMetalTexture from './brushedMetalTexture';
 import {
-rgbaColor, 
-ConicalGradient, 
-createBuffer, 
-TWO_PI,
-RAD_FACTOR,
-} from "./tools";
+  rgbaColor,
+  ConicalGradient,
+  createBuffer,
+  TWO_PI,
+  RAD_FACTOR,
+} from './tools';
 
 var drawBackground = function(ctx, backgroundColor, centerX, centerY, imageWidth, imageHeight) {
-  var radBBuffer, radBCtx,
-    grad, fractions, colors,
-    backgroundOffsetX = imageWidth * 0.831775 / 2,
-    mono, textureColor, texture,
-    radius, turnRadius, stepSize,
-    end, i,
-    cacheKey = imageWidth.toString() + imageHeight + backgroundColor.name;
+  let radBBuffer; let radBCtx;
+  let grad; let fractions; let colors;
+  const backgroundOffsetX = imageWidth * 0.831775 / 2;
+  let mono; let textureColor; let texture;
+  let radius; let turnRadius; let stepSize;
+  let end; let i;
+  const cacheKey = imageWidth.toString() + imageHeight + backgroundColor.name;
 
   // check if we have already created and cached this buffer, if not create it
   if (!drawBackground.cache[cacheKey]) {
@@ -33,7 +33,6 @@ var drawBackground = function(ctx, backgroundColor, centerX, centerY, imageWidth
     // If the backgroundColor is a texture fill it with the texture instead of the gradient
     if (backgroundColor.name === 'CARBON' || backgroundColor.name === 'PUNCHED_SHEET' ||
       backgroundColor.name === 'BRUSHED_METAL' || backgroundColor.name === 'BRUSHED_STAINLESS') {
-
       if (backgroundColor.name === 'CARBON') {
         radBCtx.fillStyle = radBCtx.createPattern(carbonBuffer, 'repeat');
         radBCtx.fill();
@@ -78,7 +77,7 @@ var drawBackground = function(ctx, backgroundColor, centerX, centerY, imageWidth
         0.81,
         0.85,
         0.97,
-        1
+        1,
       ];
 
       // Define the colors of the conical gradient paint
@@ -96,7 +95,7 @@ var drawBackground = function(ctx, backgroundColor, centerX, centerY, imageWidth
         new rgbaColor('#ACACAE'),
         new rgbaColor('#B2B2B4'),
         new rgbaColor('#FDFDFD'),
-        new rgbaColor('#FDFDFD')
+        new rgbaColor('#FDFDFD'),
       ];
 
       grad = new ConicalGradient(fractions, colors);
