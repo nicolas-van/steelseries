@@ -35,7 +35,7 @@ import {
   knobStyle,
   } from "./definitions";
 
-var horizon = function(canvas, parameters) {
+var Horizon = function(canvas, parameters) {
   parameters = parameters || {};
   var size = (undefined === parameters.size ? 0 : parameters.size),
     frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
@@ -490,4 +490,4 @@ var horizon = function(canvas, parameters) {
   return this;
 };
 
-export default horizon;
+export default Horizon;

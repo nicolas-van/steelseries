@@ -40,7 +40,7 @@ import {
   trendState as TrendState,
   } from "./definitions";
 
-var radialBargraph = function(canvas, parameters) {
+var RadialBargraph = function(canvas, parameters) {
   parameters = parameters || {};
   var gaugeType = (undefined === parameters.gaugeType ? GaugeType.TYPE4 : parameters.gaugeType),
     size = (undefined === parameters.size ? 0 : parameters.size),
@@ -1199,4 +1199,4 @@ var radialBargraph = function(canvas, parameters) {
   return this;
 };
 
-export default radialBargraph;
+export default RadialBargraph;

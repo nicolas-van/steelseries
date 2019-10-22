@@ -22,7 +22,7 @@ import {
   trendState as TrendState,
   } from "./definitions";
 
-var led = function(canvas, parameters) {
+var Led = function(canvas, parameters) {
   parameters = parameters || {};
   var size = (undefined === parameters.size ? 0 : parameters.size),
     ledColor = (undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor);
@@ -131,4 +131,4 @@ var led = function(canvas, parameters) {
   return this;
 };
 
-export default led;
+export default Led;

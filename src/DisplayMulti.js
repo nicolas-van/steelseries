@@ -23,7 +23,7 @@ import {
   trendState as TrendState,
   } from "./definitions";
 
-var displayMulti = function(canvas, parameters) {
+var DisplayMulti = function(canvas, parameters) {
   parameters = parameters || {};
   var width = (undefined === parameters.width ? 0 : parameters.width),
     height = (undefined === parameters.height ? 0 : parameters.height),
@@ -214,4 +214,4 @@ var displayMulti = function(canvas, parameters) {
   return this;
 };
 
-export default displayMulti;
+export default DisplayMulti;

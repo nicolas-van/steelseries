@@ -35,7 +35,7 @@ import {
   trendState as TrendState,
   } from "./definitions";
 
-var windDirection = function(canvas, parameters) {
+var WindDirection = function(canvas, parameters) {
   parameters = parameters || {};
   var size = (undefined === parameters.size ? 0 : parameters.size),
     frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
@@ -894,4 +894,4 @@ var windDirection = function(canvas, parameters) {
   return this;
 };
 
-export default windDirection;
+export default WindDirection;

@@ -29,7 +29,7 @@ import {
   trendState as TrendState,
   } from "./definitions";
 
-var displaySingle = function(canvas, parameters) {
+var DisplaySingle = function(canvas, parameters) {
   parameters = parameters || {};
   var width = (undefined === parameters.width ? 0 : parameters.width),
     height = (undefined === parameters.height ? 0 : parameters.height),
@@ -340,4 +340,4 @@ var displaySingle = function(canvas, parameters) {
   return this;
 };
 
-export default displaySingle;
+export default DisplaySingle;

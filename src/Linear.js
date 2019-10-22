@@ -34,7 +34,7 @@ import {
   trendState as TrendState,
   } from "./definitions";
 
-var linear = function(canvas, parameters) {
+var Linear = function(canvas, parameters) {
   parameters = parameters || {};
   var gaugeType = (undefined === parameters.gaugeType ? GaugeType.TYPE1 : parameters.gaugeType),
     width = (undefined === parameters.width ? 0 : parameters.width),
@@ -1271,4 +1271,4 @@ var linear = function(canvas, parameters) {
   return this;
 };
 
-export default linear;
+export default Linear;

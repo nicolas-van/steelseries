@@ -1,26 +1,25 @@
 
-import radial from "./radial";
-import radialBargraph from "./radialBargraph";
-import radialVertical from "./radialVertical";
-import linear from "./linear";
-import linearBargraph from "./linearBargraph";
-import displaySingle from "./displaySingle";
-import displayMulti from "./displayMulti";
-import level from "./level";
-import compass from "./compass";
-import windDirection from "./windDirection";
-import horizon from "./horizon";
-import led from "./led";
-import clock from "./clock";
-import battery from "./battery";
-import stopwatch from "./stopwatch";
-import altimeter from "./altimeter";
-import trafficlight from "./trafficlight";
-import lightbulb from "./lightbulb";
-import odometer from "./odometer";
+import Radial from "./Radial";
+import RadialBargraph from "./RadialBargraph";
+import RadialVertical from "./RadialVertical";
+import Linear from "./Linear";
+import LinearBargraph from "./LinearBargraph";
+import DisplaySingle from "./DisplaySingle";
+import DisplayMulti from "./DisplayMulti";
+import Level from "./Level";
+import Compass from "./Compass";
+import WindDirection from "./WindDirection";
+import Horizon from "./Horizon";
+import Led from "./Led";
+import Clock from "./Clock";
+import Battery from "./Battery";
+import StopWatch from "./StopWatch";
+import Altimeter from "./Altimeter";
+import TrafficLight from "./TrafficLight";
+import LightBulb from "./LightBulb";
+import Odometer from "./Odometer";
 import drawRadialFrameImage from "./drawRadialFrameImage";
 import drawRadialBackgroundImage from "./drawRadialBackgroundImage";
-import drawLinearBackgroundImage from "./drawLinearBackgroundImage";
 import drawRadialForegroundImage from "./drawRadialForegroundImage";
 import {
 RgbaColor, 
@@ -48,25 +47,25 @@ tickLabelOrientation,
 trendState,
 } from "./definitions";
 
-export {radial as Radial};
-export {radialBargraph as RadialBargraph};
-export {radialVertical as RadialVertical};
-export {linear as Linear};
-export {linearBargraph as LinearBargraph};
-export {displaySingle as DisplaySingle};
-export {displayMulti as DisplayMulti};
-export {level as Level};
-export {compass as Compass};
-export {windDirection as WindDirection};
-export {horizon as Horizon};
-export {led as Led};
-export {clock as Clock};
-export {battery as Battery};
-export {stopwatch as StopWatch};
-export {altimeter as Altimeter};
-export {trafficlight as TrafficLight};
-export {lightbulb as LightBulb};
-export {odometer as Odometer};
+export {Radial};
+export {RadialBargraph};
+export {RadialVertical};
+export {Linear};
+export {LinearBargraph};
+export {DisplaySingle};
+export {DisplayMulti};
+export {Level};
+export {Compass};
+export {WindDirection};
+export {Horizon};
+export {Led};
+export {Clock};
+export {Battery};
+export {StopWatch};
+export {Altimeter};
+export {TrafficLight};
+export {LightBulb};
+export {Odometer};
 
 // Images
 export {drawRadialFrameImage as drawFrame};
@@ -75,9 +74,9 @@ export {drawRadialForegroundImage as drawForeground};
 
 // Tools
 export {RgbaColor as rgbaColor};
-export {ConicalGradient as ConicalGradient};
-export {setAlpha as setAlpha};
-export {getColorFromFraction as getColorFromFraction};
+export {ConicalGradient};
+export {setAlpha};
+export {getColorFromFraction};
 export {GradientWrapper as gradientWrapper};
 
 // Constants

@@ -31,7 +31,7 @@ import {
   trendState as TrendState,
   } from "./definitions";
 
-var compass = function(canvas, parameters) {
+var Compass = function(canvas, parameters) {
   parameters = parameters || {};
   var size = (undefined === parameters.size ? 0 : parameters.size),
     frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign),
@@ -590,4 +590,4 @@ var compass = function(canvas, parameters) {
   return this;
 };
 
-export default compass;
+export default Compass;

@@ -41,9 +41,9 @@ import {
   trendState as TrendState,
   } from "./definitions";
 
-import Odometer from './odometer';
+import Odometer from './Odometer';
 
-var radial = function(canvas, parameters) {
+var Radial = function(canvas, parameters) {
   parameters = parameters || {};
   var gaugeType = (undefined === parameters.gaugeType ? GaugeType.TYPE4 : parameters.gaugeType),
     size = (undefined === parameters.size ? 0 : parameters.size),
@@ -1388,4 +1388,4 @@ var radial = function(canvas, parameters) {
   return this;
 };
 
-export default radial;
+export default Radial;

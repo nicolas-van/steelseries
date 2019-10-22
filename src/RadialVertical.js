@@ -34,7 +34,7 @@ import {
   trendState as TrendState,
   } from "./definitions";
 
-var radialVertical = function(canvas, parameters) {
+var RadialVertical = function(canvas, parameters) {
   parameters = parameters || {};
   var orientation = (undefined === parameters.orientation ? Orientation.NORTH : parameters.orientation),
     size = (undefined === parameters.size ? 0 : parameters.size),
@@ -1010,4 +1010,4 @@ var radialVertical = function(canvas, parameters) {
   return this;
 };
 
-export default radialVertical;
+export default RadialVertical;

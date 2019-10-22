@@ -34,7 +34,7 @@ import {
   trendState as TrendState,
   } from "./definitions";
 
-var linearBargraph = function(canvas, parameters) {
+var LinearBargraph = function(canvas, parameters) {
   parameters = parameters || {};
   var width = (undefined === parameters.width ? 0 : parameters.width),
     height = (undefined === parameters.height ? 0 : parameters.height),
@@ -1347,4 +1347,4 @@ var linearBargraph = function(canvas, parameters) {
   return this;
 };
 
-export default linearBargraph;
+export default LinearBargraph;
