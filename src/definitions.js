@@ -20,7 +20,7 @@ TickLabelOrientationDef,
 TrendStateDef,
 } from "./constants";
 
-export var backgroundColor = {
+export var BackgroundColor = {
   DARK_GRAY: new BackgroundColorDef(new rgbaColor(0, 0, 0, 1), new rgbaColor(51, 51, 51, 1), new rgbaColor(153, 153, 153, 1), new rgbaColor(255, 255, 255, 1), new rgbaColor(180, 180, 180, 1), 'DARK_GRAY'),
   SATIN_GRAY: new BackgroundColorDef(new rgbaColor(45, 57, 57, 1), new rgbaColor(45, 57, 57, 1), new rgbaColor(45, 57, 57, 1), new rgbaColor(167, 184, 180, 1), new rgbaColor(137, 154, 150, 1), 'SATIN_GRAY'),
   LIGHT_GRAY: new BackgroundColorDef(new rgbaColor(130, 130, 130, 1), new rgbaColor(181, 181, 181, 1), new rgbaColor(253, 253, 253, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(80, 80, 80, 1), 'LIGHT_GRAY'),
@@ -41,7 +41,7 @@ export var backgroundColor = {
   TURNED: new BackgroundColorDef(new rgbaColor(130, 130, 130, 1), new rgbaColor(181, 181, 181, 1), new rgbaColor(253, 253, 253, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(80, 80, 80, 1), 'TURNED')
 };
 
-export var lcdColor = {
+export var LcdColor = {
   BEIGE: new LcdColorDef('#c8c8b1', 'rgb(241, 237, 207)', 'rgb(234, 230, 194)', 'rgb(225, 220, 183)', 'rgb(237, 232, 191)', '#000000'),
   BLUE: new LcdColorDef('#ffffff', 'rgb(231, 246, 255)', 'rgb(170, 224, 255)', 'rgb(136, 212, 255)', 'rgb(192, 232, 255)', '#124564'),
   ORANGE: new LcdColorDef('#ffffff', 'rgb(255, 245, 225)', 'rgb(255, 217, 147)', 'rgb(255, 201, 104)', 'rgb(255, 227, 173)', '#503700'),
@@ -68,7 +68,7 @@ export var lcdColor = {
   SECTIONS: new LcdColorDef('#b2b2b2', '#ffffff', '#c4c4c4', '#c4c4c4', '#b2b2b2', '#000000')
 };
 
-export var color = {
+var Color = {
   RED: new ColorDef(new rgbaColor(82, 0, 0, 1), new rgbaColor(158, 0, 19, 1), new rgbaColor(213, 0, 25, 1), new rgbaColor(240, 82, 88, 1), new rgbaColor(255, 171, 173, 1), new rgbaColor(255, 217, 218, 1)),
   GREEN: new ColorDef(new rgbaColor(8, 54, 4, 1), new rgbaColor(0, 107, 14, 1), new rgbaColor(15, 148, 0, 1), new rgbaColor(121, 186, 37, 1), new rgbaColor(190, 231, 141, 1), new rgbaColor(234, 247, 218, 1)),
   BLUE: new ColorDef(new rgbaColor(0, 11, 68, 1), new rgbaColor(0, 73, 135, 1), new rgbaColor(0, 108, 201, 1), new rgbaColor(0, 141, 242, 1), new rgbaColor(122, 200, 255, 1), new rgbaColor(204, 236, 255, 1)),
@@ -83,8 +83,9 @@ export var color = {
   GREEN_LCD: new ColorDef(new rgbaColor(0, 55, 45, 1), new rgbaColor(15, 109, 93, 1), new rgbaColor(0, 185, 165, 1), new rgbaColor(48, 255, 204, 1), new rgbaColor(153, 255, 227, 1), new rgbaColor(204, 255, 241, 1)),
   JUG_GREEN: new ColorDef(new rgbaColor(0, 56, 0, 1), new rgbaColor(32, 69, 36, 1), new rgbaColor(50, 161, 0, 1), new rgbaColor(129, 206, 0, 1), new rgbaColor(190, 231, 141, 1), new rgbaColor(234, 247, 218, 1))
 };
+export {Color as ColorDef};
 
-export var ledColor = {
+export var LedColor = {
   RED_LED: new LedColorDef('#FF9A89', '#FF9A89', '#FF3300', '#FF8D70', '#7E1C00', '#7E1C00', '#641B00'),
   GREEN_LED: new LedColorDef('#9AFF89', '#9AFF89', '#59FF2A', '#A5FF00', '#1C7E00', '#1C7E00', '#1B6400'),
   BLUE_LED: new LedColorDef('#899AFF', '#899AFF', '#0033FF', '#708DFF', '#001C7E', '#001C7E', '#001B64'),
@@ -94,7 +95,7 @@ export var ledColor = {
   MAGENTA_LED: new LedColorDef('#D300FF', '#D300FF', '#8600CB', '#C300FF', '#38004B', '#38004B', '#280035')
 };
 
-export var gaugeType = {
+export var GaugeType = {
   TYPE1: new GaugeTypeDef('type1'),
   TYPE2: new GaugeTypeDef('type2'),
   TYPE3: new GaugeTypeDef('type3'),
@@ -102,25 +103,25 @@ export var gaugeType = {
   TYPE5: new GaugeTypeDef('type5')
 };
 
-export var orientation = {
+export var Orientation = {
   NORTH: new OrientationDef('north'),
   SOUTH: new OrientationDef('south'),
   EAST: new OrientationDef('east'),
   WEST: new OrientationDef('west')
 };
 
-export var knobType = {
+export var KnobType = {
   STANDARD_KNOB: new KnobTypeDef('standardKnob'),
   METAL_KNOB: new KnobTypeDef('metalKnob')
 };
 
-export var knobStyle = {
+export var KnobStyle = {
   BLACK: new KnobStyleDef('black'),
   BRASS: new KnobStyleDef('brass'),
   SILVER: new KnobStyleDef('silver')
 };
 
-export var frameDesign = {
+export var FrameDesign = {
   BLACK_METAL: new FrameDesignDef('blackMetal'),
   METAL: new FrameDesignDef('metal'),
   SHINY_METAL: new FrameDesignDef('shinyMetal'),
@@ -134,7 +135,7 @@ export var frameDesign = {
   GLOSSY_METAL: new FrameDesignDef('glossyMetal')
 };
 
-export var pointerType = {
+export var PointerType = {
   TYPE1: new PointerTypeDef('type1'),
   TYPE2: new PointerTypeDef('type2'),
   TYPE3: new PointerTypeDef('type3'),
@@ -153,7 +154,7 @@ export var pointerType = {
   TYPE16: new PointerTypeDef('type16')
 };
 
-export var foregroundType = {
+export var ForegroundType = {
   TYPE1: new ForegroundTypeDef('type1'),
   TYPE2: new ForegroundTypeDef('type2'),
   TYPE3: new ForegroundTypeDef('type3'),
@@ -161,19 +162,19 @@ export var foregroundType = {
   TYPE5: new ForegroundTypeDef('type5')
 };
 
-export var labelNumberFormat = {
+export var LabelNumberFormat = {
   STANDARD: new LabelNumberFormatDef('standard'),
   FRACTIONAL: new LabelNumberFormatDef('fractional'),
   SCIENTIFIC: new LabelNumberFormatDef('scientific')
 };
 
-export var tickLabelOrientation = {
+export var TickLabelOrientation = {
   NORMAL: new TickLabelOrientationDef('normal'),
   HORIZONTAL: new TickLabelOrientationDef('horizontal'),
   TANGENT: new TickLabelOrientationDef('tangent')
 };
 
-export var trendState = {
+export var TrendState = {
   UP: new TrendStateDef('up'),
   STEADY: new TrendStateDef('steady'),
   DOWN: new TrendStateDef('down'),

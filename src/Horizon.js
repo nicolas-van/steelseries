@@ -13,26 +13,20 @@ stdFontName,
 } from "./tools";
 
 import {
-  backgroundColor as BackgroundColor,
-  lcdColor as LcdColor,
-  color as ColorDef,
-  ledColor as LedColor,
-  gaugeType as GaugeType,
-  orientation as Orientation,
-  knobType as KnobType,
-  knobStyle as KnobStyle,
-  frameDesign as FrameDesign,
-  pointerType as PointerType,
-  foregroundType as ForegroundType,
-  labelNumberFormat as LabelNumberFormat,
-  tickLabelOrientation as TickLabelOrientation,
-  trendState as TrendState,
-  } from "./definitions";
-
-import {
-  gaugeType,
-  knobType,
-  knobStyle,
+  BackgroundColor,
+  LcdColor,
+  ColorDef,
+  LedColor,
+  GaugeType,
+  Orientation,
+  KnobType,
+  KnobStyle,
+  FrameDesign,
+  PointerType,
+  ForegroundType,
+  LabelNumberFormat,
+  TickLabelOrientation,
+  TrendState,
   } from "./definitions";
 
 var Horizon = function(canvas, parameters) {
@@ -281,7 +275,7 @@ var Horizon = function(canvas, parameters) {
     drawHorizonForegroundImage(foregroundContext);
 
     if (foregroundVisible) {
-      drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, true, knobType, knobStyle, gaugeType);
+      drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, true, KnobType, KnobStyle, GaugeType);
     }
   };
 

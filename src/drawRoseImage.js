@@ -4,9 +4,6 @@ TWO_PI,
 RAD_FACTOR,
 } from "./tools";
 
-
-
-
 var drawRoseImage = function(ctx, centerX, centerY, imageWidth, imageHeight, backgroundColor) {
   var fill = true,
     i, grad,
