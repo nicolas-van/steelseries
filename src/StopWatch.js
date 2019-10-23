@@ -66,35 +66,21 @@ const Stopwatch = function(canvas, parameters) {
   // Get the canvas context
   const mainCtx = getCanvasContext(canvas);
 
-  let imageWidth;
-  let imageHeight;
-  let centerX;
-  let centerY;
-
-  let smallPointerSize;
-  let smallPointerX_Offset;
-  let smallPointerY_Offset;
-
   let initialized = false;
 
   // Buffer for the frame
-  let frameBuffer;
   let frameContext;
 
   // Buffer for static background painting code
-  let backgroundBuffer;
   let backgroundContext;
 
   // Buffer for small pointer image painting code
-  let smallPointerBuffer;
   let smallPointerContext;
 
   // Buffer for large pointer image painting code
-  let largePointerBuffer;
   let largePointerContext;
 
   // Buffer for static foreground painting code
-  let foregroundBuffer;
   let foregroundContext;
 
   const drawTickmarksImage = function(
@@ -351,7 +337,6 @@ const Stopwatch = function(canvas, parameters) {
   };
 
   const drawSmallPointer = function(ctx) {
-    let grad;
     let radius;
 
     ctx.save();
@@ -423,7 +408,7 @@ const Stopwatch = function(canvas, parameters) {
         imageWidth * 0.313084
     );
     ctx.closePath();
-    grad = ctx.createLinearGradient(0, 0, imageWidth, 0);
+    const grad = ctx.createLinearGradient(0, 0, imageWidth, 0);
     grad.addColorStop(0, pointerColor.medium.getRgbaColor());
     grad.addColorStop(0.388888, pointerColor.medium.getRgbaColor());
     grad.addColorStop(0.5, pointerColor.light.getRgbaColor());
@@ -786,34 +771,34 @@ const Stopwatch = function(canvas, parameters) {
   mainCtx.canvas.width = size;
   mainCtx.canvas.height = size;
 
-  imageWidth = size;
-  imageHeight = size;
+  const imageWidth = size;
+  const imageHeight = size;
 
-  centerX = imageWidth / 2;
-  centerY = imageHeight / 2;
+  const centerX = imageWidth / 2;
+  const centerY = imageHeight / 2;
 
-  smallPointerSize = 0.285 * imageWidth;
-  smallPointerX_Offset = centerX - smallPointerSize / 2;
-  smallPointerY_Offset = 0.17 * imageWidth;
+  const smallPointerSize = 0.285 * imageWidth;
+  const smallPointerX_Offset = centerX - smallPointerSize / 2;
+  const smallPointerY_Offset = 0.17 * imageWidth;
 
   // Buffer for the frame
-  frameBuffer = createBuffer(size, size);
+  const frameBuffer = createBuffer(size, size);
   frameContext = frameBuffer.getContext('2d');
 
   // Buffer for static background painting code
-  backgroundBuffer = createBuffer(size, size);
+  const backgroundBuffer = createBuffer(size, size);
   backgroundContext = backgroundBuffer.getContext('2d');
 
   // Buffer for small pointer image painting code
-  smallPointerBuffer = createBuffer(size, size);
+  const smallPointerBuffer = createBuffer(size, size);
   smallPointerContext = smallPointerBuffer.getContext('2d');
 
   // Buffer for large pointer image painting code
-  largePointerBuffer = createBuffer(size, size);
+  const largePointerBuffer = createBuffer(size, size);
   largePointerContext = largePointerBuffer.getContext('2d');
 
   // Buffer for static foreground painting code
-  foregroundBuffer = createBuffer(size, size);
+  const foregroundBuffer = createBuffer(size, size);
   foregroundContext = foregroundBuffer.getContext('2d');
 
   // Visualize the component

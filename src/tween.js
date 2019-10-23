@@ -259,13 +259,12 @@ t.removeListener = function(o) {
 t.broadcastMessage = function() {
   const arr = [];
   let i;
-  let e;
   const a = this._listeners;
   const l = a.length;
   for (i = 0; i < arguments.length; i++) {
     arr.push(arguments[i]);
   }
-  e = arr.shift();
+  const e = arr.shift();
 
   for (i = 0; i < l; i++) {
     if (a[i][e]) {

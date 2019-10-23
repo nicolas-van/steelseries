@@ -431,8 +431,6 @@ const RadialVertical = function(canvas, parameters) {
   };
 
   const drawTitleImage = function(ctx) {
-    let titleWidth;
-    let unitWidth;
     ctx.save();
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
@@ -440,14 +438,14 @@ const RadialVertical = function(canvas, parameters) {
     ctx.fillStyle = backgroundColor.labelColor.getRgbaColor();
 
     ctx.font = 0.046728 * imageWidth + 'px ' + stdFontName;
-    titleWidth = ctx.measureText(titleString).width;
+    const titleWidth = ctx.measureText(titleString).width;
     ctx.fillText(
         titleString,
         (imageWidth - titleWidth) / 2,
         imageHeight * 0.4,
         imageWidth * 0.3
     );
-    unitWidth = ctx.measureText(unitString).width;
+    const unitWidth = ctx.measureText(unitString).width;
     ctx.fillText(
         unitString,
         (imageWidth - unitWidth) / 2,

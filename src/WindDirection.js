@@ -747,7 +747,6 @@ const WindDirection = function(canvas, parameters) {
   };
 
   this.setValueAnimatedLatest = function(newValue, callback) {
-    let targetValue;
     const gauge = this;
     let diff;
     let time;
@@ -755,7 +754,7 @@ const WindDirection = function(canvas, parameters) {
     // 1-360 are used for directions
     // 0 is used as a special case to indicate 'calm'
     newValue = parseFloat(newValue);
-    targetValue = newValue === 360 ? 360 : newValue % 360;
+    const targetValue = newValue === 360 ? 360 : newValue % 360;
 
     if (valueLatest !== targetValue) {
       if (undefined !== tweenLatest && tweenLatest.isPlaying) {
@@ -811,7 +810,6 @@ const WindDirection = function(canvas, parameters) {
   };
 
   this.setValueAnimatedAverage = function(newValue, callback) {
-    let targetValue;
     const gauge = this;
     let diff;
     let time;
@@ -819,7 +817,7 @@ const WindDirection = function(canvas, parameters) {
     // 1-360 are used for directions
     // 0 is used as a special case to indicate 'calm'
     newValue = parseFloat(newValue);
-    targetValue = newValue === 360 ? 360 : newValue % 360;
+    const targetValue = newValue === 360 ? 360 : newValue % 360;
     if (valueAverage !== newValue) {
       if (undefined !== tweenAverage && tweenAverage.isPlaying) {
         tweenAverage.stop();

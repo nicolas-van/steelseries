@@ -6,12 +6,6 @@ const brushedMetalTexture = function(color, radius, amount, monochrome, shine) {
     let x;
     let y; // loop counters
     let sinArr;
-    let width;
-    let height;
-    let outCanvas;
-    let outCanvasContext; // output canvas
-    let inPixels;
-    let outPixels; // pixel arrays
     // alpha = color & 0xff000000;
     const alpha = 255;
     const red = (color >> 16) & 0xff;
@@ -30,16 +24,16 @@ const brushedMetalTexture = function(color, radius, amount, monochrome, shine) {
     endX = Math.ceil(endX);
     endY = Math.ceil(endY);
 
-    width = endX - startX;
-    height = endY - startY;
+    const width = endX - startX;
+    const height = endY - startY;
 
     // Create output canvas
-    outCanvas = createBuffer(width, height);
-    outCanvasContext = outCanvas.getContext('2d');
+    const outCanvas = createBuffer(width, height);
+    const outCanvasContext = outCanvas.getContext('2d');
 
     // Create pixel arrays
-    inPixels = outCanvasContext.createImageData(width, height);
-    outPixels = outCanvasContext.createImageData(width, height);
+    const inPixels = outCanvasContext.createImageData(width, height);
+    const outPixels = outCanvasContext.createImageData(width, height);
 
     // Precreate sin() values
     if (shine !== 0) {
@@ -99,7 +93,6 @@ const brushedMetalTexture = function(color, radius, amount, monochrome, shine) {
     let x;
     let y; // loop counters
     let i;
-    let mul;
     let indx;
     let totR;
     let totG;
@@ -108,7 +101,7 @@ const brushedMetalTexture = function(color, radius, amount, monochrome, shine) {
     if (radius >= width) {
       radius = width - 1;
     }
-    mul = 1 / (radius * 2 + 1);
+    const mul = 1 / (radius * 2 + 1);
     indx = 0;
     for (y = 0; y < height; y++) {
       totR = totG = totB = 0;

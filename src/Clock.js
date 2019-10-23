@@ -134,9 +134,8 @@ const Clock = function(canvas, parameters) {
     let tickAngle;
     let SMALL_TICK_HEIGHT;
     let BIG_TICK_HEIGHT;
-    let OUTER_POINT;
     let INNER_POINT;
-    OUTER_POINT = imageWidth * 0.405;
+    const OUTER_POINT = imageWidth * 0.405;
     ctx.save();
     ctx.translate(centerX, centerY);
 
@@ -358,13 +357,11 @@ const Clock = function(canvas, parameters) {
   };
 
   const drawKnob = function(ctx) {
-    let grad;
-
     // draw the knob
     ctx.beginPath();
     ctx.arc(centerX, centerY, imageWidth * 0.045, 0, TWO_PI);
     ctx.closePath();
-    grad = ctx.createLinearGradient(
+    const grad = ctx.createLinearGradient(
         centerX - (imageWidth * 0.045) / 2,
         centerY - (imageWidth * 0.045) / 2,
         centerX + (imageWidth * 0.045) / 2,

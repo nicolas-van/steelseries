@@ -82,11 +82,6 @@ const Altimeter = function(canvas, parameters) {
   const tickLabelPeriod = 1; // Draw value at every 10th tickmark
   let tween;
   let repainting = false;
-  let imageWidth;
-  let imageHeight;
-  let centerX;
-  let centerY;
-  let stdFont;
   const mainCtx = getCanvasContext(canvas); // Get the canvas context
   // Constants
   const TICKMARK_OFFSET = PI;
@@ -129,15 +124,15 @@ const Altimeter = function(canvas, parameters) {
   mainCtx.canvas.width = size;
   mainCtx.canvas.height = size;
 
-  imageWidth = size;
-  imageHeight = size;
+  const imageWidth = size;
+  const imageHeight = size;
 
-  centerX = imageWidth / 2;
-  centerY = imageHeight / 2;
+  const centerX = imageWidth / 2;
+  const centerY = imageHeight / 2;
 
   const unitStringPosY = unitAltPos ? imageHeight * 0.68 : false;
 
-  stdFont = Math.floor(imageWidth * 0.09) + 'px ' + stdFontName;
+  const stdFont = Math.floor(imageWidth * 0.09) + 'px ' + stdFontName;
 
   // **************   Image creation  ********************
   const drawLcdText = function(value) {
@@ -381,9 +376,7 @@ const Altimeter = function(canvas, parameters) {
   };
 
   const draw1000ftPointer = function(ctx) {
-    let grad;
-
-    grad = ctx.createLinearGradient(
+    const grad = ctx.createLinearGradient(
         0,
         imageHeight * 0.401869,
         0,

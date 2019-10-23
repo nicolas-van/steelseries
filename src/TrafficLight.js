@@ -6,9 +6,6 @@ const Trafficlight = function(canvas, parameters) {
   let height = undefined === parameters.height ? 0 : parameters.height;
   //
   const mainCtx = getCanvasContext(canvas);
-  let prefHeight;
-  let imageWidth;
-  let imageHeight;
   let redOn = false;
   let yellowOn = false;
   let greenOn = false;
@@ -47,9 +44,9 @@ const Trafficlight = function(canvas, parameters) {
   mainCtx.canvas.width = width;
   mainCtx.canvas.height = height;
 
-  prefHeight = width < height * 0.352517 ? width * 2.836734 : height;
-  imageWidth = prefHeight * 0.352517;
-  imageHeight = prefHeight;
+  const prefHeight = width < height * 0.352517 ? width * 2.836734 : height;
+  const imageWidth = prefHeight * 0.352517;
+  const imageHeight = prefHeight;
 
   housingBuffer.width = imageWidth;
   housingBuffer.height = imageHeight;
@@ -82,9 +79,6 @@ const Trafficlight = function(canvas, parameters) {
   redOffBuffer.height = imageHeight;
 
   const drawHousing = function(ctx) {
-    let housingFill;
-    let housingFrontFill;
-
     ctx.save();
 
     ctx.save();
@@ -109,7 +103,7 @@ const Trafficlight = function(canvas, parameters) {
     ctx.lineTo(0, 0.107142 * imageWidth);
     ctx.quadraticCurveTo(0, 0, 0.107142 * imageWidth, imageHeight);
     ctx.closePath();
-    housingFill = ctx.createLinearGradient(
+    const housingFill = ctx.createLinearGradient(
         0.040816 * imageWidth,
         0.007194 * imageHeight,
         0.952101 * imageWidth,
@@ -174,7 +168,7 @@ const Trafficlight = function(canvas, parameters) {
         0.010791 * imageHeight
     );
     ctx.closePath();
-    housingFrontFill = ctx.createLinearGradient(
+    const housingFrontFill = ctx.createLinearGradient(
         -0.132653 * imageWidth,
         -0.053956 * imageHeight,
         2.061408 * imageWidth,
@@ -197,11 +191,6 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawLightGreen = function(ctx) {
-    let lightGreenFrameFill;
-    let lightGreenInnerFill;
-    let lightGreenEffectFill;
-    let lightGreenInnerShadowFill;
-
     ctx.save();
 
     ctx.save();
@@ -215,7 +204,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    lightGreenFrameFill = ctx.createLinearGradient(
+    const lightGreenFrameFill = ctx.createLinearGradient(
         0,
         0.665467 * imageHeight,
         0,
@@ -242,7 +231,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    lightGreenInnerFill = ctx.createLinearGradient(
+    const lightGreenInnerFill = ctx.createLinearGradient(
         0,
         0.68705 * imageHeight,
         0,
@@ -267,7 +256,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    lightGreenEffectFill = ctx.createRadialGradient(
+    const lightGreenEffectFill = ctx.createRadialGradient(
         0.5 * imageWidth,
         0.809352 * imageHeight,
         0,
@@ -294,7 +283,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    lightGreenInnerShadowFill = ctx.createLinearGradient(
+    const lightGreenInnerShadowFill = ctx.createLinearGradient(
         0,
         0.68705 * imageHeight,
         0,
@@ -309,9 +298,6 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawGreenOn = function(ctx) {
-    let greenOnFill;
-    let greenOnGlowFill;
-
     ctx.save();
 
     ctx.save();
@@ -325,7 +311,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    greenOnFill = ctx.createRadialGradient(
+    const greenOnFill = ctx.createRadialGradient(
         0.5 * imageWidth,
         0.809352 * imageHeight,
         0,
@@ -375,7 +361,7 @@ const Trafficlight = function(canvas, parameters) {
         0.812949 * imageHeight
     );
     ctx.closePath();
-    greenOnGlowFill = ctx.createRadialGradient(
+    const greenOnGlowFill = ctx.createRadialGradient(
         0.5 * imageWidth,
         0.809352 * imageHeight,
         0,
@@ -392,9 +378,6 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawGreenOff = function(ctx) {
-    let greenOffFill;
-    let greenOffInnerShadowFill;
-
     ctx.save();
 
     ctx.save();
@@ -408,7 +391,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    greenOffFill = ctx.createRadialGradient(
+    const greenOffFill = ctx.createRadialGradient(
         0.5 * imageWidth,
         0.809352 * imageHeight,
         0,
@@ -433,7 +416,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    greenOffInnerShadowFill = ctx.createRadialGradient(
+    const greenOffInnerShadowFill = ctx.createRadialGradient(
         0.5 * imageWidth,
         0.809352 * imageHeight,
         0,
@@ -458,11 +441,6 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawLightYellow = function(ctx) {
-    let lightYellowFrameFill;
-    let lightYellowInnerFill;
-    let lightYellowEffectFill;
-    let lightYellowInnerShadowFill;
-
     ctx.save();
 
     ctx.save();
@@ -476,7 +454,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    lightYellowFrameFill = ctx.createLinearGradient(
+    const lightYellowFrameFill = ctx.createLinearGradient(
         0,
         0.356115 * imageHeight,
         0,
@@ -503,7 +481,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    lightYellowInnerFill = ctx.createLinearGradient(
+    const lightYellowInnerFill = ctx.createLinearGradient(
         0,
         0.377697 * imageHeight,
         0,
@@ -528,7 +506,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    lightYellowEffectFill = ctx.createRadialGradient(
+    const lightYellowEffectFill = ctx.createRadialGradient(
         0.5 * imageWidth,
         0.5 * imageHeight,
         0,
@@ -556,7 +534,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    lightYellowInnerShadowFill = ctx.createLinearGradient(
+    const lightYellowInnerShadowFill = ctx.createLinearGradient(
         0,
         0.377697 * imageHeight,
         0,
@@ -571,9 +549,6 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawYellowOn = function(ctx) {
-    let yellowOnFill;
-    let yellowOnGlowFill;
-
     ctx.save();
 
     ctx.save();
@@ -587,7 +562,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    yellowOnFill = ctx.createRadialGradient(
+    const yellowOnFill = ctx.createRadialGradient(
         0.5 * imageWidth,
         0.5 * imageHeight,
         0,
@@ -637,7 +612,7 @@ const Trafficlight = function(canvas, parameters) {
         0.503597 * imageHeight
     );
     ctx.closePath();
-    yellowOnGlowFill = ctx.createRadialGradient(
+    const yellowOnGlowFill = ctx.createRadialGradient(
         0.5 * imageWidth,
         0.5 * imageHeight,
         0,
@@ -654,9 +629,6 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawYellowOff = function(ctx) {
-    let yellowOffFill;
-    let yellowOffInnerShadowFill;
-
     ctx.save();
 
     ctx.save();
@@ -670,7 +642,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    yellowOffFill = ctx.createRadialGradient(
+    const yellowOffFill = ctx.createRadialGradient(
         0.5 * imageWidth,
         0.5 * imageHeight,
         0,
@@ -695,7 +667,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    yellowOffInnerShadowFill = ctx.createRadialGradient(
+    const yellowOffInnerShadowFill = ctx.createRadialGradient(
         0.5 * imageWidth,
         0.5 * imageHeight,
         0,
@@ -720,11 +692,6 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawLightRed = function(ctx) {
-    let lightRedFrameFill;
-    let lightRedInnerFill;
-    let lightRedEffectFill;
-    let lightRedInnerShadowFill;
-
     ctx.save();
 
     // lIGHT_RED_7_E_FRAME_0_1
@@ -739,7 +706,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    lightRedFrameFill = ctx.createLinearGradient(
+    const lightRedFrameFill = ctx.createLinearGradient(
         0.5 * imageWidth,
         0.046762 * imageHeight,
         0.5 * imageWidth,
@@ -767,7 +734,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    lightRedInnerFill = ctx.createLinearGradient(
+    const lightRedInnerFill = ctx.createLinearGradient(
         0.5 * imageWidth,
         0.068345 * imageHeight,
         0.5 * imageWidth,
@@ -793,7 +760,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    lightRedEffectFill = ctx.createRadialGradient(
+    const lightRedEffectFill = ctx.createRadialGradient(
         0.5 * imageWidth,
         0.190647 * imageHeight,
         0,
@@ -821,7 +788,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    lightRedInnerShadowFill = ctx.createLinearGradient(
+    const lightRedInnerShadowFill = ctx.createLinearGradient(
         0.5 * imageWidth,
         0.068345 * imageHeight,
         0.5 * imageWidth,
@@ -836,9 +803,6 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawRedOn = function(ctx) {
-    let redOnFill;
-    let redOnGlowFill;
-
     ctx.save();
 
     ctx.save();
@@ -852,7 +816,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    redOnFill = ctx.createRadialGradient(
+    const redOnFill = ctx.createRadialGradient(
         0.5 * imageWidth,
         0.190647 * imageHeight,
         0,
@@ -902,7 +866,7 @@ const Trafficlight = function(canvas, parameters) {
         0.194244 * imageHeight
     );
     ctx.closePath();
-    redOnGlowFill = ctx.createRadialGradient(
+    const redOnGlowFill = ctx.createRadialGradient(
         0.5 * imageWidth,
         0.190647 * imageHeight,
         0,
@@ -920,9 +884,6 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawRedOff = function(ctx) {
-    let redOffFill;
-    let redOffInnerShadowFill;
-
     ctx.save();
 
     ctx.save();
@@ -936,7 +897,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    redOffFill = ctx.createRadialGradient(
+    const redOffFill = ctx.createRadialGradient(
         0.5 * imageWidth,
         0.190647 * imageHeight,
         0,
@@ -961,7 +922,7 @@ const Trafficlight = function(canvas, parameters) {
         TWO_PI,
         false
     );
-    redOffInnerShadowFill = ctx.createRadialGradient(
+    const redOffInnerShadowFill = ctx.createRadialGradient(
         0.5 * imageWidth,
         0.190647 * imageHeight,
         0,

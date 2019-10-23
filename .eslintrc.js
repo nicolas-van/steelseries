@@ -14,7 +14,6 @@ module.exports = {
     'new-cap': "off",
     'require-jsdoc': "off",
     'no-invalid-this': "off",
-    'prefer-const': 'off',
     'camelcase': 'off',
     'prefer-rest-params': 'off',
     'prefer-spread': 'off',

@@ -2,16 +2,12 @@ import {rgbToHsl, doc} from './tools';
 
 const Lightbulb = function(canvas, parameters) {
   parameters = parameters || {};
-  let mainCtx;
   // parameters
   let width = undefined === parameters.width ? 0 : parameters.width;
   let height = undefined === parameters.height ? 0 : parameters.height;
   let glowColor =
     undefined === parameters.glowColor ? '#ffff00' : parameters.glowColor;
   //
-  let size;
-  let imageWidth;
-  let imageHeight;
   let initialized = false;
   let lightOn = false;
   let alpha = 1;
@@ -24,7 +20,7 @@ const Lightbulb = function(canvas, parameters) {
   // End of variables
 
   // Get the canvas context and clear it
-  mainCtx = document.getElementById(canvas).getContext('2d');
+  const mainCtx = document.getElementById(canvas).getContext('2d');
 
   // Has a size been specified?
   if (width === 0) {
@@ -37,9 +33,9 @@ const Lightbulb = function(canvas, parameters) {
   // Get the size
   mainCtx.canvas.width = width;
   mainCtx.canvas.height = height;
-  size = width < height ? width : height;
-  imageWidth = size;
-  imageHeight = size;
+  const size = width < height ? width : height;
+  const imageWidth = size;
+  const imageHeight = size;
 
   function drawToBuffer(width, height, drawFunction) {
     const buffer = doc.createElement('canvas');
@@ -50,7 +46,6 @@ const Lightbulb = function(canvas, parameters) {
   }
 
   const getColorValues = function(color) {
-    let colorData;
     const lookupBuffer = drawToBuffer(1, 1, function(ctx) {
       ctx.fillStyle = color;
       ctx.beginPath();
@@ -58,7 +53,7 @@ const Lightbulb = function(canvas, parameters) {
       ctx.fill();
     });
 
-    colorData = lookupBuffer.getContext('2d').getImageData(0, 0, 2, 2).data;
+    const colorData = lookupBuffer.getContext('2d').getImageData(0, 0, 2, 2).data;
     return [colorData[0], colorData[1], colorData[2]];
   };
 
@@ -72,8 +67,6 @@ const Lightbulb = function(canvas, parameters) {
   bulbBuffer.height = imageHeight;
 
   const drawOff = function(ctx) {
-    let glassOffFill;
-
     ctx.save();
 
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -122,7 +115,7 @@ const Lightbulb = function(canvas, parameters) {
         0.438596 * imageHeight
     );
     ctx.closePath();
-    glassOffFill = ctx.createLinearGradient(
+    const glassOffFill = ctx.createLinearGradient(
         0,
         0.289473 * imageHeight,
         0,
@@ -143,7 +136,6 @@ const Lightbulb = function(canvas, parameters) {
   };
 
   const drawOn = function(ctx) {
-    let glassOnFill;
     const data = getColorValues(glowColor);
     const red = data[0];
     const green = data[1];
@@ -197,7 +189,7 @@ const Lightbulb = function(canvas, parameters) {
     );
     ctx.closePath();
 
-    glassOnFill = ctx.createLinearGradient(
+    const glassOnFill = ctx.createLinearGradient(
         0,
         0.289473 * imageHeight,
         0,
@@ -239,11 +231,6 @@ const Lightbulb = function(canvas, parameters) {
   };
 
   const drawBulb = function(ctx) {
-    let highlight;
-    let winding;
-    let winding1;
-    let contactPlate;
-
     ctx.save();
 
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -284,7 +271,7 @@ const Lightbulb = function(canvas, parameters) {
         0.333333 * imageHeight
     );
     ctx.closePath();
-    highlight = ctx.createLinearGradient(
+    const highlight = ctx.createLinearGradient(
         0,
         0.245614 * imageHeight,
         0,
@@ -370,7 +357,7 @@ const Lightbulb = function(canvas, parameters) {
     ctx.lineTo(0.377192 * imageWidth, 0.763157 * imageHeight);
     ctx.lineTo(0.377192 * imageWidth, 0.745614 * imageHeight);
     ctx.closePath();
-    winding = ctx.createLinearGradient(
+    const winding = ctx.createLinearGradient(
         0.473684 * imageWidth,
         0.72807 * imageHeight,
         0.484702 * imageWidth,
@@ -465,7 +452,7 @@ const Lightbulb = function(canvas, parameters) {
     ctx.lineTo(0.377192 * imageWidth, 0.763157 * imageHeight);
     ctx.lineTo(0.377192 * imageWidth, 0.745614 * imageHeight);
     ctx.closePath();
-    winding1 = ctx.createLinearGradient(
+    const winding1 = ctx.createLinearGradient(
         0.377192 * imageWidth,
         0.789473 * imageHeight,
         0.605263 * imageWidth,
@@ -532,7 +519,7 @@ const Lightbulb = function(canvas, parameters) {
         0.947368 * imageHeight
     );
     ctx.closePath();
-    contactPlate = ctx.createLinearGradient(
+    const contactPlate = ctx.createLinearGradient(
         0,
         0.938596 * imageHeight,
         0,

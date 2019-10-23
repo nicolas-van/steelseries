@@ -35,23 +35,7 @@ const Odometer = function(canvas, parameters) {
   let tween;
   let ctx;
   let repainting = false;
-  let digitHeight;
-  let digitWidth;
-  let stdFont;
-  let width;
-  let columnHeight;
-  let verticalSpace;
-  let zeroOffset;
   const wobble = [];
-  // buffers
-  let backgroundBuffer;
-  let backgroundContext;
-  let foregroundBuffer;
-  let foregroundContext;
-  let digitBuffer;
-  let digitContext;
-  let decimalBuffer;
-  let decimalContext;
   // End of variables
 
   // Get the canvas context and clear it
@@ -71,41 +55,40 @@ const Odometer = function(canvas, parameters) {
     value = 0;
   }
 
-  digitHeight = Math.floor(height * 0.85);
-  stdFont = '600 ' + digitHeight + 'px ' + font;
+  const digitHeight = Math.floor(height * 0.85);
+  const stdFont = '600 ' + digitHeight + 'px ' + font;
 
-  digitWidth = Math.floor(height * 0.68);
-  width = digitWidth * (digits + decimals);
-  columnHeight = digitHeight * 11;
-  verticalSpace = columnHeight / 12;
-  zeroOffset = verticalSpace * 0.81;
+  const digitWidth = Math.floor(height * 0.68);
+  const width = digitWidth * (digits + decimals);
+  const columnHeight = digitHeight * 11;
+  const verticalSpace = columnHeight / 12;
+  const zeroOffset = verticalSpace * 0.81;
 
   // Resize and clear the main context
   ctx.canvas.width = width;
   ctx.canvas.height = height;
 
   // Create buffers
-  backgroundBuffer = createBuffer(width, height);
-  backgroundContext = backgroundBuffer.getContext('2d');
+  const backgroundBuffer = createBuffer(width, height);
+  const backgroundContext = backgroundBuffer.getContext('2d');
 
-  foregroundBuffer = createBuffer(width, height);
-  foregroundContext = foregroundBuffer.getContext('2d');
+  const foregroundBuffer = createBuffer(width, height);
+  const foregroundContext = foregroundBuffer.getContext('2d');
 
-  digitBuffer = createBuffer(digitWidth, columnHeight * 1.1);
-  digitContext = digitBuffer.getContext('2d');
+  const digitBuffer = createBuffer(digitWidth, columnHeight * 1.1);
+  const digitContext = digitBuffer.getContext('2d');
 
-  decimalBuffer = createBuffer(digitWidth, columnHeight * 1.1);
-  decimalContext = decimalBuffer.getContext('2d');
+  const decimalBuffer = createBuffer(digitWidth, columnHeight * 1.1);
+  const decimalContext = decimalBuffer.getContext('2d');
 
   function init() {
-    let grad;
     let i;
 
     initialized = true;
 
     // Create the foreground
     foregroundContext.rect(0, 0, width, height);
-    grad = foregroundContext.createLinearGradient(0, 0, 0, height);
+    const grad = foregroundContext.createLinearGradient(0, 0, 0, height);
     grad.addColorStop(0, 'rgba(0, 0, 0, 1)');
     grad.addColorStop(0.1, 'rgba(0, 0, 0, 0.4)');
     grad.addColorStop(0.33, 'rgba(255, 255, 255, 0.45)');

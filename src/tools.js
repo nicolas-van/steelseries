@@ -92,8 +92,6 @@ export const ConicalGradient = function(fractions, colors) {
     let angle;
     const radius = Math.ceil(outerX);
     const diameter = radius * 2;
-    let pixels;
-    let alpha;
     let x;
     let y;
     let dx;
@@ -102,8 +100,6 @@ export const ConicalGradient = function(fractions, colors) {
     let distance;
     let indx;
     let pixColor;
-    let buffer;
-    let bufferCtx;
 
     // Original Version using rotated lines
     /*
@@ -136,8 +132,8 @@ export const ConicalGradient = function(fractions, colors) {
     // End - Original Version
 
     // Create pixel array
-    pixels = ctx.createImageData(diameter, diameter);
-    alpha = 255;
+    const pixels = ctx.createImageData(diameter, diameter);
+    const alpha = 255;
 
     for (y = 0; y < diameter; y++) {
       dy = radius - y;
@@ -170,8 +166,8 @@ export const ConicalGradient = function(fractions, colors) {
     }
 
     // Create a new buffer to apply the raw data so we can rotate it
-    buffer = createBuffer(diameter, diameter);
-    bufferCtx = buffer.getContext('2d');
+    const buffer = createBuffer(diameter, diameter);
+    const bufferCtx = buffer.getContext('2d');
     bufferCtx.putImageData(pixels, 0, 0);
     // Apply the image buffer
     ctx.drawImage(buffer, centerX - radius, centerY - radius);
@@ -187,29 +183,23 @@ export const ConicalGradient = function(fractions, colors) {
       thicknessY
   ) {
     let angle;
-    let width2;
-    let height2;
-    let pixels;
-    let alpha;
     let x;
     let y;
     let dx;
     let dy;
     let indx;
     let pixColor;
-    let buffer;
-    let bufferCtx;
 
     width = Math.ceil(width);
     height = Math.ceil(height);
-    width2 = width / 2;
-    height2 = height / 2;
+    const width2 = width / 2;
+    const height2 = height / 2;
     thicknessX = Math.ceil(thicknessX);
     thicknessY = Math.ceil(thicknessY);
 
     // Create pixel array
-    pixels = ctx.createImageData(width, height);
-    alpha = 255;
+    const pixels = ctx.createImageData(width, height);
+    const alpha = 255;
 
     for (y = 0; y < height; y++) {
       dy = height2 - y;
@@ -243,8 +233,8 @@ export const ConicalGradient = function(fractions, colors) {
       }
     }
     // Create a new buffer to apply the raw data so we can clip it when drawing to canvas
-    buffer = createBuffer(width, height);
-    bufferCtx = buffer.getContext('2d');
+    const buffer = createBuffer(width, height);
+    const bufferCtx = buffer.getContext('2d');
     bufferCtx.putImageData(pixels, 0, 0);
 
     // draw the buffer back to the canvas
@@ -259,7 +249,6 @@ export const gradientWrapper = function(start, end, fractions, colors) {
     let upperLimit = 1;
     let upperIndex = 1;
     let i;
-    let interpolationFraction;
 
     fraction = fraction < 0 ? 0 : fraction > 1 ? 1 : fraction;
 
@@ -276,7 +265,7 @@ export const gradientWrapper = function(start, end, fractions, colors) {
         upperIndex = i;
       }
     }
-    interpolationFraction = (fraction - lowerLimit) / (upperLimit - lowerLimit);
+    const interpolationFraction = (fraction - lowerLimit) / (upperLimit - lowerLimit);
     return getColorFromFraction(
         colors[lowerIndex],
         colors[upperIndex],
@@ -420,14 +409,13 @@ export function drawToBuffer(width, height, drawFunction) {
 }
 
 export function getColorValues(color) {
-  let colorData;
   const lookupBuffer = drawToBuffer(1, 1, function(ctx) {
     ctx.fillStyle = color;
     ctx.beginPath();
     ctx.rect(0, 0, 1, 1);
     ctx.fill();
   });
-  colorData = lookupBuffer.getContext('2d').getImageData(0, 0, 2, 2).data;
+  const colorData = lookupBuffer.getContext('2d').getImageData(0, 0, 2, 2).data;
 
   /*
   for (let i = 0; i < data.length; i += 4) {
@@ -443,38 +431,30 @@ export function getColorValues(color) {
 }
 
 export function customColorDef(color) {
-  let VERY_DARK;
-  let DARK;
-  let LIGHT;
-  let LIGHTER;
-  let VERY_LIGHT;
   const values = getColorValues(color);
   const rgbaCol = new rgbaColor(values[0], values[1], values[2], values[3]);
 
-  VERY_DARK = darker(rgbaCol, 0.32);
-  DARK = darker(rgbaCol, 0.62);
-  LIGHT = lighter(rgbaCol, 0.84);
-  LIGHTER = lighter(rgbaCol, 0.94);
-  VERY_LIGHT = lighter(rgbaCol, 1);
+  const VERY_DARK = darker(rgbaCol, 0.32);
+  const DARK = darker(rgbaCol, 0.62);
+  const LIGHT = lighter(rgbaCol, 0.84);
+  const LIGHTER = lighter(rgbaCol, 0.94);
+  const VERY_LIGHT = lighter(rgbaCol, 1);
 
   return new ColorDef(VERY_DARK, DARK, rgbaCol, LIGHT, LIGHTER, VERY_LIGHT);
 }
 
 export function rgbToHsl(red, green, blue) {
-  let min;
-  let max;
   let hue;
   let saturation;
-  let lightness;
   let delta;
 
   red /= 255;
   green /= 255;
   blue /= 255;
 
-  max = Math.max(red, green, blue);
-  min = Math.min(red, green, blue);
-  lightness = (max + min) / 2;
+  const max = Math.max(red, green, blue);
+  const min = Math.min(red, green, blue);
+  const lightness = (max + min) / 2;
 
   if (max === min) {
     hue = saturation = 0; // achromatic
@@ -593,21 +573,16 @@ export function hsbToRgb(hue, saturation, brightness) {
 }
 
 export function rgbToHsb(r, g, b) {
-  let min;
-  let max;
   let hue;
-  let saturation;
-  let brightness;
-  let delta;
 
   r = r / 255;
   g = g / 255;
   b = b / 255;
-  max = Math.max(r, g, b);
-  min = Math.min(r, g, b);
-  brightness = max;
-  delta = max - min;
-  saturation = max === 0 ? 0 : delta / max;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const brightness = max;
+  const delta = max - min;
+  const saturation = max === 0 ? 0 : delta / max;
 
   if (max === min) {
     hue = 0; // achromatic
@@ -657,14 +632,12 @@ export function lighter(color, fraction) {
 }
 
 export function wrap(value, lower, upper) {
-  let distance;
-  let times;
   if (upper <= lower) {
     throw new Error('Rotary bounds are of negative or zero size');
   }
 
-  distance = upper - lower;
-  times = Math.floor((value - lower) / distance);
+  const distance = upper - lower;
+  const times = Math.floor((value - lower) / distance);
 
   return value - times * distance;
 }

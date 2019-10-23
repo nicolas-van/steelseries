@@ -1510,11 +1510,10 @@ const Linear = function(canvas, parameters) {
   };
 
   this.setValueAnimated = function(newValue, callback) {
-    let targetValue;
     const gauge = this;
     let time;
     newValue = parseFloat(newValue);
-    targetValue =
+    const targetValue =
       newValue < minValue ?
         minValue :
         newValue > maxValue ?
