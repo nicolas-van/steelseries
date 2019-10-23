@@ -77,9 +77,11 @@ const LinearBargraph = function(canvas, parameters) {
   const imageWidth = width;
   const imageHeight = height;
 
+  let audioElement;
+
   // Create audio tag for alarm sound
   if (playAlarm && alarmSound !== false) {
-    var audioElement = doc.createElement('audio');
+    audioElement = doc.createElement('audio');
     audioElement.setAttribute('src', alarmSound);
     audioElement.setAttribute('preload', 'auto');
   }
@@ -418,7 +420,7 @@ const LinearBargraph = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawLinearTicks = function(ctx, tickStart, tickStop, currentPos, vertical) {
+  const drawLinearTicks = function(ctx, tickStart, tickStop, currentPos, vertical) {
     if (vertical) {
       // Vertical orientation
       ctx.beginPath();
@@ -656,7 +658,7 @@ const LinearBargraph = function(canvas, parameters) {
     }
   };
 
-  var toggleAndRepaintLed = function() {
+  const toggleAndRepaintLed = function() {
     if (ledVisible) {
       if (ledBuffer === ledBufferOn) {
         ledBuffer = ledBufferOff;
@@ -868,7 +870,7 @@ const LinearBargraph = function(canvas, parameters) {
     }
   };
 
-  var drawInActiveLed = function(ctx) {
+  const drawInActiveLed = function(ctx) {
     ctx.save();
     ctx.beginPath();
     ctx.rect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -883,7 +885,7 @@ const LinearBargraph = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawActiveLed = function(ctx, color) {
+  const drawActiveLed = function(ctx, color) {
     ctx.save();
     ctx.beginPath();
     ctx.rect(0, 0, ctx.canvas.width, ctx.canvas.height);

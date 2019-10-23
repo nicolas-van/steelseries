@@ -358,7 +358,7 @@ const Clock = function(canvas, parameters) {
     hourPointerAngle = (hour + minute / 60) * ANGLE_STEP * 5 * RAD_FACTOR;
   };
 
-  var tickTock = function() {
+  const tickTock = function() {
     if (isAutomatic) {
       objDate = new Date();
     } else {

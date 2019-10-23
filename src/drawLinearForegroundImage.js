@@ -4,7 +4,7 @@ import {
 } from './tools';
 
 
-var drawLinearForegroundImage = function(ctx, imageWidth, imageHeight, vertical) {
+const drawLinearForegroundImage = function(ctx, imageWidth, imageHeight, vertical) {
   let linFgBuffer; let linFgCtx;
   let foregroundGradient;
   let frameWidth; let fgOffset; let fgOffset2;

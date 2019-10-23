@@ -343,7 +343,7 @@ const Stopwatch = function(canvas, parameters) {
     }
   };
 
-  var tickTock = function() {
+  const tickTock = function() {
     if (!lap) {
       calculateAngles();
       self.repaint();

@@ -4,7 +4,7 @@ import {
   createBuffer,
 } from './tools';
 
-var createLcdBackgroundImage = function(width, height, lcdColor) {
+const createLcdBackgroundImage = function(width, height, lcdColor) {
   let lcdBuffer; let lcdCtx;
   const xB = 0;
   const yB = 0;

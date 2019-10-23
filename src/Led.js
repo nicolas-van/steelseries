@@ -100,7 +100,7 @@ const Led = function(canvas, parameters) {
     return this;
   };
 
-  var repaint = function() {
+  const repaint = function() {
     if (!initialized) {
       init();
     }

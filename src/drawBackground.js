@@ -10,7 +10,7 @@ import {
   RAD_FACTOR,
 } from './tools';
 
-var drawBackground = function(ctx, backgroundColor, centerX, centerY, imageWidth, imageHeight) {
+const drawBackground = function(ctx, backgroundColor, centerX, centerY, imageWidth, imageHeight) {
   let radBBuffer; let radBCtx;
   let grad; let fractions; let colors;
   const backgroundOffsetX = imageWidth * 0.831775 / 2;

@@ -275,7 +275,7 @@ const Compass = function(canvas, parameters) {
         ctx.bezierCurveTo(imageWidth * 0.443925, imageHeight * 0.5, imageWidth * 0.556074, imageHeight * 0.5, imageWidth * 0.556074, imageHeight * 0.5);
         ctx.bezierCurveTo(imageWidth * 0.556074, imageHeight * 0.481308, imageWidth * 0.546728, imageHeight * 0.462616, imageWidth * 0.532710, imageHeight * 0.453271);
         ctx.closePath();
-        var NORTHPOINTER2_GRADIENT = ctx.createLinearGradient(0.471962 * imageWidth, 0, 0.528036 * imageWidth, 0);
+        const NORTHPOINTER2_GRADIENT = ctx.createLinearGradient(0.471962 * imageWidth, 0, 0.528036 * imageWidth, 0);
         NORTHPOINTER2_GRADIENT.addColorStop(0, pointerColor.light.getRgbaColor());
         NORTHPOINTER2_GRADIENT.addColorStop(0.46, pointerColor.light.getRgbaColor());
         NORTHPOINTER2_GRADIENT.addColorStop(0.47, pointerColor.medium.getRgbaColor());
@@ -297,13 +297,13 @@ const Compass = function(canvas, parameters) {
         ctx.bezierCurveTo(imageWidth * 0.556074, imageHeight * 0.5, imageWidth * 0.443925, imageHeight * 0.5, imageWidth * 0.443925, imageHeight * 0.5);
         ctx.bezierCurveTo(imageWidth * 0.443925, imageHeight * 0.518691, imageWidth * 0.453271, imageHeight * 0.537383, imageWidth * 0.467289, imageHeight * 0.546728);
         ctx.closePath();
-        var SOUTHPOINTER2_GRADIENT = ctx.createLinearGradient(0.471962 * imageWidth, 0, 0.528036 * imageWidth, 0);
+        const SOUTHPOINTER2_GRADIENT = ctx.createLinearGradient(0.471962 * imageWidth, 0, 0.528036 * imageWidth, 0);
         SOUTHPOINTER2_GRADIENT.addColorStop(0, '#e3e5e8');
         SOUTHPOINTER2_GRADIENT.addColorStop(0.48, '#e3e5e8');
         SOUTHPOINTER2_GRADIENT.addColorStop(0.48, '#abb1b8');
         SOUTHPOINTER2_GRADIENT.addColorStop(1, '#abb1b8');
         ctx.fillStyle = SOUTHPOINTER2_GRADIENT;
-        var strokeColor_SOUTHPOINTER2 = '#abb1b8';
+        const strokeColor_SOUTHPOINTER2 = '#abb1b8';
         ctx.strokeStyle = strokeColor_SOUTHPOINTER2;
         ctx.lineWidth = 1;
         ctx.lineCap = 'square';
@@ -321,7 +321,7 @@ const Compass = function(canvas, parameters) {
         ctx.bezierCurveTo(imageWidth * 0.532710, imageHeight * 0.556074, imageWidth * 0.556074, imageHeight * 0.532710, imageWidth * 0.556074, imageHeight * 0.5);
         ctx.bezierCurveTo(imageWidth * 0.556074, imageHeight * 0.490654, imageWidth * 0.5, imageHeight * 0.149532, imageWidth * 0.5, imageHeight * 0.149532);
         ctx.closePath();
-        var NORTHPOINTER3_GRADIENT = ctx.createLinearGradient(0.471962 * imageWidth, 0, 0.528036 * imageWidth, 0);
+        const NORTHPOINTER3_GRADIENT = ctx.createLinearGradient(0.471962 * imageWidth, 0, 0.528036 * imageWidth, 0);
         NORTHPOINTER3_GRADIENT.addColorStop(0, pointerColor.light.getRgbaColor());
         NORTHPOINTER3_GRADIENT.addColorStop(0.46, pointerColor.light.getRgbaColor());
         NORTHPOINTER3_GRADIENT.addColorStop(0.47, pointerColor.medium.getRgbaColor());
@@ -346,7 +346,7 @@ const Compass = function(canvas, parameters) {
         ctx.lineTo(imageWidth * 0.471962, imageHeight * 0.495327);
         ctx.lineTo(imageWidth * 0.5, imageHeight * 0.495327);
         ctx.closePath();
-        var NORTHPOINTER1_GRADIENT = ctx.createLinearGradient(0.471962 * imageWidth, 0, 0.528036 * imageWidth, 0);
+        const NORTHPOINTER1_GRADIENT = ctx.createLinearGradient(0.471962 * imageWidth, 0, 0.528036 * imageWidth, 0);
         NORTHPOINTER1_GRADIENT.addColorStop(0, pointerColor.light.getRgbaColor());
         NORTHPOINTER1_GRADIENT.addColorStop(0.46, pointerColor.light.getRgbaColor());
         NORTHPOINTER1_GRADIENT.addColorStop(0.47, pointerColor.medium.getRgbaColor());
@@ -367,13 +367,13 @@ const Compass = function(canvas, parameters) {
         ctx.lineTo(imageWidth * 0.528037, imageHeight * 0.504672);
         ctx.lineTo(imageWidth * 0.5, imageHeight * 0.504672);
         ctx.closePath();
-        var SOUTHPOINTER1_GRADIENT = ctx.createLinearGradient(0.471962 * imageWidth, 0, 0.528036 * imageWidth, 0);
+        const SOUTHPOINTER1_GRADIENT = ctx.createLinearGradient(0.471962 * imageWidth, 0, 0.528036 * imageWidth, 0);
         SOUTHPOINTER1_GRADIENT.addColorStop(0, '#e3e5e8');
         SOUTHPOINTER1_GRADIENT.addColorStop(0.48, '#e3e5e8');
         SOUTHPOINTER1_GRADIENT.addColorStop(0.480099, '#abb1b8');
         SOUTHPOINTER1_GRADIENT.addColorStop(1, '#abb1b8');
         ctx.fillStyle = SOUTHPOINTER1_GRADIENT;
-        var strokeColor_SOUTHPOINTER = '#abb1b8';
+        const strokeColor_SOUTHPOINTER = '#abb1b8';
         ctx.strokeStyle = strokeColor_SOUTHPOINTER;
         ctx.lineWidth = 1;
         ctx.lineCap = 'square';

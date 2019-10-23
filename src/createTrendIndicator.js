@@ -5,7 +5,7 @@ import {
   TWO_PI,
 } from './tools';
 
-var createTrendIndicator = function(width, onSection, colors) {
+const createTrendIndicator = function(width, onSection, colors) {
   const height = width * 2;
   let trendBuffer; let trendCtx;
   let fill;

@@ -10,7 +10,7 @@ import {
   TWO_PI,
 } from './tools';
 
-var drawLinearBackgroundImage = function(ctx, backgroundColor, imageWidth, imageHeight, vertical) {
+const drawLinearBackgroundImage = function(ctx, backgroundColor, imageWidth, imageHeight, vertical) {
   let i; let end; let grad; let fractions; let colors;
   let frameWidth;
   let linBBuffer; let linBCtx;

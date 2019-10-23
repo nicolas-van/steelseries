@@ -20,7 +20,7 @@ import {
   TrendStateDef,
 } from './constants';
 
-export var BackgroundColor = {
+export const BackgroundColor = {
   DARK_GRAY: new BackgroundColorDef(new rgbaColor(0, 0, 0, 1), new rgbaColor(51, 51, 51, 1), new rgbaColor(153, 153, 153, 1), new rgbaColor(255, 255, 255, 1), new rgbaColor(180, 180, 180, 1), 'DARK_GRAY'),
   SATIN_GRAY: new BackgroundColorDef(new rgbaColor(45, 57, 57, 1), new rgbaColor(45, 57, 57, 1), new rgbaColor(45, 57, 57, 1), new rgbaColor(167, 184, 180, 1), new rgbaColor(137, 154, 150, 1), 'SATIN_GRAY'),
   LIGHT_GRAY: new BackgroundColorDef(new rgbaColor(130, 130, 130, 1), new rgbaColor(181, 181, 181, 1), new rgbaColor(253, 253, 253, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(80, 80, 80, 1), 'LIGHT_GRAY'),
@@ -41,7 +41,7 @@ export var BackgroundColor = {
   TURNED: new BackgroundColorDef(new rgbaColor(130, 130, 130, 1), new rgbaColor(181, 181, 181, 1), new rgbaColor(253, 253, 253, 1), new rgbaColor(0, 0, 0, 1), new rgbaColor(80, 80, 80, 1), 'TURNED'),
 };
 
-export var LcdColor = {
+export const LcdColor = {
   BEIGE: new LcdColorDef('#c8c8b1', 'rgb(241, 237, 207)', 'rgb(234, 230, 194)', 'rgb(225, 220, 183)', 'rgb(237, 232, 191)', '#000000'),
   BLUE: new LcdColorDef('#ffffff', 'rgb(231, 246, 255)', 'rgb(170, 224, 255)', 'rgb(136, 212, 255)', 'rgb(192, 232, 255)', '#124564'),
   ORANGE: new LcdColorDef('#ffffff', 'rgb(255, 245, 225)', 'rgb(255, 217, 147)', 'rgb(255, 201, 104)', 'rgb(255, 227, 173)', '#503700'),
@@ -85,7 +85,7 @@ const Color = {
 };
 export {Color as ColorDef};
 
-export var LedColor = {
+export const LedColor = {
   RED_LED: new LedColorDef('#FF9A89', '#FF9A89', '#FF3300', '#FF8D70', '#7E1C00', '#7E1C00', '#641B00'),
   GREEN_LED: new LedColorDef('#9AFF89', '#9AFF89', '#59FF2A', '#A5FF00', '#1C7E00', '#1C7E00', '#1B6400'),
   BLUE_LED: new LedColorDef('#899AFF', '#899AFF', '#0033FF', '#708DFF', '#001C7E', '#001C7E', '#001B64'),
@@ -95,7 +95,7 @@ export var LedColor = {
   MAGENTA_LED: new LedColorDef('#D300FF', '#D300FF', '#8600CB', '#C300FF', '#38004B', '#38004B', '#280035'),
 };
 
-export var GaugeType = {
+export const GaugeType = {
   TYPE1: new GaugeTypeDef('type1'),
   TYPE2: new GaugeTypeDef('type2'),
   TYPE3: new GaugeTypeDef('type3'),
@@ -103,25 +103,25 @@ export var GaugeType = {
   TYPE5: new GaugeTypeDef('type5'),
 };
 
-export var Orientation = {
+export const Orientation = {
   NORTH: new OrientationDef('north'),
   SOUTH: new OrientationDef('south'),
   EAST: new OrientationDef('east'),
   WEST: new OrientationDef('west'),
 };
 
-export var KnobType = {
+export const KnobType = {
   STANDARD_KNOB: new KnobTypeDef('standardKnob'),
   METAL_KNOB: new KnobTypeDef('metalKnob'),
 };
 
-export var KnobStyle = {
+export const KnobStyle = {
   BLACK: new KnobStyleDef('black'),
   BRASS: new KnobStyleDef('brass'),
   SILVER: new KnobStyleDef('silver'),
 };
 
-export var FrameDesign = {
+export const FrameDesign = {
   BLACK_METAL: new FrameDesignDef('blackMetal'),
   METAL: new FrameDesignDef('metal'),
   SHINY_METAL: new FrameDesignDef('shinyMetal'),
@@ -135,7 +135,7 @@ export var FrameDesign = {
   GLOSSY_METAL: new FrameDesignDef('glossyMetal'),
 };
 
-export var PointerType = {
+export const PointerType = {
   TYPE1: new PointerTypeDef('type1'),
   TYPE2: new PointerTypeDef('type2'),
   TYPE3: new PointerTypeDef('type3'),
@@ -154,7 +154,7 @@ export var PointerType = {
   TYPE16: new PointerTypeDef('type16'),
 };
 
-export var ForegroundType = {
+export const ForegroundType = {
   TYPE1: new ForegroundTypeDef('type1'),
   TYPE2: new ForegroundTypeDef('type2'),
   TYPE3: new ForegroundTypeDef('type3'),
@@ -162,19 +162,19 @@ export var ForegroundType = {
   TYPE5: new ForegroundTypeDef('type5'),
 };
 
-export var LabelNumberFormat = {
+export const LabelNumberFormat = {
   STANDARD: new LabelNumberFormatDef('standard'),
   FRACTIONAL: new LabelNumberFormatDef('fractional'),
   SCIENTIFIC: new LabelNumberFormatDef('scientific'),
 };
 
-export var TickLabelOrientation = {
+export const TickLabelOrientation = {
   NORMAL: new TickLabelOrientationDef('normal'),
   HORIZONTAL: new TickLabelOrientationDef('horizontal'),
   TANGENT: new TickLabelOrientationDef('tangent'),
 };
 
-export var TrendState = {
+export const TrendState = {
   UP: new TrendStateDef('up'),
   STEADY: new TrendStateDef('steady'),
   DOWN: new TrendStateDef('down'),

@@ -6,7 +6,7 @@ import {
   createBuffer,
 } from './tools';
 
-var drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight, vertical) {
+const drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight, vertical) {
   let frameWidth;
   let linFBuffer; let linFCtx;
   let OUTER_FRAME_CORNER_RADIUS;
@@ -138,17 +138,17 @@ var drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight, v
         // but this is only 1 pixel wide, so a plain color fill is essentially
         // the same.
         /*
-                    var frameMainFractions4 = [
+                    let frameMainFractions4 = [
                                                 0,
                                                 (imageWidth >= imageHeight ? 32 / imageHeight : 32 / imageWidth) * 0.04,
                                                 1
                                                 ];
-                    var frameMainColors4 = [
+                    let frameMainColors4 = [
                                             new rgbaColor(244, 244, 244, 1),
                                             new rgbaColor(207, 207, 207, 1),
                                             new rgbaColor(207, 207, 207, 1)
                                             ];
-                    var frameMainGradient4 = new contourGradient(linFCtx, 0, 0, imageWidth,  imageHeight, frameMainFractions4, frameMainColors4);
+                    let frameMainGradient4 = new contourGradient(linFCtx, 0, 0, imageWidth,  imageHeight, frameMainFractions4, frameMainColors4);
                     // Outer frame rim
                     roundedRectangle(linFCtx, 1, 1, imageWidth-2, imageHeight-2, OUTER_FRAME_CORNER_RADIUS);
                     linFCtx.clip();

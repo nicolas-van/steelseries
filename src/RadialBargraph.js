@@ -87,9 +87,11 @@ const RadialBargraph = function(canvas, parameters) {
   mainCtx.canvas.width = size;
   mainCtx.canvas.height = size;
 
+  let audioElement;
+
   // Create audio tag for alarm sound
   if (playAlarm && alarmSound !== false) {
-    var audioElement = doc.createElement('audio');
+    audioElement = doc.createElement('audio');
     audioElement.setAttribute('src', alarmSound);
     audioElement.setAttribute('preload', 'auto');
   }
@@ -137,7 +139,7 @@ const RadialBargraph = function(canvas, parameters) {
   const ACTIVE_LED_POS_X = imageWidth * 0.116822;
   const ACTIVE_LED_POS_Y = imageWidth * 0.485981;
   const LED_SIZE = Math.ceil(size * 0.093457);
-  // var LED_POS_X = imageWidth * 0.453271;
+  // let LED_POS_X = imageWidth * 0.453271;
   const LED_POS_X = imageWidth * 0.53;
   const LED_POS_Y = imageHeight * 0.61;
   const USER_LED_POS_X = gaugeType === GaugeType.TYPE3 ? 0.7 * imageWidth : centerX - LED_SIZE / 2;
@@ -476,7 +478,7 @@ const RadialBargraph = function(canvas, parameters) {
     }
   };
 
-  var drawBargraphTrackImage = function(ctx) {
+  const drawBargraphTrackImage = function(ctx) {
     ctx.save();
 
     // Bargraphtrack
@@ -538,7 +540,7 @@ const RadialBargraph = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawActiveLed = function(ctx, color) {
+  const drawActiveLed = function(ctx, color) {
     ctx.save();
     ctx.beginPath();
     ctx.rect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -576,7 +578,7 @@ const RadialBargraph = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawTickmarksImage = function(ctx, labelNumberFormat) {
+  const drawTickmarksImage = function(ctx, labelNumberFormat) {
     let alpha = rotationOffset; // Tracks total rotation
     const rotationStep = angleStep * minorTickSpacing;
     let textRotationAngle;
@@ -677,7 +679,7 @@ const RadialBargraph = function(canvas, parameters) {
     }
   };
 
-  var toggleAndRepaintLed = function() {
+  const toggleAndRepaintLed = function() {
     if (ledVisible) {
       if (ledBuffer === ledBufferOn) {
         ledBuffer = ledBufferOff;
@@ -691,7 +693,7 @@ const RadialBargraph = function(canvas, parameters) {
     }
   };
 
-  var toggleAndRepaintUserLed = function() {
+  const toggleAndRepaintUserLed = function() {
     if (userLedVisible) {
       if (userLedBuffer === userLedBufferOn) {
         userLedBuffer = userLedBufferOff;

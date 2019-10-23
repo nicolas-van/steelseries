@@ -527,14 +527,14 @@ const Radial = function(canvas, parameters) {
 
     /*
      // Logarithmic scale
-     var tmp = 0.1;
-     var minValueLog10 = 0.1;
-     var maxValueLog10 = parseInt(Math.pow(10, Math.ceil(Math.log10(maxValue))));
-     var drawLabel = true;
+     let tmp = 0.1;
+     let minValueLog10 = 0.1;
+     let maxValueLog10 = parseInt(Math.pow(10, Math.ceil(Math.log10(maxValue))));
+     let drawLabel = true;
      angleStep = angleRange / (maxValueLog10 - minValueLog10)
-     for (var scaleFactor = minValueLog10 ; scaleFactor <= maxValueLog10 ; scaleFactor *= 10)
+     for (let scaleFactor = minValueLog10 ; scaleFactor <= maxValueLog10 ; scaleFactor *= 10)
      {
-     for (var i = parseFloat((1 * scaleFactor).toFixed(1)) ; i < parseFloat((10 * scaleFactor).toFixed(1)) ; i += scaleFactor)
+     for (let i = parseFloat((1 * scaleFactor).toFixed(1)) ; i < parseFloat((10 * scaleFactor).toFixed(1)) ; i += scaleFactor)
      {
      textRotationAngle =+ rotationStep + HALF_PI;
 

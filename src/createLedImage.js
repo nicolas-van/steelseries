@@ -5,7 +5,7 @@ import {
   TWO_PI,
 } from './tools';
 
-var createLedImage = function(size, state, ledColor) {
+const createLedImage = function(size, state, ledColor) {
   let ledBuffer; let ledCtx;
   // Bug in Chrome browser, radialGradients do not draw correctly if the center is not an integer value
   const ledCenterX = 2 * Math.round(size / 4);

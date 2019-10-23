@@ -13,7 +13,7 @@ export const doc = document;
 export const lcdFontName = 'LCDMono2Ultra,Arial,Verdana,sans-serif';
 export const stdFontName = 'Arial,Verdana,sans-serif';
 
-export var rgbaColor = function(r, g, b, a) {
+export const rgbaColor = function(r, g, b, a) {
   let red; let green; let blue; let alpha;
 
   if (arguments.length === 1) {
@@ -80,7 +80,7 @@ export var rgbaColor = function(r, g, b, a) {
   };
 };
 
-export var ConicalGradient = function(fractions, colors) {
+export const ConicalGradient = function(fractions, colors) {
   const limit = fractions.length - 1;
   let i;
 
@@ -219,7 +219,7 @@ export var ConicalGradient = function(fractions, colors) {
   };
 };
 
-export var gradientWrapper = function(start, end, fractions, colors) {
+export const gradientWrapper = function(start, end, fractions, colors) {
   this.getColorAt = function(fraction) {
     let lowerLimit = 0;
     let lowerIndex = 0;
@@ -375,11 +375,11 @@ export function getColorValues(color) {
   colorData = lookupBuffer.getContext('2d').getImageData(0, 0, 2, 2).data;
 
   /*
-  for (var i = 0; i < data.length; i += 4) {
-      var red = data[i];       // red
-      var green = data[i + 1]; // green
-      var blue = data[i + 2];  // blue
-      //var alpha = data[i + 3]; // alpha
+  for (let i = 0; i < data.length; i += 4) {
+      let red = data[i];       // red
+      let green = data[i + 1]; // green
+      let blue = data[i + 2];  // blue
+      //let alpha = data[i + 3]; // alpha
       console.log(red + ', ' + green + ', ' + blue);
   }
   */
@@ -439,7 +439,7 @@ export function rgbToHsl(red, green, blue) {
 
 /* These functions are not currently used
     function hslToRgb(hue, saturation, lightness) {
-        var red, green, blue, p, q;
+        let red, green, blue, p, q;
 
         function hue2rgb(p, q, t) {
             if (t < 0) {
@@ -474,13 +474,13 @@ export function rgbToHsl(red, green, blue) {
     }
 
     function hsbToHsl(hue, saturation, brightness) {
-        var lightness = (brightness - saturation) / 2;
+        let lightness = (brightness - saturation) / 2;
         lightness = range(lightness, 1);
         return [hue, saturation, lightness];
     }
 
     function hslToHsb(hue, saturation, lightness) {
-        var brightness = (lightness * 2) + saturation;
+        let brightness = (lightness * 2) + saturation;
         return [hue, saturation, brightness];
     }
 */
@@ -605,7 +605,7 @@ export function getShortestAngle(from, to) {
 }
 
 // shim layer
-export var requestAnimFrame = (function() {
+export const requestAnimFrame = (function() {
   return window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
     window.mozRequestAnimationFrame ||
@@ -630,7 +630,7 @@ export function getCanvasContext(elementOrId) {
         // Cheap'n'cheerful blur filter, just applies horizontal and vertical blurs
         // Only works for square canvas's at present
 
-        var j, x, y,      // loop counters
+        let j, x, y,      // loop counters
             i,
             end,
             totR, totG, totB, totA,

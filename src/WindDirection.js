@@ -209,7 +209,7 @@ const WindDirection = function(canvas, parameters) {
       stdFont = 0.12 * imageWidth + 'px serif';
       smlFont = 0.06 * imageWidth + 'px serif';
 
-      // var angleStep = RAD_FACTOR;
+      // let angleStep = RAD_FACTOR;
       ctx.lineWidth = 1;
       ctx.strokeStyle = backgroundColor.symbolColor.getRgbaColor();
 

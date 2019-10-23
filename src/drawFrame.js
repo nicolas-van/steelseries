@@ -6,7 +6,7 @@ import {
   TWO_PI,
 } from './tools';
 
-var drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, imageHeight) {
+const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, imageHeight) {
   let radFBuffer; let radFCtx;
   let grad; let outerX; let innerX; let fractions; let colors;
   const cacheKey = imageWidth.toString() + imageHeight + frameDesign.design;

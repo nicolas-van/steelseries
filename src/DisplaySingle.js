@@ -217,7 +217,7 @@ const DisplaySingle = function(canvas, parameters) {
     return 'rgb(' + sectionForegroundRgb[0] + ', ' + sectionForegroundRgb[1] + ', ' + sectionForegroundRgb[2] + ')';
   };
 
-  var animate = function() {
+  const animate = function() {
     if (scrolling) {
       if (scrollX > imageWidth) {
         scrollX = -textWidth;

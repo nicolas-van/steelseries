@@ -4,7 +4,7 @@ import {
   TWO_PI,
 } from './tools';
 
-var createKnobImage = function(size, knob, style) {
+const createKnobImage = function(size, knob, style) {
   let knobBuffer; let knobCtx;
   const maxPostCenterX = size / 2;
   const maxPostCenterY = size / 2;

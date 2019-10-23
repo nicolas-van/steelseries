@@ -87,7 +87,7 @@ const drawRoseImage = function(ctx, centerX, centerY, imageWidth, imageHeight, b
           ctx.lineTo(imageWidth * 0.471962, imageHeight * 0.397196);
           ctx.lineTo(imageWidth * 0.523364, imageHeight * 0.397196);
           ctx.closePath();
-          var PATH5_2_GRADIENT = ctx.createLinearGradient(0.476635 * imageWidth, 0, 0.518691 * imageWidth, 0);
+          let PATH5_2_GRADIENT = ctx.createLinearGradient(0.476635 * imageWidth, 0, 0.518691 * imageWidth, 0);
           PATH5_2_GRADIENT.addColorStop(0, 'rgb(222, 223, 218)');
           PATH5_2_GRADIENT.addColorStop(0.48, 'rgb(222, 223, 218)');
           PATH5_2_GRADIENT.addColorStop(0.49, backgroundColor.symbolColor.getRgbaColor());
@@ -104,7 +104,7 @@ const drawRoseImage = function(ctx, centerX, centerY, imageWidth, imageHeight, b
           ctx.lineTo(imageWidth * 0.523364, imageHeight * 0.607476);
           ctx.lineTo(imageWidth * 0.471962, imageHeight * 0.607476);
           ctx.closePath();
-          var PATH6_2_GRADIENT = ctx.createLinearGradient(0.518691 * imageWidth, 0, (0.518691 + -0.037383) * imageWidth, 0);
+          let PATH6_2_GRADIENT = ctx.createLinearGradient(0.518691 * imageWidth, 0, (0.518691 + -0.037383) * imageWidth, 0);
           PATH6_2_GRADIENT.addColorStop(0, 'rgb(222, 223, 218)');
           PATH6_2_GRADIENT.addColorStop(0.56, 'rgb(222, 223, 218)');
           PATH6_2_GRADIENT.addColorStop(0.5601, backgroundColor.symbolColor.getRgbaColor());
@@ -125,7 +125,7 @@ const drawRoseImage = function(ctx, centerX, centerY, imageWidth, imageHeight, b
           ctx.lineTo(imageWidth * 0.602803, imageHeight * 0.476635);
           ctx.lineTo(imageWidth * 0.602803, imageHeight * 0.528037);
           ctx.closePath();
-          var PATH7_2_GRADIENT = ctx.createLinearGradient(0, 0.485981 * imageHeight, 0, 0.514018 * imageHeight);
+          let PATH7_2_GRADIENT = ctx.createLinearGradient(0, 0.485981 * imageHeight, 0, 0.514018 * imageHeight);
           PATH7_2_GRADIENT.addColorStop(0, 'rgb(222, 223, 218)');
           PATH7_2_GRADIENT.addColorStop(0.48, 'rgb(222, 223, 218)');
           PATH7_2_GRADIENT.addColorStop(0.49, backgroundColor.symbolColor.getRgbaColor());
@@ -142,7 +142,7 @@ const drawRoseImage = function(ctx, centerX, centerY, imageWidth, imageHeight, b
           ctx.lineTo(imageWidth * 0.392523, imageHeight * 0.528037);
           ctx.lineTo(imageWidth * 0.392523, imageHeight * 0.476635);
           ctx.closePath();
-          var PATH8_2_GRADIENT = ctx.createLinearGradient(0, 0.528037 * imageHeight, 0, 0.485981 * imageHeight);
+          let PATH8_2_GRADIENT = ctx.createLinearGradient(0, 0.528037 * imageHeight, 0, 0.485981 * imageHeight);
           PATH8_2_GRADIENT.addColorStop(0, 'rgb(222, 223, 218)');
           PATH8_2_GRADIENT.addColorStop(0.52, 'rgb(222, 223, 218)');
           PATH8_2_GRADIENT.addColorStop(0.53, backgroundColor.symbolColor.getRgbaColor());

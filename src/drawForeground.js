@@ -9,7 +9,7 @@ import {
   Orientation,
 } from './definitions';
 
-var drawForeground = function(ctx, foregroundType, imageWidth, imageHeight, withCenterKnob, knob, style, gaugeType, orientation) {
+const drawForeground = function(ctx, foregroundType, imageWidth, imageHeight, withCenterKnob, knob, style, gaugeType, orientation) {
   let radFgBuffer; let radFgCtx;
   const knobSize = Math.ceil(imageHeight * 0.084112);
   let knobX = imageWidth * 0.5 - knobSize / 2;

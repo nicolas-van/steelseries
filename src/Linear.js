@@ -75,10 +75,11 @@ const Linear = function(canvas, parameters) {
 
   const imageWidth = width;
   const imageHeight = height;
+  let audioElement;
 
   // Create audio tag for alarm sound
   if (playAlarm && alarmSound !== false) {
-    var audioElement = doc.createElement('audio');
+    audioElement = doc.createElement('audio');
     audioElement.setAttribute('src', alarmSound);
     // audioElement.setAttribute('src', 'js/alarm.mp3');
     audioElement.setAttribute('preload', 'auto');
@@ -409,7 +410,7 @@ const Linear = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawLinearTicks = function(ctx, tickStart, tickStop, currentPos, vertical) {
+  const drawLinearTicks = function(ctx, tickStart, tickStop, currentPos, vertical) {
     if (vertical) {
       // Vertical orientation
       ctx.beginPath();
@@ -596,7 +597,7 @@ const Linear = function(canvas, parameters) {
     }
   };
 
-  var toggleAndRepaintLed = function() {
+  const toggleAndRepaintLed = function() {
     if (ledVisible) {
       if (ledBuffer === ledBufferOn) {
         ledBuffer = ledBufferOff;
@@ -774,7 +775,7 @@ const Linear = function(canvas, parameters) {
     }
   };
 
-  var drawForegroundImage = function(ctx) {
+  const drawForegroundImage = function(ctx) {
     const foreSize = (vertical ? imageHeight : imageWidth);
 
     ctx.save();
@@ -847,7 +848,7 @@ const Linear = function(canvas, parameters) {
     ctx.restore();
   };
 
-  var drawBackgroundImage = function(ctx) {
+  const drawBackgroundImage = function(ctx) {
     const backSize = (vertical ? imageHeight : imageWidth);
     ctx.save();
     if (vertical) {

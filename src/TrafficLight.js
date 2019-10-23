@@ -550,7 +550,7 @@ const Trafficlight = function(canvas, parameters) {
     return buffer;
   }
 
-  var hatchBuffer = drawToBuffer(2, 2, function(ctx) {
+  const hatchBuffer = drawToBuffer(2, 2, function(ctx) {
     ctx.save();
     ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
     ctx.beginPath();

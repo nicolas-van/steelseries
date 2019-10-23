@@ -3,7 +3,7 @@ import {
   doc,
 } from './tools';
 
-var createMeasuredValueImage = function(size, indicatorColor, radial, vertical) {
+const createMeasuredValueImage = function(size, indicatorColor, radial, vertical) {
   let indicatorBuffer; let indicatorCtx;
   const cacheKey = size.toString() + indicatorColor + radial + vertical;
 

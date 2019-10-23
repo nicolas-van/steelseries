@@ -5,7 +5,7 @@ import {
 } from './tools';
 
 
-var drawPointerImage = function(ctx, size, ptrType, ptrColor, lblColor) {
+const drawPointerImage = function(ctx, size, ptrType, ptrColor, lblColor) {
   let ptrBuffer; let ptrCtx;
   let grad; let radius;
   const cacheKey = size.toString() + ptrType.type + ptrColor.light.getHexColor() + ptrColor.medium.getHexColor();
