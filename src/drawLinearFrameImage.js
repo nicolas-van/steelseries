@@ -192,36 +192,6 @@ const drawLinearFrameImage = function(
         break;
 
       case 'glossyMetal':
-        // The smaller side is important for the contour gradient
-        // Java version uses a contour gradient for the outer frame rim
-        // but this is only 1 pixel wide, so a plain color fill is essentially
-        // the same.
-        /*
-                    let frameMainFractions4 = [
-                                                0,
-                                                (imageWidth >= imageHeight ? 32 / imageHeight : 32 / imageWidth) * 0.04,
-                                                1
-                                                ];
-                    let frameMainColors4 = [
-                                            new rgbaColor(244, 244, 244, 1),
-                                            new rgbaColor(207, 207, 207, 1),
-                                            new rgbaColor(207, 207, 207, 1)
-                                            ];
-                    let frameMainGradient4 = new contourGradient(linFCtx, 0, 0, imageWidth,  imageHeight, frameMainFractions4, frameMainColors4);
-                    // Outer frame rim
-                    roundedRectangle(linFCtx, 1, 1, imageWidth-2, imageHeight-2, OUTER_FRAME_CORNER_RADIUS);
-                    linFCtx.clip();
-                    frameMainGradient4.paintContext();
-        */
-        // Outer frame rim
-        //                roundedRectangle(linFCtx, 1, 1, imageWidth-2, imageHeight-2, OUTER_FRAME_CORNER_RADIUS);
-        //                linFCtx.clip();
-        //                linFCtx.fillStyle = '#cfcfcf';
-        //                linFCtx.fill();
-
-        // Main frame
-        //                roundedRectangle(linFCtx, 2, 2, imageWidth - 4, imageHeight - 4, FRAME_MAIN_CORNER_RADIUS);
-        //                linFCtx.clip();
         roundedRectangle(
             linFCtx,
             1,

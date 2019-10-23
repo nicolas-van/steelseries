@@ -10,7 +10,7 @@ module.exports = {
     'sourceType': 'module',
   },
   'rules': {
-    'max-len': ["error", { "code": 220 }],
+    'max-len': ["error", { "code": 120 }],
     'new-cap': "off",
     'require-jsdoc': "off",
     'no-invalid-this': "off",

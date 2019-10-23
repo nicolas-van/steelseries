@@ -101,36 +101,6 @@ export const ConicalGradient = function(fractions, colors) {
     let indx;
     let pixColor;
 
-    // Original Version using rotated lines
-    /*
-                ctx.save();
-                ctx.lineWidth = 1.5;
-                ctx.translate(centerX, centerY);
-                ctx.rotate(rotationOffset);
-                ctx.translate(-centerX, -centerY);
-                for (i = 0, size = fractions.length - 1; i < size; i++) {
-                    startAngle = TWO_PI * fractions[i];
-                    stopAngle = TWO_PI * fractions[i + 1];
-                    range = stopAngle - startAngle;
-                    startColor = colors[i];
-                    stopColor = colors[i + 1];
-                    for (angle = startAngle; angle < stopAngle; angle += angleStep) {
-                        ctx.beginPath();
-                        ctx.fillStyle = getColorFromFraction(startColor, stopColor, range, (angle - startAngle)).getRgbaColor();
-                        ctx.strokeStyle = ctx.fillStyle;
-                        if (innerX > 0) {
-                            ctx.arc(centerX, centerY, innerX, angle + angleStep, angle, true);
-                        } else {
-                            ctx.moveTo(centerX, centerY);
-                        }
-                        ctx.arc(centerX, centerY, outerX, angle, angle + angleStep);
-                        ctx.fill();
-                        ctx.stroke();
-                    }
-                }
-    */
-    // End - Original Version
-
     // Create pixel array
     const pixels = ctx.createImageData(diameter, diameter);
     const alpha = 255;
@@ -156,7 +126,8 @@ export const ConicalGradient = function(fractions, colors) {
             }
           }
           // The pixel array is addressed as 4 elements per pixel [r,g,b,a]
-          indx = (diameter - y) * diameter * 4 + x * 4; // plot is 180 rotated from orginal method, so apply a simple invert (diameter - y)
+          // plot is 180 rotated from orginal method, so apply a simple invert (diameter - y)
+          indx = (diameter - y) * diameter * 4 + x * 4;
           pixels.data[indx] = pixColor[0];
           pixels.data[indx + 1] = pixColor[1];
           pixels.data[indx + 2] = pixColor[2];
@@ -225,7 +196,8 @@ export const ConicalGradient = function(fractions, colors) {
           }
         }
         // The pixel array is addressed as 4 elements per pixel [r,g,b,a]
-        indx = (height - y) * width * 4 + x * 4; // plot is 180 rotated from orginal method, so apply a simple invert (height - y)
+        // plot is 180 rotated from orginal method, so apply a simple invert (height - y)
+        indx = (height - y) * width * 4 + x * 4;
         pixels.data[indx] = pixColor[0];
         pixels.data[indx + 1] = pixColor[0];
         pixels.data[indx + 2] = pixColor[0];
@@ -417,16 +389,6 @@ export function getColorValues(color) {
   });
   const colorData = lookupBuffer.getContext('2d').getImageData(0, 0, 2, 2).data;
 
-  /*
-  for (let i = 0; i < data.length; i += 4) {
-      let red = data[i];       // red
-      let green = data[i + 1]; // green
-      let blue = data[i + 2];  // blue
-      //let alpha = data[i + 3]; // alpha
-      console.log(red + ', ' + green + ', ' + blue);
-  }
-  */
-
   return [colorData[0], colorData[1], colorData[2], colorData[3]];
 }
 
@@ -477,54 +439,6 @@ export function rgbToHsl(red, green, blue) {
   }
   return [hue, saturation, lightness];
 }
-
-/* These functions are not currently used
-    function hslToRgb(hue, saturation, lightness) {
-        let red, green, blue, p, q;
-
-        function hue2rgb(p, q, t) {
-            if (t < 0) {
-                t += 1;
-            }
-            if (t > 1) {
-                t -= 1;
-            }
-            if (t < 1 / 6) {
-                return p + (q - p) * 6 * t;
-            }
-            if (t < 1 / 2) {
-                return q;
-            }
-            if (t < 2 / 3) {
-                return p + (q - p) * (2 / 3 - t) * 6;
-            }
-            return p;
-        }
-
-        if (saturation === 0) {
-            red = green = blue = lightness; // achromatic
-        } else {
-            q = (lightness < 0.5 ? lightness * (1 + saturation) : lightness + saturation - lightness * saturation);
-            p = 2 * lightness - q;
-            red = hue2rgb(p, q, hue + 1 / 3);
-            green = hue2rgb(p, q, hue);
-            blue = hue2rgb(p, q, hue - 1 / 3);
-        }
-
-        return [Math.floor(red * 255), Math.floor(green * 255), Math.floor(blue * 255)];
-    }
-
-    function hsbToHsl(hue, saturation, brightness) {
-        let lightness = (brightness - saturation) / 2;
-        lightness = range(lightness, 1);
-        return [hue, saturation, lightness];
-    }
-
-    function hslToHsb(hue, saturation, lightness) {
-        let brightness = (lightness * 2) + saturation;
-        return [hue, saturation, brightness];
-    }
-*/
 
 export function hsbToRgb(hue, saturation, brightness) {
   let r;
@@ -667,98 +581,3 @@ export function getCanvasContext(elementOrId) {
       elementOrId;
   return element.getContext('2d');
 }
-
-/*
-    function blur(ctx, width, height, radius) {
-    // This function is too CPU expensive
-    // leave disabled for now :(
-
-        // Cheap'n'cheerful blur filter, just applies horizontal and vertical blurs
-        // Only works for square canvas's at present
-
-        let j, x, y,      // loop counters
-            i,
-            end,
-            totR, totG, totB, totA,
-            // Create a temporary buffer
-            tempBuffer = createBuffer(width, height),
-            tempCtx = tempBuffer.getContext('2d'),
-            // pixel data
-            inPix, outPix,
-            mul,
-            indx;
-
-        ctx.save();
-
-        for (j = 0; j < 2; j++) {
-            // Get access to the pixel data
-            inPix = ctx.getImageData(0, 0, (j === 0 ? width : height), (j === 0 ? height : width));
-            outPix = ctx.createImageData((j === 0 ? width : height), (j === 0 ? height : width));
-
-            if (j === 0) { // Horizontal blur
-                if (radius >= width) {
-                    radius = width - 1;
-                }
-            } else { // Vertical blur
-                if (radius >= height) {
-                    radius = height - 1;
-                }
-            }
-            mul = 1 / (radius * 2 + 1);
-            indx = 0;
-            for (y = 0, end = (j === 0 ? height : width); y < end; y++) {
-                totR = totG = totB = totA = 0;
-                for (x = 0; x < radius ; x++) {
-                    i = (indx + x) * 4;
-                    totR += inPix.data[i];
-                    totG += inPix.data[i + 1];
-                    totB += inPix.data[i + 2];
-                    totA += inPix.data[i + 3];
-                }
-                for (x = 0; x < (j === 0 ? width : height); x++) {
-                    if (x > radius) {
-                        i = (indx - radius - 1) * 4;
-                        totR -= inPix.data[i];
-                        totG -= inPix.data[i + 1];
-                        totB -= inPix.data[i + 2];
-                        totA -= inPix.data[i + 3];
-                    }
-                    if (x + radius < width) {
-                        i = (indx + radius) * 4;
-                        totR += inPix.data[i];
-                        totG += inPix.data[i + 1];
-                        totB += inPix.data[i + 2];
-                        totA += inPix.data[i + 3];
-                    }
-                    i = indx * 4;
-                    outPix.data[i] = (totR * mul) | 0;
-                    outPix.data[i + 1] = (totG * mul) | 0;
-                    outPix.data[i + 2] = (totB * mul) | 0;
-                    outPix.data[i + 3] = (totA * mul) | 0;
-                    indx++;
-                }
-            }
-            // Write the output pixel data back to the temp buffer
-            tempCtx.clearRect(0, 0, width, height);
-            tempCtx.putImageData(outPix, 0, 0);
-            if (j === 0) {
-                // Clear the input canvas
-                ctx.clearRect(0, 0, width, height);
-                // Rotate image by 90 degrees
-                ctx.translate(width / 2, height / 2);
-                ctx.rotate(HALF_PI);
-                ctx.translate(-width / 2, -height / 2);
-                // Write the buffer back
-                ctx.drawImage(tempBuffer, 0, 0);
-            }
-        }
-        ctx.translate(width / 2, height / 2);
-        ctx.rotate(-PI);
-        ctx.translate(-width / 2, -height / 2);
-        // Clear the input canvas
-        ctx.clearRect(0, 0, width, height);
-        ctx.drawImage(tempBuffer, 0, 0);
-        ctx.restore();
-
-    }
-*/

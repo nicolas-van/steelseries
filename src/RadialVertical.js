@@ -559,54 +559,6 @@ const RadialVertical = function(canvas, parameters) {
       ctx.rotate(rotationStep);
     }
 
-    /*
-     // Logarithmic scale
-     let tmp = 0.1;
-     let minValueLog10 = 0.1;
-     let maxValueLog10 = parseInt(Math.pow(10, Math.ceil(Math.log10(maxValue))));
-     let drawLabel = true;
-     angleStep = angleRange / (maxValueLog10 - minValueLog10)
-     for (let scaleFactor = minValueLog10 ; scaleFactor <= maxValueLog10 ; scaleFactor *= 10)
-     {
-     for (let i = parseFloat((1 * scaleFactor).toFixed(1)) ; i < parseFloat((10 * scaleFactor).toFixed(1)) ; i += scaleFactor)
-     {
-     textRotationAngle =+ rotationStep + HALF_PI;
-
-     if(drawLabel)
-     {
-     ctx.lineWidth = 1.5;
-     ctx.beginPath();
-     ctx.moveTo(imageWidth * 0.38,0);
-     ctx.lineTo(imageWidth * 0.35,0);
-     ctx.closePath();
-     ctx.stroke();
-     ctx.save();
-     ctx.translate(imageWidth * 0.31, 0);
-     ctx.rotate(textRotationAngle);
-     ctx.fillText(parseFloat((i).toFixed(1)), 0, 0, imageWidth * 0.0375);
-     ctx.translate(-imageWidth * 0.31, 0);
-     ctx.restore();
-     drawLabel = false;
-     }
-     else
-     {
-     ctx.lineWidth = 0.5;
-     ctx.beginPath();
-     ctx.moveTo(imageWidth * 0.38,0);
-     ctx.lineTo(imageWidth * 0.36,0);
-     ctx.closePath();
-     ctx.stroke();
-     }
-     //doc.write('log10 scale value: ' + parseFloat((i).toFixed(1)) + '<br>');
-     //Math.log10(parseFloat((i).toFixed(1)));
-
-     ctx.rotate(rotationStep);
-     }
-     tmp = 0.1;
-     drawLabel = true;
-     }
-     */
-
     ctx.translate(-centerX, -centerY);
     ctx.restore();
   };

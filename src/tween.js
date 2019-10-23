@@ -49,7 +49,8 @@ Delegate.create = function(o, f) {
 /*
 object:
   type:Object
-    The object you want to modify. It can be any object, a visual object that you want to animate ( document.body.style ) or an anymous object ( new Object() ).
+    The object you want to modify. It can be any object, a visual object that you want to animate
+    ( document.body.style ) or an anymous object ( new Object() ).
 property:
   type:String
     The property that is updated on the target object, it can be empty ('')

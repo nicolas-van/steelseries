@@ -148,7 +148,8 @@ const DisplaySingle = function(canvas, parameters) {
       if (alwaysScroll || (autoScroll && textWidth > imageWidth - 4)) {
         if (!scrolling) {
           if (textWidth > imageWidth * 0.8) {
-            scrollX = imageWidth - textWidth - imageWidth * 0.2; // leave 20% blank leading space to give time to read start of message
+            // leave 20% blank leading space to give time to read start of message
+            scrollX = imageWidth - textWidth - imageWidth * 0.2;
           } else {
             scrollX = 0;
           }
