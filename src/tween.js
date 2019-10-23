@@ -34,7 +34,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *****************************************/
 function Delegate() {}
 Delegate.create = function(o, f) {
-  const a = []; let i; const l = arguments.length;
+  const a = [];
+  let i;
+  const l = arguments.length;
   for (i = 2; i < l; i++) {
     a[i - 2] = arguments[i];
   }
@@ -76,7 +78,7 @@ const t = Tween.prototype;
 t.obj = {};
 t.prop = '';
 t.func = function(t, b, c, d) {
-  return c * t / d + b;
+  return (c * t) / d + b;
 };
 t.begin = 0;
 t.change = 0;
@@ -98,12 +100,18 @@ t.setTime = function(t) {
     if (this.looping) {
       this.rewind(t - this._duration);
       this.update();
-      this.broadcastMessage('onMotionLooped', {target: this, type: 'onMotionLooped'});
+      this.broadcastMessage('onMotionLooped', {
+        target: this,
+        type: 'onMotionLooped',
+      });
     } else {
       this._time = this._duration;
       this.update();
       this.stop();
-      this.broadcastMessage('onMotionFinished', {target: this, type: 'onMotionFinished'});
+      this.broadcastMessage('onMotionFinished', {
+        target: this,
+        type: 'onMotionFinished',
+      });
     }
   } else if (t < 0) {
     this.rewind();
@@ -117,7 +125,7 @@ t.getTime = function() {
   return this._time;
 };
 t.setDuration = function(d) {
-  this._duration = (d === null || d <= 0) ? 100000 : d;
+  this._duration = d === null || d <= 0 ? 100000 : d;
 };
 t.getDuration = function() {
   return this._duration;
@@ -127,7 +135,10 @@ t.setPosition = function(p) {
   const a = this.suffixe !== '' ? this.suffixe : '';
   this.obj[this.prop] = Math.round(p) + a;
   this._pos = p;
-  this.broadcastMessage('onMotionChanged', {target: this, type: 'onMotionChanged'});
+  this.broadcastMessage('onMotionChanged', {
+    target: this,
+    type: 'onMotionChanged',
+  });
 };
 t.getPosition = function(t) {
   if (t === undefined) {
@@ -163,12 +174,15 @@ t.init = function(obj, prop, func, begin, finish, duration, suffixe) {
 t.start = function() {
   this.rewind();
   this.startEnterFrame();
-  this.broadcastMessage('onMotionStarted', {target: this, type: 'onMotionStarted'});
+  this.broadcastMessage('onMotionStarted', {
+    target: this,
+    type: 'onMotionStarted',
+  });
   // alert('in');
 };
 t.rewind = function(t) {
   this.stop();
-  this._time = (t === undefined) ? 0 : t;
+  this._time = t === undefined ? 0 : t;
   this.fixTime();
   this.update();
 };
@@ -197,7 +211,10 @@ t.nextFrame = function() {
 };
 t.stop = function() {
   this.stopEnterFrame();
-  this.broadcastMessage('onMotionStopped', {target: this, type: 'onMotionStopped'});
+  this.broadcastMessage('onMotionStopped', {
+    target: this,
+    type: 'onMotionStopped',
+  });
 };
 t.stopEnterFrame = function() {
   this.isPlaying = false;
@@ -216,7 +233,10 @@ t.continueTo = function(finish, duration) {
 t.resume = function() {
   this.fixTime();
   this.startEnterFrame();
-  this.broadcastMessage('onMotionResumed', {target: this, type: 'onMotionResumed'});
+  this.broadcastMessage('onMotionResumed', {
+    target: this,
+    type: 'onMotionResumed',
+  });
 };
 t.yoyo = function() {
   this.continueTo(this.begin, this._time);
@@ -237,7 +257,10 @@ t.removeListener = function(o) {
   return false;
 };
 t.broadcastMessage = function() {
-  const arr = []; let i; let e; const a = this._listeners;
+  const arr = [];
+  let i;
+  let e;
+  const a = this._listeners;
   const l = a.length;
   for (i = 0; i < arguments.length; i++) {
     arr.push(arguments[i]);
@@ -267,9 +290,9 @@ Tween.backEaseOut = function(t, b, c, d, a, p) {
 Tween.backEaseInOut = function(t, b, c, d, a, p) {
   let s = 1.70158;
   if ((t /= d / 2) < 1) {
-    return c / 2 * (t * t * (((s *= (1.525)) + 1) * t - s)) + b;
+    return (c / 2) * (t * t * (((s *= 1.525) + 1) * t - s)) + b;
   }
-  return c / 2 * ((t -= 2) * t * (((s *= (1.525)) + 1) * t + s) + 2) + b;
+  return (c / 2) * ((t -= 2) * t * (((s *= 1.525) + 1) * t + s) + 2) + b;
 };
 Tween.elasticEaseIn = function(t, b, c, d, a, p) {
   let s;
@@ -286,10 +309,16 @@ Tween.elasticEaseIn = function(t, b, c, d, a, p) {
     a = c;
     s = p / 4;
   } else {
-    s = p / (2 * Math.PI) * Math.asin(c / a);
+    s = (p / (2 * Math.PI)) * Math.asin(c / a);
   }
 
-  return -(a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
+  return (
+    -(
+      a *
+      Math.pow(2, 10 * (t -= 1)) *
+      Math.sin(((t * d - s) * (2 * Math.PI)) / p)
+    ) + b
+  );
 };
 Tween.elasticEaseOut = function(t, b, c, d, a, p) {
   let s;
@@ -306,9 +335,13 @@ Tween.elasticEaseOut = function(t, b, c, d, a, p) {
     a = c;
     s = p / 4;
   } else {
-    s = p / (2 * Math.PI) * Math.asin(c / a);
+    s = (p / (2 * Math.PI)) * Math.asin(c / a);
   }
-  return (a * Math.pow(2, -10 * t) * Math.sin((t * d - s) * (2 * Math.PI) / p) + c + b);
+  return (
+    a * Math.pow(2, -10 * t) * Math.sin(((t * d - s) * (2 * Math.PI)) / p) +
+    c +
+    b
+  );
 };
 Tween.elasticEaseInOut = function(t, b, c, d, a, p) {
   let s;
@@ -325,22 +358,35 @@ Tween.elasticEaseInOut = function(t, b, c, d, a, p) {
     a = c;
     s = p / 4;
   } else {
-    s = p / (2 * Math.PI) * Math.asin(c / a);
+    s = (p / (2 * Math.PI)) * Math.asin(c / a);
   }
   if (t < 1) {
-    return -0.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
+    return (
+      -0.5 *
+        (a *
+          Math.pow(2, 10 * (t -= 1)) *
+          Math.sin(((t * d - s) * (2 * Math.PI)) / p)) +
+      b
+    );
   }
-  return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p) * 0.5 + c + b;
+  return (
+    a *
+      Math.pow(2, -10 * (t -= 1)) *
+      Math.sin(((t * d - s) * (2 * Math.PI)) / p) *
+      0.5 +
+    c +
+    b
+  );
 };
 Tween.bounceEaseOut = function(t, b, c, d) {
-  if ((t /= d) < (1 / 2.75)) {
+  if ((t /= d) < 1 / 2.75) {
     return c * (7.5625 * t * t) + b;
-  } else if (t < (2 / 2.75)) {
-    return c * (7.5625 * (t -= (1.5 / 2.75)) * t + 0.75) + b;
-  } else if (t < (2.5 / 2.75)) {
-    return c * (7.5625 * (t -= (2.25 / 2.75)) * t + 0.9375) + b;
+  } else if (t < 2 / 2.75) {
+    return c * (7.5625 * (t -= 1.5 / 2.75) * t + 0.75) + b;
+  } else if (t < 2.5 / 2.75) {
+    return c * (7.5625 * (t -= 2.25 / 2.75) * t + 0.9375) + b;
   } else {
-    return c * (7.5625 * (t -= (2.625 / 2.75)) * t + 0.984375) + b;
+    return c * (7.5625 * (t -= 2.625 / 2.75) * t + 0.984375) + b;
   }
 };
 Tween.bounceEaseIn = function(t, b, c, d) {
@@ -364,9 +410,9 @@ Tween.regularEaseOut = function(t, b, c, d) {
 };
 Tween.regularEaseInOut = function(t, b, c, d) {
   if ((t /= d / 2) < 1) {
-    return c / 2 * t * t + b;
+    return (c / 2) * t * t + b;
   }
-  return -c / 2 * ((--t) * (t - 2) - 1) + b;
+  return (-c / 2) * (--t * (t - 2) - 1) + b;
 };
 Tween.strongEaseIn = function(t, b, c, d) {
   return c * (t /= d) * t * t * t * t + b;
@@ -376,9 +422,9 @@ Tween.strongEaseOut = function(t, b, c, d) {
 };
 Tween.strongEaseInOut = function(t, b, c, d) {
   if ((t /= d / 2) < 1) {
-    return c / 2 * t * t * t * t * t + b;
+    return (c / 2) * t * t * t * t * t + b;
   }
-  return c / 2 * ((t -= 2) * t * t * t * t + 2) + b;
+  return (c / 2) * ((t -= 2) * t * t * t * t + 2) + b;
 };
 
 export default Tween;

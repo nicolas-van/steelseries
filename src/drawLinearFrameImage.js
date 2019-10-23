@@ -1,4 +1,3 @@
-
 import {
   rgbaColor,
   ConicalGradient,
@@ -6,21 +5,32 @@ import {
   createBuffer,
 } from './tools';
 
-const drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight, vertical) {
+const drawLinearFrameImage = function(
+    ctx,
+    frameDesign,
+    imageWidth,
+    imageHeight,
+    vertical
+) {
   let frameWidth;
-  let linFBuffer; let linFCtx;
+  let linFBuffer;
+  let linFCtx;
   let OUTER_FRAME_CORNER_RADIUS;
   let FRAME_MAIN_CORNER_RADIUS;
   let SUBTRACT_CORNER_RADIUS;
   let grad;
   let fractions = [];
   let colors = [];
-  const cacheKey = imageWidth.toString() + imageHeight + frameDesign.design + vertical;
+  const cacheKey =
+    imageWidth.toString() + imageHeight + frameDesign.design + vertical;
 
   // check if we have already created and cached this buffer, if not create it
   if (!drawLinearFrameImage.cache[cacheKey]) {
-    frameWidth = Math.sqrt(imageWidth * imageWidth + imageHeight * imageHeight) * 0.04;
-    frameWidth = Math.ceil(Math.min(frameWidth, (vertical ? imageWidth : imageHeight) * 0.1));
+    frameWidth =
+      Math.sqrt(imageWidth * imageWidth + imageHeight * imageHeight) * 0.04;
+    frameWidth = Math.ceil(
+        Math.min(frameWidth, (vertical ? imageWidth : imageHeight) * 0.1)
+    );
 
     // Setup buffer
     linFBuffer = createBuffer(imageWidth, imageHeight);
@@ -37,16 +47,35 @@ const drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight,
       SUBTRACT_CORNER_RADIUS = Math.floor(imageHeight * 0.028571);
     }
 
-    roundedRectangle(linFCtx, 0, 0, imageWidth, imageHeight, OUTER_FRAME_CORNER_RADIUS);
+    roundedRectangle(
+        linFCtx,
+        0,
+        0,
+        imageWidth,
+        imageHeight,
+        OUTER_FRAME_CORNER_RADIUS
+    );
     linFCtx.fillStyle = '#838383';
     linFCtx.fill();
 
-    roundedRectangle(linFCtx, 1, 1, imageWidth - 2, imageHeight - 2, FRAME_MAIN_CORNER_RADIUS);
+    roundedRectangle(
+        linFCtx,
+        1,
+        1,
+        imageWidth - 2,
+        imageHeight - 2,
+        FRAME_MAIN_CORNER_RADIUS
+    );
 
     // main gradient frame
     switch (frameDesign.design) {
       case 'metal':
-        grad = linFCtx.createLinearGradient(0, imageWidth * 0.004672, 0, imageHeight * 0.990654);
+        grad = linFCtx.createLinearGradient(
+            0,
+            imageWidth * 0.004672,
+            0,
+            imageHeight * 0.990654
+        );
         grad.addColorStop(0, '#fefefe');
         grad.addColorStop(0.07, 'rgb(210, 210, 210)');
         grad.addColorStop(0.12, 'rgb(179, 179, 179)');
@@ -56,12 +85,17 @@ const drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight,
         break;
 
       case 'brass':
-        grad = linFCtx.createLinearGradient(0, imageWidth * 0.004672, 0, imageHeight * 0.990654);
+        grad = linFCtx.createLinearGradient(
+            0,
+            imageWidth * 0.004672,
+            0,
+            imageHeight * 0.990654
+        );
         grad.addColorStop(0, 'rgb(249, 243, 155)');
         grad.addColorStop(0.05, 'rgb(246, 226, 101)');
-        grad.addColorStop(0.10, 'rgb(240, 225, 132)');
-        grad.addColorStop(0.50, 'rgb(90, 57, 22)');
-        grad.addColorStop(0.90, 'rgb(249, 237, 139)');
+        grad.addColorStop(0.1, 'rgb(240, 225, 132)');
+        grad.addColorStop(0.5, 'rgb(90, 57, 22)');
+        grad.addColorStop(0.9, 'rgb(249, 237, 139)');
         grad.addColorStop(0.95, 'rgb(243, 226, 108)');
         grad.addColorStop(1, 'rgb(202, 182, 113)');
         linFCtx.fillStyle = grad;
@@ -69,12 +103,17 @@ const drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight,
         break;
 
       case 'steel':
-        grad = linFCtx.createLinearGradient(0, imageWidth * 0.004672, 0, imageHeight * 0.990654);
+        grad = linFCtx.createLinearGradient(
+            0,
+            imageWidth * 0.004672,
+            0,
+            imageHeight * 0.990654
+        );
         grad.addColorStop(0, 'rgb(231, 237, 237)');
         grad.addColorStop(0.05, 'rgb(189, 199, 198)');
-        grad.addColorStop(0.10, 'rgb(192, 201, 200)');
-        grad.addColorStop(0.50, 'rgb(23, 31, 33)');
-        grad.addColorStop(0.90, 'rgb(196, 205, 204)');
+        grad.addColorStop(0.1, 'rgb(192, 201, 200)');
+        grad.addColorStop(0.5, 'rgb(23, 31, 33)');
+        grad.addColorStop(0.9, 'rgb(196, 205, 204)');
         grad.addColorStop(0.95, 'rgb(194, 204, 203)');
         grad.addColorStop(1, 'rgb(189, 201, 199)');
         linFCtx.fillStyle = grad;
@@ -82,7 +121,12 @@ const drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight,
         break;
 
       case 'gold':
-        grad = linFCtx.createLinearGradient(0, imageWidth * 0.004672, 0, imageHeight * 0.990654);
+        grad = linFCtx.createLinearGradient(
+            0,
+            imageWidth * 0.004672,
+            0,
+            imageHeight * 0.990654
+        );
         grad.addColorStop(0, 'rgb(255, 255, 207)');
         grad.addColorStop(0.15, 'rgb(255, 237, 96)');
         grad.addColorStop(0.22, 'rgb(254, 199, 57)');
@@ -99,7 +143,12 @@ const drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight,
         break;
 
       case 'anthracite':
-        grad = linFCtx.createLinearGradient(0, 0.004672 * imageHeight, 0, 0.995326 * imageHeight);
+        grad = linFCtx.createLinearGradient(
+            0,
+            0.004672 * imageHeight,
+            0,
+            0.995326 * imageHeight
+        );
         grad.addColorStop(0, 'rgb(118, 117, 135)');
         grad.addColorStop(0.06, 'rgb(74, 74, 82)');
         grad.addColorStop(0.12, 'rgb(50, 50, 54)');
@@ -109,7 +158,12 @@ const drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight,
         break;
 
       case 'tiltedGray':
-        grad = linFCtx.createLinearGradient(0.233644 * imageWidth, 0.084112 * imageHeight, 0.81258 * imageWidth, 0.910919 * imageHeight);
+        grad = linFCtx.createLinearGradient(
+            0.233644 * imageWidth,
+            0.084112 * imageHeight,
+            0.81258 * imageWidth,
+            0.910919 * imageHeight
+        );
         grad.addColorStop(0, '#ffffff');
         grad.addColorStop(0.07, 'rgb(210, 210, 210)');
         grad.addColorStop(0.16, 'rgb(179, 179, 179)');
@@ -122,7 +176,12 @@ const drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight,
         break;
 
       case 'tiltedBlack':
-        grad = linFCtx.createLinearGradient(0.228971 * imageWidth, 0.079439 * imageHeight, 0.802547 * imageWidth, 0.898591 * imageHeight);
+        grad = linFCtx.createLinearGradient(
+            0.228971 * imageWidth,
+            0.079439 * imageHeight,
+            0.802547 * imageWidth,
+            0.898591 * imageHeight
+        );
         grad.addColorStop(0, '#666666');
         grad.addColorStop(0.21, '#000000');
         grad.addColorStop(0.47, '#666666');
@@ -163,7 +222,14 @@ const drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight,
         // Main frame
         //                roundedRectangle(linFCtx, 2, 2, imageWidth - 4, imageHeight - 4, FRAME_MAIN_CORNER_RADIUS);
         //                linFCtx.clip();
-        roundedRectangle(linFCtx, 1, 1, imageWidth - 2, imageHeight - 2, OUTER_FRAME_CORNER_RADIUS);
+        roundedRectangle(
+            linFCtx,
+            1,
+            1,
+            imageWidth - 2,
+            imageHeight - 2,
+            OUTER_FRAME_CORNER_RADIUS
+        );
         linFCtx.clip();
         grad = linFCtx.createLinearGradient(0, 1, 0, imageHeight - 2);
         // The fractions from the Java version of linear gauge
@@ -185,29 +251,37 @@ const drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight,
         linFCtx.fill();
 
         // Inner frame bright
-        roundedRectangle(linFCtx, frameWidth - 2, frameWidth - 2, imageWidth - (frameWidth - 2) * 2, imageHeight - (frameWidth - 2) * 2, SUBTRACT_CORNER_RADIUS);
+        roundedRectangle(
+            linFCtx,
+            frameWidth - 2,
+            frameWidth - 2,
+            imageWidth - (frameWidth - 2) * 2,
+            imageHeight - (frameWidth - 2) * 2,
+            SUBTRACT_CORNER_RADIUS
+        );
         linFCtx.clip();
         linFCtx.fillStyle = '#f6f6f6';
         linFCtx.fill();
 
         // Inner frame dark
-        roundedRectangle(linFCtx, frameWidth - 1, frameWidth - 1, imageWidth - (frameWidth - 1) * 2, imageHeight - (frameWidth - 1) * 2, SUBTRACT_CORNER_RADIUS);
+        roundedRectangle(
+            linFCtx,
+            frameWidth - 1,
+            frameWidth - 1,
+            imageWidth - (frameWidth - 1) * 2,
+            imageHeight - (frameWidth - 1) * 2,
+            SUBTRACT_CORNER_RADIUS
+        );
         linFCtx.clip();
         linFCtx.fillStyle = '#333333';
         //                linFCtx.fill();
         break;
 
       case 'blackMetal':
-        fractions = [0,
-          0.125,
-          0.347222,
-          0.5,
-          0.680555,
-          0.875,
-          1,
-        ];
+        fractions = [0, 0.125, 0.347222, 0.5, 0.680555, 0.875, 1];
 
-        colors = [new rgbaColor('#FFFFFF'),
+        colors = [
+          new rgbaColor('#FFFFFF'),
           new rgbaColor('#000000'),
           new rgbaColor('#999999'),
           new rgbaColor('#000000'),
@@ -217,26 +291,33 @@ const drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight,
         ];
         // Set the clip
         linFCtx.beginPath();
-        roundedRectangle(linFCtx, 1, 1, imageWidth - 2, imageHeight - 2, OUTER_FRAME_CORNER_RADIUS);
+        roundedRectangle(
+            linFCtx,
+            1,
+            1,
+            imageWidth - 2,
+            imageHeight - 2,
+            OUTER_FRAME_CORNER_RADIUS
+        );
         linFCtx.closePath();
         linFCtx.clip();
         grad = new ConicalGradient(fractions, colors);
-        grad.fillRect(linFCtx, imageWidth / 2, imageHeight / 2, imageWidth, imageHeight, frameWidth, frameWidth);
+        grad.fillRect(
+            linFCtx,
+            imageWidth / 2,
+            imageHeight / 2,
+            imageWidth,
+            imageHeight,
+            frameWidth,
+            frameWidth
+        );
         break;
 
       case 'shinyMetal':
-        fractions = [0,
-          0.125,
-          0.25,
-          0.347222,
-          0.5,
-          0.652777,
-          0.75,
-          0.875,
-          1,
-        ];
+        fractions = [0, 0.125, 0.25, 0.347222, 0.5, 0.652777, 0.75, 0.875, 1];
 
-        colors = [new rgbaColor('#FFFFFF'),
+        colors = [
+          new rgbaColor('#FFFFFF'),
           new rgbaColor('#D2D2D2'),
           new rgbaColor('#B3B3B3'),
           new rgbaColor('#EEEEEE'),
@@ -248,15 +329,31 @@ const drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight,
         ];
         // Set the clip
         linFCtx.beginPath();
-        roundedRectangle(linFCtx, 1, 1, imageWidth - 2, imageHeight - 2, OUTER_FRAME_CORNER_RADIUS);
+        roundedRectangle(
+            linFCtx,
+            1,
+            1,
+            imageWidth - 2,
+            imageHeight - 2,
+            OUTER_FRAME_CORNER_RADIUS
+        );
         linFCtx.closePath();
         linFCtx.clip();
         grad = new ConicalGradient(fractions, colors);
-        grad.fillRect(linFCtx, imageWidth / 2, imageHeight / 2, imageWidth, imageHeight, frameWidth, frameWidth);
+        grad.fillRect(
+            linFCtx,
+            imageWidth / 2,
+            imageHeight / 2,
+            imageWidth,
+            imageHeight,
+            frameWidth,
+            frameWidth
+        );
         break;
 
       case 'chrome':
-        fractions = [0,
+        fractions = [
+          0,
           0.09,
           0.12,
           0.16,
@@ -275,7 +372,8 @@ const drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight,
           1,
         ];
 
-        colors = [new rgbaColor('#FFFFFF'),
+        colors = [
+          new rgbaColor('#FFFFFF'),
           new rgbaColor('#FFFFFF'),
           new rgbaColor('#888890'),
           new rgbaColor('#A4B9BE'),
@@ -295,20 +393,49 @@ const drawLinearFrameImage = function(ctx, frameDesign, imageWidth, imageHeight,
         ];
         // Set the clip
         linFCtx.beginPath();
-        roundedRectangle(linFCtx, 1, 1, imageWidth - 2, imageHeight - 2, OUTER_FRAME_CORNER_RADIUS);
+        roundedRectangle(
+            linFCtx,
+            1,
+            1,
+            imageWidth - 2,
+            imageHeight - 2,
+            OUTER_FRAME_CORNER_RADIUS
+        );
         linFCtx.closePath();
         linFCtx.clip();
         grad = new ConicalGradient(fractions, colors);
-        grad.fillRect(linFCtx, imageWidth / 2, imageHeight / 2, imageWidth, imageHeight, frameWidth, frameWidth);
+        grad.fillRect(
+            linFCtx,
+            imageWidth / 2,
+            imageHeight / 2,
+            imageWidth,
+            imageHeight,
+            frameWidth,
+            frameWidth
+        );
         break;
     }
 
-    roundedRectangle(linFCtx, frameWidth, frameWidth, imageWidth - (frameWidth) * 2, imageHeight - (frameWidth) * 2, SUBTRACT_CORNER_RADIUS);
+    roundedRectangle(
+        linFCtx,
+        frameWidth,
+        frameWidth,
+        imageWidth - frameWidth * 2,
+        imageHeight - frameWidth * 2,
+        SUBTRACT_CORNER_RADIUS
+    );
     linFCtx.fillStyle = 'rgb(192, 192, 192)';
 
     // clip out the center of the frame for transparent backgrounds
     linFCtx.globalCompositeOperation = 'destination-out';
-    roundedRectangle(linFCtx, frameWidth, frameWidth, imageWidth - frameWidth * 2, imageHeight - frameWidth * 2, SUBTRACT_CORNER_RADIUS);
+    roundedRectangle(
+        linFCtx,
+        frameWidth,
+        frameWidth,
+        imageWidth - frameWidth * 2,
+        imageHeight - frameWidth * 2,
+        SUBTRACT_CORNER_RADIUS
+    );
     linFCtx.fill();
 
     // cache the buffer

@@ -1,11 +1,8 @@
-
-import {
-  createBuffer,
-  TWO_PI,
-} from './tools';
+import {createBuffer, TWO_PI} from './tools';
 
 const createKnobImage = function(size, knob, style) {
-  let knobBuffer; let knobCtx;
+  let knobBuffer;
+  let knobCtx;
   const maxPostCenterX = size / 2;
   const maxPostCenterY = size / 2;
   let grad;
@@ -21,10 +18,38 @@ const createKnobImage = function(size, knob, style) {
         // METALKNOB_FRAME
         knobCtx.beginPath();
         knobCtx.moveTo(0, size * 0.5);
-        knobCtx.bezierCurveTo(0, size * 0.222222, size * 0.222222, 0, size * 0.5, 0);
-        knobCtx.bezierCurveTo(size * 0.777777, 0, size, size * 0.222222, size, size * 0.5);
-        knobCtx.bezierCurveTo(size, size * 0.777777, size * 0.777777, size, size * 0.5, size);
-        knobCtx.bezierCurveTo(size * 0.222222, size, 0, size * 0.777777, 0, size * 0.5);
+        knobCtx.bezierCurveTo(
+            0,
+            size * 0.222222,
+            size * 0.222222,
+            0,
+            size * 0.5,
+            0
+        );
+        knobCtx.bezierCurveTo(
+            size * 0.777777,
+            0,
+            size,
+            size * 0.222222,
+            size,
+            size * 0.5
+        );
+        knobCtx.bezierCurveTo(
+            size,
+            size * 0.777777,
+            size * 0.777777,
+            size,
+            size * 0.5,
+            size
+        );
+        knobCtx.bezierCurveTo(
+            size * 0.222222,
+            size,
+            0,
+            size * 0.777777,
+            0,
+            size * 0.5
+        );
         knobCtx.closePath();
         grad = knobCtx.createLinearGradient(0, 0, 0, size);
         grad.addColorStop(0, 'rgb(92, 95, 101)');
@@ -36,12 +61,45 @@ const createKnobImage = function(size, knob, style) {
         // METALKNOB_MAIN
         knobCtx.beginPath();
         knobCtx.moveTo(size * 0.055555, size * 0.5);
-        knobCtx.bezierCurveTo(size * 0.055555, size * 0.277777, size * 0.277777, size * 0.055555, size * 0.5, size * 0.055555);
-        knobCtx.bezierCurveTo(size * 0.722222, size * 0.055555, size * 0.944444, size * 0.277777, size * 0.944444, size * 0.5);
-        knobCtx.bezierCurveTo(size * 0.944444, size * 0.722222, size * 0.722222, size * 0.944444, size * 0.5, size * 0.944444);
-        knobCtx.bezierCurveTo(size * 0.277777, size * 0.944444, size * 0.055555, size * 0.722222, size * 0.055555, size * 0.5);
+        knobCtx.bezierCurveTo(
+            size * 0.055555,
+            size * 0.277777,
+            size * 0.277777,
+            size * 0.055555,
+            size * 0.5,
+            size * 0.055555
+        );
+        knobCtx.bezierCurveTo(
+            size * 0.722222,
+            size * 0.055555,
+            size * 0.944444,
+            size * 0.277777,
+            size * 0.944444,
+            size * 0.5
+        );
+        knobCtx.bezierCurveTo(
+            size * 0.944444,
+            size * 0.722222,
+            size * 0.722222,
+            size * 0.944444,
+            size * 0.5,
+            size * 0.944444
+        );
+        knobCtx.bezierCurveTo(
+            size * 0.277777,
+            size * 0.944444,
+            size * 0.055555,
+            size * 0.722222,
+            size * 0.055555,
+            size * 0.5
+        );
         knobCtx.closePath();
-        grad = knobCtx.createLinearGradient(0, 0.055555 * size, 0, 0.944443 * size);
+        grad = knobCtx.createLinearGradient(
+            0,
+            0.055555 * size,
+            0,
+            0.944443 * size
+        );
         switch (style.style) {
           case 'black':
             grad.addColorStop(0, 'rgb(43, 42, 47)');
@@ -54,7 +112,7 @@ const createKnobImage = function(size, knob, style) {
             break;
 
           case 'silver':
-            /* falls through */
+          /* falls through */
           default:
             grad.addColorStop(0, 'rgb(204, 204, 204)');
             grad.addColorStop(1, 'rgb(87, 92, 98)');
@@ -66,12 +124,47 @@ const createKnobImage = function(size, knob, style) {
         // METALKNOB_LOWERHL
         knobCtx.beginPath();
         knobCtx.moveTo(size * 0.777777, size * 0.833333);
-        knobCtx.bezierCurveTo(size * 0.722222, size * 0.722222, size * 0.611111, size * 0.666666, size * 0.5, size * 0.666666);
-        knobCtx.bezierCurveTo(size * 0.388888, size * 0.666666, size * 0.277777, size * 0.722222, size * 0.222222, size * 0.833333);
-        knobCtx.bezierCurveTo(size * 0.277777, size * 0.888888, size * 0.388888, size * 0.944444, size * 0.5, size * 0.944444);
-        knobCtx.bezierCurveTo(size * 0.611111, size * 0.944444, size * 0.722222, size * 0.888888, size * 0.777777, size * 0.833333);
+        knobCtx.bezierCurveTo(
+            size * 0.722222,
+            size * 0.722222,
+            size * 0.611111,
+            size * 0.666666,
+            size * 0.5,
+            size * 0.666666
+        );
+        knobCtx.bezierCurveTo(
+            size * 0.388888,
+            size * 0.666666,
+            size * 0.277777,
+            size * 0.722222,
+            size * 0.222222,
+            size * 0.833333
+        );
+        knobCtx.bezierCurveTo(
+            size * 0.277777,
+            size * 0.888888,
+            size * 0.388888,
+            size * 0.944444,
+            size * 0.5,
+            size * 0.944444
+        );
+        knobCtx.bezierCurveTo(
+            size * 0.611111,
+            size * 0.944444,
+            size * 0.722222,
+            size * 0.888888,
+            size * 0.777777,
+            size * 0.833333
+        );
         knobCtx.closePath();
-        grad = knobCtx.createRadialGradient((0.555555) * size, ((0.944444) * size), 0, ((0.555555) * size), ((0.944444) * size), 0.388888 * size);
+        grad = knobCtx.createRadialGradient(
+            0.555555 * size,
+            0.944444 * size,
+            0,
+            0.555555 * size,
+            0.944444 * size,
+            0.388888 * size
+        );
         grad.addColorStop(0, 'rgba(255, 255, 255, 0.6)');
         grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
         knobCtx.fillStyle = grad;
@@ -80,12 +173,47 @@ const createKnobImage = function(size, knob, style) {
         // METALKNOB_UPPERHL
         knobCtx.beginPath();
         knobCtx.moveTo(size * 0.944444, size * 0.277777);
-        knobCtx.bezierCurveTo(size * 0.833333, size * 0.111111, size * 0.666666, 0, size * 0.5, 0);
-        knobCtx.bezierCurveTo(size * 0.333333, 0, size * 0.166666, size * 0.111111, size * 0.055555, size * 0.277777);
-        knobCtx.bezierCurveTo(size * 0.166666, size * 0.333333, size * 0.333333, size * 0.388888, size * 0.5, size * 0.388888);
-        knobCtx.bezierCurveTo(size * 0.666666, size * 0.388888, size * 0.833333, size * 0.333333, size * 0.944444, size * 0.277777);
+        knobCtx.bezierCurveTo(
+            size * 0.833333,
+            size * 0.111111,
+            size * 0.666666,
+            0,
+            size * 0.5,
+            0
+        );
+        knobCtx.bezierCurveTo(
+            size * 0.333333,
+            0,
+            size * 0.166666,
+            size * 0.111111,
+            size * 0.055555,
+            size * 0.277777
+        );
+        knobCtx.bezierCurveTo(
+            size * 0.166666,
+            size * 0.333333,
+            size * 0.333333,
+            size * 0.388888,
+            size * 0.5,
+            size * 0.388888
+        );
+        knobCtx.bezierCurveTo(
+            size * 0.666666,
+            size * 0.388888,
+            size * 0.833333,
+            size * 0.333333,
+            size * 0.944444,
+            size * 0.277777
+        );
         knobCtx.closePath();
-        grad = knobCtx.createRadialGradient(0.5 * size, 0, 0, ((0.5) * size), 0, 0.583333 * size);
+        grad = knobCtx.createRadialGradient(
+            0.5 * size,
+            0,
+            0,
+            0.5 * size,
+            0,
+            0.583333 * size
+        );
         grad.addColorStop(0, 'rgba(255, 255, 255, 0.749019)');
         grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
         knobCtx.fillStyle = grad;
@@ -94,12 +222,45 @@ const createKnobImage = function(size, knob, style) {
         // METALKNOB_INNERFRAME
         knobCtx.beginPath();
         knobCtx.moveTo(size * 0.277777, size * 0.555555);
-        knobCtx.bezierCurveTo(size * 0.277777, size * 0.388888, size * 0.388888, size * 0.277777, size * 0.5, size * 0.277777);
-        knobCtx.bezierCurveTo(size * 0.611111, size * 0.277777, size * 0.777777, size * 0.388888, size * 0.777777, size * 0.555555);
-        knobCtx.bezierCurveTo(size * 0.777777, size * 0.666666, size * 0.611111, size * 0.777777, size * 0.5, size * 0.777777);
-        knobCtx.bezierCurveTo(size * 0.388888, size * 0.777777, size * 0.277777, size * 0.666666, size * 0.277777, size * 0.555555);
+        knobCtx.bezierCurveTo(
+            size * 0.277777,
+            size * 0.388888,
+            size * 0.388888,
+            size * 0.277777,
+            size * 0.5,
+            size * 0.277777
+        );
+        knobCtx.bezierCurveTo(
+            size * 0.611111,
+            size * 0.277777,
+            size * 0.777777,
+            size * 0.388888,
+            size * 0.777777,
+            size * 0.555555
+        );
+        knobCtx.bezierCurveTo(
+            size * 0.777777,
+            size * 0.666666,
+            size * 0.611111,
+            size * 0.777777,
+            size * 0.5,
+            size * 0.777777
+        );
+        knobCtx.bezierCurveTo(
+            size * 0.388888,
+            size * 0.777777,
+            size * 0.277777,
+            size * 0.666666,
+            size * 0.277777,
+            size * 0.555555
+        );
         knobCtx.closePath();
-        grad = knobCtx.createLinearGradient(0, 0.277777 * size, 0, 0.722221 * size);
+        grad = knobCtx.createLinearGradient(
+            0,
+            0.277777 * size,
+            0,
+            0.722221 * size
+        );
         grad.addColorStop(0, '#000000');
         grad.addColorStop(1, 'rgb(204, 204, 204)');
         knobCtx.fillStyle = grad;
@@ -108,12 +269,45 @@ const createKnobImage = function(size, knob, style) {
         // METALKNOB_INNERBACKGROUND
         knobCtx.beginPath();
         knobCtx.moveTo(size * 0.333333, size * 0.555555);
-        knobCtx.bezierCurveTo(size * 0.333333, size * 0.444444, size * 0.388888, size * 0.333333, size * 0.5, size * 0.333333);
-        knobCtx.bezierCurveTo(size * 0.611111, size * 0.333333, size * 0.722222, size * 0.444444, size * 0.722222, size * 0.555555);
-        knobCtx.bezierCurveTo(size * 0.722222, size * 0.611111, size * 0.611111, size * 0.722222, size * 0.5, size * 0.722222);
-        knobCtx.bezierCurveTo(size * 0.388888, size * 0.722222, size * 0.333333, size * 0.611111, size * 0.333333, size * 0.555555);
+        knobCtx.bezierCurveTo(
+            size * 0.333333,
+            size * 0.444444,
+            size * 0.388888,
+            size * 0.333333,
+            size * 0.5,
+            size * 0.333333
+        );
+        knobCtx.bezierCurveTo(
+            size * 0.611111,
+            size * 0.333333,
+            size * 0.722222,
+            size * 0.444444,
+            size * 0.722222,
+            size * 0.555555
+        );
+        knobCtx.bezierCurveTo(
+            size * 0.722222,
+            size * 0.611111,
+            size * 0.611111,
+            size * 0.722222,
+            size * 0.5,
+            size * 0.722222
+        );
+        knobCtx.bezierCurveTo(
+            size * 0.388888,
+            size * 0.722222,
+            size * 0.333333,
+            size * 0.611111,
+            size * 0.333333,
+            size * 0.555555
+        );
         knobCtx.closePath();
-        grad = knobCtx.createLinearGradient(0, 0.333333 * size, 0, 0.666666 * size);
+        grad = knobCtx.createLinearGradient(
+            0,
+            0.333333 * size,
+            0,
+            0.666666 * size
+        );
         grad.addColorStop(0, 'rgb(10, 9, 1)');
         grad.addColorStop(1, 'rgb(42, 41, 37)');
         knobCtx.fillStyle = grad;
@@ -130,7 +324,12 @@ const createKnobImage = function(size, knob, style) {
         knobCtx.arc(maxPostCenterX, maxPostCenterY, size / 2, 0, TWO_PI, true);
         knobCtx.closePath();
         knobCtx.fill();
-        grad = knobCtx.createLinearGradient(0, size - size * 0.77, 0, size - size * 0.77 + size * 0.77);
+        grad = knobCtx.createLinearGradient(
+            0,
+            size - size * 0.77,
+            0,
+            size - size * 0.77 + size * 0.77
+        );
         switch (style.style) {
           case 'black':
             grad.addColorStop(0, 'rgb(191, 191, 191)');
@@ -145,7 +344,7 @@ const createKnobImage = function(size, knob, style) {
             break;
 
           case 'silver':
-            /* falls through */
+          /* falls through */
           default:
             grad.addColorStop(0, 'rgb(215, 215, 215)');
             grad.addColorStop(0.5, 'rgb(116, 116, 116)');
@@ -154,18 +353,39 @@ const createKnobImage = function(size, knob, style) {
         }
         knobCtx.fillStyle = grad;
         knobCtx.beginPath();
-        knobCtx.arc(maxPostCenterX, maxPostCenterY, size * 0.77 / 2, 0, TWO_PI, true);
+        knobCtx.arc(
+            maxPostCenterX,
+            maxPostCenterY,
+            (size * 0.77) / 2,
+            0,
+            TWO_PI,
+            true
+        );
         knobCtx.closePath();
         knobCtx.fill();
 
-        grad = knobCtx.createRadialGradient(maxPostCenterX, maxPostCenterY, 0, maxPostCenterX, maxPostCenterY, size * 0.77 / 2);
+        grad = knobCtx.createRadialGradient(
+            maxPostCenterX,
+            maxPostCenterY,
+            0,
+            maxPostCenterX,
+            maxPostCenterY,
+            (size * 0.77) / 2
+        );
         grad.addColorStop(0, 'rgba(0, 0, 0, 0)');
         grad.addColorStop(0.75, 'rgba(0, 0, 0, 0)');
         grad.addColorStop(0.76, 'rgba(0, 0, 0, 0.01)');
         grad.addColorStop(1, 'rgba(0, 0, 0, 0.2)');
         knobCtx.fillStyle = grad;
         knobCtx.beginPath();
-        knobCtx.arc(maxPostCenterX, maxPostCenterY, size * 0.77 / 2, 0, TWO_PI, true);
+        knobCtx.arc(
+            maxPostCenterX,
+            maxPostCenterY,
+            (size * 0.77) / 2,
+            0,
+            TWO_PI,
+            true
+        );
         knobCtx.closePath();
         knobCtx.fill();
         break;

@@ -1,18 +1,17 @@
-
-import {
-  rgbToHsl,
-  doc,
-} from './tools';
+import {rgbToHsl, doc} from './tools';
 
 const Lightbulb = function(canvas, parameters) {
   parameters = parameters || {};
   let mainCtx;
   // parameters
-  let width = (undefined === parameters.width ? 0 : parameters.width);
-  let height = (undefined === parameters.height ? 0 : parameters.height);
-  let glowColor = (undefined === parameters.glowColor ? '#ffff00' : parameters.glowColor);
+  let width = undefined === parameters.width ? 0 : parameters.width;
+  let height = undefined === parameters.height ? 0 : parameters.height;
+  let glowColor =
+    undefined === parameters.glowColor ? '#ffff00' : parameters.glowColor;
   //
-  let size; let imageWidth; let imageHeight;
+  let size;
+  let imageWidth;
+  let imageHeight;
   let initialized = false;
   let lightOn = false;
   let alpha = 1;
@@ -82,13 +81,53 @@ const Lightbulb = function(canvas, parameters) {
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(0.289473 * imageWidth, 0.438596 * imageHeight);
-    ctx.bezierCurveTo(0.289473 * imageWidth, 0.561403 * imageHeight, 0.385964 * imageWidth, 0.605263 * imageHeight, 0.385964 * imageWidth, 0.745614 * imageHeight);
-    ctx.bezierCurveTo(0.385964 * imageWidth, 0.745614 * imageHeight, 0.587719 * imageWidth, 0.745614 * imageHeight, 0.587719 * imageWidth, 0.745614 * imageHeight);
-    ctx.bezierCurveTo(0.587719 * imageWidth, 0.605263 * imageHeight, 0.692982 * imageWidth, 0.561403 * imageHeight, 0.692982 * imageWidth, 0.438596 * imageHeight);
-    ctx.bezierCurveTo(0.692982 * imageWidth, 0.324561 * imageHeight, 0.605263 * imageWidth, 0.228070 * imageHeight, 0.5 * imageWidth, 0.228070 * imageHeight);
-    ctx.bezierCurveTo(0.385964 * imageWidth, 0.228070 * imageHeight, 0.289473 * imageWidth, 0.324561 * imageHeight, 0.289473 * imageWidth, 0.438596 * imageHeight);
+    ctx.bezierCurveTo(
+        0.289473 * imageWidth,
+        0.561403 * imageHeight,
+        0.385964 * imageWidth,
+        0.605263 * imageHeight,
+        0.385964 * imageWidth,
+        0.745614 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.385964 * imageWidth,
+        0.745614 * imageHeight,
+        0.587719 * imageWidth,
+        0.745614 * imageHeight,
+        0.587719 * imageWidth,
+        0.745614 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.587719 * imageWidth,
+        0.605263 * imageHeight,
+        0.692982 * imageWidth,
+        0.561403 * imageHeight,
+        0.692982 * imageWidth,
+        0.438596 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.692982 * imageWidth,
+        0.324561 * imageHeight,
+        0.605263 * imageWidth,
+        0.22807 * imageHeight,
+        0.5 * imageWidth,
+        0.22807 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.385964 * imageWidth,
+        0.22807 * imageHeight,
+        0.289473 * imageWidth,
+        0.324561 * imageHeight,
+        0.289473 * imageWidth,
+        0.438596 * imageHeight
+    );
     ctx.closePath();
-    glassOffFill = ctx.createLinearGradient(0, 0.289473 * imageHeight, 0, 0.701754 * imageHeight);
+    glassOffFill = ctx.createLinearGradient(
+        0,
+        0.289473 * imageHeight,
+        0,
+        0.701754 * imageHeight
+    );
     glassOffFill.addColorStop(0, '#eeeeee');
     glassOffFill.addColorStop(0.99, '#999999');
     glassOffFill.addColorStop(1, '#999999');
@@ -116,21 +155,67 @@ const Lightbulb = function(canvas, parameters) {
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(0.289473 * imageWidth, 0.438596 * imageHeight);
-    ctx.bezierCurveTo(0.289473 * imageWidth, 0.561403 * imageHeight, 0.385964 * imageWidth, 0.605263 * imageHeight, 0.385964 * imageWidth, 0.745614 * imageHeight);
-    ctx.bezierCurveTo(0.385964 * imageWidth, 0.745614 * imageHeight, 0.587719 * imageWidth, 0.745614 * imageHeight, 0.587719 * imageWidth, 0.745614 * imageHeight);
-    ctx.bezierCurveTo(0.587719 * imageWidth, 0.605263 * imageHeight, 0.692982 * imageWidth, 0.561403 * imageHeight, 0.692982 * imageWidth, 0.438596 * imageHeight);
-    ctx.bezierCurveTo(0.692982 * imageWidth, 0.324561 * imageHeight, 0.605263 * imageWidth, 0.228070 * imageHeight, 0.5 * imageWidth, 0.228070 * imageHeight);
-    ctx.bezierCurveTo(0.385964 * imageWidth, 0.228070 * imageHeight, 0.289473 * imageWidth, 0.324561 * imageHeight, 0.289473 * imageWidth, 0.438596 * imageHeight);
+    ctx.bezierCurveTo(
+        0.289473 * imageWidth,
+        0.561403 * imageHeight,
+        0.385964 * imageWidth,
+        0.605263 * imageHeight,
+        0.385964 * imageWidth,
+        0.745614 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.385964 * imageWidth,
+        0.745614 * imageHeight,
+        0.587719 * imageWidth,
+        0.745614 * imageHeight,
+        0.587719 * imageWidth,
+        0.745614 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.587719 * imageWidth,
+        0.605263 * imageHeight,
+        0.692982 * imageWidth,
+        0.561403 * imageHeight,
+        0.692982 * imageWidth,
+        0.438596 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.692982 * imageWidth,
+        0.324561 * imageHeight,
+        0.605263 * imageWidth,
+        0.22807 * imageHeight,
+        0.5 * imageWidth,
+        0.22807 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.385964 * imageWidth,
+        0.22807 * imageHeight,
+        0.289473 * imageWidth,
+        0.324561 * imageHeight,
+        0.289473 * imageWidth,
+        0.438596 * imageHeight
+    );
     ctx.closePath();
 
-    glassOnFill = ctx.createLinearGradient(0, 0.289473 * imageHeight, 0, 0.701754 * imageHeight);
+    glassOnFill = ctx.createLinearGradient(
+        0,
+        0.289473 * imageHeight,
+        0,
+        0.701754 * imageHeight
+    );
 
     if (red === green && green === blue) {
       glassOnFill.addColorStop(0, 'hsl(0, 60%, 0%)');
       glassOnFill.addColorStop(1, 'hsl(0, 40%, 0%)');
     } else {
-      glassOnFill.addColorStop(0, 'hsl(' + hsl[0] * 255 + ', ' + hsl[1] * 100 + '%, 70%)');
-      glassOnFill.addColorStop(1, 'hsl(' + hsl[0] * 255 + ', ' + hsl[1] * 100 + '%, 80%)');
+      glassOnFill.addColorStop(
+          0,
+          'hsl(' + hsl[0] * 255 + ', ' + hsl[1] * 100 + '%, 70%)'
+      );
+      glassOnFill.addColorStop(
+          1,
+          'hsl(' + hsl[0] * 255 + ', ' + hsl[1] * 100 + '%, 80%)'
+      );
     }
     ctx.fillStyle = glassOnFill;
 
@@ -154,7 +239,10 @@ const Lightbulb = function(canvas, parameters) {
   };
 
   const drawBulb = function(ctx) {
-    let highlight; let winding; let winding1; let contactPlate;
+    let highlight;
+    let winding;
+    let winding1;
+    let contactPlate;
 
     ctx.save();
 
@@ -163,12 +251,45 @@ const Lightbulb = function(canvas, parameters) {
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(0.350877 * imageWidth, 0.333333 * imageHeight);
-    ctx.bezierCurveTo(0.350877 * imageWidth, 0.280701 * imageHeight, 0.412280 * imageWidth, 0.236842 * imageHeight, 0.5 * imageWidth, 0.236842 * imageHeight);
-    ctx.bezierCurveTo(0.578947 * imageWidth, 0.236842 * imageHeight, 0.640350 * imageWidth, 0.280701 * imageHeight, 0.640350 * imageWidth, 0.333333 * imageHeight);
-    ctx.bezierCurveTo(0.640350 * imageWidth, 0.385964 * imageHeight, 0.578947 * imageWidth, 0.429824 * imageHeight, 0.5 * imageWidth, 0.429824 * imageHeight);
-    ctx.bezierCurveTo(0.412280 * imageWidth, 0.429824 * imageHeight, 0.350877 * imageWidth, 0.385964 * imageHeight, 0.350877 * imageWidth, 0.333333 * imageHeight);
+    ctx.bezierCurveTo(
+        0.350877 * imageWidth,
+        0.280701 * imageHeight,
+        0.41228 * imageWidth,
+        0.236842 * imageHeight,
+        0.5 * imageWidth,
+        0.236842 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.578947 * imageWidth,
+        0.236842 * imageHeight,
+        0.64035 * imageWidth,
+        0.280701 * imageHeight,
+        0.64035 * imageWidth,
+        0.333333 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.64035 * imageWidth,
+        0.385964 * imageHeight,
+        0.578947 * imageWidth,
+        0.429824 * imageHeight,
+        0.5 * imageWidth,
+        0.429824 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.41228 * imageWidth,
+        0.429824 * imageHeight,
+        0.350877 * imageWidth,
+        0.385964 * imageHeight,
+        0.350877 * imageWidth,
+        0.333333 * imageHeight
+    );
     ctx.closePath();
-    highlight = ctx.createLinearGradient(0, 0.245614 * imageHeight, 0, 0.429824 * imageHeight);
+    highlight = ctx.createLinearGradient(
+        0,
+        0.245614 * imageHeight,
+        0,
+        0.429824 * imageHeight
+    );
     highlight.addColorStop(0, '#ffffff');
     highlight.addColorStop(0.99, 'rgba(255, 255, 255, 0)');
     highlight.addColorStop(1, 'rgba(255, 255, 255, 0)');
@@ -180,8 +301,22 @@ const Lightbulb = function(canvas, parameters) {
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(0.377192 * imageWidth, 0.745614 * imageHeight);
-    ctx.bezierCurveTo(0.377192 * imageWidth, 0.745614 * imageHeight, 0.429824 * imageWidth, 0.728070 * imageHeight, 0.491228 * imageWidth, 0.728070 * imageHeight);
-    ctx.bezierCurveTo(0.561403 * imageWidth, 0.728070 * imageHeight, 0.605263 * imageWidth, 0.736842 * imageHeight, 0.605263 * imageWidth, 0.736842 * imageHeight);
+    ctx.bezierCurveTo(
+        0.377192 * imageWidth,
+        0.745614 * imageHeight,
+        0.429824 * imageWidth,
+        0.72807 * imageHeight,
+        0.491228 * imageWidth,
+        0.72807 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.561403 * imageWidth,
+        0.72807 * imageHeight,
+        0.605263 * imageWidth,
+        0.736842 * imageHeight,
+        0.605263 * imageWidth,
+        0.736842 * imageHeight
+    );
     ctx.lineTo(0.605263 * imageWidth, 0.763157 * imageHeight);
     ctx.lineTo(0.596491 * imageWidth, 0.780701 * imageHeight);
     ctx.lineTo(0.605263 * imageWidth, 0.798245 * imageHeight);
@@ -191,10 +326,38 @@ const Lightbulb = function(canvas, parameters) {
     ctx.lineTo(0.605263 * imageWidth, 0.868421 * imageHeight);
     ctx.lineTo(0.596491 * imageWidth, 0.885964 * imageHeight);
     ctx.lineTo(0.605263 * imageWidth, 0.894736 * imageHeight);
-    ctx.bezierCurveTo(0.605263 * imageWidth, 0.894736 * imageHeight, 0.570175 * imageWidth, 0.956140 * imageHeight, 0.535087 * imageWidth, 0.991228 * imageHeight);
-    ctx.bezierCurveTo(0.526315 * imageWidth, 0.991228 * imageHeight, 0.517543 * imageWidth, imageHeight, 0.5 * imageWidth, imageHeight);
-    ctx.bezierCurveTo(0.482456 * imageWidth, imageHeight, 0.473684 * imageWidth, imageHeight, 0.464912 * imageWidth, 0.991228 * imageHeight);
-    ctx.bezierCurveTo(0.421052 * imageWidth, 0.947368 * imageHeight, 0.394736 * imageWidth, 0.903508 * imageHeight, 0.394736 * imageWidth, 0.903508 * imageHeight);
+    ctx.bezierCurveTo(
+        0.605263 * imageWidth,
+        0.894736 * imageHeight,
+        0.570175 * imageWidth,
+        0.95614 * imageHeight,
+        0.535087 * imageWidth,
+        0.991228 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.526315 * imageWidth,
+        0.991228 * imageHeight,
+        0.517543 * imageWidth,
+        imageHeight,
+        0.5 * imageWidth,
+        imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.482456 * imageWidth,
+        imageHeight,
+        0.473684 * imageWidth,
+        imageHeight,
+        0.464912 * imageWidth,
+        0.991228 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.421052 * imageWidth,
+        0.947368 * imageHeight,
+        0.394736 * imageWidth,
+        0.903508 * imageHeight,
+        0.394736 * imageWidth,
+        0.903508 * imageHeight
+    );
     ctx.lineTo(0.394736 * imageWidth, 0.894736 * imageHeight);
     ctx.lineTo(0.385964 * imageWidth, 0.885964 * imageHeight);
     ctx.lineTo(0.394736 * imageWidth, 0.868421 * imageHeight);
@@ -207,7 +370,12 @@ const Lightbulb = function(canvas, parameters) {
     ctx.lineTo(0.377192 * imageWidth, 0.763157 * imageHeight);
     ctx.lineTo(0.377192 * imageWidth, 0.745614 * imageHeight);
     ctx.closePath();
-    winding = ctx.createLinearGradient(0.473684 * imageWidth, 0.728070 * imageHeight, 0.484702 * imageWidth, 0.938307 * imageHeight);
+    winding = ctx.createLinearGradient(
+        0.473684 * imageWidth,
+        0.72807 * imageHeight,
+        0.484702 * imageWidth,
+        0.938307 * imageHeight
+    );
     winding.addColorStop(0, '#333333');
     winding.addColorStop(0.04, '#d9dad6');
     winding.addColorStop(0.19, '#e4e5e0');
@@ -228,8 +396,22 @@ const Lightbulb = function(canvas, parameters) {
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(0.377192 * imageWidth, 0.745614 * imageHeight);
-    ctx.bezierCurveTo(0.377192 * imageWidth, 0.745614 * imageHeight, 0.429824 * imageWidth, 0.728070 * imageHeight, 0.491228 * imageWidth, 0.728070 * imageHeight);
-    ctx.bezierCurveTo(0.561403 * imageWidth, 0.728070 * imageHeight, 0.605263 * imageWidth, 0.736842 * imageHeight, 0.605263 * imageWidth, 0.736842 * imageHeight);
+    ctx.bezierCurveTo(
+        0.377192 * imageWidth,
+        0.745614 * imageHeight,
+        0.429824 * imageWidth,
+        0.72807 * imageHeight,
+        0.491228 * imageWidth,
+        0.72807 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.561403 * imageWidth,
+        0.72807 * imageHeight,
+        0.605263 * imageWidth,
+        0.736842 * imageHeight,
+        0.605263 * imageWidth,
+        0.736842 * imageHeight
+    );
     ctx.lineTo(0.605263 * imageWidth, 0.763157 * imageHeight);
     ctx.lineTo(0.596491 * imageWidth, 0.780701 * imageHeight);
     ctx.lineTo(0.605263 * imageWidth, 0.798245 * imageHeight);
@@ -239,10 +421,38 @@ const Lightbulb = function(canvas, parameters) {
     ctx.lineTo(0.605263 * imageWidth, 0.868421 * imageHeight);
     ctx.lineTo(0.596491 * imageWidth, 0.885964 * imageHeight);
     ctx.lineTo(0.605263 * imageWidth, 0.894736 * imageHeight);
-    ctx.bezierCurveTo(0.605263 * imageWidth, 0.894736 * imageHeight, 0.570175 * imageWidth, 0.956140 * imageHeight, 0.535087 * imageWidth, 0.991228 * imageHeight);
-    ctx.bezierCurveTo(0.526315 * imageWidth, 0.991228 * imageHeight, 0.517543 * imageWidth, imageHeight, 0.5 * imageWidth, imageHeight);
-    ctx.bezierCurveTo(0.482456 * imageWidth, imageHeight, 0.473684 * imageWidth, imageHeight, 0.464912 * imageWidth, 0.991228 * imageHeight);
-    ctx.bezierCurveTo(0.421052 * imageWidth, 0.947368 * imageHeight, 0.394736 * imageWidth, 0.903508 * imageHeight, 0.394736 * imageWidth, 0.903508 * imageHeight);
+    ctx.bezierCurveTo(
+        0.605263 * imageWidth,
+        0.894736 * imageHeight,
+        0.570175 * imageWidth,
+        0.95614 * imageHeight,
+        0.535087 * imageWidth,
+        0.991228 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.526315 * imageWidth,
+        0.991228 * imageHeight,
+        0.517543 * imageWidth,
+        imageHeight,
+        0.5 * imageWidth,
+        imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.482456 * imageWidth,
+        imageHeight,
+        0.473684 * imageWidth,
+        imageHeight,
+        0.464912 * imageWidth,
+        0.991228 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.421052 * imageWidth,
+        0.947368 * imageHeight,
+        0.394736 * imageWidth,
+        0.903508 * imageHeight,
+        0.394736 * imageWidth,
+        0.903508 * imageHeight
+    );
     ctx.lineTo(0.394736 * imageWidth, 0.894736 * imageHeight);
     ctx.lineTo(0.385964 * imageWidth, 0.885964 * imageHeight);
     ctx.lineTo(0.394736 * imageWidth, 0.868421 * imageHeight);
@@ -255,7 +465,12 @@ const Lightbulb = function(canvas, parameters) {
     ctx.lineTo(0.377192 * imageWidth, 0.763157 * imageHeight);
     ctx.lineTo(0.377192 * imageWidth, 0.745614 * imageHeight);
     ctx.closePath();
-    winding1 = ctx.createLinearGradient(0.377192 * imageWidth, 0.789473 * imageHeight, 0.605263 * imageWidth, 0.789473 * imageHeight);
+    winding1 = ctx.createLinearGradient(
+        0.377192 * imageWidth,
+        0.789473 * imageHeight,
+        0.605263 * imageWidth,
+        0.789473 * imageHeight
+    );
     winding1.addColorStop(0, 'rgba(0, 0, 0, 0.4)');
     winding1.addColorStop(0.15, 'rgba(0, 0, 0, 0.32)');
     winding1.addColorStop(0.85, 'rgba(0, 0, 0, 0.33)');
@@ -268,14 +483,61 @@ const Lightbulb = function(canvas, parameters) {
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(0.421052 * imageWidth, 0.947368 * imageHeight);
-    ctx.bezierCurveTo(0.438596 * imageWidth, 0.956140 * imageHeight, 0.447368 * imageWidth, 0.973684 * imageHeight, 0.464912 * imageWidth, 0.991228 * imageHeight);
-    ctx.bezierCurveTo(0.473684 * imageWidth, imageHeight, 0.482456 * imageWidth, imageHeight, 0.5 * imageWidth, imageHeight);
-    ctx.bezierCurveTo(0.517543 * imageWidth, imageHeight, 0.526315 * imageWidth, 0.991228 * imageHeight, 0.535087 * imageWidth, 0.991228 * imageHeight);
-    ctx.bezierCurveTo(0.543859 * imageWidth, 0.982456 * imageHeight, 0.561403 * imageWidth, 0.956140 * imageHeight, 0.578947 * imageWidth, 0.947368 * imageHeight);
-    ctx.bezierCurveTo(0.552631 * imageWidth, 0.938596 * imageHeight, 0.526315 * imageWidth, 0.938596 * imageHeight, 0.5 * imageWidth, 0.938596 * imageHeight);
-    ctx.bezierCurveTo(0.473684 * imageWidth, 0.938596 * imageHeight, 0.447368 * imageWidth, 0.938596 * imageHeight, 0.421052 * imageWidth, 0.947368 * imageHeight);
+    ctx.bezierCurveTo(
+        0.438596 * imageWidth,
+        0.95614 * imageHeight,
+        0.447368 * imageWidth,
+        0.973684 * imageHeight,
+        0.464912 * imageWidth,
+        0.991228 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.473684 * imageWidth,
+        imageHeight,
+        0.482456 * imageWidth,
+        imageHeight,
+        0.5 * imageWidth,
+        imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.517543 * imageWidth,
+        imageHeight,
+        0.526315 * imageWidth,
+        0.991228 * imageHeight,
+        0.535087 * imageWidth,
+        0.991228 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.543859 * imageWidth,
+        0.982456 * imageHeight,
+        0.561403 * imageWidth,
+        0.95614 * imageHeight,
+        0.578947 * imageWidth,
+        0.947368 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.552631 * imageWidth,
+        0.938596 * imageHeight,
+        0.526315 * imageWidth,
+        0.938596 * imageHeight,
+        0.5 * imageWidth,
+        0.938596 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.473684 * imageWidth,
+        0.938596 * imageHeight,
+        0.447368 * imageWidth,
+        0.938596 * imageHeight,
+        0.421052 * imageWidth,
+        0.947368 * imageHeight
+    );
     ctx.closePath();
-    contactPlate = ctx.createLinearGradient(0, 0.938596 * imageHeight, 0, imageHeight);
+    contactPlate = ctx.createLinearGradient(
+        0,
+        0.938596 * imageHeight,
+        0,
+        imageHeight
+    );
     contactPlate.addColorStop(0, '#050a06');
     contactPlate.addColorStop(0.61, '#070602');
     contactPlate.addColorStop(0.71, '#999288');

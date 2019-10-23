@@ -1,7 +1,13 @@
-
 let BackgroundColorDef;
 (function() {
-  BackgroundColorDef = function(gradientStart, gradientFraction, gradientStop, labelColor, symbolColor, name) {
+  BackgroundColorDef = function(
+      gradientStart,
+      gradientFraction,
+      gradientStop,
+      labelColor,
+      symbolColor,
+      name
+  ) {
     this.gradientStart = gradientStart;
     this.gradientFraction = gradientFraction;
     this.gradientStop = gradientStop;
@@ -9,12 +15,19 @@ let BackgroundColorDef;
     this.symbolColor = symbolColor;
     this.name = name;
   };
-}());
+})();
 export {BackgroundColorDef};
 
 let LcdColorDef;
 (function() {
-  LcdColorDef = function(gradientStartColor, gradientFraction1Color, gradientFraction2Color, gradientFraction3Color, gradientStopColor, textColor) {
+  LcdColorDef = function(
+      gradientStartColor,
+      gradientFraction1Color,
+      gradientFraction2Color,
+      gradientFraction3Color,
+      gradientStopColor,
+      textColor
+  ) {
     this.gradientStartColor = gradientStartColor;
     this.gradientFraction1Color = gradientFraction1Color;
     this.gradientFraction2Color = gradientFraction2Color;
@@ -22,7 +35,7 @@ let LcdColorDef;
     this.gradientStopColor = gradientStopColor;
     this.textColor = textColor;
   };
-}());
+})();
 export {LcdColorDef};
 
 let ColorDef;
@@ -35,12 +48,20 @@ let ColorDef;
     this.lighter = lighter;
     this.veryLight = veryLight;
   };
-}());
+})();
 export {ColorDef};
 
 let LedColorDef;
 (function() {
-  LedColorDef = function(innerColor1_ON, innerColor2_ON, outerColor_ON, coronaColor, innerColor1_OFF, innerColor2_OFF, outerColor_OFF) {
+  LedColorDef = function(
+      innerColor1_ON,
+      innerColor2_ON,
+      outerColor_ON,
+      coronaColor,
+      innerColor1_OFF,
+      innerColor2_OFF,
+      outerColor_OFF
+  ) {
     this.innerColor1_ON = innerColor1_ON;
     this.innerColor2_ON = innerColor2_ON;
     this.outerColor_ON = outerColor_ON;
@@ -49,7 +70,7 @@ let LedColorDef;
     this.innerColor2_OFF = innerColor2_OFF;
     this.outerColor_OFF = outerColor_OFF;
   };
-}());
+})();
 export {LedColorDef};
 
 let GaugeTypeDef;
@@ -57,7 +78,7 @@ let GaugeTypeDef;
   GaugeTypeDef = function(type) {
     this.type = type;
   };
-}());
+})();
 export {GaugeTypeDef};
 
 let OrientationDef;
@@ -65,7 +86,7 @@ let OrientationDef;
   OrientationDef = function(type) {
     this.type = type;
   };
-}());
+})();
 export {OrientationDef};
 
 let KnobTypeDef;
@@ -73,7 +94,7 @@ let KnobTypeDef;
   KnobTypeDef = function(type) {
     this.type = type;
   };
-}());
+})();
 export {KnobTypeDef};
 
 let KnobStyleDef;
@@ -81,7 +102,7 @@ let KnobStyleDef;
   KnobStyleDef = function(style) {
     this.style = style;
   };
-}());
+})();
 export {KnobStyleDef};
 
 let FrameDesignDef;
@@ -89,7 +110,7 @@ let FrameDesignDef;
   FrameDesignDef = function(design) {
     this.design = design;
   };
-}());
+})();
 export {FrameDesignDef};
 
 let PointerTypeDef;
@@ -97,7 +118,7 @@ let PointerTypeDef;
   PointerTypeDef = function(type) {
     this.type = type;
   };
-}());
+})();
 export {PointerTypeDef};
 
 let ForegroundTypeDef;
@@ -105,7 +126,7 @@ let ForegroundTypeDef;
   ForegroundTypeDef = function(type) {
     this.type = type;
   };
-}());
+})();
 export {ForegroundTypeDef};
 
 let LabelNumberFormatDef;
@@ -113,7 +134,7 @@ let LabelNumberFormatDef;
   LabelNumberFormatDef = function(format) {
     this.format = format;
   };
-}());
+})();
 export {LabelNumberFormatDef};
 
 let TickLabelOrientationDef;
@@ -121,7 +142,7 @@ let TickLabelOrientationDef;
   TickLabelOrientationDef = function(type) {
     this.type = type;
   };
-}());
+})();
 export {TickLabelOrientationDef};
 
 let TrendStateDef;
@@ -129,5 +150,5 @@ let TrendStateDef;
   TrendStateDef = function(state) {
     this.state = state;
   };
-}());
+})();
 export {TrendStateDef};

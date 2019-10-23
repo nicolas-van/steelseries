@@ -1,12 +1,16 @@
+import {TWO_PI, RAD_FACTOR} from './tools';
 
-import {
-  TWO_PI,
-  RAD_FACTOR,
-} from './tools';
-
-const drawRoseImage = function(ctx, centerX, centerY, imageWidth, imageHeight, backgroundColor) {
+const drawRoseImage = function(
+    ctx,
+    centerX,
+    centerY,
+    imageWidth,
+    imageHeight,
+    backgroundColor
+) {
   let fill = true;
-  let i; let grad;
+  let i;
+  let grad;
   const symbolColor = backgroundColor.symbolColor.getRgbaColor();
 
   ctx.save();
@@ -19,8 +23,22 @@ const drawRoseImage = function(ctx, centerX, centerY, imageWidth, imageHeight, b
     fill = !fill;
 
     ctx.beginPath();
-    ctx.arc(0, 0, imageWidth * 0.26, i * RAD_FACTOR, (i + 15) * RAD_FACTOR, false);
-    ctx.arc(0, 0, imageWidth * 0.23, (i + 15) * RAD_FACTOR, i * RAD_FACTOR, true);
+    ctx.arc(
+        0,
+        0,
+        imageWidth * 0.26,
+        i * RAD_FACTOR,
+        (i + 15) * RAD_FACTOR,
+        false
+    );
+    ctx.arc(
+        0,
+        0,
+        imageWidth * 0.23,
+        (i + 15) * RAD_FACTOR,
+        i * RAD_FACTOR,
+        true
+    );
     ctx.closePath();
     if (fill) {
       ctx.fill();
@@ -195,7 +213,12 @@ const drawRoseImage = function(ctx, centerX, centerY, imageWidth, imageHeight, b
     ctx.lineTo(imageWidth * 0.471962, imageHeight * 0.397196);
     ctx.lineTo(imageWidth * 0.523364, imageHeight * 0.397196);
     ctx.closePath();
-    grad = ctx.createLinearGradient(0.476635 * imageWidth, 0, 0.518691 * imageWidth, 0);
+    grad = ctx.createLinearGradient(
+        0.476635 * imageWidth,
+        0,
+        0.518691 * imageWidth,
+        0
+    );
     grad.addColorStop(0, 'rgb(222, 223, 218)');
     grad.addColorStop(0.48, 'rgb(222, 223, 218)');
     grad.addColorStop(0.49, symbolColor);

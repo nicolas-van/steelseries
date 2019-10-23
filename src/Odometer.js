@@ -1,37 +1,57 @@
 import Tween from './tween.js';
-import {
-  createBuffer,
-  requestAnimFrame,
-  getCanvasContext,
-} from './tools';
+import {createBuffer, requestAnimFrame, getCanvasContext} from './tools';
 
 const Odometer = function(canvas, parameters) {
   parameters = parameters || {};
 
   // parameters
-  const _context = (undefined === parameters._context ? null : parameters._context);
-  let height = (undefined === parameters.height ? 0 : parameters.height);
-  const digits = (undefined === parameters.digits ? 6 : parameters.digits);
-  const decimals = (undefined === parameters.decimals ? 1 : parameters.decimals);
-  const decimalBackColor = (undefined === parameters.decimalBackColor ? '#F0F0F0' : parameters.decimalBackColor);
-  const decimalForeColor = (undefined === parameters.decimalForeColor ? '#F01010' : parameters.decimalForeColor);
-  const font = (undefined === parameters.font ? 'sans-serif' : parameters.font);
-  let value = (undefined === parameters.value ? 0 : parameters.value);
-  const valueBackColor = (undefined === parameters.valueBackColor ? '#050505' : parameters.valueBackColor);
-  const valueForeColor = (undefined === parameters.valueForeColor ? '#F8F8F8' : parameters.valueForeColor);
-  const wobbleFactor = (undefined === parameters.wobbleFactor ? 0.07 : parameters.wobbleFactor);
+  const _context =
+    undefined === parameters._context ? null : parameters._context;
+  let height = undefined === parameters.height ? 0 : parameters.height;
+  const digits = undefined === parameters.digits ? 6 : parameters.digits;
+  const decimals = undefined === parameters.decimals ? 1 : parameters.decimals;
+  const decimalBackColor =
+    undefined === parameters.decimalBackColor ?
+      '#F0F0F0' :
+      parameters.decimalBackColor;
+  const decimalForeColor =
+    undefined === parameters.decimalForeColor ?
+      '#F01010' :
+      parameters.decimalForeColor;
+  const font = undefined === parameters.font ? 'sans-serif' : parameters.font;
+  let value = undefined === parameters.value ? 0 : parameters.value;
+  const valueBackColor =
+    undefined === parameters.valueBackColor ?
+      '#050505' :
+      parameters.valueBackColor;
+  const valueForeColor =
+    undefined === parameters.valueForeColor ?
+      '#F8F8F8' :
+      parameters.valueForeColor;
+  const wobbleFactor =
+    undefined === parameters.wobbleFactor ? 0.07 : parameters.wobbleFactor;
   //
   let initialized = false;
-  let tween; let ctx;
+  let tween;
+  let ctx;
   let repainting = false;
-  let digitHeight; let digitWidth; let stdFont;
-  let width; let columnHeight; let verticalSpace; let zeroOffset;
+  let digitHeight;
+  let digitWidth;
+  let stdFont;
+  let width;
+  let columnHeight;
+  let verticalSpace;
+  let zeroOffset;
   const wobble = [];
   // buffers
-  let backgroundBuffer; let backgroundContext;
-  let foregroundBuffer; let foregroundContext;
-  let digitBuffer; let digitContext;
-  let decimalBuffer; let decimalContext;
+  let backgroundBuffer;
+  let backgroundContext;
+  let foregroundBuffer;
+  let foregroundContext;
+  let digitBuffer;
+  let digitContext;
+  let decimalBuffer;
+  let decimalContext;
   // End of variables
 
   // Get the canvas context and clear it
@@ -78,7 +98,8 @@ const Odometer = function(canvas, parameters) {
   decimalContext = decimalBuffer.getContext('2d');
 
   function init() {
-    let grad; let i;
+    let grad;
+    let i;
 
     initialized = true;
 
@@ -116,7 +137,11 @@ const Odometer = function(canvas, parameters) {
     digitContext.fillStyle = valueForeColor;
     // put the digits 901234567890 vertically into the buffer
     for (i = 9; i < 21; i++) {
-      digitContext.fillText(i % 10, digitWidth * 0.5, verticalSpace * (i - 9) + verticalSpace / 2);
+      digitContext.fillText(
+          i % 10,
+          digitWidth * 0.5,
+          verticalSpace * (i - 9) + verticalSpace / 2
+      );
     }
 
     // Create a decimal column
@@ -142,19 +167,28 @@ const Odometer = function(canvas, parameters) {
       decimalContext.fillStyle = decimalForeColor;
       // put the digits 901234567890 vertically into the buffer
       for (i = 9; i < 21; i++) {
-        decimalContext.fillText(i % 10, digitWidth * 0.5, verticalSpace * (i - 9) + verticalSpace / 2);
+        decimalContext.fillText(
+            i % 10,
+            digitWidth * 0.5,
+            verticalSpace * (i - 9) + verticalSpace / 2
+        );
       }
     }
     // wobble factors
-    for (i = 0; i < (digits + decimals); i++) {
-      wobble[i] = Math.random() * wobbleFactor * height - wobbleFactor * height / 2;
+    for (i = 0; i < digits + decimals; i++) {
+      wobble[i] =
+        Math.random() * wobbleFactor * height - (wobbleFactor * height) / 2;
     }
   }
 
   function drawDigits() {
     let pos = 1;
     let val = value;
-    let i; let num; let numb; let frac; let prevNum;
+    let i;
+    let num;
+    let numb;
+    let frac;
+    let prevNum;
 
     // do not use Math.pow() - rounding errors!
     for (i = 0; i < decimals; i++) {
@@ -172,9 +206,17 @@ const Odometer = function(canvas, parameters) {
         frac = 0;
       }
       if (i < decimals) {
-        backgroundContext.drawImage(decimalBuffer, width - digitWidth * pos, -(verticalSpace * (num + frac) + zeroOffset + wobble[i]));
+        backgroundContext.drawImage(
+            decimalBuffer,
+            width - digitWidth * pos,
+            -(verticalSpace * (num + frac) + zeroOffset + wobble[i])
+        );
       } else {
-        backgroundContext.drawImage(digitBuffer, width - digitWidth * pos, -(verticalSpace * (num + frac) + zeroOffset + wobble[i]));
+        backgroundContext.drawImage(
+            digitBuffer,
+            width - digitWidth * pos,
+            -(verticalSpace * (num + frac) + zeroOffset + wobble[i])
+        );
       }
       pos++;
       prevNum = num;
@@ -203,7 +245,7 @@ const Odometer = function(canvas, parameters) {
       };
 
       // do we have a callback function to process?
-      if (callback && typeof(callback) === 'function') {
+      if (callback && typeof callback === 'function') {
         tween.onMotionFinished = callback;
       }
 

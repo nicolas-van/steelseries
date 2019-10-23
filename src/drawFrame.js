@@ -1,14 +1,20 @@
+import {rgbaColor, ConicalGradient, createBuffer, TWO_PI} from './tools';
 
-import {
-  rgbaColor,
-  ConicalGradient,
-  createBuffer,
-  TWO_PI,
-} from './tools';
-
-const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, imageHeight) {
-  let radFBuffer; let radFCtx;
-  let grad; let outerX; let innerX; let fractions; let colors;
+const drawFrame = function(
+    ctx,
+    frameDesign,
+    centerX,
+    centerY,
+    imageWidth,
+    imageHeight
+) {
+  let radFBuffer;
+  let radFCtx;
+  let grad;
+  let outerX;
+  let innerX;
+  let fractions;
+  let colors;
   const cacheKey = imageWidth.toString() + imageHeight + frameDesign.design;
 
   // check if we have already created and cached this buffer, if not create it
@@ -27,13 +33,18 @@ const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, image
     radFCtx.stroke();
 
     radFCtx.beginPath();
-    radFCtx.arc(centerX, centerY, imageWidth * 0.990654 / 2, 0, TWO_PI, true);
+    radFCtx.arc(centerX, centerY, (imageWidth * 0.990654) / 2, 0, TWO_PI, true);
     radFCtx.closePath();
 
     // main gradient frame
     switch (frameDesign.design) {
       case 'metal':
-        grad = radFCtx.createLinearGradient(0, imageWidth * 0.004672, 0, imageHeight * 0.990654);
+        grad = radFCtx.createLinearGradient(
+            0,
+            imageWidth * 0.004672,
+            0,
+            imageHeight * 0.990654
+        );
         grad.addColorStop(0, '#fefefe');
         grad.addColorStop(0.07, 'rgb(210, 210, 210)');
         grad.addColorStop(0.12, 'rgb(179, 179, 179)');
@@ -43,12 +54,17 @@ const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, image
         break;
 
       case 'brass':
-        grad = radFCtx.createLinearGradient(0, imageWidth * 0.004672, 0, imageHeight * 0.990654);
+        grad = radFCtx.createLinearGradient(
+            0,
+            imageWidth * 0.004672,
+            0,
+            imageHeight * 0.990654
+        );
         grad.addColorStop(0, 'rgb(249, 243, 155)');
         grad.addColorStop(0.05, 'rgb(246, 226, 101)');
-        grad.addColorStop(0.10, 'rgb(240, 225, 132)');
-        grad.addColorStop(0.50, 'rgb(90, 57, 22)');
-        grad.addColorStop(0.90, 'rgb(249, 237, 139)');
+        grad.addColorStop(0.1, 'rgb(240, 225, 132)');
+        grad.addColorStop(0.5, 'rgb(90, 57, 22)');
+        grad.addColorStop(0.9, 'rgb(249, 237, 139)');
         grad.addColorStop(0.95, 'rgb(243, 226, 108)');
         grad.addColorStop(1, 'rgb(202, 182, 113)');
         radFCtx.fillStyle = grad;
@@ -56,12 +72,17 @@ const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, image
         break;
 
       case 'steel':
-        grad = radFCtx.createLinearGradient(0, imageWidth * 0.004672, 0, imageHeight * 0.990654);
+        grad = radFCtx.createLinearGradient(
+            0,
+            imageWidth * 0.004672,
+            0,
+            imageHeight * 0.990654
+        );
         grad.addColorStop(0, 'rgb(231, 237, 237)');
         grad.addColorStop(0.05, 'rgb(189, 199, 198)');
-        grad.addColorStop(0.10, 'rgb(192, 201, 200)');
-        grad.addColorStop(0.50, 'rgb(23, 31, 33)');
-        grad.addColorStop(0.90, 'rgb(196, 205, 204)');
+        grad.addColorStop(0.1, 'rgb(192, 201, 200)');
+        grad.addColorStop(0.5, 'rgb(23, 31, 33)');
+        grad.addColorStop(0.9, 'rgb(196, 205, 204)');
         grad.addColorStop(0.95, 'rgb(194, 204, 203)');
         grad.addColorStop(1, 'rgb(189, 201, 199)');
         radFCtx.fillStyle = grad;
@@ -69,7 +90,12 @@ const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, image
         break;
 
       case 'gold':
-        grad = radFCtx.createLinearGradient(0, imageWidth * 0.004672, 0, imageHeight * 0.990654);
+        grad = radFCtx.createLinearGradient(
+            0,
+            imageWidth * 0.004672,
+            0,
+            imageHeight * 0.990654
+        );
         grad.addColorStop(0, 'rgb(255, 255, 207)');
         grad.addColorStop(0.15, 'rgb(255, 237, 96)');
         grad.addColorStop(0.22, 'rgb(254, 199, 57)');
@@ -86,7 +112,12 @@ const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, image
         break;
 
       case 'anthracite':
-        grad = radFCtx.createLinearGradient(0, 0.004672 * imageHeight, 0, 0.995326 * imageHeight);
+        grad = radFCtx.createLinearGradient(
+            0,
+            0.004672 * imageHeight,
+            0,
+            0.995326 * imageHeight
+        );
         grad.addColorStop(0, 'rgb(118, 117, 135)');
         grad.addColorStop(0.06, 'rgb(74, 74, 82)');
         grad.addColorStop(0.12, 'rgb(50, 50, 54)');
@@ -96,7 +127,12 @@ const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, image
         break;
 
       case 'tiltedGray':
-        grad = radFCtx.createLinearGradient(0.233644 * imageWidth, 0.084112 * imageHeight, 0.81258 * imageWidth, 0.910919 * imageHeight);
+        grad = radFCtx.createLinearGradient(
+            0.233644 * imageWidth,
+            0.084112 * imageHeight,
+            0.81258 * imageWidth,
+            0.910919 * imageHeight
+        );
         grad.addColorStop(0, '#ffffff');
         grad.addColorStop(0.07, 'rgb(210, 210, 210)');
         grad.addColorStop(0.16, 'rgb(179, 179, 179)');
@@ -109,7 +145,12 @@ const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, image
         break;
 
       case 'tiltedBlack':
-        grad = radFCtx.createLinearGradient(0.228971 * imageWidth, 0.079439 * imageHeight, 0.802547 * imageWidth, 0.898591 * imageHeight);
+        grad = radFCtx.createLinearGradient(
+            0.228971 * imageWidth,
+            0.079439 * imageHeight,
+            0.802547 * imageWidth,
+            0.898591 * imageHeight
+        );
         grad.addColorStop(0, '#666666');
         grad.addColorStop(0.21, '#000000');
         grad.addColorStop(0.47, '#666666');
@@ -120,16 +161,34 @@ const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, image
         break;
 
       case 'glossyMetal':
-        grad = radFCtx.createRadialGradient(0.5 * imageWidth, 0.5 * imageHeight, 0, 0.5 * imageWidth, 0.5 * imageWidth, 0.5 * imageWidth);
+        grad = radFCtx.createRadialGradient(
+            0.5 * imageWidth,
+            0.5 * imageHeight,
+            0,
+            0.5 * imageWidth,
+            0.5 * imageWidth,
+            0.5 * imageWidth
+        );
         grad.addColorStop(0, 'rgb(207, 207, 207)');
         grad.addColorStop(0.96, 'rgb(205, 204, 205)');
         grad.addColorStop(1, 'rgb(244, 244, 244)');
         radFCtx.fillStyle = grad;
         radFCtx.fill();
         radFCtx.beginPath();
-        radFCtx.arc(0.5 * imageWidth, 0.5 * imageHeight, 0.973962 * imageWidth / 2, 0, TWO_PI);
+        radFCtx.arc(
+            0.5 * imageWidth,
+            0.5 * imageHeight,
+            (0.973962 * imageWidth) / 2,
+            0,
+            TWO_PI
+        );
         radFCtx.closePath();
-        grad = radFCtx.createLinearGradient(0, imageHeight - 0.971962 * imageHeight, 0, 0.971962 * imageHeight);
+        grad = radFCtx.createLinearGradient(
+            0,
+            imageHeight - 0.971962 * imageHeight,
+            0,
+            0.971962 * imageHeight
+        );
         grad.addColorStop(0, 'rgb(249, 249, 249)');
         grad.addColorStop(0.23, 'rgb(200, 195, 191)');
         grad.addColorStop(0.36, '#ffffff');
@@ -140,29 +199,35 @@ const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, image
         radFCtx.fill();
 
         radFCtx.beginPath();
-        radFCtx.arc(0.5 * imageWidth, 0.5 * imageHeight, 0.869158 * imageWidth / 2, 0, TWO_PI);
+        radFCtx.arc(
+            0.5 * imageWidth,
+            0.5 * imageHeight,
+            (0.869158 * imageWidth) / 2,
+            0,
+            TWO_PI
+        );
         radFCtx.closePath();
         radFCtx.fillStyle = '#f6f6f6';
         radFCtx.fill();
 
         radFCtx.beginPath();
-        radFCtx.arc(0.5 * imageWidth, 0.5 * imageHeight, 0.85 * imageWidth / 2, 0, TWO_PI);
+        radFCtx.arc(
+            0.5 * imageWidth,
+            0.5 * imageHeight,
+            (0.85 * imageWidth) / 2,
+            0,
+            TWO_PI
+        );
         radFCtx.closePath();
         radFCtx.fillStyle = '#333333';
         radFCtx.fill();
         break;
 
       case 'blackMetal':
-        fractions = [0,
-          0.125,
-          0.347222,
-          0.5,
-          0.680555,
-          0.875,
-          1,
-        ];
+        fractions = [0, 0.125, 0.347222, 0.5, 0.680555, 0.875, 1];
 
-        colors = [new rgbaColor(254, 254, 254, 1),
+        colors = [
+          new rgbaColor(254, 254, 254, 1),
           new rgbaColor(0, 0, 0, 1),
           new rgbaColor(153, 153, 153, 1),
           new rgbaColor(0, 0, 0, 1),
@@ -172,10 +237,17 @@ const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, image
         ];
 
         radFCtx.save();
-        radFCtx.arc(centerX, centerY, imageWidth * 0.990654 / 2, 0, TWO_PI, true);
+        radFCtx.arc(
+            centerX,
+            centerY,
+            (imageWidth * 0.990654) / 2,
+            0,
+            TWO_PI,
+            true
+        );
         radFCtx.clip();
         outerX = imageWidth * 0.495327;
-        innerX = imageWidth * 0.420560;
+        innerX = imageWidth * 0.42056;
         grad = new ConicalGradient(fractions, colors);
         grad.fillCircle(radFCtx, centerX, centerY, innerX, outerX);
         // fade outer edge
@@ -190,18 +262,10 @@ const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, image
         break;
 
       case 'shinyMetal':
-        fractions = [0,
-          0.125,
-          0.25,
-          0.347222,
-          0.5,
-          0.652777,
-          0.75,
-          0.875,
-          1,
-        ];
+        fractions = [0, 0.125, 0.25, 0.347222, 0.5, 0.652777, 0.75, 0.875, 1];
 
-        colors = [new rgbaColor(254, 254, 254, 1),
+        colors = [
+          new rgbaColor(254, 254, 254, 1),
           new rgbaColor(210, 210, 210, 1),
           new rgbaColor(179, 179, 179, 1),
           new rgbaColor(238, 238, 238, 1),
@@ -213,10 +277,17 @@ const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, image
         ];
 
         radFCtx.save();
-        radFCtx.arc(centerX, centerY, imageWidth * 0.990654 / 2, 0, TWO_PI, true);
+        radFCtx.arc(
+            centerX,
+            centerY,
+            (imageWidth * 0.990654) / 2,
+            0,
+            TWO_PI,
+            true
+        );
         radFCtx.clip();
         outerX = imageWidth * 0.495327;
-        innerX = imageWidth * 0.420560;
+        innerX = imageWidth * 0.42056;
         grad = new ConicalGradient(fractions, colors);
         grad.fillCircle(radFCtx, centerX, centerY, innerX, outerX);
         // fade outer edge
@@ -231,7 +302,8 @@ const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, image
         break;
 
       case 'chrome':
-        fractions = [0,
+        fractions = [
+          0,
           0.09,
           0.12,
           0.16,
@@ -250,7 +322,8 @@ const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, image
           1,
         ];
 
-        colors = [new rgbaColor(255, 255, 255, 1),
+        colors = [
+          new rgbaColor(255, 255, 255, 1),
           new rgbaColor(255, 255, 255, 1),
           new rgbaColor(136, 136, 138, 1),
           new rgbaColor(164, 185, 190, 1),
@@ -270,10 +343,17 @@ const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, image
         ];
 
         radFCtx.save();
-        radFCtx.arc(centerX, centerY, imageWidth * 0.990654 / 2, 0, TWO_PI, true);
+        radFCtx.arc(
+            centerX,
+            centerY,
+            (imageWidth * 0.990654) / 2,
+            0,
+            TWO_PI,
+            true
+        );
         radFCtx.clip();
         outerX = imageWidth * 0.495327;
-        innerX = imageWidth * 0.420560;
+        innerX = imageWidth * 0.42056;
         grad = new ConicalGradient(fractions, colors);
         grad.fillCircle(radFCtx, centerX, centerY, innerX, outerX);
         // fade outer edge
@@ -292,7 +372,7 @@ const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, image
     // inner bright frame
     radFCtx.fillStyle = 'rgb(191, 191, 191)';
     radFCtx.beginPath();
-    radFCtx.arc(centerX, centerY, imageWidth * 0.841121 / 2, 0, TWO_PI, true);
+    radFCtx.arc(centerX, centerY, (imageWidth * 0.841121) / 2, 0, TWO_PI, true);
     radFCtx.closePath();
     radFCtx.fill();
 
@@ -300,7 +380,7 @@ const drawFrame = function(ctx, frameDesign, centerX, centerY, imageWidth, image
     radFCtx.globalCompositeOperation = 'destination-out';
     // Background ellipse
     radFCtx.beginPath();
-    radFCtx.arc(centerX, centerY, imageWidth * 0.83 / 2, 0, TWO_PI, true);
+    radFCtx.arc(centerX, centerY, (imageWidth * 0.83) / 2, 0, TWO_PI, true);
     radFCtx.closePath();
     radFCtx.fill();
 

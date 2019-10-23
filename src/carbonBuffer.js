@@ -1,7 +1,4 @@
-
-import {
-  drawToBuffer,
-} from './tools';
+import {drawToBuffer} from './tools';
 
 const carbonBuffer = drawToBuffer(12, 12, function(ctx) {
   const imageWidth = ctx.canvas.width;
@@ -18,7 +15,12 @@ const carbonBuffer = drawToBuffer(12, 12, function(ctx) {
   ctx.closePath();
   ctx.restore();
 
-  grad = ctx.createLinearGradient(0, offsetY * imageHeight, 0, 0.5 * imageHeight + offsetY * imageHeight);
+  grad = ctx.createLinearGradient(
+      0,
+      offsetY * imageHeight,
+      0,
+      0.5 * imageHeight + offsetY * imageHeight
+  );
   grad.addColorStop(0, 'rgb(35, 35, 35)');
   grad.addColorStop(1, 'rgb(23, 23, 23)');
   ctx.fillStyle = grad;
@@ -27,11 +29,21 @@ const carbonBuffer = drawToBuffer(12, 12, function(ctx) {
   // RULF
   ctx.save();
   ctx.beginPath();
-  ctx.rect(imageWidth * 0.083333, 0, imageWidth * 0.333333, imageHeight * 0.416666);
+  ctx.rect(
+      imageWidth * 0.083333,
+      0,
+      imageWidth * 0.333333,
+      imageHeight * 0.416666
+  );
   ctx.closePath();
   ctx.restore();
   offsetY = 0;
-  grad = ctx.createLinearGradient(0, offsetY * imageHeight, 0, 0.416666 * imageHeight + offsetY * imageHeight);
+  grad = ctx.createLinearGradient(
+      0,
+      offsetY * imageHeight,
+      0,
+      0.416666 * imageHeight + offsetY * imageHeight
+  );
   grad.addColorStop(0, 'rgb(38, 38, 38)');
   grad.addColorStop(1, 'rgb(30, 30, 30)');
   ctx.fillStyle = grad;
@@ -40,11 +52,21 @@ const carbonBuffer = drawToBuffer(12, 12, function(ctx) {
   // RLRB
   ctx.save();
   ctx.beginPath();
-  ctx.rect(imageWidth * 0.5, imageHeight * 0.5, imageWidth * 0.5, imageHeight * 0.5);
+  ctx.rect(
+      imageWidth * 0.5,
+      imageHeight * 0.5,
+      imageWidth * 0.5,
+      imageHeight * 0.5
+  );
   ctx.closePath();
   ctx.restore();
   offsetY = 0.5;
-  grad = ctx.createLinearGradient(0, offsetY * imageHeight, 0, 0.5 * imageHeight + offsetY * imageHeight);
+  grad = ctx.createLinearGradient(
+      0,
+      offsetY * imageHeight,
+      0,
+      0.5 * imageHeight + offsetY * imageHeight
+  );
   grad.addColorStop(0, 'rgb(35, 35, 35)');
   grad.addColorStop(1, 'rgb(23, 23, 23)');
   ctx.fillStyle = grad;
@@ -53,11 +75,21 @@ const carbonBuffer = drawToBuffer(12, 12, function(ctx) {
   // RLRF
   ctx.save();
   ctx.beginPath();
-  ctx.rect(imageWidth * 0.583333, imageHeight * 0.5, imageWidth * 0.333333, imageHeight * 0.416666);
+  ctx.rect(
+      imageWidth * 0.583333,
+      imageHeight * 0.5,
+      imageWidth * 0.333333,
+      imageHeight * 0.416666
+  );
   ctx.closePath();
   ctx.restore();
   offsetY = 0.5;
-  grad = ctx.createLinearGradient(0, offsetY * imageHeight, 0, 0.416666 * imageHeight + offsetY * imageHeight);
+  grad = ctx.createLinearGradient(
+      0,
+      offsetY * imageHeight,
+      0,
+      0.416666 * imageHeight + offsetY * imageHeight
+  );
   grad.addColorStop(0, 'rgb(38, 38, 38)');
   grad.addColorStop(1, 'rgb(30, 30, 30)');
   ctx.fillStyle = grad;
@@ -70,7 +102,12 @@ const carbonBuffer = drawToBuffer(12, 12, function(ctx) {
   ctx.closePath();
   ctx.restore();
   offsetY = 0;
-  grad = ctx.createLinearGradient(0, offsetY * imageHeight, 0, 0.5 * imageHeight + offsetY * imageHeight);
+  grad = ctx.createLinearGradient(
+      0,
+      offsetY * imageHeight,
+      0,
+      0.5 * imageHeight + offsetY * imageHeight
+  );
   grad.addColorStop(0, '#303030');
   grad.addColorStop(1, 'rgb(40, 40, 40)');
   ctx.fillStyle = grad;
@@ -79,11 +116,21 @@ const carbonBuffer = drawToBuffer(12, 12, function(ctx) {
   // RURF
   ctx.save();
   ctx.beginPath();
-  ctx.rect(imageWidth * 0.583333, imageHeight * 0.083333, imageWidth * 0.333333, imageHeight * 0.416666);
+  ctx.rect(
+      imageWidth * 0.583333,
+      imageHeight * 0.083333,
+      imageWidth * 0.333333,
+      imageHeight * 0.416666
+  );
   ctx.closePath();
   ctx.restore();
   offsetY = 0.083333;
-  grad = ctx.createLinearGradient(0, offsetY * imageHeight, 0, 0.416666 * imageHeight + offsetY * imageHeight);
+  grad = ctx.createLinearGradient(
+      0,
+      offsetY * imageHeight,
+      0,
+      0.416666 * imageHeight + offsetY * imageHeight
+  );
   grad.addColorStop(0, 'rgb(53, 53, 53)');
   grad.addColorStop(1, 'rgb(45, 45, 45)');
   ctx.fillStyle = grad;
@@ -96,7 +143,12 @@ const carbonBuffer = drawToBuffer(12, 12, function(ctx) {
   ctx.closePath();
   ctx.restore();
   offsetY = 0.5;
-  grad = ctx.createLinearGradient(0, offsetY * imageHeight, 0, 0.5 * imageHeight + offsetY * imageHeight);
+  grad = ctx.createLinearGradient(
+      0,
+      offsetY * imageHeight,
+      0,
+      0.5 * imageHeight + offsetY * imageHeight
+  );
   grad.addColorStop(0, '#303030');
   grad.addColorStop(1, '#282828');
   ctx.fillStyle = grad;
@@ -105,11 +157,21 @@ const carbonBuffer = drawToBuffer(12, 12, function(ctx) {
   // RLLF
   ctx.save();
   ctx.beginPath();
-  ctx.rect(imageWidth * 0.083333, imageHeight * 0.583333, imageWidth * 0.333333, imageHeight * 0.416666);
+  ctx.rect(
+      imageWidth * 0.083333,
+      imageHeight * 0.583333,
+      imageWidth * 0.333333,
+      imageHeight * 0.416666
+  );
   ctx.closePath();
   ctx.restore();
   offsetY = 0.583333;
-  grad = ctx.createLinearGradient(0, offsetY * imageHeight, 0, 0.416666 * imageHeight + offsetY * imageHeight);
+  grad = ctx.createLinearGradient(
+      0,
+      offsetY * imageHeight,
+      0,
+      0.416666 * imageHeight + offsetY * imageHeight
+  );
   grad.addColorStop(0, '#353535');
   grad.addColorStop(1, '#2d2d2d');
   ctx.fillStyle = grad;

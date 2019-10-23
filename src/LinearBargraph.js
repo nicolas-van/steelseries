@@ -28,37 +28,88 @@ import {
 
 const LinearBargraph = function(canvas, parameters) {
   parameters = parameters || {};
-  let width = (undefined === parameters.width ? 0 : parameters.width);
-  let height = (undefined === parameters.height ? 0 : parameters.height);
-  let minValue = (undefined === parameters.minValue ? 0 : parameters.minValue);
-  let maxValue = (undefined === parameters.maxValue ? (minValue + 100) : parameters.maxValue);
-  let section = (undefined === parameters.section ? null : parameters.section);
-  const niceScale = (undefined === parameters.niceScale ? true : parameters.niceScale);
-  let threshold = (undefined === parameters.threshold ? (maxValue - minValue) / 2 + minValue : parameters.threshold);
-  let titleString = (undefined === parameters.titleString ? '' : parameters.titleString);
-  let unitString = (undefined === parameters.unitString ? '' : parameters.unitString);
-  let frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign);
-  const frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible);
-  let backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor);
-  const backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible);
-  let valueColor = (undefined === parameters.valueColor ? ColorDef.RED : parameters.valueColor);
-  let lcdColor = (undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor);
-  const lcdVisible = (undefined === parameters.lcdVisible ? true : parameters.lcdVisible);
-  let lcdDecimals = (undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals);
-  const digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont);
-  let ledColor = (undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor);
-  let ledVisible = (undefined === parameters.ledVisible ? true : parameters.ledVisible);
-  let thresholdVisible = (undefined === parameters.thresholdVisible ? true : parameters.thresholdVisible);
-  let thresholdRising = (undefined === parameters.thresholdRising ? true : parameters.thresholdRising);
-  let minMeasuredValueVisible = (undefined === parameters.minMeasuredValueVisible ? false : parameters.minMeasuredValueVisible);
-  let maxMeasuredValueVisible = (undefined === parameters.maxMeasuredValueVisible ? false : parameters.maxMeasuredValueVisible);
-  const labelNumberFormat = (undefined === parameters.labelNumberFormat ? LabelNumberFormat.STANDARD : parameters.labelNumberFormat);
-  const foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible);
-  const playAlarm = (undefined === parameters.playAlarm ? false : parameters.playAlarm);
-  const alarmSound = (undefined === parameters.alarmSound ? false : parameters.alarmSound);
-  let valueGradient = (undefined === parameters.valueGradient ? null : parameters.valueGradient);
-  let useValueGradient = (undefined === parameters.useValueGradient ? false : parameters.useValueGradient);
-  const fullScaleDeflectionTime = (undefined === parameters.fullScaleDeflectionTime ? 2.5 : parameters.fullScaleDeflectionTime);
+  let width = undefined === parameters.width ? 0 : parameters.width;
+  let height = undefined === parameters.height ? 0 : parameters.height;
+  let minValue = undefined === parameters.minValue ? 0 : parameters.minValue;
+  let maxValue =
+    undefined === parameters.maxValue ? minValue + 100 : parameters.maxValue;
+  let section = undefined === parameters.section ? null : parameters.section;
+  const niceScale =
+    undefined === parameters.niceScale ? true : parameters.niceScale;
+  let threshold =
+    undefined === parameters.threshold ?
+      (maxValue - minValue) / 2 + minValue :
+      parameters.threshold;
+  let titleString =
+    undefined === parameters.titleString ? '' : parameters.titleString;
+  let unitString =
+    undefined === parameters.unitString ? '' : parameters.unitString;
+  let frameDesign =
+    undefined === parameters.frameDesign ?
+      FrameDesign.METAL :
+      parameters.frameDesign;
+  const frameVisible =
+    undefined === parameters.frameVisible ? true : parameters.frameVisible;
+  let backgroundColor =
+    undefined === parameters.backgroundColor ?
+      BackgroundColor.DARK_GRAY :
+      parameters.backgroundColor;
+  const backgroundVisible =
+    undefined === parameters.backgroundVisible ?
+      true :
+      parameters.backgroundVisible;
+  let valueColor =
+    undefined === parameters.valueColor ? ColorDef.RED : parameters.valueColor;
+  let lcdColor =
+    undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor;
+  const lcdVisible =
+    undefined === parameters.lcdVisible ? true : parameters.lcdVisible;
+  let lcdDecimals =
+    undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals;
+  const digitalFont =
+    undefined === parameters.digitalFont ? false : parameters.digitalFont;
+  let ledColor =
+    undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor;
+  let ledVisible =
+    undefined === parameters.ledVisible ? true : parameters.ledVisible;
+  let thresholdVisible =
+    undefined === parameters.thresholdVisible ?
+      true :
+      parameters.thresholdVisible;
+  let thresholdRising =
+    undefined === parameters.thresholdRising ?
+      true :
+      parameters.thresholdRising;
+  let minMeasuredValueVisible =
+    undefined === parameters.minMeasuredValueVisible ?
+      false :
+      parameters.minMeasuredValueVisible;
+  let maxMeasuredValueVisible =
+    undefined === parameters.maxMeasuredValueVisible ?
+      false :
+      parameters.maxMeasuredValueVisible;
+  const labelNumberFormat =
+    undefined === parameters.labelNumberFormat ?
+      LabelNumberFormat.STANDARD :
+      parameters.labelNumberFormat;
+  const foregroundVisible =
+    undefined === parameters.foregroundVisible ?
+      true :
+      parameters.foregroundVisible;
+  const playAlarm =
+    undefined === parameters.playAlarm ? false : parameters.playAlarm;
+  const alarmSound =
+    undefined === parameters.alarmSound ? false : parameters.alarmSound;
+  let valueGradient =
+    undefined === parameters.valueGradient ? null : parameters.valueGradient;
+  let useValueGradient =
+    undefined === parameters.useValueGradient ?
+      false :
+      parameters.useValueGradient;
+  const fullScaleDeflectionTime =
+    undefined === parameters.fullScaleDeflectionTime ?
+      2.5 :
+      parameters.fullScaleDeflectionTime;
 
   // Get the canvas context and clear it
   const mainCtx = getCanvasContext(canvas);
@@ -138,14 +189,20 @@ const LinearBargraph = function(canvas, parameters) {
   const calculate = function calculate() {
     if (niceScale) {
       niceRange = calcNiceNumber(maxValue - minValue, false);
-      majorTickSpacing = calcNiceNumber(niceRange / (maxNoOfMajorTicks - 1), true);
+      majorTickSpacing = calcNiceNumber(
+          niceRange / (maxNoOfMajorTicks - 1),
+          true
+      );
       niceMinValue = Math.floor(minValue / majorTickSpacing) * majorTickSpacing;
       niceMaxValue = Math.ceil(maxValue / majorTickSpacing) * majorTickSpacing;
-      minorTickSpacing = calcNiceNumber(majorTickSpacing / (maxNoOfMinorTicks - 1), true);
+      minorTickSpacing = calcNiceNumber(
+          majorTickSpacing / (maxNoOfMinorTicks - 1),
+          true
+      );
       minValue = niceMinValue;
       maxValue = niceMaxValue;
     } else {
-      niceRange = (maxValue - minValue);
+      niceRange = maxValue - minValue;
       niceMinValue = minValue;
       niceMaxValue = maxValue;
       minorTickSpacing = 1;
@@ -153,9 +210,24 @@ const LinearBargraph = function(canvas, parameters) {
     }
     // Make sure values are still in range
     value = value < minValue ? minValue : value > maxValue ? maxValue : value;
-    minMeasuredValue = minMeasuredValue < minValue ? minValue : minMeasuredValue > maxValue ? maxValue : minMeasuredValue;
-    maxMeasuredValue = maxMeasuredValue < minValue ? minValue : maxMeasuredValue > maxValue ? maxValue : maxMeasuredValue;
-    threshold = threshold < minValue ? minValue : threshold > maxValue ? maxValue : threshold;
+    minMeasuredValue =
+      minMeasuredValue < minValue ?
+        minValue :
+        minMeasuredValue > maxValue ?
+        maxValue :
+        minMeasuredValue;
+    maxMeasuredValue =
+      maxMeasuredValue < minValue ?
+        minValue :
+        maxMeasuredValue > maxValue ?
+        maxValue :
+        maxMeasuredValue;
+    threshold =
+      threshold < minValue ?
+        minValue :
+        threshold > maxValue ?
+        maxValue :
+        threshold;
   };
 
   // **************   Buffer creation  ********************
@@ -222,7 +294,10 @@ const LinearBargraph = function(canvas, parameters) {
     ctx.strokeStyle = lcdColor.textColor;
     ctx.fillStyle = lcdColor.textColor;
 
-    if (lcdColor === LcdColor.STANDARD || lcdColor === LcdColor.STANDARD_GREEN) {
+    if (
+      lcdColor === LcdColor.STANDARD ||
+      lcdColor === LcdColor.STANDARD_GREEN
+    ) {
       ctx.shadowColor = 'gray';
       if (vertical) {
         ctx.shadowOffsetX = imageWidth * 0.007;
@@ -246,12 +321,16 @@ const LinearBargraph = function(canvas, parameters) {
     }
 
     if (vertical) {
-      lcdTextX = (imageWidth - (imageWidth * 0.571428)) / 2 + 1 + imageWidth * 0.571428 - 2;
+      lcdTextX =
+        (imageWidth - imageWidth * 0.571428) / 2 +
+        1 +
+        imageWidth * 0.571428 -
+        2;
       lcdTextY = imageHeight * 0.88 + 1 + (imageHeight * 0.055 - 2) / 2;
       lcdTextWidth = imageWidth * 0.7 - 2;
     } else {
-      lcdTextX = (imageWidth * 0.695) + imageWidth * 0.18 - 2;
-      lcdTextY = (imageHeight * 0.22) + 1 + (imageHeight * 0.15 - 2) / 2;
+      lcdTextX = imageWidth * 0.695 + imageWidth * 0.18 - 2;
+      lcdTextY = imageHeight * 0.22 + 1 + (imageHeight * 0.15 - 2) / 2;
       lcdTextWidth = imageHeight * 0.22 - 2;
     }
 
@@ -266,7 +345,12 @@ const LinearBargraph = function(canvas, parameters) {
     const thresholdCtx = thresholdBuffer.getContext('2d');
 
     thresholdCtx.save();
-    const gradThreshold = thresholdCtx.createLinearGradient(0, 0.1, 0, thresholdBuffer.height * 0.9);
+    const gradThreshold = thresholdCtx.createLinearGradient(
+        0,
+        0.1,
+        0,
+        thresholdBuffer.height * 0.9
+    );
     gradThreshold.addColorStop(0, '#520000');
     gradThreshold.addColorStop(0.3, '#fc1d00');
     gradThreshold.addColorStop(0.59, '#fc1d00');
@@ -277,13 +361,19 @@ const LinearBargraph = function(canvas, parameters) {
       thresholdCtx.beginPath();
       thresholdCtx.moveTo(0.1, thresholdBuffer.height * 0.5);
       thresholdCtx.lineTo(thresholdBuffer.width * 0.9, 0.1);
-      thresholdCtx.lineTo(thresholdBuffer.width * 0.9, thresholdBuffer.height * 0.9);
+      thresholdCtx.lineTo(
+          thresholdBuffer.width * 0.9,
+          thresholdBuffer.height * 0.9
+      );
       thresholdCtx.closePath();
     } else {
       thresholdCtx.beginPath();
       thresholdCtx.moveTo(0.1, 0.1);
       thresholdCtx.lineTo(thresholdBuffer.width * 0.9, 0.1);
-      thresholdCtx.lineTo(thresholdBuffer.width * 0.5, thresholdBuffer.height * 0.9);
+      thresholdCtx.lineTo(
+          thresholdBuffer.width * 0.5,
+          thresholdBuffer.height * 0.9
+      );
       thresholdCtx.closePath();
     }
 
@@ -321,38 +411,43 @@ const LinearBargraph = function(canvas, parameters) {
     let majorTickStart;
     let majorTickStop;
     if (vertical) {
-      minorTickStart = (0.34 * imageWidth);
-      minorTickStop = (0.36 * imageWidth);
-      mediumTickStart = (0.33 * imageWidth);
-      mediumTickStop = (0.36 * imageWidth);
-      majorTickStart = (0.32 * imageWidth);
-      majorTickStop = (0.36 * imageWidth);
+      minorTickStart = 0.34 * imageWidth;
+      minorTickStop = 0.36 * imageWidth;
+      mediumTickStart = 0.33 * imageWidth;
+      mediumTickStop = 0.36 * imageWidth;
+      majorTickStart = 0.32 * imageWidth;
+      majorTickStop = 0.36 * imageWidth;
       ctx.textAlign = 'right';
       scaleBoundsX = 0;
-      scaleBoundsY = imageHeight * 0.128640;
+      scaleBoundsY = imageHeight * 0.12864;
       scaleBoundsW = 0;
-      scaleBoundsH = (imageHeight * 0.856796 - imageHeight * 0.128640);
+      scaleBoundsH = imageHeight * 0.856796 - imageHeight * 0.12864;
       tickSpaceScaling = scaleBoundsH / (maxValue - minValue);
     } else {
-      minorTickStart = (0.65 * imageHeight);
-      minorTickStop = (0.63 * imageHeight);
-      mediumTickStart = (0.66 * imageHeight);
-      mediumTickStop = (0.63 * imageHeight);
-      majorTickStart = (0.67 * imageHeight);
-      majorTickStop = (0.63 * imageHeight);
+      minorTickStart = 0.65 * imageHeight;
+      minorTickStop = 0.63 * imageHeight;
+      mediumTickStart = 0.66 * imageHeight;
+      mediumTickStop = 0.63 * imageHeight;
+      majorTickStart = 0.67 * imageHeight;
+      majorTickStop = 0.63 * imageHeight;
       ctx.textAlign = 'center';
       scaleBoundsX = imageWidth * 0.142857;
       scaleBoundsY = 0;
-      scaleBoundsW = (imageWidth * 0.871012 - imageWidth * 0.142857);
+      scaleBoundsW = imageWidth * 0.871012 - imageWidth * 0.142857;
       scaleBoundsH = 0;
       tickSpaceScaling = scaleBoundsW / (maxValue - minValue);
     }
 
     let labelCounter;
-    for (labelCounter = minValue, tickCounter = 0; labelCounter <= maxValue; labelCounter += minorTickSpacing, tickCounter += minorTickSpacing) {
+    for (
+      labelCounter = minValue, tickCounter = 0;
+      labelCounter <= maxValue;
+      labelCounter += minorTickSpacing, tickCounter += minorTickSpacing
+    ) {
       // Calculate the bounds of the scaling
       if (vertical) {
-        currentPos = scaleBoundsY + scaleBoundsH - tickCounter * tickSpaceScaling;
+        currentPos =
+          scaleBoundsY + scaleBoundsH - tickCounter * tickSpaceScaling;
       } else {
         currentPos = scaleBoundsX + tickCounter * tickSpaceScaling;
       }
@@ -363,41 +458,77 @@ const LinearBargraph = function(canvas, parameters) {
       if (majorTickCounter === maxNoOfMinorTicks) {
         // Draw the major tickmarks
         ctx.lineWidth = 1.5;
-        drawLinearTicks(ctx, majorTickStart, majorTickStop, currentPos, vertical);
+        drawLinearTicks(
+            ctx,
+            majorTickStart,
+            majorTickStop,
+            currentPos,
+            vertical
+        );
 
         // Draw the standard tickmark labels
         if (vertical) {
           // Vertical orientation
           switch (labelNumberFormat.format) {
             case 'fractional':
-              ctx.fillText((valueCounter.toFixed(2)), imageWidth * 0.28, currentPos, TEXT_WIDTH);
+              ctx.fillText(
+                  valueCounter.toFixed(2),
+                  imageWidth * 0.28,
+                  currentPos,
+                  TEXT_WIDTH
+              );
               break;
 
             case 'scientific':
-              ctx.fillText((valueCounter.toPrecision(2)), imageWidth * 0.28, currentPos, TEXT_WIDTH);
+              ctx.fillText(
+                  valueCounter.toPrecision(2),
+                  imageWidth * 0.28,
+                  currentPos,
+                  TEXT_WIDTH
+              );
               break;
 
             case 'standard':
-              /* falls through */
+            /* falls through */
             default:
-              ctx.fillText((valueCounter.toFixed(0)), imageWidth * 0.28, currentPos, TEXT_WIDTH);
+              ctx.fillText(
+                  valueCounter.toFixed(0),
+                  imageWidth * 0.28,
+                  currentPos,
+                  TEXT_WIDTH
+              );
               break;
           }
         } else {
           // Horizontal orientation
           switch (labelNumberFormat.format) {
             case 'fractional':
-              ctx.fillText((valueCounter.toFixed(2)), currentPos, (imageHeight * 0.73), TEXT_WIDTH);
+              ctx.fillText(
+                  valueCounter.toFixed(2),
+                  currentPos,
+                  imageHeight * 0.73,
+                  TEXT_WIDTH
+              );
               break;
 
             case 'scientific':
-              ctx.fillText((valueCounter.toPrecision(2)), currentPos, (imageHeight * 0.73), TEXT_WIDTH);
+              ctx.fillText(
+                  valueCounter.toPrecision(2),
+                  currentPos,
+                  imageHeight * 0.73,
+                  TEXT_WIDTH
+              );
               break;
 
             case 'standard':
-              /* falls through */
+            /* falls through */
             default:
-              ctx.fillText((valueCounter.toFixed(0)), currentPos, (imageHeight * 0.73), TEXT_WIDTH);
+              ctx.fillText(
+                  valueCounter.toFixed(0),
+                  currentPos,
+                  imageHeight * 0.73,
+                  TEXT_WIDTH
+              );
               break;
           }
         }
@@ -408,19 +539,40 @@ const LinearBargraph = function(canvas, parameters) {
       }
 
       // Draw tickmark every minor tickmark spacing
-      if (0 === maxNoOfMinorTicks % 2 && majorTickCounter === (maxNoOfMinorTicks / 2)) {
+      if (
+        0 === maxNoOfMinorTicks % 2 &&
+        majorTickCounter === maxNoOfMinorTicks / 2
+      ) {
         ctx.lineWidth = 1;
-        drawLinearTicks(ctx, mediumTickStart, mediumTickStop, currentPos, vertical);
+        drawLinearTicks(
+            ctx,
+            mediumTickStart,
+            mediumTickStop,
+            currentPos,
+            vertical
+        );
       } else {
         ctx.lineWidth = 0.5;
-        drawLinearTicks(ctx, minorTickStart, minorTickStop, currentPos, vertical);
+        drawLinearTicks(
+            ctx,
+            minorTickStart,
+            minorTickStop,
+            currentPos,
+            vertical
+        );
       }
     }
 
     ctx.restore();
   };
 
-  const drawLinearTicks = function(ctx, tickStart, tickStop, currentPos, vertical) {
+  const drawLinearTicks = function(
+      ctx,
+      tickStart,
+      tickStop,
+      currentPos,
+      vertical
+  ) {
     if (vertical) {
       // Vertical orientation
       ctx.beginPath();
@@ -441,11 +593,15 @@ const LinearBargraph = function(canvas, parameters) {
   // **************   Initialization  ********************
   const init = function(parameters) {
     parameters = parameters || {};
-    const drawFrame2 = (undefined === parameters.frame ? false : parameters.frame);
-    const drawBackground2 = (undefined === parameters.background ? false : parameters.background);
-    const drawLed = (undefined === parameters.led ? false : parameters.led);
-    const drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
-    const drawBargraphLed = (undefined === parameters.bargraphled ? false : parameters.bargraphled);
+    const drawFrame2 =
+      undefined === parameters.frame ? false : parameters.frame;
+    const drawBackground2 =
+      undefined === parameters.background ? false : parameters.background;
+    const drawLed = undefined === parameters.led ? false : parameters.led;
+    const drawForeground2 =
+      undefined === parameters.foreground ? false : parameters.foreground;
+    const drawBargraphLed =
+      undefined === parameters.bargraphled ? false : parameters.bargraphled;
 
     initialized = true;
 
@@ -454,12 +610,24 @@ const LinearBargraph = function(canvas, parameters) {
 
     // Create frame in frame buffer (backgroundBuffer)
     if (drawFrame2 && frameVisible) {
-      drawLinearFrameImage(frameContext, frameDesign, imageWidth, imageHeight, vertical);
+      drawLinearFrameImage(
+          frameContext,
+          frameDesign,
+          imageWidth,
+          imageHeight,
+          vertical
+      );
     }
 
     // Create background in background buffer (backgroundBuffer)
     if (drawBackground2 && backgroundVisible) {
-      drawLinearBackgroundImage(backgroundContext, backgroundColor, imageWidth, imageHeight, vertical);
+      drawLinearBackgroundImage(
+          backgroundContext,
+          backgroundColor,
+          imageWidth,
+          imageHeight,
+          vertical
+      );
     }
 
     if (drawLed) {
@@ -481,18 +649,54 @@ const LinearBargraph = function(canvas, parameters) {
     // Draw min measured value indicator in minMeasuredValueBuffer
     if (minMeasuredValueVisible) {
       if (vertical) {
-        minMeasuredValueCtx.drawImage(createMeasuredValueImage(minMaxIndSize, ColorDef.BLUE.dark.getRgbaColor(), false, vertical), 0, 0);
+        minMeasuredValueCtx.drawImage(
+            createMeasuredValueImage(
+                minMaxIndSize,
+                ColorDef.BLUE.dark.getRgbaColor(),
+                false,
+                vertical
+            ),
+            0,
+            0
+        );
       } else {
-        minMeasuredValueCtx.drawImage(createMeasuredValueImage(minMaxIndSize, ColorDef.BLUE.dark.getRgbaColor(), false, vertical), 0, 0);
+        minMeasuredValueCtx.drawImage(
+            createMeasuredValueImage(
+                minMaxIndSize,
+                ColorDef.BLUE.dark.getRgbaColor(),
+                false,
+                vertical
+            ),
+            0,
+            0
+        );
       }
     }
 
     // Draw max measured value indicator in maxMeasuredValueBuffer
     if (maxMeasuredValueVisible) {
       if (vertical) {
-        maxMeasuredValueCtx.drawImage(createMeasuredValueImage(minMaxIndSize, ColorDef.RED.medium.getRgbaColor(), false, vertical), 0, 0);
+        maxMeasuredValueCtx.drawImage(
+            createMeasuredValueImage(
+                minMaxIndSize,
+                ColorDef.RED.medium.getRgbaColor(),
+                false,
+                vertical
+            ),
+            0,
+            0
+        );
       } else {
-        maxMeasuredValueCtx.drawImage(createMeasuredValueImage(minMaxIndSize, ColorDef.RED.medium.getRgbaColor(), false, vertical), 0, 0);
+        maxMeasuredValueCtx.drawImage(
+            createMeasuredValueImage(
+                minMaxIndSize,
+                ColorDef.RED.medium.getRgbaColor(),
+                false,
+                vertical
+            ),
+            0,
+            0
+        );
       }
     }
 
@@ -507,12 +711,24 @@ const LinearBargraph = function(canvas, parameters) {
         backgroundContext.save();
         if (vertical) {
           // Vertical orientation
-          valuePos = imageHeight * 0.856796 - (imageHeight * 0.728155) * (threshold - minValue) / (maxValue - minValue);
-          backgroundContext.translate(imageWidth * 0.365, valuePos - minMaxIndSize / 2);
+          valuePos =
+            imageHeight * 0.856796 -
+            (imageHeight * 0.728155 * (threshold - minValue)) /
+              (maxValue - minValue);
+          backgroundContext.translate(
+              imageWidth * 0.365,
+              valuePos - minMaxIndSize / 2
+          );
         } else {
           // Horizontal orientation
-          valuePos = (imageWidth * 0.856796 - imageWidth * 0.128640) * (threshold - minValue) / (maxValue - minValue);
-          backgroundContext.translate(imageWidth * 0.142857 - minMaxIndSize / 2 + valuePos, imageHeight * 0.58);
+          valuePos =
+            ((imageWidth * 0.856796 - imageWidth * 0.12864) *
+              (threshold - minValue)) /
+            (maxValue - minValue);
+          backgroundContext.translate(
+              imageWidth * 0.142857 - minMaxIndSize / 2 + valuePos,
+              imageHeight * 0.58
+          );
         }
         backgroundContext.drawImage(createThresholdImage(vertical), 0, 0);
         backgroundContext.restore();
@@ -520,20 +736,56 @@ const LinearBargraph = function(canvas, parameters) {
 
       // Create title in background buffer (backgroundBuffer)
       if (vertical) {
-        drawTitleImage(backgroundContext, imageWidth, imageHeight, titleString, unitString, backgroundColor, vertical, null, lcdVisible);
+        drawTitleImage(
+            backgroundContext,
+            imageWidth,
+            imageHeight,
+            titleString,
+            unitString,
+            backgroundColor,
+            vertical,
+            null,
+            lcdVisible
+        );
       } else {
-        drawTitleImage(backgroundContext, imageWidth, imageHeight, titleString, unitString, backgroundColor, vertical, null, lcdVisible);
+        drawTitleImage(
+            backgroundContext,
+            imageWidth,
+            imageHeight,
+            titleString,
+            unitString,
+            backgroundColor,
+            vertical,
+            null,
+            lcdVisible
+        );
       }
     }
 
     // Create lcd background if selected in background buffer (backgroundBuffer)
     if (drawBackground2 && lcdVisible) {
       if (vertical) {
-        lcdBuffer = createLcdBackgroundImage(imageWidth * 0.571428, imageHeight * 0.055, lcdColor);
-        backgroundContext.drawImage(lcdBuffer, ((imageWidth - (imageWidth * 0.571428)) / 2), imageHeight * 0.88);
+        lcdBuffer = createLcdBackgroundImage(
+            imageWidth * 0.571428,
+            imageHeight * 0.055,
+            lcdColor
+        );
+        backgroundContext.drawImage(
+            lcdBuffer,
+            (imageWidth - imageWidth * 0.571428) / 2,
+            imageHeight * 0.88
+        );
       } else {
-        lcdBuffer = createLcdBackgroundImage(imageWidth * 0.18, imageHeight * 0.15, lcdColor);
-        backgroundContext.drawImage(lcdBuffer, imageWidth * 0.695, imageHeight * 0.22);
+        lcdBuffer = createLcdBackgroundImage(
+            imageWidth * 0.18,
+            imageHeight * 0.15,
+            lcdColor
+        );
+        backgroundContext.drawImage(
+            lcdBuffer,
+            imageWidth * 0.695,
+            imageHeight * 0.22
+        );
       }
     }
 
@@ -548,27 +800,38 @@ const LinearBargraph = function(canvas, parameters) {
     if (null !== section && 0 < section.length) {
       isSectionsVisible = true;
       let sectionIndex = section.length;
-      let top; let bottom; let fullSize; let ledWidth2;
+      let top;
+      let bottom;
+      let fullSize;
+      let ledWidth2;
 
       if (vertical) {
         // Vertical orientation
-        top = imageHeight * 0.128640; // position of max value
+        top = imageHeight * 0.12864; // position of max value
         bottom = imageHeight * 0.856796; // position of min value
         fullSize = bottom - top;
         ledWidth2 = 0;
       } else {
         // Horizontal orientation
         top = imageWidth * 0.856796; // position of max value
-        bottom = imageWidth * 0.128640;
+        bottom = imageWidth * 0.12864;
         fullSize = top - bottom;
-        ledWidth2 = imageWidth * 0.012135 / 2;
+        ledWidth2 = (imageWidth * 0.012135) / 2;
       }
       sectionPixels = [];
       do {
         sectionIndex--;
         sectionPixels.push({
-          start: (((section[sectionIndex].start + Math.abs(minValue)) / (maxValue - minValue)) * fullSize - ledWidth2),
-          stop: (((section[sectionIndex].stop + Math.abs(minValue)) / (maxValue - minValue)) * fullSize - ledWidth2),
+          start:
+            ((section[sectionIndex].start + Math.abs(minValue)) /
+              (maxValue - minValue)) *
+              fullSize -
+            ledWidth2,
+          stop:
+            ((section[sectionIndex].stop + Math.abs(minValue)) /
+              (maxValue - minValue)) *
+              fullSize -
+            ledWidth2,
           color: customColorDef(section[sectionIndex].color),
         });
       } while (0 < sectionIndex);
@@ -584,17 +847,26 @@ const LinearBargraph = function(canvas, parameters) {
 
     // Create foreground in foreground buffer (foregroundBuffer)
     if (drawForeground2 && foregroundVisible) {
-      drawLinearForegroundImage(foregroundContext, imageWidth, imageHeight, vertical, false);
+      drawLinearForegroundImage(
+          foregroundContext,
+          imageWidth,
+          imageHeight,
+          vertical,
+          false
+      );
     }
   };
 
   const resetBuffers = function(buffers) {
     buffers = buffers || {};
-    const resetFrame = (undefined === buffers.frame ? false : buffers.frame);
-    const resetBackground = (undefined === buffers.background ? false : buffers.background);
-    const resetLed = (undefined === buffers.led ? false : buffers.led);
-    const resetBargraphLed = (undefined === buffers.bargraphled ? false : buffers.bargraphled);
-    const resetForeground = (undefined === buffers.foreground ? false : buffers.foreground);
+    const resetFrame = undefined === buffers.frame ? false : buffers.frame;
+    const resetBackground =
+      undefined === buffers.background ? false : buffers.background;
+    const resetLed = undefined === buffers.led ? false : buffers.led;
+    const resetBargraphLed =
+      undefined === buffers.bargraphled ? false : buffers.bargraphled;
+    const resetForeground =
+      undefined === buffers.foreground ? false : buffers.foreground;
 
     if (resetFrame) {
       frameBuffer.width = width;
@@ -692,7 +964,7 @@ const LinearBargraph = function(canvas, parameters) {
     // Orientation dependend definitions
     if (vertical) {
       // Vertical orientation
-      top = imageHeight * 0.128640; // position of max value
+      top = imageHeight * 0.12864; // position of max value
       bottom = imageHeight * 0.856796; // position of min value
       fullSize = bottom - top;
       valueBackgroundStartX = 0;
@@ -702,7 +974,7 @@ const LinearBargraph = function(canvas, parameters) {
     } else {
       // Horizontal orientation
       top = imageWidth * 0.856796; // position of max value
-      bottom = imageWidth * 0.128640;
+      bottom = imageWidth * 0.12864;
       fullSize = top - bottom;
       valueBackgroundStartX = imageWidth * 0.13;
       valueBackgroundStartY = imageHeight * 0.435714;
@@ -710,13 +982,21 @@ const LinearBargraph = function(canvas, parameters) {
       valueBackgroundStopY = valueBackgroundStartY;
     }
 
-    const darker = (backgroundColor === BackgroundColor.CARBON ||
+    const darker =
+      backgroundColor === BackgroundColor.CARBON ||
       backgroundColor === BackgroundColor.PUNCHED_SHEET ||
       backgroundColor === BackgroundColor.STAINLESS ||
       backgroundColor === BackgroundColor.BRUSHED_STAINLESS ||
-      backgroundColor === BackgroundColor.TURNED) ? 0.3 : 0;
+      backgroundColor === BackgroundColor.TURNED ?
+        0.3 :
+        0;
 
-    const valueBackgroundTrackGradient = ctx.createLinearGradient(valueBackgroundStartX, valueBackgroundStartY, valueBackgroundStopX, valueBackgroundStopY);
+    const valueBackgroundTrackGradient = ctx.createLinearGradient(
+        valueBackgroundStartX,
+        valueBackgroundStartY,
+        valueBackgroundStopX,
+        valueBackgroundStopY
+    );
     labelColor.setAlpha(0.047058 + darker);
     valueBackgroundTrackGradient.addColorStop(0, labelColor.getRgbaColor());
     labelColor.setAlpha(0.145098 + darker);
@@ -728,9 +1008,19 @@ const LinearBargraph = function(canvas, parameters) {
     ctx.fillStyle = valueBackgroundTrackGradient;
 
     if (vertical) {
-      ctx.fillRect(imageWidth * 0.435714, top, imageWidth * 0.15, fullSize * 1.014);
+      ctx.fillRect(
+          imageWidth * 0.435714,
+          top,
+          imageWidth * 0.15,
+          fullSize * 1.014
+      );
     } else {
-      ctx.fillRect(valueBackgroundStartX, valueBackgroundStartY, fullSize * 1.035, imageHeight * 0.152857);
+      ctx.fillRect(
+          valueBackgroundStartX,
+          valueBackgroundStartY,
+          fullSize * 1.035,
+          imageHeight * 0.152857
+      );
     }
 
     if (vertical) {
@@ -747,7 +1037,12 @@ const LinearBargraph = function(canvas, parameters) {
       valueBorderStopY = 0;
     }
 
-    const valueBorderGradient = ctx.createLinearGradient(valueBorderStartX, valueBorderStartY, valueBorderStopX, valueBorderStopY);
+    const valueBorderGradient = ctx.createLinearGradient(
+        valueBorderStartX,
+        valueBorderStartY,
+        valueBorderStopX,
+        valueBorderStopY
+    );
     labelColor.setAlpha(0.298039 + darker);
     valueBorderGradient.addColorStop(0, labelColor.getRgbaColor());
     labelColor.setAlpha(0.686274 + darker);
@@ -758,11 +1053,31 @@ const LinearBargraph = function(canvas, parameters) {
     valueBorderGradient.addColorStop(1, labelColor.getRgbaColor());
     ctx.fillStyle = valueBorderGradient;
     if (vertical) {
-      ctx.fillRect(imageWidth * 0.435714, top, imageWidth * 0.007142, fullSize * 1.014);
-      ctx.fillRect(imageWidth * 0.571428, top, imageWidth * 0.007142, fullSize * 1.014);
+      ctx.fillRect(
+          imageWidth * 0.435714,
+          top,
+          imageWidth * 0.007142,
+          fullSize * 1.014
+      );
+      ctx.fillRect(
+          imageWidth * 0.571428,
+          top,
+          imageWidth * 0.007142,
+          fullSize * 1.014
+      );
     } else {
-      ctx.fillRect(imageWidth * 0.13, imageHeight * 0.435714, fullSize * 1.035, imageHeight * 0.007142);
-      ctx.fillRect(imageWidth * 0.13, imageHeight * 0.571428, fullSize * 1.035, imageHeight * 0.007142);
+      ctx.fillRect(
+          imageWidth * 0.13,
+          imageHeight * 0.435714,
+          fullSize * 1.035,
+          imageHeight * 0.007142
+      );
+      ctx.fillRect(
+          imageWidth * 0.13,
+          imageHeight * 0.571428,
+          fullSize * 1.035,
+          imageHeight * 0.007142
+      );
     }
 
     // Prepare led specific variables
@@ -786,7 +1101,8 @@ const LinearBargraph = function(canvas, parameters) {
       ledH = imageHeight * 0.121428;
     }
 
-    let translateX; let translateY;
+    let translateX;
+    let translateY;
     let activeLedColor;
     let lastActiveLedColor = valueColor;
     let i;
@@ -807,21 +1123,30 @@ const LinearBargraph = function(canvas, parameters) {
         // Use a gradient for value colors?
         if (isGradientVisible) {
           // Convert pixel back to value
-          currentValue = minValue + (translateY / fullSize) * (maxValue - minValue);
+          currentValue =
+            minValue + (translateY / fullSize) * (maxValue - minValue);
           gradRange = valueGradient.getEnd() - valueGradient.getStart();
           fraction = (currentValue - minValue) / gradRange;
           fraction = Math.max(Math.min(fraction, 1), 0);
-          activeLedColor = customColorDef(valueGradient.getColorAt(fraction).getRgbaColor());
+          activeLedColor = customColorDef(
+              valueGradient.getColorAt(fraction).getRgbaColor()
+          );
         } else if (isSectionsVisible) {
           for (i = 0; i < sectionPixels.length; i++) {
-            if (translateY >= sectionPixels[i].start && translateY < sectionPixels[i].stop) {
+            if (
+              translateY >= sectionPixels[i].start &&
+              translateY < sectionPixels[i].stop
+            ) {
               activeLedColor = sectionPixels[i].color;
               break;
             }
           }
         }
         // Has LED color changed? If so redraw the buffer
-        if (lastActiveLedColor.medium.getHexColor() !== activeLedColor.medium.getHexColor()) {
+        if (
+          lastActiveLedColor.medium.getHexColor() !==
+          activeLedColor.medium.getHexColor()
+        ) {
           drawActiveLed(activeLedContext, activeLedColor);
           lastActiveLedColor = activeLedColor;
         }
@@ -833,33 +1158,50 @@ const LinearBargraph = function(canvas, parameters) {
     } else {
       // Draw the inactive leds
       inactiveLeds = fullSize;
-      for (translateX = -(ledW / 2); translateX <= inactiveLeds; translateX += ledW + 1) {
+      for (
+        translateX = -(ledW / 2);
+        translateX <= inactiveLeds;
+        translateX += ledW + 1
+      ) {
         ctx.translate(translateX, 0);
         ctx.drawImage(inActiveLedBuffer, ledX, ledY);
         ctx.translate(-translateX, 0);
       }
       // Draw the active leds in dependence on the current value
       activeLeds = ((value - minValue) / (maxValue - minValue)) * fullSize;
-      for (translateX = -(ledW / 2); translateX <= activeLeds; translateX += ledW + 1) {
+      for (
+        translateX = -(ledW / 2);
+        translateX <= activeLeds;
+        translateX += ledW + 1
+      ) {
         // check for LED color
         activeLedColor = valueColor;
         if (isGradientVisible) {
           // Convert pixel back to value
-          currentValue = minValue + (translateX / fullSize) * (maxValue - minValue);
+          currentValue =
+            minValue + (translateX / fullSize) * (maxValue - minValue);
           gradRange = valueGradient.getEnd() - valueGradient.getStart();
           fraction = (currentValue - minValue) / gradRange;
           fraction = Math.max(Math.min(fraction, 1), 0);
-          activeLedColor = customColorDef(valueGradient.getColorAt(fraction).getRgbaColor());
+          activeLedColor = customColorDef(
+              valueGradient.getColorAt(fraction).getRgbaColor()
+          );
         } else if (isSectionsVisible) {
           for (i = 0; i < sectionPixels.length; i++) {
-            if (translateX >= sectionPixels[i].start && translateX < sectionPixels[i].stop) {
+            if (
+              translateX >= sectionPixels[i].start &&
+              translateX < sectionPixels[i].stop
+            ) {
               activeLedColor = sectionPixels[i].color;
               break;
             }
           }
         }
         // Has LED color changed? If so redraw the buffer
-        if (lastActiveLedColor.medium.getHexColor() !== activeLedColor.medium.getHexColor()) {
+        if (
+          lastActiveLedColor.medium.getHexColor() !==
+          activeLedColor.medium.getHexColor()
+        ) {
           drawActiveLed(activeLedContext, activeLedColor);
           lastActiveLedColor = activeLedColor;
         }
@@ -875,9 +1217,16 @@ const LinearBargraph = function(canvas, parameters) {
     ctx.beginPath();
     ctx.rect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.closePath();
-    const ledCenterX = (ctx.canvas.width / 2);
-    const ledCenterY = (ctx.canvas.height / 2);
-    const ledGradient = mainCtx.createRadialGradient(ledCenterX, ledCenterY, 0, ledCenterX, ledCenterY, ctx.canvas.width / 2);
+    const ledCenterX = ctx.canvas.width / 2;
+    const ledCenterY = ctx.canvas.height / 2;
+    const ledGradient = mainCtx.createRadialGradient(
+        ledCenterX,
+        ledCenterY,
+        0,
+        ledCenterX,
+        ledCenterY,
+        ctx.canvas.width / 2
+    );
     ledGradient.addColorStop(0, '#3c3c3c');
     ledGradient.addColorStop(1, '#323232');
     ctx.fillStyle = ledGradient;
@@ -890,15 +1239,22 @@ const LinearBargraph = function(canvas, parameters) {
     ctx.beginPath();
     ctx.rect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.closePath();
-    const ledCenterX = (ctx.canvas.width / 2);
-    const ledCenterY = (ctx.canvas.height / 2);
+    const ledCenterX = ctx.canvas.width / 2;
+    const ledCenterY = ctx.canvas.height / 2;
     let outerRadius;
     if (vertical) {
       outerRadius = ctx.canvas.width / 2;
     } else {
       outerRadius = ctx.canvas.height / 2;
     }
-    const ledGradient = mainCtx.createRadialGradient(ledCenterX, ledCenterY, 0, ledCenterX, ledCenterY, outerRadius);
+    const ledGradient = mainCtx.createRadialGradient(
+        ledCenterX,
+        ledCenterY,
+        0,
+        ledCenterX,
+        ledCenterY,
+        outerRadius
+    );
     ledGradient.addColorStop(0, color.light.getRgbaColor());
     ledGradient.addColorStop(1, color.dark.getRgbaColor());
     ctx.fillStyle = ledGradient;
@@ -909,7 +1265,12 @@ const LinearBargraph = function(canvas, parameters) {
   //* *********************************** Public methods **************************************
   this.setValue = function(newValue) {
     newValue = parseFloat(newValue);
-    const targetValue = (newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue));
+    const targetValue =
+      newValue < minValue ?
+        minValue :
+        newValue > maxValue ?
+        maxValue :
+        newValue;
     if (value !== targetValue) {
       value = targetValue;
 
@@ -920,15 +1281,19 @@ const LinearBargraph = function(canvas, parameters) {
         minMeasuredValue = value;
       }
 
-      if ((value >= threshold && !ledBlinking && thresholdRising) ||
-        (value <= threshold && !ledBlinking && !thresholdRising)) {
+      if (
+        (value >= threshold && !ledBlinking && thresholdRising) ||
+        (value <= threshold && !ledBlinking && !thresholdRising)
+      ) {
         ledBlinking = true;
         blink(ledBlinking);
         if (playAlarm) {
           audioElement.play();
         }
-      } else if ((value < threshold && ledBlinking && thresholdRising) ||
-        (value > threshold && ledBlinking && !thresholdRising)) {
+      } else if (
+        (value < threshold && ledBlinking && thresholdRising) ||
+        (value > threshold && ledBlinking && !thresholdRising)
+      ) {
         ledBlinking = false;
         blink(ledBlinking);
         if (playAlarm) {
@@ -950,30 +1315,48 @@ const LinearBargraph = function(canvas, parameters) {
     const gauge = this;
     let time;
     newValue = parseFloat(newValue);
-    targetValue = (newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue));
+    targetValue =
+      newValue < minValue ?
+        minValue :
+        newValue > maxValue ?
+        maxValue :
+        newValue;
 
     if (value !== targetValue) {
       if (undefined !== tween && tween.isPlaying) {
         tween.stop();
       }
 
-      time = fullScaleDeflectionTime * Math.abs(targetValue - value) / (maxValue - minValue);
+      time =
+        (fullScaleDeflectionTime * Math.abs(targetValue - value)) /
+        (maxValue - minValue);
       time = Math.max(time, fullScaleDeflectionTime / 5);
-      tween = new Tween({}, '', Tween.regularEaseInOut, value, targetValue, time);
+      tween = new Tween(
+          {},
+          '',
+          Tween.regularEaseInOut,
+          value,
+          targetValue,
+          time
+      );
       // tween = new Tween({}, '', Tween.regularEaseInOut, value, targetValue, 1);
       // tween = new Tween(new Object(), '', Tween.strongEaseInOut, value, targetValue, 1);
       tween.onMotionChanged = function(event) {
         value = event.target._pos;
 
-        if ((value >= threshold && !ledBlinking && thresholdRising) ||
-          (value <= threshold && !ledBlinking && !thresholdRising)) {
+        if (
+          (value >= threshold && !ledBlinking && thresholdRising) ||
+          (value <= threshold && !ledBlinking && !thresholdRising)
+        ) {
           ledBlinking = true;
           blink(ledBlinking);
           if (playAlarm) {
             audioElement.play();
           }
-        } else if ((value < threshold && ledBlinking && thresholdRising) ||
-          (value > threshold && ledBlinking && !thresholdRising)) {
+        } else if (
+          (value < threshold && ledBlinking && thresholdRising) ||
+          (value > threshold && ledBlinking && !thresholdRising)
+        ) {
           ledBlinking = false;
           blink(ledBlinking);
           if (playAlarm) {
@@ -995,7 +1378,7 @@ const LinearBargraph = function(canvas, parameters) {
       };
 
       // do we have a callback function to process?
-      if (callback && typeof(callback) === 'function') {
+      if (callback && typeof callback === 'function') {
         tween.onMotionFinished = callback;
       }
 
@@ -1144,7 +1527,12 @@ const LinearBargraph = function(canvas, parameters) {
 
   this.setMaxMeasuredValue = function(newValue) {
     newValue = parseFloat(newValue);
-    const targetValue = (newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue));
+    const targetValue =
+      newValue < minValue ?
+        minValue :
+        newValue > maxValue ?
+        maxValue :
+        newValue;
     if (maxMeasuredValue !== targetValue) {
       maxMeasuredValue = targetValue;
       this.repaint();
@@ -1154,7 +1542,12 @@ const LinearBargraph = function(canvas, parameters) {
 
   this.setMinMeasuredValue = function(newValue) {
     newValue = parseFloat(newValue);
-    const targetValue = (newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue));
+    const targetValue =
+      newValue < minValue ?
+        minValue :
+        newValue > maxValue ?
+        maxValue :
+        newValue;
     if (minMeasuredValue !== targetValue) {
       minMeasuredValue = targetValue;
       this.repaint();
@@ -1220,7 +1613,12 @@ const LinearBargraph = function(canvas, parameters) {
 
   this.setThreshold = function(newValue) {
     newValue = parseFloat(newValue);
-    const targetValue = (newValue < minValue ? minValue : (newValue > maxValue ? maxValue : newValue));
+    const targetValue =
+      newValue < minValue ?
+        minValue :
+        newValue > maxValue ?
+        maxValue :
+        newValue;
     if (threshold !== targetValue) {
       threshold = targetValue;
       resetBuffers({
@@ -1275,16 +1673,24 @@ const LinearBargraph = function(canvas, parameters) {
       mainCtx.drawImage(ledBuffer, ledPosX, ledPosY);
     }
     let valuePos;
-    let minMaxX; let minMaxY;
+    let minMaxX;
+    let minMaxY;
     // Draw min measured value indicator
     if (minMeasuredValueVisible) {
       if (vertical) {
-        valuePos = imageHeight * 0.856796 - (imageHeight * 0.728155) * (minMeasuredValue - minValue) / (maxValue - minValue);
+        valuePos =
+          imageHeight * 0.856796 -
+          (imageHeight * 0.728155 * (minMeasuredValue - minValue)) /
+            (maxValue - minValue);
         minMaxX = imageWidth * 0.34 - minMeasuredValueBuffer.width;
         minMaxY = valuePos - minMeasuredValueBuffer.height / 2;
       } else {
-        valuePos = ((imageWidth * 0.856796) - (imageWidth * 0.128640)) * (minMeasuredValue - minValue) / (maxValue - minValue);
-        minMaxX = imageWidth * 0.142857 - minMeasuredValueBuffer.height / 2 + valuePos;
+        valuePos =
+          ((imageWidth * 0.856796 - imageWidth * 0.12864) *
+            (minMeasuredValue - minValue)) /
+          (maxValue - minValue);
+        minMaxX =
+          imageWidth * 0.142857 - minMeasuredValueBuffer.height / 2 + valuePos;
         minMaxY = imageHeight * 0.65;
       }
       mainCtx.drawImage(minMeasuredValueBuffer, minMaxX, minMaxY);
@@ -1293,12 +1699,19 @@ const LinearBargraph = function(canvas, parameters) {
     // Draw max measured value indicator
     if (maxMeasuredValueVisible) {
       if (vertical) {
-        valuePos = imageHeight * 0.856796 - (imageHeight * 0.728155) * (maxMeasuredValue - minValue) / (maxValue - minValue);
+        valuePos =
+          imageHeight * 0.856796 -
+          (imageHeight * 0.728155 * (maxMeasuredValue - minValue)) /
+            (maxValue - minValue);
         minMaxX = imageWidth * 0.34 - maxMeasuredValueBuffer.width;
         minMaxY = valuePos - maxMeasuredValueBuffer.height / 2;
       } else {
-        valuePos = ((imageWidth * 0.856796) - (imageWidth * 0.128640)) * (maxMeasuredValue - minValue) / (maxValue - minValue);
-        minMaxX = imageWidth * 0.142857 - maxMeasuredValueBuffer.height / 2 + valuePos;
+        valuePos =
+          ((imageWidth * 0.856796 - imageWidth * 0.12864) *
+            (maxMeasuredValue - minValue)) /
+          (maxValue - minValue);
+        minMaxX =
+          imageWidth * 0.142857 - maxMeasuredValueBuffer.height / 2 + valuePos;
         minMaxY = imageHeight * 0.65;
       }
       mainCtx.drawImage(maxMeasuredValueBuffer, minMaxX, minMaxY);

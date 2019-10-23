@@ -1,13 +1,17 @@
+import {createBuffer} from './tools';
 
-import {
-  createBuffer,
-} from './tools';
-
-
-const drawLinearForegroundImage = function(ctx, imageWidth, imageHeight, vertical) {
-  let linFgBuffer; let linFgCtx;
+const drawLinearForegroundImage = function(
+    ctx,
+    imageWidth,
+    imageHeight,
+    vertical
+) {
+  let linFgBuffer;
+  let linFgCtx;
   let foregroundGradient;
-  let frameWidth; let fgOffset; let fgOffset2;
+  let frameWidth;
+  let fgOffset;
+  let fgOffset2;
   const cacheKey = imageWidth.toString() + imageHeight + vertical;
 
   // check if we have already created and cached this buffer, if not create it
@@ -16,22 +20,59 @@ const drawLinearForegroundImage = function(ctx, imageWidth, imageHeight, vertica
     linFgBuffer = createBuffer(imageWidth, imageHeight);
     linFgCtx = linFgBuffer.getContext('2d');
 
-    frameWidth = Math.sqrt(imageWidth * imageWidth + imageHeight * imageHeight) * 0.04;
-    frameWidth = Math.min(frameWidth, (vertical ? imageWidth : imageHeight) * 0.1);
+    frameWidth =
+      Math.sqrt(imageWidth * imageWidth + imageHeight * imageHeight) * 0.04;
+    frameWidth = Math.min(
+        frameWidth,
+        (vertical ? imageWidth : imageHeight) * 0.1
+    );
     fgOffset = frameWidth * 1.3;
     fgOffset2 = fgOffset * 1.33;
 
     linFgCtx.beginPath();
     linFgCtx.moveTo(fgOffset, imageHeight - fgOffset);
     linFgCtx.lineTo(imageWidth - fgOffset, imageHeight - fgOffset);
-    linFgCtx.bezierCurveTo(imageWidth - fgOffset, imageHeight - fgOffset, imageWidth - fgOffset2, imageHeight * 0.7, imageWidth - fgOffset2, imageHeight * 0.5);
-    linFgCtx.bezierCurveTo(imageWidth - fgOffset2, fgOffset2, imageWidth - fgOffset, fgOffset, imageWidth - frameWidth, fgOffset);
+    linFgCtx.bezierCurveTo(
+        imageWidth - fgOffset,
+        imageHeight - fgOffset,
+        imageWidth - fgOffset2,
+        imageHeight * 0.7,
+        imageWidth - fgOffset2,
+        imageHeight * 0.5
+    );
+    linFgCtx.bezierCurveTo(
+        imageWidth - fgOffset2,
+        fgOffset2,
+        imageWidth - fgOffset,
+        fgOffset,
+        imageWidth - frameWidth,
+        fgOffset
+    );
     linFgCtx.lineTo(fgOffset, fgOffset);
-    linFgCtx.bezierCurveTo(fgOffset, fgOffset, fgOffset2, imageHeight * 0.285714, fgOffset2, imageHeight * 0.5);
-    linFgCtx.bezierCurveTo(fgOffset2, imageHeight * 0.7, fgOffset, imageHeight - fgOffset, frameWidth, imageHeight - fgOffset);
+    linFgCtx.bezierCurveTo(
+        fgOffset,
+        fgOffset,
+        fgOffset2,
+        imageHeight * 0.285714,
+        fgOffset2,
+        imageHeight * 0.5
+    );
+    linFgCtx.bezierCurveTo(
+        fgOffset2,
+        imageHeight * 0.7,
+        fgOffset,
+        imageHeight - fgOffset,
+        frameWidth,
+        imageHeight - fgOffset
+    );
     linFgCtx.closePath();
 
-    foregroundGradient = linFgCtx.createLinearGradient(0, (imageHeight - frameWidth), 0, frameWidth);
+    foregroundGradient = linFgCtx.createLinearGradient(
+        0,
+        imageHeight - frameWidth,
+        0,
+        frameWidth
+    );
     foregroundGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
     foregroundGradient.addColorStop(0.06, 'rgba(255, 255, 255, 0)');
     foregroundGradient.addColorStop(0.07, 'rgba(255, 255, 255, 0)');

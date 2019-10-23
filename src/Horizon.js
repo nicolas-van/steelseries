@@ -23,12 +23,25 @@ import {
 
 const Horizon = function(canvas, parameters) {
   parameters = parameters || {};
-  let size = (undefined === parameters.size ? 0 : parameters.size);
-  let frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign);
-  const frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible);
-  let foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType);
-  const foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible);
-  const pointerColor = (undefined === parameters.pointerColor ? ColorDef.WHITE : parameters.pointerColor);
+  let size = undefined === parameters.size ? 0 : parameters.size;
+  let frameDesign =
+    undefined === parameters.frameDesign ?
+      FrameDesign.METAL :
+      parameters.frameDesign;
+  const frameVisible =
+    undefined === parameters.frameVisible ? true : parameters.frameVisible;
+  let foregroundType =
+    undefined === parameters.foregroundType ?
+      ForegroundType.TYPE1 :
+      parameters.foregroundType;
+  const foregroundVisible =
+    undefined === parameters.foregroundVisible ?
+      true :
+      parameters.foregroundVisible;
+  const pointerColor =
+    undefined === parameters.pointerColor ?
+      ColorDef.WHITE :
+      parameters.pointerColor;
 
   let tweenRoll;
   let tweenPitch;
@@ -96,7 +109,7 @@ const Horizon = function(canvas, parameters) {
     ctx.fill();
 
     ctx.lineWidth = 1;
-    const stepSizeY = imgHeight / 360 * 5;
+    const stepSizeY = (imgHeight / 360) * 5;
     let stepTen = false;
     let step = 10;
 
@@ -108,17 +121,27 @@ const Horizon = function(canvas, parameters) {
     for (y = imgHeight / 2 - stepSizeY; y > 0; y -= stepSizeY) {
       if (step <= 90) {
         if (stepTen) {
-          ctx.fillText(step, (imgWidth - (imgWidth * 0.2)) / 2 - 8, y, imgWidth * 0.375);
-          ctx.fillText(step, imgWidth - (imgWidth - (imgWidth * 0.2)) / 2 + 8, y, imgWidth * 0.375);
+          ctx.fillText(
+              step,
+              (imgWidth - imgWidth * 0.2) / 2 - 8,
+              y,
+              imgWidth * 0.375
+          );
+          ctx.fillText(
+              step,
+              imgWidth - (imgWidth - imgWidth * 0.2) / 2 + 8,
+              y,
+              imgWidth * 0.375
+          );
           ctx.beginPath();
-          ctx.moveTo((imgWidth - (imgWidth * 0.2)) / 2, y);
-          ctx.lineTo(imgWidth - (imgWidth - (imgWidth * 0.2)) / 2, y);
+          ctx.moveTo((imgWidth - imgWidth * 0.2) / 2, y);
+          ctx.lineTo(imgWidth - (imgWidth - imgWidth * 0.2) / 2, y);
           ctx.closePath();
           step += 10;
         } else {
           ctx.beginPath();
-          ctx.moveTo((imgWidth - (imgWidth * 0.1)) / 2, y);
-          ctx.lineTo(imgWidth - (imgWidth - (imgWidth * 0.1)) / 2, y);
+          ctx.moveTo((imgWidth - imgWidth * 0.1) / 2, y);
+          ctx.lineTo(imgWidth - (imgWidth - imgWidth * 0.1) / 2, y);
           ctx.closePath();
         }
         ctx.stroke();
@@ -139,17 +162,27 @@ const Horizon = function(canvas, parameters) {
     for (y = imgHeight / 2 + stepSizeY; y <= imgHeight; y += stepSizeY) {
       if (step <= 90) {
         if (stepTen) {
-          ctx.fillText(-step, (imgWidth - (imgWidth * 0.2)) / 2 - 8, y, imgWidth * 0.375);
-          ctx.fillText(-step, imgWidth - (imgWidth - (imgWidth * 0.2)) / 2 + 8, y, imgWidth * 0.375);
+          ctx.fillText(
+              -step,
+              (imgWidth - imgWidth * 0.2) / 2 - 8,
+              y,
+              imgWidth * 0.375
+          );
+          ctx.fillText(
+              -step,
+              imgWidth - (imgWidth - imgWidth * 0.2) / 2 + 8,
+              y,
+              imgWidth * 0.375
+          );
           ctx.beginPath();
-          ctx.moveTo((imgWidth - (imgWidth * 0.2)) / 2, y);
-          ctx.lineTo(imgWidth - (imgWidth - (imgWidth * 0.2)) / 2, y);
+          ctx.moveTo((imgWidth - imgWidth * 0.2) / 2, y);
+          ctx.lineTo(imgWidth - (imgWidth - imgWidth * 0.2) / 2, y);
           ctx.closePath();
           step += 10;
         } else {
           ctx.beginPath();
-          ctx.moveTo((imgWidth - (imgWidth * 0.1)) / 2, y);
-          ctx.lineTo(imgWidth - (imgWidth - (imgWidth * 0.1)) / 2, y);
+          ctx.moveTo((imgWidth - imgWidth * 0.1) / 2, y);
+          ctx.lineTo(imgWidth - (imgWidth - imgWidth * 0.1) / 2, y);
           ctx.closePath();
         }
         ctx.stroke();
@@ -168,25 +201,123 @@ const Horizon = function(canvas, parameters) {
     // CENTERINDICATOR
     ctx.beginPath();
     ctx.moveTo(imageWidth * 0.476635, imageHeight * 0.5);
-    ctx.bezierCurveTo(imageWidth * 0.476635, imageHeight * 0.514018, imageWidth * 0.485981, imageHeight * 0.523364, imageWidth * 0.5, imageHeight * 0.523364);
-    ctx.bezierCurveTo(imageWidth * 0.514018, imageHeight * 0.523364, imageWidth * 0.523364, imageHeight * 0.514018, imageWidth * 0.523364, imageHeight * 0.5);
-    ctx.bezierCurveTo(imageWidth * 0.523364, imageHeight * 0.485981, imageWidth * 0.514018, imageHeight * 0.476635, imageWidth * 0.5, imageHeight * 0.476635);
-    ctx.bezierCurveTo(imageWidth * 0.485981, imageHeight * 0.476635, imageWidth * 0.476635, imageHeight * 0.485981, imageWidth * 0.476635, imageHeight * 0.5);
+    ctx.bezierCurveTo(
+        imageWidth * 0.476635,
+        imageHeight * 0.514018,
+        imageWidth * 0.485981,
+        imageHeight * 0.523364,
+        imageWidth * 0.5,
+        imageHeight * 0.523364
+    );
+    ctx.bezierCurveTo(
+        imageWidth * 0.514018,
+        imageHeight * 0.523364,
+        imageWidth * 0.523364,
+        imageHeight * 0.514018,
+        imageWidth * 0.523364,
+        imageHeight * 0.5
+    );
+    ctx.bezierCurveTo(
+        imageWidth * 0.523364,
+        imageHeight * 0.485981,
+        imageWidth * 0.514018,
+        imageHeight * 0.476635,
+        imageWidth * 0.5,
+        imageHeight * 0.476635
+    );
+    ctx.bezierCurveTo(
+        imageWidth * 0.485981,
+        imageHeight * 0.476635,
+        imageWidth * 0.476635,
+        imageHeight * 0.485981,
+        imageWidth * 0.476635,
+        imageHeight * 0.5
+    );
     ctx.closePath();
     ctx.moveTo(imageWidth * 0.415887, imageHeight * 0.504672);
     ctx.lineTo(imageWidth * 0.415887, imageHeight * 0.495327);
-    ctx.bezierCurveTo(imageWidth * 0.415887, imageHeight * 0.495327, imageWidth * 0.467289, imageHeight * 0.495327, imageWidth * 0.467289, imageHeight * 0.495327);
-    ctx.bezierCurveTo(imageWidth * 0.471962, imageHeight * 0.481308, imageWidth * 0.481308, imageHeight * 0.471962, imageWidth * 0.495327, imageHeight * 0.467289);
-    ctx.bezierCurveTo(imageWidth * 0.495327, imageHeight * 0.467289, imageWidth * 0.495327, imageHeight * 0.415887, imageWidth * 0.495327, imageHeight * 0.415887);
+    ctx.bezierCurveTo(
+        imageWidth * 0.415887,
+        imageHeight * 0.495327,
+        imageWidth * 0.467289,
+        imageHeight * 0.495327,
+        imageWidth * 0.467289,
+        imageHeight * 0.495327
+    );
+    ctx.bezierCurveTo(
+        imageWidth * 0.471962,
+        imageHeight * 0.481308,
+        imageWidth * 0.481308,
+        imageHeight * 0.471962,
+        imageWidth * 0.495327,
+        imageHeight * 0.467289
+    );
+    ctx.bezierCurveTo(
+        imageWidth * 0.495327,
+        imageHeight * 0.467289,
+        imageWidth * 0.495327,
+        imageHeight * 0.415887,
+        imageWidth * 0.495327,
+        imageHeight * 0.415887
+    );
     ctx.lineTo(imageWidth * 0.504672, imageHeight * 0.415887);
-    ctx.bezierCurveTo(imageWidth * 0.504672, imageHeight * 0.415887, imageWidth * 0.504672, imageHeight * 0.467289, imageWidth * 0.504672, imageHeight * 0.467289);
-    ctx.bezierCurveTo(imageWidth * 0.518691, imageHeight * 0.471962, imageWidth * 0.528037, imageHeight * 0.481308, imageWidth * 0.532710, imageHeight * 0.495327);
-    ctx.bezierCurveTo(imageWidth * 0.532710, imageHeight * 0.495327, imageWidth * 0.584112, imageHeight * 0.495327, imageWidth * 0.584112, imageHeight * 0.495327);
+    ctx.bezierCurveTo(
+        imageWidth * 0.504672,
+        imageHeight * 0.415887,
+        imageWidth * 0.504672,
+        imageHeight * 0.467289,
+        imageWidth * 0.504672,
+        imageHeight * 0.467289
+    );
+    ctx.bezierCurveTo(
+        imageWidth * 0.518691,
+        imageHeight * 0.471962,
+        imageWidth * 0.528037,
+        imageHeight * 0.481308,
+        imageWidth * 0.53271,
+        imageHeight * 0.495327
+    );
+    ctx.bezierCurveTo(
+        imageWidth * 0.53271,
+        imageHeight * 0.495327,
+        imageWidth * 0.584112,
+        imageHeight * 0.495327,
+        imageWidth * 0.584112,
+        imageHeight * 0.495327
+    );
     ctx.lineTo(imageWidth * 0.584112, imageHeight * 0.504672);
-    ctx.bezierCurveTo(imageWidth * 0.584112, imageHeight * 0.504672, imageWidth * 0.532710, imageHeight * 0.504672, imageWidth * 0.532710, imageHeight * 0.504672);
-    ctx.bezierCurveTo(imageWidth * 0.528037, imageHeight * 0.518691, imageWidth * 0.518691, imageHeight * 0.532710, imageWidth * 0.5, imageHeight * 0.532710);
-    ctx.bezierCurveTo(imageWidth * 0.481308, imageHeight * 0.532710, imageWidth * 0.471962, imageHeight * 0.518691, imageWidth * 0.467289, imageHeight * 0.504672);
-    ctx.bezierCurveTo(imageWidth * 0.467289, imageHeight * 0.504672, imageWidth * 0.415887, imageHeight * 0.504672, imageWidth * 0.415887, imageHeight * 0.504672);
+    ctx.bezierCurveTo(
+        imageWidth * 0.584112,
+        imageHeight * 0.504672,
+        imageWidth * 0.53271,
+        imageHeight * 0.504672,
+        imageWidth * 0.53271,
+        imageHeight * 0.504672
+    );
+    ctx.bezierCurveTo(
+        imageWidth * 0.528037,
+        imageHeight * 0.518691,
+        imageWidth * 0.518691,
+        imageHeight * 0.53271,
+        imageWidth * 0.5,
+        imageHeight * 0.53271
+    );
+    ctx.bezierCurveTo(
+        imageWidth * 0.481308,
+        imageHeight * 0.53271,
+        imageWidth * 0.471962,
+        imageHeight * 0.518691,
+        imageWidth * 0.467289,
+        imageHeight * 0.504672
+    );
+    ctx.bezierCurveTo(
+        imageWidth * 0.467289,
+        imageHeight * 0.504672,
+        imageWidth * 0.415887,
+        imageHeight * 0.504672,
+        imageWidth * 0.415887,
+        imageHeight * 0.504672
+    );
     ctx.closePath();
     ctx.fill();
 
@@ -257,7 +388,14 @@ const Horizon = function(canvas, parameters) {
     initialized = true;
 
     if (frameVisible) {
-      drawFrame(backgroundContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
+      drawFrame(
+          backgroundContext,
+          frameDesign,
+          centerX,
+          centerY,
+          imageWidth,
+          imageHeight
+      );
     }
 
     drawHorizonBackgroundImage(valueContext);
@@ -267,7 +405,16 @@ const Horizon = function(canvas, parameters) {
     drawHorizonForegroundImage(foregroundContext);
 
     if (foregroundVisible) {
-      drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, true, KnobType, KnobStyle, GaugeType);
+      drawForeground(
+          foregroundContext,
+          foregroundType,
+          imageWidth,
+          imageHeight,
+          true,
+          KnobType,
+          KnobStyle,
+          GaugeType
+      );
     }
   };
 
@@ -326,7 +473,7 @@ const Horizon = function(canvas, parameters) {
       };
 
       // do we have a callback function to process?
-      if (callback && typeof(callback) === 'function') {
+      if (callback && typeof callback === 'function') {
         tweenRoll.onMotionFinished = callback;
       }
 
@@ -374,7 +521,14 @@ const Horizon = function(canvas, parameters) {
       if (undefined !== tweenPitch && tweenPitch.isPlaying) {
         tweenPitch.stop();
       }
-      tweenPitch = new Tween({}, '', Tween.regularEaseInOut, pitch, newPitch, 1);
+      tweenPitch = new Tween(
+          {},
+          '',
+          Tween.regularEaseInOut,
+          pitch,
+          newPitch,
+          1
+      );
       tweenPitch.onMotionChanged = function(event) {
         pitch = event.target._pos;
         if (pitch > 90) {
@@ -400,7 +554,7 @@ const Horizon = function(canvas, parameters) {
       };
 
       // do we have a callback function to process?
-      if (callback && typeof(callback) === 'function') {
+      if (callback && typeof callback === 'function') {
         tweenPitch.onMotionFinished = callback;
       }
 
@@ -445,7 +599,7 @@ const Horizon = function(canvas, parameters) {
 
     // Set the clipping area
     mainCtx.beginPath();
-    mainCtx.arc(centerX, centerY, imageWidth * 0.831775 / 2, 0, TWO_PI, true);
+    mainCtx.arc(centerX, centerY, (imageWidth * 0.831775) / 2, 0, TWO_PI, true);
     mainCtx.closePath();
     mainCtx.clip();
 
@@ -454,14 +608,18 @@ const Horizon = function(canvas, parameters) {
     mainCtx.rotate(-(roll * RAD_FACTOR));
     mainCtx.translate(-centerX, 0);
     // Translate about dive
-    mainCtx.translate(0, (pitch * pitchPixel));
+    mainCtx.translate(0, pitch * pitchPixel);
 
     // Draw horizon
     mainCtx.drawImage(valueBuffer, 0, -valueBuffer.height / 2);
 
     // Draw the scale and angle indicator
     mainCtx.translate(0, -(pitch * pitchPixel) - centerY);
-    mainCtx.drawImage(indicatorBuffer, (imageWidth * 0.5 - indicatorBuffer.width / 2), (imageWidth * 0.107476));
+    mainCtx.drawImage(
+        indicatorBuffer,
+        imageWidth * 0.5 - indicatorBuffer.width / 2,
+        imageWidth * 0.107476
+    );
     mainCtx.restore();
 
     mainCtx.drawImage(foregroundBuffer, 0, 0);

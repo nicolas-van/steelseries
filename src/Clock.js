@@ -1,14 +1,8 @@
-
 import drawFrame from './drawFrame';
 import drawBackground from './drawBackground';
 import drawRadialCustomImage from './drawRadialCustomImage';
 import drawForeground from './drawForeground';
-import {
-  createBuffer,
-  getCanvasContext,
-  TWO_PI,
-  RAD_FACTOR,
-} from './tools';
+import {createBuffer, getCanvasContext, TWO_PI, RAD_FACTOR} from './tools';
 
 import {
   BackgroundColor,
@@ -20,24 +14,64 @@ import {
 
 const Clock = function(canvas, parameters) {
   parameters = parameters || {};
-  let size = (undefined === parameters.size ? 0 : parameters.size);
-  let frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign);
-  const frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible);
-  let pointerType = (undefined === parameters.pointerType ? PointerType.TYPE1 : parameters.pointerType);
-  let pointerColor = (undefined === parameters.pointerColor ? (pointerType === PointerType.TYPE1 ? ColorDef.GRAY : ColorDef.BLACK) : parameters.pointerColor);
-  let backgroundColor = (undefined === parameters.backgroundColor ? (pointerType === PointerType.TYPE1 ? BackgroundColor.ANTHRACITE : BackgroundColor.LIGHT_GRAY) : parameters.backgroundColor);
-  const backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible);
-  let foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType);
-  const foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible);
-  const customLayer = (undefined === parameters.customLayer ? null : parameters.customLayer);
-  let isAutomatic = (undefined === parameters.isAutomatic ? true : parameters.isAutomatic);
-  let hour = (undefined === parameters.hour ? 11 : parameters.hour);
-  let minute = (undefined === parameters.minute ? 5 : parameters.minute);
-  let second = (undefined === parameters.second ? 0 : parameters.second);
-  let secondMovesContinuous = (undefined === parameters.secondMovesContinuous ? false : parameters.secondMovesContinuous);
-  let timeZoneOffsetHour = (undefined === parameters.timeZoneOffsetHour ? 0 : parameters.timeZoneOffsetHour);
-  let timeZoneOffsetMinute = (undefined === parameters.timeZoneOffsetMinute ? 0 : parameters.timeZoneOffsetMinute);
-  let secondPointerVisible = (undefined === parameters.secondPointerVisible ? true : parameters.secondPointerVisible);
+  let size = undefined === parameters.size ? 0 : parameters.size;
+  let frameDesign =
+    undefined === parameters.frameDesign ?
+      FrameDesign.METAL :
+      parameters.frameDesign;
+  const frameVisible =
+    undefined === parameters.frameVisible ? true : parameters.frameVisible;
+  let pointerType =
+    undefined === parameters.pointerType ?
+      PointerType.TYPE1 :
+      parameters.pointerType;
+  let pointerColor =
+    undefined === parameters.pointerColor ?
+      pointerType === PointerType.TYPE1 ?
+        ColorDef.GRAY :
+        ColorDef.BLACK :
+      parameters.pointerColor;
+  let backgroundColor =
+    undefined === parameters.backgroundColor ?
+      pointerType === PointerType.TYPE1 ?
+        BackgroundColor.ANTHRACITE :
+        BackgroundColor.LIGHT_GRAY :
+      parameters.backgroundColor;
+  const backgroundVisible =
+    undefined === parameters.backgroundVisible ?
+      true :
+      parameters.backgroundVisible;
+  let foregroundType =
+    undefined === parameters.foregroundType ?
+      ForegroundType.TYPE1 :
+      parameters.foregroundType;
+  const foregroundVisible =
+    undefined === parameters.foregroundVisible ?
+      true :
+      parameters.foregroundVisible;
+  const customLayer =
+    undefined === parameters.customLayer ? null : parameters.customLayer;
+  let isAutomatic =
+    undefined === parameters.isAutomatic ? true : parameters.isAutomatic;
+  let hour = undefined === parameters.hour ? 11 : parameters.hour;
+  let minute = undefined === parameters.minute ? 5 : parameters.minute;
+  let second = undefined === parameters.second ? 0 : parameters.second;
+  let secondMovesContinuous =
+    undefined === parameters.secondMovesContinuous ?
+      false :
+      parameters.secondMovesContinuous;
+  let timeZoneOffsetHour =
+    undefined === parameters.timeZoneOffsetHour ?
+      0 :
+      parameters.timeZoneOffsetHour;
+  let timeZoneOffsetMinute =
+    undefined === parameters.timeZoneOffsetMinute ?
+      0 :
+      parameters.timeZoneOffsetMinute;
+  let secondPointerVisible =
+    undefined === parameters.secondPointerVisible ?
+      true :
+      parameters.secondPointerVisible;
 
   // GaugeType specific private variables
   let objDate = new Date();
@@ -45,8 +79,8 @@ const Clock = function(canvas, parameters) {
   let hourPointerAngle;
   let secondPointerAngle;
   let tickTimer;
-  let tickInterval = (secondMovesContinuous ? 100 : 1000);
-  tickInterval = (secondPointerVisible ? tickInterval : 100);
+  let tickInterval = secondMovesContinuous ? 100 : 1000;
+  tickInterval = secondPointerVisible ? tickInterval : 100;
 
   const self = this;
 
@@ -100,7 +134,8 @@ const Clock = function(canvas, parameters) {
     let tickAngle;
     let SMALL_TICK_HEIGHT;
     let BIG_TICK_HEIGHT;
-    let OUTER_POINT; let INNER_POINT;
+    let OUTER_POINT;
+    let INNER_POINT;
     OUTER_POINT = imageWidth * 0.405;
     ctx.save();
     ctx.translate(centerX, centerY);
@@ -125,7 +160,7 @@ const Clock = function(canvas, parameters) {
         // Draw hours tickmarks
         BIG_TICK_HEIGHT = imageWidth * 0.126168;
         INNER_POINT = OUTER_POINT - BIG_TICK_HEIGHT;
-        ctx.lineWidth = imageWidth * 0.032710;
+        ctx.lineWidth = imageWidth * 0.03271;
 
         for (tickAngle = 0; tickAngle < 360; tickAngle += 90) {
           ctx.beginPath();
@@ -138,7 +173,7 @@ const Clock = function(canvas, parameters) {
         break;
 
       case 'type2':
-        /* falls through */
+      /* falls through */
       default:
         // Draw minutes tickmarks
         SMALL_TICK_HEIGHT = imageWidth * 0.037383;
@@ -190,7 +225,7 @@ const Clock = function(canvas, parameters) {
         break;
 
       case 'type1':
-        /* falls through */
+      /* falls through */
       default:
         ctx.beginPath();
         ctx.moveTo(imageWidth * 0.471962, imageHeight * 0.560747);
@@ -200,7 +235,12 @@ const Clock = function(canvas, parameters) {
         ctx.lineTo(imageWidth * 0.528037, imageHeight * 0.560747);
         ctx.lineTo(imageWidth * 0.471962, imageHeight * 0.560747);
         ctx.closePath();
-        grad = ctx.createLinearGradient(imageWidth * 0.471962, imageHeight * 0.560747, imageWidth * 0.528037, imageHeight * 0.214953);
+        grad = ctx.createLinearGradient(
+            imageWidth * 0.471962,
+            imageHeight * 0.560747,
+            imageWidth * 0.528037,
+            imageHeight * 0.214953
+        );
         grad.addColorStop(1, pointerColor.veryLight.getRgbaColor());
         grad.addColorStop(0, pointerColor.light.getRgbaColor());
         ctx.fillStyle = grad;
@@ -219,16 +259,16 @@ const Clock = function(canvas, parameters) {
     switch (ptrType.type) {
       case 'type2':
         ctx.beginPath();
-        ctx.lineWidth = imageWidth * 0.032710;
+        ctx.lineWidth = imageWidth * 0.03271;
         ctx.moveTo(centerX, imageWidth * 0.116822);
-        ctx.lineTo(centerX, imageWidth * 0.116822 + imageWidth * 0.387850);
+        ctx.lineTo(centerX, imageWidth * 0.116822 + imageWidth * 0.38785);
         ctx.strokeStyle = pointerColor.medium.getRgbaColor();
         ctx.closePath();
         ctx.stroke();
         break;
 
       case 'type1':
-        /* falls through */
+      /* falls through */
       default:
         ctx.beginPath();
         ctx.moveTo(imageWidth * 0.518691, imageHeight * 0.574766);
@@ -238,7 +278,12 @@ const Clock = function(canvas, parameters) {
         ctx.lineTo(imageWidth * 0.476635, imageHeight * 0.574766);
         ctx.lineTo(imageWidth * 0.518691, imageHeight * 0.574766);
         ctx.closePath();
-        grad = ctx.createLinearGradient(imageWidth * 0.518691, imageHeight * 0.574766, imageWidth * 0.476635, imageHeight * 0.140186);
+        grad = ctx.createLinearGradient(
+            imageWidth * 0.518691,
+            imageHeight * 0.574766,
+            imageWidth * 0.476635,
+            imageHeight * 0.140186
+        );
         grad.addColorStop(1, pointerColor.veryLight.getRgbaColor());
         grad.addColorStop(0, pointerColor.light.getRgbaColor());
         ctx.fillStyle = grad;
@@ -259,8 +304,8 @@ const Clock = function(canvas, parameters) {
         // top rectangle
         ctx.lineWidth = imageWidth * 0.009345;
         ctx.beginPath();
-        ctx.moveTo(centerX, imageWidth * 0.098130);
-        ctx.lineTo(centerX, imageWidth * 0.098130 + imageWidth * 0.126168);
+        ctx.moveTo(centerX, imageWidth * 0.09813);
+        ctx.lineTo(centerX, imageWidth * 0.09813 + imageWidth * 0.126168);
         ctx.closePath();
         ctx.stroke();
         // bottom rectangle
@@ -273,13 +318,19 @@ const Clock = function(canvas, parameters) {
         // circle
         ctx.lineWidth = imageWidth * 0.016;
         ctx.beginPath();
-        ctx.arc(centerX, imageWidth * 0.26, imageWidth * 0.085 / 2, 0, TWO_PI);
+        ctx.arc(
+            centerX,
+            imageWidth * 0.26,
+            (imageWidth * 0.085) / 2,
+            0,
+            TWO_PI
+        );
         ctx.closePath();
         ctx.stroke();
         break;
 
       case 'type1':
-        /* falls through */
+      /* falls through */
       default:
         ctx.beginPath();
         ctx.moveTo(imageWidth * 0.509345, imageHeight * 0.116822);
@@ -288,7 +339,12 @@ const Clock = function(canvas, parameters) {
         ctx.lineTo(imageWidth * 0.490654, imageHeight * 0.116822);
         ctx.lineTo(imageWidth * 0.509345, imageHeight * 0.116822);
         ctx.closePath();
-        grad = ctx.createLinearGradient(imageWidth * 0.509345, imageHeight * 0.116822, imageWidth * 0.490654, imageHeight * 0.574766);
+        grad = ctx.createLinearGradient(
+            imageWidth * 0.509345,
+            imageHeight * 0.116822,
+            imageWidth * 0.490654,
+            imageHeight * 0.574766
+        );
         grad.addColorStop(0, ColorDef.RED.light.getRgbaColor());
         grad.addColorStop(0.47, ColorDef.RED.medium.getRgbaColor());
         grad.addColorStop(1, ColorDef.RED.dark.getRgbaColor());
@@ -308,7 +364,12 @@ const Clock = function(canvas, parameters) {
     ctx.beginPath();
     ctx.arc(centerX, centerY, imageWidth * 0.045, 0, TWO_PI);
     ctx.closePath();
-    grad = ctx.createLinearGradient(centerX - imageWidth * 0.045 / 2, centerY - imageWidth * 0.045 / 2, centerX + imageWidth * 0.045 / 2, centerY + imageWidth * 0.045 / 2);
+    grad = ctx.createLinearGradient(
+        centerX - (imageWidth * 0.045) / 2,
+        centerY - (imageWidth * 0.045) / 2,
+        centerX + (imageWidth * 0.045) / 2,
+        centerY + (imageWidth * 0.045) / 2
+    );
     grad.addColorStop(0, '#eef0f2');
     grad.addColorStop(1, '#65696d');
     ctx.fillStyle = grad;
@@ -325,16 +386,21 @@ const Clock = function(canvas, parameters) {
         // draw knob
         ctx.fillStyle = '#000000';
         ctx.beginPath();
-        ctx.arc(centerX, centerY, imageWidth * 0.088785 / 2, 0, TWO_PI);
+        ctx.arc(centerX, centerY, (imageWidth * 0.088785) / 2, 0, TWO_PI);
         ctx.closePath();
         ctx.fill();
         break;
 
       case 'type1':
-        /* falls through */
+      /* falls through */
       default:
         // draw knob
-        grad = ctx.createLinearGradient(centerX - imageWidth * 0.027 / 2, centerY - imageWidth * 0.027 / 2, centerX + imageWidth * 0.027 / 2, centerY + imageWidth * 0.027 / 2);
+        grad = ctx.createLinearGradient(
+            centerX - (imageWidth * 0.027) / 2,
+            centerY - (imageWidth * 0.027) / 2,
+            centerX + (imageWidth * 0.027) / 2,
+            centerY + (imageWidth * 0.027) / 2
+        );
         grad.addColorStop(0, '#f3f4f7');
         grad.addColorStop(0.11, '#f3f5f7');
         grad.addColorStop(0.12, '#f1f3f5');
@@ -367,7 +433,9 @@ const Clock = function(canvas, parameters) {
       objDate.setSeconds(second);
     }
     // Seconds
-    second = objDate.getSeconds() + (secondMovesContinuous ? objDate.getMilliseconds() / 1000 : 0);
+    second =
+      objDate.getSeconds() +
+      (secondMovesContinuous ? objDate.getMilliseconds() / 1000 : 0);
 
     // Hours
     if (timeZoneOffsetHour !== 0) {
@@ -406,23 +474,48 @@ const Clock = function(canvas, parameters) {
   // Draw all static painting code to background
   const init = function(parameters) {
     parameters = parameters || {};
-    const drawFrame2 = (undefined === parameters.frame ? false : parameters.frame);
-    const drawBackground2 = (undefined === parameters.background ? false : parameters.background);
-    const drawPointers = (undefined === parameters.pointers ? false : parameters.pointers);
-    const drawForeground2 = (undefined === parameters.foreground ? false : parameters.foreground);
+    const drawFrame2 =
+      undefined === parameters.frame ? false : parameters.frame;
+    const drawBackground2 =
+      undefined === parameters.background ? false : parameters.background;
+    const drawPointers =
+      undefined === parameters.pointers ? false : parameters.pointers;
+    const drawForeground2 =
+      undefined === parameters.foreground ? false : parameters.foreground;
 
     initialized = true;
 
     if (drawFrame2 && frameVisible) {
-      drawFrame(frameContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
+      drawFrame(
+          frameContext,
+          frameDesign,
+          centerX,
+          centerY,
+          imageWidth,
+          imageHeight
+      );
     }
 
     if (drawBackground2 && backgroundVisible) {
       // Create background in background buffer (backgroundBuffer)
-      drawBackground(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
+      drawBackground(
+          backgroundContext,
+          backgroundColor,
+          centerX,
+          centerY,
+          imageWidth,
+          imageHeight
+      );
 
       // Create custom layer in background buffer (backgroundBuffer)
-      drawRadialCustomImage(backgroundContext, customLayer, centerX, centerY, imageWidth, imageHeight);
+      drawRadialCustomImage(
+          backgroundContext,
+          customLayer,
+          centerX,
+          centerY,
+          imageWidth,
+          imageHeight
+      );
 
       drawTickmarksImage(backgroundContext, pointerType);
     }
@@ -435,16 +528,25 @@ const Clock = function(canvas, parameters) {
 
     if (drawForeground2 && foregroundVisible) {
       drawTopKnob(foregroundContext, pointerType);
-      drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, false);
+      drawForeground(
+          foregroundContext,
+          foregroundType,
+          imageWidth,
+          imageHeight,
+          false
+      );
     }
   };
 
   const resetBuffers = function(buffers) {
     buffers = buffers || {};
-    const resetFrame = (undefined === buffers.frame ? false : buffers.frame);
-    const resetBackground = (undefined === buffers.background ? false : buffers.background);
-    const resetPointers = (undefined === buffers.pointers ? false : buffers.pointers);
-    const resetForeground = (undefined === buffers.foreground ? false : buffers.foreground);
+    const resetFrame = undefined === buffers.frame ? false : buffers.frame;
+    const resetBackground =
+      undefined === buffers.background ? false : buffers.background;
+    const resetPointers =
+      undefined === buffers.pointers ? false : buffers.pointers;
+    const resetForeground =
+      undefined === buffers.foreground ? false : buffers.foreground;
 
     if (resetFrame) {
       frameBuffer.width = size;
@@ -576,8 +678,8 @@ const Clock = function(canvas, parameters) {
 
   this.setSecondMovesContinuous = function(newValue) {
     secondMovesContinuous = !!newValue;
-    tickInterval = (secondMovesContinuous ? 100 : 1000);
-    tickInterval = (secondPointerVisible ? tickInterval : 100);
+    tickInterval = secondMovesContinuous ? 100 : 1000;
+    tickInterval = secondPointerVisible ? tickInterval : 100;
     return this;
   };
 

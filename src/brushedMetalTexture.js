@@ -1,16 +1,17 @@
-
-import {
-  createBuffer,
-  PI,
-} from './tools';
+import {createBuffer, PI} from './tools';
 
 const brushedMetalTexture = function(color, radius, amount, monochrome, shine) {
   this.fill = function(startX, startY, endX, endY) {
-    let i; let x; let y; // loop counters
+    let i;
+    let x;
+    let y; // loop counters
     let sinArr;
-    let width; let height;
-    let outCanvas; let outCanvasContext; // output canvas
-    let inPixels; let outPixels; // pixel arrays
+    let width;
+    let height;
+    let outCanvas;
+    let outCanvasContext; // output canvas
+    let inPixels;
+    let outPixels; // pixel arrays
     // alpha = color & 0xff000000;
     const alpha = 255;
     const red = (color >> 16) & 0xff;
@@ -18,7 +19,11 @@ const brushedMetalTexture = function(color, radius, amount, monochrome, shine) {
     const blue = color & 0xff;
     let n = 0;
     const variation = 255 * amount;
-    let indx; let tr; let tg; let tb; let f;
+    let indx;
+    let tr;
+    let tg;
+    let tb;
+    let f;
 
     startX = Math.floor(startX);
     startY = Math.floor(startY);
@@ -40,13 +45,13 @@ const brushedMetalTexture = function(color, radius, amount, monochrome, shine) {
     if (shine !== 0) {
       sinArr = [];
       for (i = 0; i < width; i++) {
-        sinArr[i] = (255 * shine * Math.sin(i / width * PI)) | 0;
+        sinArr[i] = (255 * shine * Math.sin((i / width) * PI)) | 0;
       }
     }
 
     for (y = 0; y < height; y++) {
       for (x = 0; x < width; x++) {
-        indx = (y * width * 4) + (x * 4);
+        indx = y * width * 4 + x * 4;
         tr = red;
         tg = green;
         tb = blue;
@@ -83,17 +88,22 @@ const brushedMetalTexture = function(color, radius, amount, monochrome, shine) {
 
   function random(x, vari) {
     x += ((2 * Math.random() - 1) * vari) | 0;
-    return (x < 0 ? 0 : (x > 255 ? 255 : x));
+    return x < 0 ? 0 : x > 255 ? 255 : x;
   }
 
   function clamp(C) {
-    return (C < 0 ? 0 : (C > 255 ? 255 : C));
+    return C < 0 ? 0 : C > 255 ? 255 : C;
   }
 
   function horizontalBlur(inPix, outPix, width, height, radius, alpha) {
-    let x; let y; // loop counters
-    let i; let mul; let indx;
-    let totR; let totG; let totB;
+    let x;
+    let y; // loop counters
+    let i;
+    let mul;
+    let indx;
+    let totR;
+    let totG;
+    let totB;
 
     if (radius >= width) {
       radius = width - 1;

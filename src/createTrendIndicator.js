@@ -1,13 +1,9 @@
-
-import {
-  setAlpha,
-  createBuffer,
-  TWO_PI,
-} from './tools';
+import {setAlpha, createBuffer, TWO_PI} from './tools';
 
 const createTrendIndicator = function(width, onSection, colors) {
   const height = width * 2;
-  let trendBuffer; let trendCtx;
+  let trendBuffer;
+  let trendCtx;
   let fill;
   const cacheKey = onSection.state + width + JSON.stringify(colors);
 
@@ -16,7 +12,14 @@ const createTrendIndicator = function(width, onSection, colors) {
     const ledColor = colors[0];
 
     if (onSection.state === 'up') {
-      fill = trendCtx.createRadialGradient(0.5 * width, 0.2 * height, 0, 0.5 * width, 0.2 * height, 0.5 * width);
+      fill = trendCtx.createRadialGradient(
+          0.5 * width,
+          0.2 * height,
+          0,
+          0.5 * width,
+          0.2 * height,
+          0.5 * width
+      );
       fill.addColorStop(0, ledColor.innerColor1_ON);
       fill.addColorStop(0.2, ledColor.innerColor2_ON);
       fill.addColorStop(1, ledColor.outerColor_ON);
@@ -56,7 +59,14 @@ const createTrendIndicator = function(width, onSection, colors) {
       trendCtx.stroke();
     } else {
       // draw halo
-      fill = trendCtx.createRadialGradient(0.5 * width, 0.2 * height, 0, 0.5 * width, 0.2 * height, 0.7 * width);
+      fill = trendCtx.createRadialGradient(
+          0.5 * width,
+          0.2 * height,
+          0,
+          0.5 * width,
+          0.2 * height,
+          0.7 * width
+      );
       fill.addColorStop(0, setAlpha(ledColor.coronaColor, 0));
       fill.addColorStop(0.5, setAlpha(ledColor.coronaColor, 0.3));
       fill.addColorStop(0.7, setAlpha(ledColor.coronaColor, 0.2));
@@ -80,23 +90,53 @@ const createTrendIndicator = function(width, onSection, colors) {
     if (onSection.state === 'steady') {
       fill = ledColor.outerColor_ON;
       trendCtx.fillStyle = fill;
-      trendCtx.rect(0.128 * width, 0.41 * height, 0.744 * width, 0.074 * height);
-      trendCtx.rect(0.128 * width, 0.516 * height, 0.744 * width, 0.074 * height);
+      trendCtx.rect(
+          0.128 * width,
+          0.41 * height,
+          0.744 * width,
+          0.074 * height
+      );
+      trendCtx.rect(
+          0.128 * width,
+          0.516 * height,
+          0.744 * width,
+          0.074 * height
+      );
       trendCtx.closePath();
       trendCtx.fill();
     } else {
-      fill = trendCtx.createLinearGradient(0, 0.41 * height, 0, 0.41 * height + 0.074 * height);
+      fill = trendCtx.createLinearGradient(
+          0,
+          0.41 * height,
+          0,
+          0.41 * height + 0.074 * height
+      );
       fill.addColorStop(0, '#323232');
       fill.addColorStop(1, '#5c5c5c');
       trendCtx.fillStyle = fill;
-      trendCtx.rect(0.128 * width, 0.41 * height, 0.744 * width, 0.074 * height);
+      trendCtx.rect(
+          0.128 * width,
+          0.41 * height,
+          0.744 * width,
+          0.074 * height
+      );
       trendCtx.closePath();
       trendCtx.fill();
-      fill = trendCtx.createLinearGradient(0, 0.516 * height, 0, 0.516 * height + 0.074 * height);
+      fill = trendCtx.createLinearGradient(
+          0,
+          0.516 * height,
+          0,
+          0.516 * height + 0.074 * height
+      );
       fill.addColorStop(0, '#323232');
       fill.addColorStop(1, '#5c5c5c');
       trendCtx.fillStyle = fill;
-      trendCtx.rect(0.128 * width, 0.516 * height, 0.744 * width, 0.074 * height);
+      trendCtx.rect(
+          0.128 * width,
+          0.516 * height,
+          0.744 * width,
+          0.074 * height
+      );
       trendCtx.closePath();
       trendCtx.fill();
     }
@@ -117,17 +157,30 @@ const createTrendIndicator = function(width, onSection, colors) {
       trendCtx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
       trendCtx.beginPath();
       trendCtx.moveTo(0.128 * width + 0.744 * width, 0.41 * height);
-      trendCtx.lineTo(0.128 * width + 0.744 * width, 0.41 * height + 0.074 * height);
+      trendCtx.lineTo(
+          0.128 * width + 0.744 * width,
+          0.41 * height + 0.074 * height
+      );
       trendCtx.lineTo(0.128 * width, 0.41 * height + 0.074 * height);
       trendCtx.stroke();
       trendCtx.beginPath();
       trendCtx.moveTo(0.128 * width + 0.744 * width, 0.516 * height);
-      trendCtx.lineTo(0.128 * width + 0.744 * width, 0.516 * height + 0.074 * height);
+      trendCtx.lineTo(
+          0.128 * width + 0.744 * width,
+          0.516 * height + 0.074 * height
+      );
       trendCtx.lineTo(0.128 * width, 0.516 * height + 0.074 * height);
       trendCtx.stroke();
     } else {
       // draw halo
-      fill = trendCtx.createRadialGradient(0.5 * width, 0.5 * height, 0, 0.5 * width, 0.5 * height, 0.7 * width);
+      fill = trendCtx.createRadialGradient(
+          0.5 * width,
+          0.5 * height,
+          0,
+          0.5 * width,
+          0.5 * height,
+          0.7 * width
+      );
       fill.addColorStop(0, setAlpha(ledColor.coronaColor, 0));
       fill.addColorStop(0.5, setAlpha(ledColor.coronaColor, 0.3));
       fill.addColorStop(0.7, setAlpha(ledColor.coronaColor, 0.2));
@@ -146,7 +199,14 @@ const createTrendIndicator = function(width, onSection, colors) {
     // draw down arrow
     const ledColor = colors[2];
     if (onSection.state === 'down') {
-      fill = trendCtx.createRadialGradient(0.5 * width, 0.8 * height, 0, 0.5 * width, 0.8 * height, 0.5 * width);
+      fill = trendCtx.createRadialGradient(
+          0.5 * width,
+          0.8 * height,
+          0,
+          0.5 * width,
+          0.8 * height,
+          0.5 * width
+      );
       fill.addColorStop(0, ledColor.innerColor1_ON);
       fill.addColorStop(0.2, ledColor.innerColor2_ON);
       fill.addColorStop(1, ledColor.outerColor_ON);
@@ -192,7 +252,14 @@ const createTrendIndicator = function(width, onSection, colors) {
       trendCtx.stroke();
     } else {
       // draw halo
-      fill = trendCtx.createRadialGradient(0.5 * width, 0.8 * height, 0, 0.5 * width, 0.8 * height, 0.7 * width);
+      fill = trendCtx.createRadialGradient(
+          0.5 * width,
+          0.8 * height,
+          0,
+          0.5 * width,
+          0.8 * height,
+          0.7 * width
+      );
       fill.addColorStop(0, setAlpha(ledColor.coronaColor, 0));
       fill.addColorStop(0.5, setAlpha(ledColor.coronaColor, 0.3));
       fill.addColorStop(0.7, setAlpha(ledColor.coronaColor, 0.2));
@@ -226,7 +293,7 @@ const createTrendIndicator = function(width, onSection, colors) {
         drawEquals();
         break;
       case 'down':
-        /* falls through */
+      /* falls through */
       default:
         drawUpArrow();
         drawEquals();

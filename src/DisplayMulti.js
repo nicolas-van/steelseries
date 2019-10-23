@@ -1,32 +1,42 @@
-
 import createLcdBackgroundImage from './createLcdBackgroundImage';
-import {
-  getCanvasContext,
-  lcdFontName,
-  stdFontName,
-} from './tools';
+import {getCanvasContext, lcdFontName, stdFontName} from './tools';
 
-import {
-  LcdColor,
-} from './definitions';
+import {LcdColor} from './definitions';
 
 const DisplayMulti = function(canvas, parameters) {
   parameters = parameters || {};
-  let width = (undefined === parameters.width ? 0 : parameters.width);
-  let height = (undefined === parameters.height ? 0 : parameters.height);
-  let lcdColor = (undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor);
-  const lcdDecimals = (undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals);
-  const headerString = (undefined === parameters.headerString ? '' : parameters.headerString);
-  const headerStringVisible = (undefined === parameters.headerStringVisible ? false : parameters.headerStringVisible);
-  const detailString = (undefined === parameters.detailString ? '' : parameters.detailString);
-  const detailStringVisible = (undefined === parameters.detailStringVisible ? false : parameters.detailStringVisible);
-  const linkAltValue = (undefined === parameters.linkAltValue ? true : parameters.linkAltValue);
-  const unitString = (undefined === parameters.unitString ? '' : parameters.unitString);
-  const unitStringVisible = (undefined === parameters.unitStringVisible ? false : parameters.unitStringVisible);
-  const digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont);
-  const valuesNumeric = (undefined === parameters.valuesNumeric ? true : parameters.valuesNumeric);
-  let value = (undefined === parameters.value ? 0 : parameters.value);
-  let altValue = (undefined === parameters.altValue ? 0 : parameters.altValue);
+  let width = undefined === parameters.width ? 0 : parameters.width;
+  let height = undefined === parameters.height ? 0 : parameters.height;
+  let lcdColor =
+    undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor;
+  const lcdDecimals =
+    undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals;
+  const headerString =
+    undefined === parameters.headerString ? '' : parameters.headerString;
+  const headerStringVisible =
+    undefined === parameters.headerStringVisible ?
+      false :
+      parameters.headerStringVisible;
+  const detailString =
+    undefined === parameters.detailString ? '' : parameters.detailString;
+  const detailStringVisible =
+    undefined === parameters.detailStringVisible ?
+      false :
+      parameters.detailStringVisible;
+  const linkAltValue =
+    undefined === parameters.linkAltValue ? true : parameters.linkAltValue;
+  const unitString =
+    undefined === parameters.unitString ? '' : parameters.unitString;
+  const unitStringVisible =
+    undefined === parameters.unitStringVisible ?
+      false :
+      parameters.unitStringVisible;
+  const digitalFont =
+    undefined === parameters.digitalFont ? false : parameters.digitalFont;
+  const valuesNumeric =
+    undefined === parameters.valuesNumeric ? true : parameters.valuesNumeric;
+  let value = undefined === parameters.value ? 0 : parameters.value;
+  let altValue = undefined === parameters.altValue ? 0 : parameters.altValue;
 
   // Get the canvas context and clear it
   const mainCtx = getCanvasContext(canvas);
@@ -64,7 +74,10 @@ const DisplayMulti = function(canvas, parameters) {
     mainCtx.strokeStyle = lcdColor.textColor;
     mainCtx.fillStyle = lcdColor.textColor;
 
-    if (lcdColor === LcdColor.STANDARD || lcdColor === LcdColor.STANDARD_GREEN) {
+    if (
+      lcdColor === LcdColor.STANDARD ||
+      lcdColor === LcdColor.STANDARD_GREEN
+    ) {
       mainCtx.shadowColor = 'gray';
       mainCtx.shadowOffsetX = imageHeight * 0.025;
       mainCtx.shadowOffsetY = imageHeight * 0.025;
@@ -91,9 +104,17 @@ const DisplayMulti = function(canvas, parameters) {
       mainCtx.font = digitalFont ? lcdFont : stdFont;
       const valueText = value.toFixed(lcdDecimals);
       if (headerStringVisible) {
-        mainCtx.fillText(valueText, imageWidth - unitWidth - 4, imageHeight * 0.5);
+        mainCtx.fillText(
+            valueText,
+            imageWidth - unitWidth - 4,
+            imageHeight * 0.5
+        );
       } else {
-        mainCtx.fillText(valueText, imageWidth - unitWidth - 4, imageHeight * 0.38);
+        mainCtx.fillText(
+            valueText,
+            imageWidth - unitWidth - 4,
+            imageHeight * 0.38
+        );
       }
 
       if (unitStringVisible) {

@@ -1,17 +1,14 @@
-
-import {
-  getCanvasContext,
-  TWO_PI,
-  doc,
-} from './tools';
+import {getCanvasContext, TWO_PI, doc} from './tools';
 
 const Trafficlight = function(canvas, parameters) {
   parameters = parameters || {};
-  let width = (undefined === parameters.width ? 0 : parameters.width);
-  let height = (undefined === parameters.height ? 0 : parameters.height);
+  let width = undefined === parameters.width ? 0 : parameters.width;
+  let height = undefined === parameters.height ? 0 : parameters.height;
   //
   const mainCtx = getCanvasContext(canvas);
-  let prefHeight; let imageWidth; let imageHeight;
+  let prefHeight;
+  let imageWidth;
+  let imageHeight;
   let redOn = false;
   let yellowOn = false;
   let greenOn = false;
@@ -50,7 +47,7 @@ const Trafficlight = function(canvas, parameters) {
   mainCtx.canvas.width = width;
   mainCtx.canvas.height = height;
 
-  prefHeight = width < (height * 0.352517) ? (width * 2.836734) : height;
+  prefHeight = width < height * 0.352517 ? width * 2.836734 : height;
   imageWidth = prefHeight * 0.352517;
   imageHeight = prefHeight;
 
@@ -85,7 +82,8 @@ const Trafficlight = function(canvas, parameters) {
   redOffBuffer.height = imageHeight;
 
   const drawHousing = function(ctx) {
-    let housingFill; let housingFrontFill;
+    let housingFill;
+    let housingFrontFill;
 
     ctx.save();
 
@@ -95,13 +93,28 @@ const Trafficlight = function(canvas, parameters) {
     ctx.lineTo(imageWidth - 0.107142 * imageWidth, 0);
     ctx.quadraticCurveTo(imageWidth, 0, imageWidth, 0.107142 * imageWidth);
     ctx.lineTo(imageWidth, imageHeight - 0.107142 * imageWidth);
-    ctx.quadraticCurveTo(imageWidth, imageHeight, imageWidth - 0.107142 * imageWidth, imageHeight);
+    ctx.quadraticCurveTo(
+        imageWidth,
+        imageHeight,
+        imageWidth - 0.107142 * imageWidth,
+        imageHeight
+    );
     ctx.lineTo(0.107142 * imageWidth, imageHeight);
-    ctx.quadraticCurveTo(0, imageHeight, 0, imageHeight - 0.107142 * imageWidth);
+    ctx.quadraticCurveTo(
+        0,
+        imageHeight,
+        0,
+        imageHeight - 0.107142 * imageWidth
+    );
     ctx.lineTo(0, 0.107142 * imageWidth);
     ctx.quadraticCurveTo(0, 0, 0.107142 * imageWidth, imageHeight);
     ctx.closePath();
-    housingFill = ctx.createLinearGradient(0.040816 * imageWidth, 0.007194 * imageHeight, 0.952101 * imageWidth, 0.995882 * imageHeight);
+    housingFill = ctx.createLinearGradient(
+        0.040816 * imageWidth,
+        0.007194 * imageHeight,
+        0.952101 * imageWidth,
+        0.995882 * imageHeight
+    );
     housingFill.addColorStop(0, 'rgb(152, 152, 154)');
     housingFill.addColorStop(0.01, 'rgb(152, 152, 154)');
     housingFill.addColorStop(0.09, '#333333');
@@ -116,23 +129,57 @@ const Trafficlight = function(canvas, parameters) {
 
     ctx.save();
     ctx.beginPath();
-    ctx.moveTo(0.030612 * imageWidth + 0.084183 * imageWidth, 0.010791 * imageHeight);
-    ctx.lineTo(0.030612 * imageWidth + 0.938775 * imageWidth - 0.084183 * imageWidth, 0.010791 * imageHeight);
-    ctx.quadraticCurveTo(0.030612 * imageWidth + 0.938775 * imageWidth, 0.010791 * imageHeight,
-        0.030612 * imageWidth + 0.938775 * imageWidth, 0.010791 * imageHeight + 0.084183 * imageWidth);
-    ctx.lineTo(0.030612 * imageWidth + 0.938775 * imageWidth, 0.010791 * imageHeight + 0.978417 * imageHeight - 0.084183 * imageWidth);
-    ctx.quadraticCurveTo(0.030612 * imageWidth + 0.938775 * imageWidth, 0.010791 * imageHeight +
-      0.978417 * imageHeight, 0.030612 * imageWidth + 0.938775 * imageWidth - 0.084183 * imageWidth,
-    0.010791 * imageHeight + 0.978417 * imageHeight);
-    ctx.lineTo(0.030612 * imageWidth + 0.084183 * imageWidth, 0.010791 * imageHeight + 0.978417 * imageHeight);
-    ctx.quadraticCurveTo(0.030612 * imageWidth, 0.010791 * imageHeight + 0.978417 * imageHeight, 0.030612 *
-      imageWidth, 0.010791 * imageHeight + 0.978417 * imageHeight - 0.084183 * imageWidth);
-    ctx.lineTo(0.030612 * imageWidth, 0.010791 * imageHeight + 0.084183 * imageWidth);
-    ctx.quadraticCurveTo(0.030612 * imageWidth, 0.010791 * imageHeight, 0.030612 * imageWidth + 0.084183 *
-      imageWidth, 0.010791 * imageHeight);
+    ctx.moveTo(
+        0.030612 * imageWidth + 0.084183 * imageWidth,
+        0.010791 * imageHeight
+    );
+    ctx.lineTo(
+        0.030612 * imageWidth + 0.938775 * imageWidth - 0.084183 * imageWidth,
+        0.010791 * imageHeight
+    );
+    ctx.quadraticCurveTo(
+        0.030612 * imageWidth + 0.938775 * imageWidth,
+        0.010791 * imageHeight,
+        0.030612 * imageWidth + 0.938775 * imageWidth,
+        0.010791 * imageHeight + 0.084183 * imageWidth
+    );
+    ctx.lineTo(
+        0.030612 * imageWidth + 0.938775 * imageWidth,
+        0.010791 * imageHeight + 0.978417 * imageHeight - 0.084183 * imageWidth
+    );
+    ctx.quadraticCurveTo(
+        0.030612 * imageWidth + 0.938775 * imageWidth,
+        0.010791 * imageHeight + 0.978417 * imageHeight,
+        0.030612 * imageWidth + 0.938775 * imageWidth - 0.084183 * imageWidth,
+        0.010791 * imageHeight + 0.978417 * imageHeight
+    );
+    ctx.lineTo(
+        0.030612 * imageWidth + 0.084183 * imageWidth,
+        0.010791 * imageHeight + 0.978417 * imageHeight
+    );
+    ctx.quadraticCurveTo(
+        0.030612 * imageWidth,
+        0.010791 * imageHeight + 0.978417 * imageHeight,
+        0.030612 * imageWidth,
+        0.010791 * imageHeight + 0.978417 * imageHeight - 0.084183 * imageWidth
+    );
+    ctx.lineTo(
+        0.030612 * imageWidth,
+        0.010791 * imageHeight + 0.084183 * imageWidth
+    );
+    ctx.quadraticCurveTo(
+        0.030612 * imageWidth,
+        0.010791 * imageHeight,
+        0.030612 * imageWidth + 0.084183 * imageWidth,
+        0.010791 * imageHeight
+    );
     ctx.closePath();
-    housingFrontFill = ctx.createLinearGradient(-0.132653 * imageWidth, -0.053956 * imageHeight, 2.061408 *
-      imageWidth, 0.667293 * imageHeight);
+    housingFrontFill = ctx.createLinearGradient(
+        -0.132653 * imageWidth,
+        -0.053956 * imageHeight,
+        2.061408 * imageWidth,
+        0.667293 * imageHeight
+    );
     housingFrontFill.addColorStop(0, '#000000');
     housingFrontFill.addColorStop(0.01, '#000000');
     housingFrontFill.addColorStop(0.16, '#373735');
@@ -150,15 +197,30 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawLightGreen = function(ctx) {
-    let lightGreenFrameFill; let lightGreenInnerFill; let lightGreenEffectFill; let lightGreenInnerShadowFill;
+    let lightGreenFrameFill;
+    let lightGreenInnerFill;
+    let lightGreenEffectFill;
+    let lightGreenInnerShadowFill;
 
     ctx.save();
 
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.805755 * imageHeight, 0.397959 * imageWidth, 0, TWO_PI, false);
-    lightGreenFrameFill = ctx.createLinearGradient(0, 0.665467 * imageHeight, 0, 0.946043 * imageHeight);
+    ctx.arc(
+        0.5 * imageWidth,
+        0.805755 * imageHeight,
+        0.397959 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    lightGreenFrameFill = ctx.createLinearGradient(
+        0,
+        0.665467 * imageHeight,
+        0,
+        0.946043 * imageHeight
+    );
     lightGreenFrameFill.addColorStop(0, '#ffffff');
     lightGreenFrameFill.addColorStop(0.05, 'rgb(204, 204, 204)');
     lightGreenFrameFill.addColorStop(0.1, 'rgb(153, 153, 153)');
@@ -172,8 +234,20 @@ const Trafficlight = function(canvas, parameters) {
     ctx.save();
     ctx.scale(1.083333, 1);
     ctx.beginPath();
-    ctx.arc(0.461538 * imageWidth, 0.816546 * imageHeight, 0.367346 * imageWidth, 0, TWO_PI, false);
-    lightGreenInnerFill = ctx.createLinearGradient(0, 0.687050 * imageHeight, 0, 0.946043 * imageHeight);
+    ctx.arc(
+        0.461538 * imageWidth,
+        0.816546 * imageHeight,
+        0.367346 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    lightGreenInnerFill = ctx.createLinearGradient(
+        0,
+        0.68705 * imageHeight,
+        0,
+        0.946043 * imageHeight
+    );
     lightGreenInnerFill.addColorStop(0, '#000000');
     lightGreenInnerFill.addColorStop(0.35, '#040404');
     lightGreenInnerFill.addColorStop(0.66, '#000000');
@@ -185,8 +259,22 @@ const Trafficlight = function(canvas, parameters) {
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.809352 * imageHeight, 0.357142 * imageWidth, 0, TWO_PI, false);
-    lightGreenEffectFill = ctx.createRadialGradient(0.5 * imageWidth, 0.809352 * imageHeight, 0, 0.5 * imageWidth, 0.809352 * imageHeight, 0.362244 * imageWidth);
+    ctx.arc(
+        0.5 * imageWidth,
+        0.809352 * imageHeight,
+        0.357142 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    lightGreenEffectFill = ctx.createRadialGradient(
+        0.5 * imageWidth,
+        0.809352 * imageHeight,
+        0,
+        0.5 * imageWidth,
+        0.809352 * imageHeight,
+        0.362244 * imageWidth
+    );
     lightGreenEffectFill.addColorStop(0, '#000000');
     lightGreenEffectFill.addColorStop(0.88, '#000000');
     lightGreenEffectFill.addColorStop(0.95, 'rgb(94, 94, 94)');
@@ -198,8 +286,20 @@ const Trafficlight = function(canvas, parameters) {
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.809352 * imageHeight, 0.357142 * imageWidth, 0, TWO_PI, false);
-    lightGreenInnerShadowFill = ctx.createLinearGradient(0, 0.687050 * imageHeight, 0, 0.917266 * imageHeight);
+    ctx.arc(
+        0.5 * imageWidth,
+        0.809352 * imageHeight,
+        0.357142 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    lightGreenInnerShadowFill = ctx.createLinearGradient(
+        0,
+        0.68705 * imageHeight,
+        0,
+        0.917266 * imageHeight
+    );
     lightGreenInnerShadowFill.addColorStop(0, '#000000');
     lightGreenInnerShadowFill.addColorStop(1, 'rgba(1, 1, 1, 0)');
     ctx.fillStyle = lightGreenInnerShadowFill;
@@ -209,15 +309,30 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawGreenOn = function(ctx) {
-    let greenOnFill; let greenOnGlowFill;
+    let greenOnFill;
+    let greenOnGlowFill;
 
     ctx.save();
 
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.809352 * imageHeight, 0.326530 * imageWidth, 0, TWO_PI, false);
-    greenOnFill = ctx.createRadialGradient(0.5 * imageWidth, 0.809352 * imageHeight, 0, 0.5 * imageWidth, 0.809352 * imageHeight, 0.326530 * imageWidth);
+    ctx.arc(
+        0.5 * imageWidth,
+        0.809352 * imageHeight,
+        0.32653 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    greenOnFill = ctx.createRadialGradient(
+        0.5 * imageWidth,
+        0.809352 * imageHeight,
+        0,
+        0.5 * imageWidth,
+        0.809352 * imageHeight,
+        0.32653 * imageWidth
+    );
     greenOnFill.addColorStop(0, 'rgb(85, 185, 123)');
     greenOnFill.addColorStop(1, 'rgb(0, 31, 0)');
     ctx.fillStyle = greenOnFill;
@@ -227,12 +342,47 @@ const Trafficlight = function(canvas, parameters) {
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(0, 0.812949 * imageHeight);
-    ctx.bezierCurveTo(0, 0.910071 * imageHeight, 0.224489 * imageWidth, 0.989208 * imageHeight, 0.5 * imageWidth, 0.989208 * imageHeight);
-    ctx.bezierCurveTo(0.775510 * imageWidth, 0.989208 * imageHeight, imageWidth, 0.910071 * imageHeight, imageWidth, 0.809352 * imageHeight);
-    ctx.bezierCurveTo(0.908163 * imageWidth, 0.751798 * imageHeight, 0.704081 * imageWidth, 0.687050 * imageHeight, 0.5 * imageWidth, 0.687050 * imageHeight);
-    ctx.bezierCurveTo(0.285714 * imageWidth, 0.687050 * imageHeight, 0.081632 * imageWidth, 0.751798 * imageHeight, 0, 0.812949 * imageHeight);
+    ctx.bezierCurveTo(
+        0,
+        0.910071 * imageHeight,
+        0.224489 * imageWidth,
+        0.989208 * imageHeight,
+        0.5 * imageWidth,
+        0.989208 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.77551 * imageWidth,
+        0.989208 * imageHeight,
+        imageWidth,
+        0.910071 * imageHeight,
+        imageWidth,
+        0.809352 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.908163 * imageWidth,
+        0.751798 * imageHeight,
+        0.704081 * imageWidth,
+        0.68705 * imageHeight,
+        0.5 * imageWidth,
+        0.68705 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.285714 * imageWidth,
+        0.68705 * imageHeight,
+        0.081632 * imageWidth,
+        0.751798 * imageHeight,
+        0,
+        0.812949 * imageHeight
+    );
     ctx.closePath();
-    greenOnGlowFill = ctx.createRadialGradient(0.5 * imageWidth, 0.809352 * imageHeight, 0, 0.5 * imageWidth, 0.809352 * imageHeight, 0.515306 * imageWidth);
+    greenOnGlowFill = ctx.createRadialGradient(
+        0.5 * imageWidth,
+        0.809352 * imageHeight,
+        0,
+        0.5 * imageWidth,
+        0.809352 * imageHeight,
+        0.515306 * imageWidth
+    );
     greenOnGlowFill.addColorStop(0, 'rgb(65, 187, 126)');
     greenOnGlowFill.addColorStop(1, 'rgba(4, 37, 8, 0)');
     ctx.fillStyle = greenOnGlowFill;
@@ -242,15 +392,30 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawGreenOff = function(ctx) {
-    let greenOffFill; let greenOffInnerShadowFill;
+    let greenOffFill;
+    let greenOffInnerShadowFill;
 
     ctx.save();
 
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.809352 * imageHeight, 0.326530 * imageWidth, 0, TWO_PI, false);
-    greenOffFill = ctx.createRadialGradient(0.5 * imageWidth, 0.809352 * imageHeight, 0, 0.5 * imageWidth, 0.809352 * imageHeight, 0.326530 * imageWidth);
+    ctx.arc(
+        0.5 * imageWidth,
+        0.809352 * imageHeight,
+        0.32653 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    greenOffFill = ctx.createRadialGradient(
+        0.5 * imageWidth,
+        0.809352 * imageHeight,
+        0,
+        0.5 * imageWidth,
+        0.809352 * imageHeight,
+        0.32653 * imageWidth
+    );
     greenOffFill.addColorStop(0, 'rgba(0, 255, 0, 0.25)');
     greenOffFill.addColorStop(1, 'rgba(0, 255, 0, 0.05)');
     ctx.fillStyle = greenOffFill;
@@ -260,8 +425,22 @@ const Trafficlight = function(canvas, parameters) {
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.809352 * imageHeight, 0.326530 * imageWidth, 0, TWO_PI, false);
-    greenOffInnerShadowFill = ctx.createRadialGradient(0.5 * imageWidth, 0.809352 * imageHeight, 0, 0.5 * imageWidth, 0.809352 * imageHeight, 0.326530 * imageWidth);
+    ctx.arc(
+        0.5 * imageWidth,
+        0.809352 * imageHeight,
+        0.32653 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    greenOffInnerShadowFill = ctx.createRadialGradient(
+        0.5 * imageWidth,
+        0.809352 * imageHeight,
+        0,
+        0.5 * imageWidth,
+        0.809352 * imageHeight,
+        0.32653 * imageWidth
+    );
     greenOffInnerShadowFill.addColorStop(0, 'rgba(1, 1, 1, 0)');
     greenOffInnerShadowFill.addColorStop(0.55, 'rgba(0, 0, 0, 0)');
     greenOffInnerShadowFill.addColorStop(0.5501, 'rgba(0, 0, 0, 0)');
@@ -279,15 +458,30 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawLightYellow = function(ctx) {
-    let lightYellowFrameFill; let lightYellowInnerFill; let lightYellowEffectFill; let lightYellowInnerShadowFill;
+    let lightYellowFrameFill;
+    let lightYellowInnerFill;
+    let lightYellowEffectFill;
+    let lightYellowInnerShadowFill;
 
     ctx.save();
 
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.496402 * imageHeight, 0.397959 * imageWidth, 0, TWO_PI, false);
-    lightYellowFrameFill = ctx.createLinearGradient(0, 0.356115 * imageHeight, 0, 0.636690 * imageHeight);
+    ctx.arc(
+        0.5 * imageWidth,
+        0.496402 * imageHeight,
+        0.397959 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    lightYellowFrameFill = ctx.createLinearGradient(
+        0,
+        0.356115 * imageHeight,
+        0,
+        0.63669 * imageHeight
+    );
     lightYellowFrameFill.addColorStop(0, '#ffffff');
     lightYellowFrameFill.addColorStop(0.05, 'rgb(204, 204, 204)');
     lightYellowFrameFill.addColorStop(0.1, 'rgb(153, 153, 153)');
@@ -301,8 +495,20 @@ const Trafficlight = function(canvas, parameters) {
     ctx.save();
     ctx.scale(1.083333, 1);
     ctx.beginPath();
-    ctx.arc(0.461538 * imageWidth, 0.507194 * imageHeight, 0.367346 * imageWidth, 0, TWO_PI, false);
-    lightYellowInnerFill = ctx.createLinearGradient(0, 0.377697 * imageHeight, 0, 0.636690 * imageHeight);
+    ctx.arc(
+        0.461538 * imageWidth,
+        0.507194 * imageHeight,
+        0.367346 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    lightYellowInnerFill = ctx.createLinearGradient(
+        0,
+        0.377697 * imageHeight,
+        0,
+        0.63669 * imageHeight
+    );
     lightYellowInnerFill.addColorStop(0, '#000000');
     lightYellowInnerFill.addColorStop(0.35, '#040404');
     lightYellowInnerFill.addColorStop(0.66, '#000000');
@@ -314,8 +520,22 @@ const Trafficlight = function(canvas, parameters) {
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.5 * imageHeight, 0.357142 * imageWidth, 0, TWO_PI, false);
-    lightYellowEffectFill = ctx.createRadialGradient(0.5 * imageWidth, 0.5 * imageHeight, 0, 0.5 * imageWidth, 0.5 * imageHeight, 0.362244 * imageWidth);
+    ctx.arc(
+        0.5 * imageWidth,
+        0.5 * imageHeight,
+        0.357142 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    lightYellowEffectFill = ctx.createRadialGradient(
+        0.5 * imageWidth,
+        0.5 * imageHeight,
+        0,
+        0.5 * imageWidth,
+        0.5 * imageHeight,
+        0.362244 * imageWidth
+    );
     lightYellowEffectFill.addColorStop(0, '#000000');
     lightYellowEffectFill.addColorStop(0.88, '#000000');
     lightYellowEffectFill.addColorStop(0.95, '#5e5e5e');
@@ -328,8 +548,20 @@ const Trafficlight = function(canvas, parameters) {
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.5 * imageHeight, 0.357142 * imageWidth, 0, TWO_PI, false);
-    lightYellowInnerShadowFill = ctx.createLinearGradient(0, 0.377697 * imageHeight, 0, 0.607913 * imageHeight);
+    ctx.arc(
+        0.5 * imageWidth,
+        0.5 * imageHeight,
+        0.357142 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    lightYellowInnerShadowFill = ctx.createLinearGradient(
+        0,
+        0.377697 * imageHeight,
+        0,
+        0.607913 * imageHeight
+    );
     lightYellowInnerShadowFill.addColorStop(0, '#000000');
     lightYellowInnerShadowFill.addColorStop(1, 'rgba(1, 1, 1, 0)');
     ctx.fillStyle = lightYellowInnerShadowFill;
@@ -339,15 +571,30 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawYellowOn = function(ctx) {
-    let yellowOnFill; let yellowOnGlowFill;
+    let yellowOnFill;
+    let yellowOnGlowFill;
 
     ctx.save();
 
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.5 * imageHeight, 0.326530 * imageWidth, 0, TWO_PI, false);
-    yellowOnFill = ctx.createRadialGradient(0.5 * imageWidth, 0.5 * imageHeight, 0, 0.5 * imageWidth, 0.5 * imageHeight, 0.326530 * imageWidth);
+    ctx.arc(
+        0.5 * imageWidth,
+        0.5 * imageHeight,
+        0.32653 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    yellowOnFill = ctx.createRadialGradient(
+        0.5 * imageWidth,
+        0.5 * imageHeight,
+        0,
+        0.5 * imageWidth,
+        0.5 * imageHeight,
+        0.32653 * imageWidth
+    );
     yellowOnFill.addColorStop(0, '#fed434');
     yellowOnFill.addColorStop(1, '#82330c');
     ctx.fillStyle = yellowOnFill;
@@ -357,12 +604,47 @@ const Trafficlight = function(canvas, parameters) {
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(0, 0.503597 * imageHeight);
-    ctx.bezierCurveTo(0, 0.600719 * imageHeight, 0.224489 * imageWidth, 0.679856 * imageHeight, 0.5 * imageWidth, 0.679856 * imageHeight);
-    ctx.bezierCurveTo(0.775510 * imageWidth, 0.679856 * imageHeight, imageWidth, 0.600719 * imageHeight, imageWidth, 0.5 * imageHeight);
-    ctx.bezierCurveTo(0.908163 * imageWidth, 0.442446 * imageHeight, 0.704081 * imageWidth, 0.377697 * imageHeight, 0.5 * imageWidth, 0.377697 * imageHeight);
-    ctx.bezierCurveTo(0.285714 * imageWidth, 0.377697 * imageHeight, 0.081632 * imageWidth, 0.442446 * imageHeight, 0, 0.503597 * imageHeight);
+    ctx.bezierCurveTo(
+        0,
+        0.600719 * imageHeight,
+        0.224489 * imageWidth,
+        0.679856 * imageHeight,
+        0.5 * imageWidth,
+        0.679856 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.77551 * imageWidth,
+        0.679856 * imageHeight,
+        imageWidth,
+        0.600719 * imageHeight,
+        imageWidth,
+        0.5 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.908163 * imageWidth,
+        0.442446 * imageHeight,
+        0.704081 * imageWidth,
+        0.377697 * imageHeight,
+        0.5 * imageWidth,
+        0.377697 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.285714 * imageWidth,
+        0.377697 * imageHeight,
+        0.081632 * imageWidth,
+        0.442446 * imageHeight,
+        0,
+        0.503597 * imageHeight
+    );
     ctx.closePath();
-    yellowOnGlowFill = ctx.createRadialGradient(0.5 * imageWidth, 0.5 * imageHeight, 0, 0.5 * imageWidth, 0.5 * imageHeight, 0.515306 * imageWidth);
+    yellowOnGlowFill = ctx.createRadialGradient(
+        0.5 * imageWidth,
+        0.5 * imageHeight,
+        0,
+        0.5 * imageWidth,
+        0.5 * imageHeight,
+        0.515306 * imageWidth
+    );
     yellowOnGlowFill.addColorStop(0, '#fed434');
     yellowOnGlowFill.addColorStop(1, 'rgba(130, 51, 12, 0)');
     ctx.fillStyle = yellowOnGlowFill;
@@ -372,15 +654,30 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawYellowOff = function(ctx) {
-    let yellowOffFill; let yellowOffInnerShadowFill;
+    let yellowOffFill;
+    let yellowOffInnerShadowFill;
 
     ctx.save();
 
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.5 * imageHeight, 0.326530 * imageWidth, 0, TWO_PI, false);
-    yellowOffFill = ctx.createRadialGradient(0.5 * imageWidth, 0.5 * imageHeight, 0, 0.5 * imageWidth, 0.5 * imageHeight, 0.326530 * imageWidth);
+    ctx.arc(
+        0.5 * imageWidth,
+        0.5 * imageHeight,
+        0.32653 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    yellowOffFill = ctx.createRadialGradient(
+        0.5 * imageWidth,
+        0.5 * imageHeight,
+        0,
+        0.5 * imageWidth,
+        0.5 * imageHeight,
+        0.32653 * imageWidth
+    );
     yellowOffFill.addColorStop(0, 'rgba(255, 255, 0, 0.25)');
     yellowOffFill.addColorStop(1, 'rgba(255, 255, 0, 0.05)');
     ctx.fillStyle = yellowOffFill;
@@ -390,8 +687,22 @@ const Trafficlight = function(canvas, parameters) {
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.5 * imageHeight, 0.326530 * imageWidth, 0, TWO_PI, false);
-    yellowOffInnerShadowFill = ctx.createRadialGradient(0.5 * imageWidth, 0.5 * imageHeight, 0, 0.5 * imageWidth, 0.5 * imageHeight, 0.326530 * imageWidth);
+    ctx.arc(
+        0.5 * imageWidth,
+        0.5 * imageHeight,
+        0.32653 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    yellowOffInnerShadowFill = ctx.createRadialGradient(
+        0.5 * imageWidth,
+        0.5 * imageHeight,
+        0,
+        0.5 * imageWidth,
+        0.5 * imageHeight,
+        0.32653 * imageWidth
+    );
     yellowOffInnerShadowFill.addColorStop(0, 'rgba(1, 1, 1, 0)');
     yellowOffInnerShadowFill.addColorStop(0.55, 'rgba(0, 0, 0, 0)');
     yellowOffInnerShadowFill.addColorStop(0.5501, 'rgba(0, 0, 0, 0)');
@@ -409,7 +720,10 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawLightRed = function(ctx) {
-    let lightRedFrameFill; let lightRedInnerFill; let lightRedEffectFill; let lightRedInnerShadowFill;
+    let lightRedFrameFill;
+    let lightRedInnerFill;
+    let lightRedEffectFill;
+    let lightRedInnerShadowFill;
 
     ctx.save();
 
@@ -417,8 +731,20 @@ const Trafficlight = function(canvas, parameters) {
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.187050 * imageHeight, 0.397959 * imageWidth, 0, TWO_PI, false);
-    lightRedFrameFill = ctx.createLinearGradient((0.5 * imageWidth), (0.046762 * imageHeight), ((0.500000) * imageWidth), ((0.327338) * imageHeight));
+    ctx.arc(
+        0.5 * imageWidth,
+        0.18705 * imageHeight,
+        0.397959 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    lightRedFrameFill = ctx.createLinearGradient(
+        0.5 * imageWidth,
+        0.046762 * imageHeight,
+        0.5 * imageWidth,
+        0.327338 * imageHeight
+    );
     lightRedFrameFill.addColorStop(0, '#ffffff');
     lightRedFrameFill.addColorStop(0.05, '#cccccc');
     lightRedFrameFill.addColorStop(0.1, '#999999');
@@ -433,8 +759,20 @@ const Trafficlight = function(canvas, parameters) {
     ctx.save();
     ctx.scale(1.083333, 1);
     ctx.beginPath();
-    ctx.arc(0.461538 * imageWidth, 0.197841 * imageHeight, 0.367346 * imageWidth, 0, TWO_PI, false);
-    lightRedInnerFill = ctx.createLinearGradient((0.5 * imageWidth), (0.068345 * imageHeight), ((0.500000) * imageWidth), ((0.327338) * imageHeight));
+    ctx.arc(
+        0.461538 * imageWidth,
+        0.197841 * imageHeight,
+        0.367346 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    lightRedInnerFill = ctx.createLinearGradient(
+        0.5 * imageWidth,
+        0.068345 * imageHeight,
+        0.5 * imageWidth,
+        0.327338 * imageHeight
+    );
     lightRedInnerFill.addColorStop(0, '#000000');
     lightRedInnerFill.addColorStop(0.35, '#040404');
     lightRedInnerFill.addColorStop(0.66, '#000000');
@@ -447,8 +785,22 @@ const Trafficlight = function(canvas, parameters) {
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.190647 * imageHeight, 0.357142 * imageWidth, 0, TWO_PI, false);
-    lightRedEffectFill = ctx.createRadialGradient((0.5) * imageWidth, ((0.190647) * imageHeight), 0, ((0.5) * imageWidth), ((0.190647) * imageHeight), 0.362244 * imageWidth);
+    ctx.arc(
+        0.5 * imageWidth,
+        0.190647 * imageHeight,
+        0.357142 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    lightRedEffectFill = ctx.createRadialGradient(
+        0.5 * imageWidth,
+        0.190647 * imageHeight,
+        0,
+        0.5 * imageWidth,
+        0.190647 * imageHeight,
+        0.362244 * imageWidth
+    );
     lightRedEffectFill.addColorStop(0, '#000000');
     lightRedEffectFill.addColorStop(0.88, '#000000');
     lightRedEffectFill.addColorStop(0.95, '#5e5e5e');
@@ -461,8 +813,20 @@ const Trafficlight = function(canvas, parameters) {
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.190647 * imageHeight, 0.357142 * imageWidth, 0, TWO_PI, false);
-    lightRedInnerShadowFill = ctx.createLinearGradient((0.5 * imageWidth), (0.068345 * imageHeight), ((0.500000) * imageWidth), ((0.298561) * imageHeight));
+    ctx.arc(
+        0.5 * imageWidth,
+        0.190647 * imageHeight,
+        0.357142 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    lightRedInnerShadowFill = ctx.createLinearGradient(
+        0.5 * imageWidth,
+        0.068345 * imageHeight,
+        0.5 * imageWidth,
+        0.298561 * imageHeight
+    );
     lightRedInnerShadowFill.addColorStop(0, '#000000');
     lightRedInnerShadowFill.addColorStop(1, 'rgba(1, 1, 1, 0)');
     ctx.fillStyle = lightRedInnerShadowFill;
@@ -472,15 +836,30 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawRedOn = function(ctx) {
-    let redOnFill; let redOnGlowFill;
+    let redOnFill;
+    let redOnGlowFill;
 
     ctx.save();
 
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.190647 * imageHeight, 0.326530 * imageWidth, 0, TWO_PI, false);
-    redOnFill = ctx.createRadialGradient(0.5 * imageWidth, 0.190647 * imageHeight, 0, 0.5 * imageWidth, 0.190647 * imageHeight, 0.326530 * imageWidth);
+    ctx.arc(
+        0.5 * imageWidth,
+        0.190647 * imageHeight,
+        0.32653 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    redOnFill = ctx.createRadialGradient(
+        0.5 * imageWidth,
+        0.190647 * imageHeight,
+        0,
+        0.5 * imageWidth,
+        0.190647 * imageHeight,
+        0.32653 * imageWidth
+    );
     redOnFill.addColorStop(0, '#ff0000');
     redOnFill.addColorStop(1, '#410004');
     ctx.fillStyle = redOnFill;
@@ -490,12 +869,47 @@ const Trafficlight = function(canvas, parameters) {
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(0, 0.194244 * imageHeight);
-    ctx.bezierCurveTo(0, 0.291366 * imageHeight, 0.224489 * imageWidth, 0.370503 * imageHeight, 0.5 * imageWidth, 0.370503 * imageHeight);
-    ctx.bezierCurveTo(0.775510 * imageWidth, 0.370503 * imageHeight, imageWidth, 0.291366 * imageHeight, imageWidth, 0.190647 * imageHeight);
-    ctx.bezierCurveTo(0.908163 * imageWidth, 0.133093 * imageHeight, 0.704081 * imageWidth, 0.068345 * imageHeight, 0.5 * imageWidth, 0.068345 * imageHeight);
-    ctx.bezierCurveTo(0.285714 * imageWidth, 0.068345 * imageHeight, 0.081632 * imageWidth, 0.133093 * imageHeight, 0, 0.194244 * imageHeight);
+    ctx.bezierCurveTo(
+        0,
+        0.291366 * imageHeight,
+        0.224489 * imageWidth,
+        0.370503 * imageHeight,
+        0.5 * imageWidth,
+        0.370503 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.77551 * imageWidth,
+        0.370503 * imageHeight,
+        imageWidth,
+        0.291366 * imageHeight,
+        imageWidth,
+        0.190647 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.908163 * imageWidth,
+        0.133093 * imageHeight,
+        0.704081 * imageWidth,
+        0.068345 * imageHeight,
+        0.5 * imageWidth,
+        0.068345 * imageHeight
+    );
+    ctx.bezierCurveTo(
+        0.285714 * imageWidth,
+        0.068345 * imageHeight,
+        0.081632 * imageWidth,
+        0.133093 * imageHeight,
+        0,
+        0.194244 * imageHeight
+    );
     ctx.closePath();
-    redOnGlowFill = ctx.createRadialGradient(0.5 * imageWidth, 0.190647 * imageHeight, 0, 0.5 * imageWidth, 0.190647 * imageHeight, 0.515306 * imageWidth);
+    redOnGlowFill = ctx.createRadialGradient(
+        0.5 * imageWidth,
+        0.190647 * imageHeight,
+        0,
+        0.5 * imageWidth,
+        0.190647 * imageHeight,
+        0.515306 * imageWidth
+    );
     redOnGlowFill.addColorStop(0, '#ff0000');
     redOnGlowFill.addColorStop(1, 'rgba(118, 5, 1, 0)');
     ctx.fillStyle = redOnGlowFill;
@@ -506,15 +920,30 @@ const Trafficlight = function(canvas, parameters) {
   };
 
   const drawRedOff = function(ctx) {
-    let redOffFill; let redOffInnerShadowFill;
+    let redOffFill;
+    let redOffInnerShadowFill;
 
     ctx.save();
 
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.190647 * imageHeight, 0.326530 * imageWidth, 0, TWO_PI, false);
-    redOffFill = ctx.createRadialGradient(0.5 * imageWidth, 0.190647 * imageHeight, 0, 0.5 * imageWidth, 0.190647 * imageHeight, 0.326530 * imageWidth);
+    ctx.arc(
+        0.5 * imageWidth,
+        0.190647 * imageHeight,
+        0.32653 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    redOffFill = ctx.createRadialGradient(
+        0.5 * imageWidth,
+        0.190647 * imageHeight,
+        0,
+        0.5 * imageWidth,
+        0.190647 * imageHeight,
+        0.32653 * imageWidth
+    );
     redOffFill.addColorStop(0, 'rgba(255, 0, 0, 0.25)');
     redOffFill.addColorStop(1, 'rgba(255, 0, 0, 0.05)');
     ctx.fillStyle = redOffFill;
@@ -524,8 +953,22 @@ const Trafficlight = function(canvas, parameters) {
     ctx.save();
     ctx.scale(1, 1);
     ctx.beginPath();
-    ctx.arc(0.5 * imageWidth, 0.190647 * imageHeight, 0.326530 * imageWidth, 0, TWO_PI, false);
-    redOffInnerShadowFill = ctx.createRadialGradient(0.5 * imageWidth, 0.190647 * imageHeight, 0, 0.5 * imageWidth, 0.190647 * imageHeight, 0.326530 * imageWidth);
+    ctx.arc(
+        0.5 * imageWidth,
+        0.190647 * imageHeight,
+        0.32653 * imageWidth,
+        0,
+        TWO_PI,
+        false
+    );
+    redOffInnerShadowFill = ctx.createRadialGradient(
+        0.5 * imageWidth,
+        0.190647 * imageHeight,
+        0,
+        0.5 * imageWidth,
+        0.190647 * imageHeight,
+        0.32653 * imageWidth
+    );
     redOffInnerShadowFill.addColorStop(0, 'rgba(1, 1, 1, 0)');
     redOffInnerShadowFill.addColorStop(0.55, 'rgba(0, 0, 0, 0)');
     redOffInnerShadowFill.addColorStop(0.5501, 'rgba(0, 0, 0, 0)');

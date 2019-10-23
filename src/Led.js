@@ -1,18 +1,13 @@
-
 import createLedImage from './createLedImage';
-import {
-  getCanvasContext,
-  doc,
-} from './tools';
+import {getCanvasContext, doc} from './tools';
 
-import {
-  LedColor,
-} from './definitions';
+import {LedColor} from './definitions';
 
 const Led = function(canvas, parameters) {
   parameters = parameters || {};
-  let size = (undefined === parameters.size ? 0 : parameters.size);
-  let ledColor = (undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor);
+  let size = undefined === parameters.size ? 0 : parameters.size;
+  let ledColor =
+    undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor;
 
   let ledBlinking = false;
   let ledTimerId = 0;
@@ -49,11 +44,21 @@ const Led = function(canvas, parameters) {
     initialized = true;
 
     // Draw LED ON in ledBuffer_ON
-    ledContextOn.clearRect(0, 0, ledContextOn.canvas.width, ledContextOn.canvas.height);
+    ledContextOn.clearRect(
+        0,
+        0,
+        ledContextOn.canvas.width,
+        ledContextOn.canvas.height
+    );
     ledContextOn.drawImage(createLedImage(size, 1, ledColor), 0, 0);
 
     // Draw LED ON in ledBuffer_OFF
-    ledContextOff.clearRect(0, 0, ledContextOff.canvas.width, ledContextOff.canvas.height);
+    ledContextOff.clearRect(
+        0,
+        0,
+        ledContextOff.canvas.width,
+        ledContextOff.canvas.height
+    );
     ledContextOff.drawImage(createLedImage(size, 0, ledColor), 0, 0);
   };
 

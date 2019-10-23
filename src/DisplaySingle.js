@@ -1,4 +1,3 @@
-
 import createLcdBackgroundImage from './createLcdBackgroundImage';
 import {
   roundedRectangle,
@@ -12,26 +11,38 @@ import {
   stdFontName,
 } from './tools';
 
-import {
-  LcdColor,
-} from './definitions';
+import {LcdColor} from './definitions';
 
 const DisplaySingle = function(canvas, parameters) {
   parameters = parameters || {};
-  let width = (undefined === parameters.width ? 0 : parameters.width);
-  let height = (undefined === parameters.height ? 0 : parameters.height);
-  let lcdColor = (undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor);
-  const lcdDecimals = (undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals);
-  const unitString = (undefined === parameters.unitString ? '' : parameters.unitString);
-  const unitStringVisible = (undefined === parameters.unitStringVisible ? false : parameters.unitStringVisible);
-  const headerString = (undefined === parameters.headerString ? '' : parameters.headerString);
-  const headerStringVisible = (undefined === parameters.headerStringVisible ? false : parameters.headerStringVisible);
-  const digitalFont = (undefined === parameters.digitalFont ? false : parameters.digitalFont);
-  const valuesNumeric = (undefined === parameters.valuesNumeric ? true : parameters.valuesNumeric);
-  let value = (undefined === parameters.value ? 0 : parameters.value);
-  const alwaysScroll = (undefined === parameters.alwaysScroll ? false : parameters.alwaysScroll);
-  const autoScroll = (undefined === parameters.autoScroll ? false : parameters.autoScroll);
-  let section = (undefined === parameters.section ? null : parameters.section);
+  let width = undefined === parameters.width ? 0 : parameters.width;
+  let height = undefined === parameters.height ? 0 : parameters.height;
+  let lcdColor =
+    undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor;
+  const lcdDecimals =
+    undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals;
+  const unitString =
+    undefined === parameters.unitString ? '' : parameters.unitString;
+  const unitStringVisible =
+    undefined === parameters.unitStringVisible ?
+      false :
+      parameters.unitStringVisible;
+  const headerString =
+    undefined === parameters.headerString ? '' : parameters.headerString;
+  const headerStringVisible =
+    undefined === parameters.headerStringVisible ?
+      false :
+      parameters.headerStringVisible;
+  const digitalFont =
+    undefined === parameters.digitalFont ? false : parameters.digitalFont;
+  const valuesNumeric =
+    undefined === parameters.valuesNumeric ? true : parameters.valuesNumeric;
+  let value = undefined === parameters.value ? 0 : parameters.value;
+  const alwaysScroll =
+    undefined === parameters.alwaysScroll ? false : parameters.alwaysScroll;
+  const autoScroll =
+    undefined === parameters.autoScroll ? false : parameters.autoScroll;
+  let section = undefined === parameters.section ? null : parameters.section;
 
   let scrolling = false;
   let scrollX = 0;
@@ -83,8 +94,11 @@ const DisplaySingle = function(canvas, parameters) {
     mainCtx.closePath();
     mainCtx.clip();
 
-    if ((lcdColor === LcdColor.STANDARD || lcdColor === LcdColor.STANDARD_GREEN) &&
-      section === null) {
+    if (
+      (lcdColor === LcdColor.STANDARD ||
+        lcdColor === LcdColor.STANDARD_GREEN) &&
+      section === null
+    ) {
       mainCtx.shadowColor = 'gray';
       mainCtx.shadowOffsetX = imageHeight * 0.035;
       mainCtx.shadowOffsetY = imageHeight * 0.035;
@@ -109,11 +123,19 @@ const DisplaySingle = function(canvas, parameters) {
         vPos = 0.52;
       }
 
-      mainCtx.fillText(lcdText, imageWidth - unitWidth - 4 - scrollX, imageHeight * 0.5 + fontHeight * vPos);
+      mainCtx.fillText(
+          lcdText,
+          imageWidth - unitWidth - 4 - scrollX,
+          imageHeight * 0.5 + fontHeight * vPos
+      );
 
       if (unitStringVisible) {
         mainCtx.font = Math.floor(imageHeight / 2.5) + 'px ' + stdFontName;
-        mainCtx.fillText(unitString, imageWidth - 2 - scrollX, imageHeight * 0.5 + fontHeight * vPos);
+        mainCtx.fillText(
+            unitString,
+            imageWidth - 2 - scrollX,
+            imageHeight * 0.5 + fontHeight * vPos
+        );
       }
       if (headerStringVisible) {
         mainCtx.textAlign = 'center';
@@ -138,7 +160,11 @@ const DisplaySingle = function(canvas, parameters) {
         scrollX = 0;
         scrolling = false;
       }
-      mainCtx.fillText(value, imageWidth - 2 - scrollX, imageHeight * 0.5 + fontHeight * 0.38);
+      mainCtx.fillText(
+          value,
+          imageWidth - 2 - scrollX,
+          imageHeight * 0.5 + fontHeight * 0.38
+      );
     }
     mainCtx.restore();
   };
@@ -175,11 +201,23 @@ const DisplaySingle = function(canvas, parameters) {
     const rgbStart = getColorValues(lcdColor.gradientStartColor);
     const hsbStart = rgbToHsb(rgbStart[0], rgbStart[1], rgbStart[2]);
     const rgbFraction1 = getColorValues(lcdColor.gradientFraction1Color);
-    const hsbFraction1 = rgbToHsb(rgbFraction1[0], rgbFraction1[1], rgbFraction1[2]);
+    const hsbFraction1 = rgbToHsb(
+        rgbFraction1[0],
+        rgbFraction1[1],
+        rgbFraction1[2]
+    );
     const rgbFraction2 = getColorValues(lcdColor.gradientFraction2Color);
-    const hsbFraction2 = rgbToHsb(rgbFraction2[0], rgbFraction2[1], rgbFraction2[2]);
+    const hsbFraction2 = rgbToHsb(
+        rgbFraction2[0],
+        rgbFraction2[1],
+        rgbFraction2[2]
+    );
     const rgbFraction3 = getColorValues(lcdColor.gradientFraction3Color);
-    const hsbFraction3 = rgbToHsb(rgbFraction3[0], rgbFraction3[1], rgbFraction3[2]);
+    const hsbFraction3 = rgbToHsb(
+        rgbFraction3[0],
+        rgbFraction3[1],
+        rgbFraction3[2]
+    );
     const rgbStop = getColorValues(lcdColor.gradientStopColor);
     const hsbStop = rgbToHsb(rgbStop[0], rgbStop[1], rgbStop[2]);
 
@@ -195,11 +233,44 @@ const DisplaySingle = function(canvas, parameters) {
     const hF = height - 2;
     const rF = rB - 1;
     const lcdForeground = lcdCtx.createLinearGradient(0, yF, 0, yF + hF);
-    lcdForeground.addColorStop(0, 'rgb(' + startColor[0] + ', ' + startColor[1] + ', ' + startColor[2] + ')');
-    lcdForeground.addColorStop(0.03, 'rgb(' + fraction1Color[0] + ',' + fraction1Color[1] + ',' + fraction1Color[2] + ')');
-    lcdForeground.addColorStop(0.49, 'rgb(' + fraction2Color[0] + ',' + fraction2Color[1] + ',' + fraction2Color[2] + ')');
-    lcdForeground.addColorStop(0.5, 'rgb(' + fraction3Color[0] + ',' + fraction3Color[1] + ',' + fraction3Color[2] + ')');
-    lcdForeground.addColorStop(1, 'rgb(' + stopColor[0] + ',' + stopColor[1] + ',' + stopColor[2] + ')');
+    lcdForeground.addColorStop(
+        0,
+        'rgb(' + startColor[0] + ', ' + startColor[1] + ', ' + startColor[2] + ')'
+    );
+    lcdForeground.addColorStop(
+        0.03,
+        'rgb(' +
+        fraction1Color[0] +
+        ',' +
+        fraction1Color[1] +
+        ',' +
+        fraction1Color[2] +
+        ')'
+    );
+    lcdForeground.addColorStop(
+        0.49,
+        'rgb(' +
+        fraction2Color[0] +
+        ',' +
+        fraction2Color[1] +
+        ',' +
+        fraction2Color[2] +
+        ')'
+    );
+    lcdForeground.addColorStop(
+        0.5,
+        'rgb(' +
+        fraction3Color[0] +
+        ',' +
+        fraction3Color[1] +
+        ',' +
+        fraction3Color[2] +
+        ')'
+    );
+    lcdForeground.addColorStop(
+        1,
+        'rgb(' + stopColor[0] + ',' + stopColor[1] + ',' + stopColor[2] + ')'
+    );
     lcdCtx.fillStyle = lcdForeground;
 
     roundedRectangle(lcdCtx, xF, yF, wF, hF, rF);
@@ -214,7 +285,15 @@ const DisplaySingle = function(canvas, parameters) {
     const rgbSection = getColorValues(sectionColor);
     const hsbSection = rgbToHsb(rgbSection[0], rgbSection[1], rgbSection[2]);
     const sectionForegroundRgb = hsbToRgb(hsbSection[0], 0.57, 0.83);
-    return 'rgb(' + sectionForegroundRgb[0] + ', ' + sectionForegroundRgb[1] + ', ' + sectionForegroundRgb[2] + ')';
+    return (
+      'rgb(' +
+      sectionForegroundRgb[0] +
+      ', ' +
+      sectionForegroundRgb[1] +
+      ', ' +
+      sectionForegroundRgb[2] +
+      ')'
+    );
   };
 
   const animate = function() {
@@ -243,8 +322,15 @@ const DisplaySingle = function(canvas, parameters) {
 
     if (null !== section && 0 < section.length) {
       for (sectionIndex = 0; sectionIndex < section.length; sectionIndex++) {
-        sectionBuffer[sectionIndex] = createLcdSectionImage(width, height, section[sectionIndex].color, lcdColor);
-        sectionForegroundColor[sectionIndex] = createSectionForegroundColor(section[sectionIndex].color);
+        sectionBuffer[sectionIndex] = createLcdSectionImage(
+            width,
+            height,
+            section[sectionIndex].color,
+            lcdColor
+        );
+        sectionForegroundColor[sectionIndex] = createSectionForegroundColor(
+            section[sectionIndex].color
+        );
       }
     }
   };
@@ -283,7 +369,8 @@ const DisplaySingle = function(canvas, parameters) {
         scrolling = scroll;
         animate();
       }
-    } else { // disable scrolling
+    } else {
+      // disable scrolling
       scrolling = scroll;
     }
     return this;
@@ -303,7 +390,10 @@ const DisplaySingle = function(canvas, parameters) {
     // Draw sections
     if (null !== section && 0 < section.length) {
       for (sectionIndex = 0; sectionIndex < section.length; sectionIndex++) {
-        if (value >= section[sectionIndex].start && value <= section[sectionIndex].stop) {
+        if (
+          value >= section[sectionIndex].start &&
+          value <= section[sectionIndex].stop
+        ) {
           lcdBackgroundBuffer = sectionBuffer[sectionIndex];
           lcdTextColor = sectionForegroundColor[sectionIndex];
           break;

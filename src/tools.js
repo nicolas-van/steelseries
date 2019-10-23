@@ -1,8 +1,4 @@
-
-
-import {
-  ColorDef,
-} from './constants';
+import {ColorDef} from './constants';
 
 export const HALF_PI = Math.PI * 0.5;
 export const TWO_PI = Math.PI * 2;
@@ -14,7 +10,10 @@ export const lcdFontName = 'LCDMono2Ultra,Arial,Verdana,sans-serif';
 export const stdFontName = 'Arial,Verdana,sans-serif';
 
 export const rgbaColor = function(r, g, b, a) {
-  let red; let green; let blue; let alpha;
+  let red;
+  let green;
+  let blue;
+  let alpha;
 
   if (arguments.length === 1) {
     // hexadecimal input #112233
@@ -93,10 +92,18 @@ export const ConicalGradient = function(fractions, colors) {
     let angle;
     const radius = Math.ceil(outerX);
     const diameter = radius * 2;
-    let pixels; let alpha;
-    let x; let y; let dx; let dy; let dy2; let distance;
-    let indx; let pixColor;
-    let buffer; let bufferCtx;
+    let pixels;
+    let alpha;
+    let x;
+    let y;
+    let dx;
+    let dy;
+    let dy2;
+    let distance;
+    let indx;
+    let pixColor;
+    let buffer;
+    let bufferCtx;
 
     // Original Version using rotated lines
     /*
@@ -137,16 +144,23 @@ export const ConicalGradient = function(fractions, colors) {
       dy2 = dy * dy;
       for (x = 0; x < diameter; x++) {
         dx = x - radius;
-        distance = Math.sqrt((dx * dx) + dy2);
-        if (distance <= radius && distance >= innerX) { // pixels are transparent by default, so only paint the ones we need
+        distance = Math.sqrt(dx * dx + dy2);
+        if (distance <= radius && distance >= innerX) {
+          // pixels are transparent by default, so only paint the ones we need
           angle = Math.atan2(dx, dy);
           for (i = 0; i < limit; i++) {
             if (angle >= fractions[i] && angle < fractions[i + 1]) {
-              pixColor = getColorFromFraction(colors[i], colors[i + 1], fractions[i + 1] - fractions[i], angle - fractions[i], true);
+              pixColor = getColorFromFraction(
+                  colors[i],
+                  colors[i + 1],
+                  fractions[i + 1] - fractions[i],
+                  angle - fractions[i],
+                  true
+              );
             }
           }
           // The pixel array is addressed as 4 elements per pixel [r,g,b,a]
-          indx = ((diameter - y) * diameter * 4) + (x * 4); // plot is 180 rotated from orginal method, so apply a simple invert (diameter - y)
+          indx = (diameter - y) * diameter * 4 + x * 4; // plot is 180 rotated from orginal method, so apply a simple invert (diameter - y)
           pixels.data[indx] = pixColor[0];
           pixels.data[indx + 1] = pixColor[1];
           pixels.data[indx + 2] = pixColor[2];
@@ -163,15 +177,28 @@ export const ConicalGradient = function(fractions, colors) {
     ctx.drawImage(buffer, centerX - radius, centerY - radius);
   };
 
-  this.fillRect = function(ctx, centerX, centerY, width, height, thicknessX, thicknessY) {
+  this.fillRect = function(
+      ctx,
+      centerX,
+      centerY,
+      width,
+      height,
+      thicknessX,
+      thicknessY
+  ) {
     let angle;
     let width2;
     let height2;
-    let pixels; let alpha;
-    let x; let y; let dx; let dy;
+    let pixels;
+    let alpha;
+    let x;
+    let y;
+    let dx;
+    let dy;
     let indx;
     let pixColor;
-    let buffer; let bufferCtx;
+    let buffer;
+    let bufferCtx;
 
     width = Math.ceil(width);
     height = Math.ceil(height);
@@ -198,11 +225,17 @@ export const ConicalGradient = function(fractions, colors) {
         angle = Math.atan2(dx, dy);
         for (i = 0; i < limit; i++) {
           if (angle >= fractions[i] && angle < fractions[i + 1]) {
-            pixColor = getColorFromFraction(colors[i], colors[i + 1], fractions[i + 1] - fractions[i], angle - fractions[i], true);
+            pixColor = getColorFromFraction(
+                colors[i],
+                colors[i + 1],
+                fractions[i + 1] - fractions[i],
+                angle - fractions[i],
+                true
+            );
           }
         }
         // The pixel array is addressed as 4 elements per pixel [r,g,b,a]
-        indx = ((height - y) * width * 4) + (x * 4); // plot is 180 rotated from orginal method, so apply a simple invert (height - y)
+        indx = (height - y) * width * 4 + x * 4; // plot is 180 rotated from orginal method, so apply a simple invert (height - y)
         pixels.data[indx] = pixColor[0];
         pixels.data[indx + 1] = pixColor[0];
         pixels.data[indx + 2] = pixColor[0];
@@ -228,7 +261,7 @@ export const gradientWrapper = function(start, end, fractions, colors) {
     let i;
     let interpolationFraction;
 
-    fraction = (fraction < 0 ? 0 : (fraction > 1 ? 1 : fraction));
+    fraction = fraction < 0 ? 0 : fraction > 1 ? 1 : fraction;
 
     for (i = 0; i < fractions.length; i++) {
       if (fractions[i] < fraction && lowerLimit < fractions[i]) {
@@ -244,7 +277,12 @@ export const gradientWrapper = function(start, end, fractions, colors) {
       }
     }
     interpolationFraction = (fraction - lowerLimit) / (upperLimit - lowerLimit);
-    return getColorFromFraction(colors[lowerIndex], colors[upperIndex], 1, interpolationFraction);
+    return getColorFromFraction(
+        colors[lowerIndex],
+        colors[upperIndex],
+        1,
+        interpolationFraction
+    );
   };
 
   this.getStart = function() {
@@ -257,16 +295,22 @@ export const gradientWrapper = function(start, end, fractions, colors) {
 };
 
 export function setAlpha(hex, alpha) {
-  const hexColor = ('#' === hex.charAt(0)) ? hex.substring(1, 7) : hex;
-  const red = parseInt((hexColor).substring(0, 2), 16);
-  const green = parseInt((hexColor).substring(2, 4), 16);
-  const blue = parseInt((hexColor).substring(4, 6), 16);
+  const hexColor = '#' === hex.charAt(0) ? hex.substring(1, 7) : hex;
+  const red = parseInt(hexColor.substring(0, 2), 16);
+  const green = parseInt(hexColor.substring(2, 4), 16);
+  const blue = parseInt(hexColor.substring(4, 6), 16);
   const color = 'rgba(' + red + ',' + green + ',' + blue + ',' + alpha + ')';
 
   return color;
 }
 
-export function getColorFromFraction(sourceColor, destinationColor, range, fraction, returnRawData) {
+export function getColorFromFraction(
+    sourceColor,
+    destinationColor,
+    range,
+    fraction,
+    returnRawData
+) {
   const INT_TO_FLOAT = 1 / 255;
   const sourceRed = sourceColor.getRed();
   const sourceGreen = sourceColor.getGreen();
@@ -276,18 +320,29 @@ export function getColorFromFraction(sourceColor, destinationColor, range, fract
   const deltaRed = destinationColor.getRed() - sourceRed;
   const deltaGreen = destinationColor.getGreen() - sourceGreen;
   const deltaBlue = destinationColor.getBlue() - sourceBlue;
-  const deltaAlpha = destinationColor.getAlpha() * INT_TO_FLOAT - sourceAlpha * INT_TO_FLOAT;
+  const deltaAlpha =
+    destinationColor.getAlpha() * INT_TO_FLOAT - sourceAlpha * INT_TO_FLOAT;
 
-  const fractionRed = deltaRed / range * fraction;
-  const fractionGreen = deltaGreen / range * fraction;
-  const fractionBlue = deltaBlue / range * fraction;
-  const fractionAlpha = deltaAlpha / range * fraction;
+  const fractionRed = (deltaRed / range) * fraction;
+  const fractionGreen = (deltaGreen / range) * fraction;
+  const fractionBlue = (deltaBlue / range) * fraction;
+  const fractionAlpha = (deltaAlpha / range) * fraction;
 
   returnRawData = returnRawData || false;
   if (returnRawData) {
-    return [(sourceRed + fractionRed).toFixed(0), (sourceGreen + fractionGreen).toFixed(0), (sourceBlue + fractionBlue).toFixed(0), sourceAlpha + fractionAlpha];
+    return [
+      (sourceRed + fractionRed).toFixed(0),
+      (sourceGreen + fractionGreen).toFixed(0),
+      (sourceBlue + fractionBlue).toFixed(0),
+      sourceAlpha + fractionAlpha,
+    ];
   } else {
-    return new rgbaColor((sourceRed + fractionRed).toFixed(0), (sourceGreen + fractionGreen).toFixed(0), (sourceBlue + fractionBlue).toFixed(0), sourceAlpha + fractionAlpha);
+    return new rgbaColor(
+        (sourceRed + fractionRed).toFixed(0),
+        (sourceGreen + fractionGreen).toFixed(0),
+        (sourceBlue + fractionBlue).toFixed(0),
+        sourceAlpha + fractionAlpha
+    );
   }
 }
 
@@ -300,7 +355,7 @@ export function Section(start, stop, color) {
 }
 
 Math.log10 = function(value) {
-  return (Math.log(value) / Math.LN10);
+  return Math.log(value) / Math.LN10;
 };
 
 export function calcNiceNumber(range, round) {
@@ -406,7 +461,12 @@ export function customColorDef(color) {
 }
 
 export function rgbToHsl(red, green, blue) {
-  let min; let max; let hue; let saturation; let lightness; let delta;
+  let min;
+  let max;
+  let hue;
+  let saturation;
+  let lightness;
+  let delta;
 
   red /= 255;
   green /= 255;
@@ -420,7 +480,8 @@ export function rgbToHsl(red, green, blue) {
     hue = saturation = 0; // achromatic
   } else {
     delta = max - min;
-    saturation = lightness > 0.5 ? delta / (2 - max - min) : delta / (max + min);
+    saturation =
+      lightness > 0.5 ? delta / (2 - max - min) : delta / (max + min);
     switch (max) {
       case red:
         hue = (green - blue) / delta + (green < blue ? 6 : 0);
@@ -486,7 +547,9 @@ export function rgbToHsl(red, green, blue) {
 */
 
 export function hsbToRgb(hue, saturation, brightness) {
-  let r; let g; let b;
+  let r;
+  let g;
+  let b;
   const i = Math.floor(hue * 6);
   const f = hue * 6 - i;
   const p = brightness * (1 - saturation);
@@ -530,7 +593,12 @@ export function hsbToRgb(hue, saturation, brightness) {
 }
 
 export function rgbToHsb(r, g, b) {
-  let min; let max; let hue; let saturation; let brightness; let delta;
+  let min;
+  let max;
+  let hue;
+  let saturation;
+  let brightness;
+  let delta;
 
   r = r / 255;
   g = g / 255;
@@ -561,7 +629,7 @@ export function rgbToHsb(r, g, b) {
 }
 
 export function range(value, limit) {
-  return (value < 0 ? 0 : (value > limit ? limit : value));
+  return value < 0 ? 0 : value > limit ? limit : value;
 }
 
 export function darker(color, fraction) {
@@ -589,7 +657,8 @@ export function lighter(color, fraction) {
 }
 
 export function wrap(value, lower, upper) {
-  let distance; let times;
+  let distance;
+  let times;
   if (upper <= lower) {
     throw new Error('Rotary bounds are of negative or zero size');
   }
@@ -597,28 +666,32 @@ export function wrap(value, lower, upper) {
   distance = upper - lower;
   times = Math.floor((value - lower) / distance);
 
-  return value - (times * distance);
+  return value - times * distance;
 }
 
 export function getShortestAngle(from, to) {
-  return wrap((to - from), -180, 180);
+  return wrap(to - from, -180, 180);
 }
 
 // shim layer
 export const requestAnimFrame = (function() {
-  return window.requestAnimationFrame ||
+  return (
+    window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
     window.mozRequestAnimationFrame ||
     window.oRequestAnimationFrame ||
     window.msRequestAnimationFrame ||
     function(callback) {
       window.setTimeout(callback, 1000 / 16);
-    };
-}());
+    }
+  );
+})();
 
 export function getCanvasContext(elementOrId) {
-  const element = (typeof elementOrId === 'string' || elementOrId instanceof String) ?
-    doc.getElementById(elementOrId) : elementOrId;
+  const element =
+    typeof elementOrId === 'string' || elementOrId instanceof String ?
+      doc.getElementById(elementOrId) :
+      elementOrId;
   return element.getContext('2d');
 }
 

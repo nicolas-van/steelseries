@@ -1,4 +1,3 @@
-
 import carbonBuffer from './carbonBuffer';
 import punchedSheetBuffer from './punchedSheetBuffer';
 import brushedMetalTexture from './brushedMetalTexture';
@@ -10,13 +9,28 @@ import {
   RAD_FACTOR,
 } from './tools';
 
-const drawBackground = function(ctx, backgroundColor, centerX, centerY, imageWidth, imageHeight) {
-  let radBBuffer; let radBCtx;
-  let grad; let fractions; let colors;
-  const backgroundOffsetX = imageWidth * 0.831775 / 2;
-  let mono; let textureColor; let texture;
-  let radius; let turnRadius; let stepSize;
-  let end; let i;
+const drawBackground = function(
+    ctx,
+    backgroundColor,
+    centerX,
+    centerY,
+    imageWidth,
+    imageHeight
+) {
+  let radBBuffer;
+  let radBCtx;
+  let grad;
+  let fractions;
+  let colors;
+  const backgroundOffsetX = (imageWidth * 0.831775) / 2;
+  let mono;
+  let textureColor;
+  let texture;
+  let radius;
+  let turnRadius;
+  let stepSize;
+  let end;
+  let i;
   const cacheKey = imageWidth.toString() + imageHeight + backgroundColor.name;
 
   // check if we have already created and cached this buffer, if not create it
@@ -31,8 +45,12 @@ const drawBackground = function(ctx, backgroundColor, centerX, centerY, imageWid
     radBCtx.closePath();
 
     // If the backgroundColor is a texture fill it with the texture instead of the gradient
-    if (backgroundColor.name === 'CARBON' || backgroundColor.name === 'PUNCHED_SHEET' ||
-      backgroundColor.name === 'BRUSHED_METAL' || backgroundColor.name === 'BRUSHED_STAINLESS') {
+    if (
+      backgroundColor.name === 'CARBON' ||
+      backgroundColor.name === 'PUNCHED_SHEET' ||
+      backgroundColor.name === 'BRUSHED_METAL' ||
+      backgroundColor.name === 'BRUSHED_STAINLESS'
+    ) {
       if (backgroundColor.name === 'CARBON') {
         radBCtx.fillStyle = radBCtx.createPattern(carbonBuffer, 'repeat');
         radBCtx.fill();
@@ -44,7 +62,12 @@ const drawBackground = function(ctx, backgroundColor, centerX, centerY, imageWid
       }
 
       // Add another inner shadow to make the look more realistic
-      grad = radBCtx.createLinearGradient(backgroundOffsetX, 0, imageWidth - backgroundOffsetX, 0);
+      grad = radBCtx.createLinearGradient(
+          backgroundOffsetX,
+          0,
+          imageWidth - backgroundOffsetX,
+          0
+      );
       grad.addColorStop(0, 'rgba(0, 0, 0, 0.25)');
       grad.addColorStop(0.5, 'rgba(0, 0, 0, 0)');
       grad.addColorStop(1, 'rgba(0, 0, 0, 0.25)');
@@ -54,18 +77,31 @@ const drawBackground = function(ctx, backgroundColor, centerX, centerY, imageWid
       radBCtx.closePath();
       radBCtx.fill();
 
-      if (backgroundColor.name === 'BRUSHED_METAL' || backgroundColor.name === 'BRUSHED_STAINLESS') {
-        mono = (backgroundColor.name === 'BRUSHED_METAL' ? true : false);
-        textureColor = parseInt(backgroundColor.gradientStop.getHexColor().substr(-6), 16);
+      if (
+        backgroundColor.name === 'BRUSHED_METAL' ||
+        backgroundColor.name === 'BRUSHED_STAINLESS'
+      ) {
+        mono = backgroundColor.name === 'BRUSHED_METAL' ? true : false;
+        textureColor = parseInt(
+            backgroundColor.gradientStop.getHexColor().substr(-6),
+            16
+        );
         texture = brushedMetalTexture(textureColor, 5, 0.1, mono, 0.5);
-        radBCtx.fillStyle = radBCtx.createPattern(texture.fill(0, 0, imageWidth, imageHeight), 'no-repeat');
+        radBCtx.fillStyle = radBCtx.createPattern(
+            texture.fill(0, 0, imageWidth, imageHeight),
+            'no-repeat'
+        );
         radBCtx.fill();
       }
-    } else if (backgroundColor.name === 'STAINLESS' || backgroundColor.name === 'TURNED') {
+    } else if (
+      backgroundColor.name === 'STAINLESS' ||
+      backgroundColor.name === 'TURNED'
+    ) {
       // Define the fractions of the conical gradient paint
-      fractions = [0,
+      fractions = [
+        0,
         0.03,
-        0.10,
+        0.1,
         0.14,
         0.24,
         0.33,
@@ -81,7 +117,8 @@ const drawBackground = function(ctx, backgroundColor, centerX, centerY, imageWid
       ];
 
       // Define the colors of the conical gradient paint
-      colors = [new rgbaColor('#FDFDFD'),
+      colors = [
+        new rgbaColor('#FDFDFD'),
         new rgbaColor('#FDFDFD'),
         new rgbaColor('#B2B2B4'),
         new rgbaColor('#ACACAE'),
@@ -142,7 +179,12 @@ const drawBackground = function(ctx, backgroundColor, centerX, centerY, imageWid
         radBCtx.restore();
       }
     } else {
-      grad = radBCtx.createLinearGradient(0, imageWidth * 0.084112, 0, backgroundOffsetX * 2);
+      grad = radBCtx.createLinearGradient(
+          0,
+          imageWidth * 0.084112,
+          0,
+          backgroundOffsetX * 2
+      );
       grad.addColorStop(0, backgroundColor.gradientStart.getRgbaColor());
       grad.addColorStop(0.4, backgroundColor.gradientFraction.getRgbaColor());
       grad.addColorStop(1, backgroundColor.gradientStop.getRgbaColor());
@@ -150,7 +192,14 @@ const drawBackground = function(ctx, backgroundColor, centerX, centerY, imageWid
       radBCtx.fill();
     }
     // Inner shadow
-    grad = radBCtx.createRadialGradient(centerX, centerY, 0, centerX, centerY, backgroundOffsetX);
+    grad = radBCtx.createRadialGradient(
+        centerX,
+        centerY,
+        0,
+        centerX,
+        centerY,
+        backgroundOffsetX
+    );
     grad.addColorStop(0, 'rgba(0, 0, 0, 0)');
     grad.addColorStop(0.7, 'rgba(0, 0, 0, 0)');
     grad.addColorStop(0.71, 'rgba(0, 0, 0, 0)');

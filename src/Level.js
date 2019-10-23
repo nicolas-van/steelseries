@@ -22,17 +22,43 @@ import {
 
 const Level = function(canvas, parameters) {
   parameters = parameters || {};
-  let size = (undefined === parameters.size ? 0 : parameters.size);
-  const decimalsVisible = (undefined === parameters.decimalsVisible ? false : parameters.decimalsVisible);
-  const textOrientationFixed = (undefined === parameters.textOrientationFixed ? false : parameters.textOrientationFixed);
-  let frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign);
-  const frameVisible = (undefined === parameters.frameVisible ? true : parameters.frameVisible);
-  let backgroundColor = (undefined === parameters.backgroundColor ? BackgroundColor.DARK_GRAY : parameters.backgroundColor);
-  const backgroundVisible = (undefined === parameters.backgroundVisible ? true : parameters.backgroundVisible);
-  let pointerColor = (undefined === parameters.pointerColor ? ColorDef.RED : parameters.pointerColor);
-  let foregroundType = (undefined === parameters.foregroundType ? ForegroundType.TYPE1 : parameters.foregroundType);
-  const foregroundVisible = (undefined === parameters.foregroundVisible ? true : parameters.foregroundVisible);
-  const rotateFace = (undefined === parameters.rotateFace ? false : parameters.rotateFace);
+  let size = undefined === parameters.size ? 0 : parameters.size;
+  const decimalsVisible =
+    undefined === parameters.decimalsVisible ?
+      false :
+      parameters.decimalsVisible;
+  const textOrientationFixed =
+    undefined === parameters.textOrientationFixed ?
+      false :
+      parameters.textOrientationFixed;
+  let frameDesign =
+    undefined === parameters.frameDesign ?
+      FrameDesign.METAL :
+      parameters.frameDesign;
+  const frameVisible =
+    undefined === parameters.frameVisible ? true : parameters.frameVisible;
+  let backgroundColor =
+    undefined === parameters.backgroundColor ?
+      BackgroundColor.DARK_GRAY :
+      parameters.backgroundColor;
+  const backgroundVisible =
+    undefined === parameters.backgroundVisible ?
+      true :
+      parameters.backgroundVisible;
+  let pointerColor =
+    undefined === parameters.pointerColor ?
+      ColorDef.RED :
+      parameters.pointerColor;
+  let foregroundType =
+    undefined === parameters.foregroundType ?
+      ForegroundType.TYPE1 :
+      parameters.foregroundType;
+  const foregroundVisible =
+    undefined === parameters.foregroundVisible ?
+      true :
+      parameters.foregroundVisible;
+  const rotateFace =
+    undefined === parameters.rotateFace ? false : parameters.rotateFace;
 
   // Get the canvas context and clear it
   const mainCtx = getCanvasContext(canvas);
@@ -82,7 +108,9 @@ const Level = function(canvas, parameters) {
 
   // **************   Image creation  ********************
   const drawTickmarksImage = function(ctx) {
-    let stdFont; let smlFont; let i;
+    let stdFont;
+    let smlFont;
+    let i;
 
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -141,106 +169,106 @@ const Level = function(canvas, parameters) {
       switch (i) {
         case 0:
           ctx.translate(imageWidth * 0.31, 0);
-          ctx.rotate((i * RAD_FACTOR) + HALF_PI);
+          ctx.rotate(i * RAD_FACTOR + HALF_PI);
           ctx.font = stdFont;
           ctx.fillText('0\u00B0', 0, 0, imageWidth);
           ctx.rotate(-(i * RAD_FACTOR) + HALF_PI);
           ctx.translate(-imageWidth * 0.31, 0);
 
           ctx.translate(imageWidth * 0.41, 0);
-          ctx.rotate((i * RAD_FACTOR) - HALF_PI);
+          ctx.rotate(i * RAD_FACTOR - HALF_PI);
           ctx.font = smlFont;
           ctx.fillText('0%', 0, 0, imageWidth);
           break;
         case 45:
           ctx.translate(imageWidth * 0.31, 0);
-          ctx.rotate((i * RAD_FACTOR) + 0.25 * PI);
+          ctx.rotate(i * RAD_FACTOR + 0.25 * PI);
           ctx.font = stdFont;
           ctx.fillText('45\u00B0', 0, 0, imageWidth);
           ctx.rotate(-(i * RAD_FACTOR) + 0.25 * PI);
           ctx.translate(-imageWidth * 0.31, 0);
 
           ctx.translate(imageWidth * 0.31, imageWidth * 0.085);
-          ctx.rotate((i * RAD_FACTOR) - 0.25 * PI);
+          ctx.rotate(i * RAD_FACTOR - 0.25 * PI);
           ctx.font = smlFont;
           ctx.fillText('100%', 0, 0, imageWidth);
           break;
         case 90:
           ctx.translate(imageWidth * 0.31, 0);
-          ctx.rotate((i * RAD_FACTOR));
+          ctx.rotate(i * RAD_FACTOR);
           ctx.font = stdFont;
           ctx.fillText('90\u00B0', 0, 0, imageWidth);
           ctx.rotate(-(i * RAD_FACTOR));
           ctx.translate(-imageWidth * 0.31, 0);
 
           ctx.translate(imageWidth * 0.21, 0);
-          ctx.rotate((i * RAD_FACTOR));
+          ctx.rotate(i * RAD_FACTOR);
           ctx.font = smlFont;
           ctx.fillText('\u221E', 0, 0, imageWidth);
           break;
         case 135:
           ctx.translate(imageWidth * 0.31, 0);
-          ctx.rotate((i * RAD_FACTOR) - 0.25 * PI);
+          ctx.rotate(i * RAD_FACTOR - 0.25 * PI);
           ctx.font = stdFont;
           ctx.fillText('45\u00B0', 0, 0, imageWidth);
           ctx.rotate(-(i * RAD_FACTOR) - 0.25 * PI);
           ctx.translate(-imageWidth * 0.31, 0);
 
           ctx.translate(imageWidth * 0.31, -imageWidth * 0.085);
-          ctx.rotate((i * RAD_FACTOR) + 0.25 * PI);
+          ctx.rotate(i * RAD_FACTOR + 0.25 * PI);
           ctx.font = smlFont;
           ctx.fillText('100%', 0, 0, imageWidth);
           break;
         case 180:
           ctx.translate(imageWidth * 0.31, 0);
-          ctx.rotate((i * RAD_FACTOR) - HALF_PI);
+          ctx.rotate(i * RAD_FACTOR - HALF_PI);
           ctx.font = stdFont;
           ctx.fillText('0\u00B0', 0, 0, imageWidth);
           ctx.rotate(-(i * RAD_FACTOR) - HALF_PI);
           ctx.translate(-imageWidth * 0.31, 0);
 
           ctx.translate(imageWidth * 0.41, 0);
-          ctx.rotate((i * RAD_FACTOR) + HALF_PI);
+          ctx.rotate(i * RAD_FACTOR + HALF_PI);
           ctx.font = smlFont;
           ctx.fillText('0%', 0, 0, imageWidth);
           ctx.translate(-imageWidth * 0.41, 0);
           break;
         case 225:
           ctx.translate(imageWidth * 0.31, 0);
-          ctx.rotate((i * RAD_FACTOR) - 0.75 * PI);
+          ctx.rotate(i * RAD_FACTOR - 0.75 * PI);
           ctx.font = stdFont;
           ctx.fillText('45\u00B0', 0, 0, imageWidth);
           ctx.rotate(-(i * RAD_FACTOR) - 0.75 * PI);
           ctx.translate(-imageWidth * 0.31, 0);
 
           ctx.translate(imageWidth * 0.31, imageWidth * 0.085);
-          ctx.rotate((i * RAD_FACTOR) + 0.75 * PI);
+          ctx.rotate(i * RAD_FACTOR + 0.75 * PI);
           ctx.font = smlFont;
           ctx.fillText('100%', 0, 0, imageWidth);
           break;
         case 270:
           ctx.translate(imageWidth * 0.31, 0);
-          ctx.rotate((i * RAD_FACTOR) - PI);
+          ctx.rotate(i * RAD_FACTOR - PI);
           ctx.font = stdFont;
           ctx.fillText('90\u00B0', 0, 0, imageWidth);
           ctx.rotate(-(i * RAD_FACTOR) - PI);
           ctx.translate(-imageWidth * 0.31, 0);
 
           ctx.translate(imageWidth * 0.21, 0);
-          ctx.rotate((i * RAD_FACTOR) - PI);
+          ctx.rotate(i * RAD_FACTOR - PI);
           ctx.font = smlFont;
           ctx.fillText('\u221E', 0, 0, imageWidth);
           break;
         case 315:
           ctx.translate(imageWidth * 0.31, 0);
-          ctx.rotate((i * RAD_FACTOR) - 1.25 * PI);
+          ctx.rotate(i * RAD_FACTOR - 1.25 * PI);
           ctx.font = stdFont;
           ctx.fillText('45\u00B0', 0, 0, imageWidth);
           ctx.rotate(-(i * RAD_FACTOR) - 1.25 * PI);
           ctx.translate(-imageWidth * 0.31, 0);
 
           ctx.translate(imageWidth * 0.31, -imageWidth * 0.085);
-          ctx.rotate((i * RAD_FACTOR) + 1.25 * PI);
+          ctx.rotate(i * RAD_FACTOR + 1.25 * PI);
           ctx.font = smlFont;
           ctx.fillText('100%', 0, 0, imageWidth);
           break;
@@ -315,10 +343,29 @@ const Level = function(canvas, parameters) {
     ctx.moveTo(imageWidth * 0.523364, imageHeight * 0.350467);
     ctx.lineTo(imageWidth * 0.5, imageHeight * 0.130841);
     ctx.lineTo(imageWidth * 0.476635, imageHeight * 0.350467);
-    ctx.bezierCurveTo(imageWidth * 0.476635, imageHeight * 0.350467, imageWidth * 0.490654, imageHeight * 0.345794, imageWidth * 0.5, imageHeight * 0.345794);
-    ctx.bezierCurveTo(imageWidth * 0.509345, imageHeight * 0.345794, imageWidth * 0.523364, imageHeight * 0.350467, imageWidth * 0.523364, imageHeight * 0.350467);
+    ctx.bezierCurveTo(
+        imageWidth * 0.476635,
+        imageHeight * 0.350467,
+        imageWidth * 0.490654,
+        imageHeight * 0.345794,
+        imageWidth * 0.5,
+        imageHeight * 0.345794
+    );
+    ctx.bezierCurveTo(
+        imageWidth * 0.509345,
+        imageHeight * 0.345794,
+        imageWidth * 0.523364,
+        imageHeight * 0.350467,
+        imageWidth * 0.523364,
+        imageHeight * 0.350467
+    );
     ctx.closePath();
-    const POINTER_LEVEL_GRADIENT = ctx.createLinearGradient(0, 0.154205 * imageHeight, 0, 0.350466 * imageHeight);
+    const POINTER_LEVEL_GRADIENT = ctx.createLinearGradient(
+        0,
+        0.154205 * imageHeight,
+        0,
+        0.350466 * imageHeight
+    );
     const tmpDarkColor = pointerColor.dark;
     const tmpLightColor = pointerColor.light;
     tmpDarkColor.setAlpha(0.70588);
@@ -354,15 +401,37 @@ const Level = function(canvas, parameters) {
     ctx.save();
     ctx.beginPath();
     ctx.moveTo(imageWidth * 0.285046, imageHeight * 0.514018);
-    ctx.lineTo(imageWidth * 0.210280, imageHeight * 0.5);
+    ctx.lineTo(imageWidth * 0.21028, imageHeight * 0.5);
     ctx.lineTo(imageWidth * 0.285046, imageHeight * 0.481308);
-    ctx.bezierCurveTo(imageWidth * 0.285046, imageHeight * 0.481308, imageWidth * 0.280373, imageHeight * 0.490654, imageWidth * 0.280373, imageHeight * 0.495327);
-    ctx.bezierCurveTo(imageWidth * 0.280373, imageHeight * 0.504672, imageWidth * 0.285046, imageHeight * 0.514018, imageWidth * 0.285046, imageHeight * 0.514018);
+    ctx.bezierCurveTo(
+        imageWidth * 0.285046,
+        imageHeight * 0.481308,
+        imageWidth * 0.280373,
+        imageHeight * 0.490654,
+        imageWidth * 0.280373,
+        imageHeight * 0.495327
+    );
+    ctx.bezierCurveTo(
+        imageWidth * 0.280373,
+        imageHeight * 0.504672,
+        imageWidth * 0.285046,
+        imageHeight * 0.514018,
+        imageWidth * 0.285046,
+        imageHeight * 0.514018
+    );
     ctx.closePath();
-    const POINTER_LEVEL_LEFT_GRADIENT = ctx.createLinearGradient(0.224299 * imageWidth, 0, 0.289719 * imageWidth, 0);
+    const POINTER_LEVEL_LEFT_GRADIENT = ctx.createLinearGradient(
+        0.224299 * imageWidth,
+        0,
+        0.289719 * imageWidth,
+        0
+    );
     POINTER_LEVEL_LEFT_GRADIENT.addColorStop(0, tmpDarkColor.getRgbaColor());
     POINTER_LEVEL_LEFT_GRADIENT.addColorStop(0.3, tmpLightColor.getRgbaColor());
-    POINTER_LEVEL_LEFT_GRADIENT.addColorStop(0.59, tmpLightColor.getRgbaColor());
+    POINTER_LEVEL_LEFT_GRADIENT.addColorStop(
+        0.59,
+        tmpLightColor.getRgbaColor()
+    );
     POINTER_LEVEL_LEFT_GRADIENT.addColorStop(1, tmpDarkColor.getRgbaColor());
     ctx.fillStyle = POINTER_LEVEL_LEFT_GRADIENT;
     const strokeColor_POINTER_LEVEL_LEFT = pointerColor.light.getRgbaColor();
@@ -379,13 +448,38 @@ const Level = function(canvas, parameters) {
     ctx.moveTo(imageWidth * 0.714953, imageHeight * 0.514018);
     ctx.lineTo(imageWidth * 0.789719, imageHeight * 0.5);
     ctx.lineTo(imageWidth * 0.714953, imageHeight * 0.481308);
-    ctx.bezierCurveTo(imageWidth * 0.714953, imageHeight * 0.481308, imageWidth * 0.719626, imageHeight * 0.490654, imageWidth * 0.719626, imageHeight * 0.495327);
-    ctx.bezierCurveTo(imageWidth * 0.719626, imageHeight * 0.504672, imageWidth * 0.714953, imageHeight * 0.514018, imageWidth * 0.714953, imageHeight * 0.514018);
+    ctx.bezierCurveTo(
+        imageWidth * 0.714953,
+        imageHeight * 0.481308,
+        imageWidth * 0.719626,
+        imageHeight * 0.490654,
+        imageWidth * 0.719626,
+        imageHeight * 0.495327
+    );
+    ctx.bezierCurveTo(
+        imageWidth * 0.719626,
+        imageHeight * 0.504672,
+        imageWidth * 0.714953,
+        imageHeight * 0.514018,
+        imageWidth * 0.714953,
+        imageHeight * 0.514018
+    );
     ctx.closePath();
-    const POINTER_LEVEL_RIGHT_GRADIENT = ctx.createLinearGradient(0.775700 * imageWidth, 0, 0.71028 * imageWidth, 0);
+    const POINTER_LEVEL_RIGHT_GRADIENT = ctx.createLinearGradient(
+        0.7757 * imageWidth,
+        0,
+        0.71028 * imageWidth,
+        0
+    );
     POINTER_LEVEL_RIGHT_GRADIENT.addColorStop(0, tmpDarkColor.getRgbaColor());
-    POINTER_LEVEL_RIGHT_GRADIENT.addColorStop(0.3, tmpLightColor.getRgbaColor());
-    POINTER_LEVEL_RIGHT_GRADIENT.addColorStop(0.59, tmpLightColor.getRgbaColor());
+    POINTER_LEVEL_RIGHT_GRADIENT.addColorStop(
+        0.3,
+        tmpLightColor.getRgbaColor()
+    );
+    POINTER_LEVEL_RIGHT_GRADIENT.addColorStop(
+        0.59,
+        tmpLightColor.getRgbaColor()
+    );
     POINTER_LEVEL_RIGHT_GRADIENT.addColorStop(1, tmpDarkColor.getRgbaColor());
     ctx.fillStyle = POINTER_LEVEL_RIGHT_GRADIENT;
     const strokeColor_POINTER_LEVEL_RIGHT = pointerColor.light.getRgbaColor();
@@ -408,11 +502,25 @@ const Level = function(canvas, parameters) {
     initialized = true;
 
     if (frameVisible) {
-      drawFrame(backgroundContext, frameDesign, centerX, centerY, imageWidth, imageHeight);
+      drawFrame(
+          backgroundContext,
+          frameDesign,
+          centerX,
+          centerY,
+          imageWidth,
+          imageHeight
+      );
     }
 
     if (backgroundVisible) {
-      drawBackground(backgroundContext, backgroundColor, centerX, centerY, imageWidth, imageHeight);
+      drawBackground(
+          backgroundContext,
+          backgroundColor,
+          centerX,
+          centerY,
+          imageWidth,
+          imageHeight
+      );
       drawTickmarksImage(backgroundContext);
     }
 
@@ -423,7 +531,13 @@ const Level = function(canvas, parameters) {
     drawStepPointerImage(stepPointerContext);
 
     if (foregroundVisible) {
-      drawForeground(foregroundContext, foregroundType, imageWidth, imageHeight, false);
+      drawForeground(
+          foregroundContext,
+          foregroundType,
+          imageWidth,
+          imageHeight,
+          false
+      );
     }
   };
 
@@ -452,8 +566,8 @@ const Level = function(canvas, parameters) {
   this.setValue = function(newValue) {
     let targetValue;
     newValue = parseFloat(newValue);
-    targetValue = 0 > newValue ? (360 + newValue) : newValue;
-    targetValue = 359.9 < newValue ? (newValue - 360) : newValue;
+    targetValue = 0 > newValue ? 360 + newValue : newValue;
+    targetValue = 359.9 < newValue ? newValue - 360 : newValue;
 
     if (value !== targetValue) {
       value = targetValue;
@@ -467,23 +581,23 @@ const Level = function(canvas, parameters) {
       }
 
       if (0 < value && 90 >= value) {
-        visibleValue = (90 - value);
+        visibleValue = 90 - value;
       }
 
       if (90 < value && 180 >= value) {
-        visibleValue = (value - 90);
+        visibleValue = value - 90;
       }
 
       if (180 < value && 270 >= value) {
-        visibleValue = (270 - value);
+        visibleValue = 270 - value;
       }
 
       if (270 < value && 360 >= value) {
-        visibleValue = (value - 270);
+        visibleValue = value - 270;
       }
 
       if (0 > value && value >= -90) {
-        visibleValue = (90 - Math.abs(value));
+        visibleValue = 90 - Math.abs(value);
       }
 
       if (value < -90 && value >= -180) {
@@ -535,23 +649,23 @@ const Level = function(canvas, parameters) {
         }
 
         if (0 < value && 90 >= value) {
-          visibleValue = (90 - value);
+          visibleValue = 90 - value;
         }
 
         if (90 < value && 180 >= value) {
-          visibleValue = (value - 90);
+          visibleValue = value - 90;
         }
 
         if (180 < value && 270 >= value) {
-          visibleValue = (270 - value);
+          visibleValue = 270 - value;
         }
 
         if (270 < value && 360 >= value) {
-          visibleValue = (value - 270);
+          visibleValue = value - 270;
         }
 
         if (0 > value && value >= -90) {
-          visibleValue = (90 - Math.abs(value));
+          visibleValue = 90 - Math.abs(value);
         }
 
         if (value < -90 && value >= -180) {
@@ -573,7 +687,7 @@ const Level = function(canvas, parameters) {
       };
 
       // do we have a callback function to process?
-      if (callback && typeof(callback) === 'function') {
+      if (callback && typeof callback === 'function') {
         tween.onMotionFinished = callback;
       }
 
@@ -653,14 +767,24 @@ const Level = function(canvas, parameters) {
       } else {
         mainCtx.font = imageWidth * 0.15 + 'px ' + stdFontName;
       }
-      mainCtx.fillText(visibleValue.toFixed(decimals) + '\u00B0', centerX, centerY, imageWidth * 0.35);
+      mainCtx.fillText(
+          visibleValue.toFixed(decimals) + '\u00B0',
+          centerX,
+          centerY,
+          imageWidth * 0.35
+      );
     } else {
       if (decimalsVisible) {
         mainCtx.font = imageWidth * 0.15 + 'px ' + stdFontName;
       } else {
         mainCtx.font = imageWidth * 0.2 + 'px ' + stdFontName;
       }
-      mainCtx.fillText(visibleValue.toFixed(decimals) + '\u00B0', centerX, centerY, imageWidth * 0.35);
+      mainCtx.fillText(
+          visibleValue.toFixed(decimals) + '\u00B0',
+          centerX,
+          centerY,
+          imageWidth * 0.35
+      );
       mainCtx.restore();
     }
 
