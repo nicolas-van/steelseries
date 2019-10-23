@@ -12,19 +12,10 @@ import {
 
 import {
   BackgroundColor,
-  LcdColor,
   ColorDef,
-  LedColor,
-  GaugeType,
-  Orientation,
-  KnobType,
-  KnobStyle,
   FrameDesign,
   PointerType,
   ForegroundType,
-  LabelNumberFormat,
-  TickLabelOrientation,
-  TrendState,
 } from './definitions';
 
 const Clock = function(canvas, parameters) {

@@ -19,7 +19,6 @@ import {
 
 import {
   BackgroundColor,
-  LcdColor,
   ColorDef,
   LedColor,
   GaugeType,
@@ -30,8 +29,6 @@ import {
   PointerType,
   ForegroundType,
   LabelNumberFormat,
-  TickLabelOrientation,
-  TrendState,
 } from './definitions';
 
 const RadialVertical = function(canvas, parameters) {

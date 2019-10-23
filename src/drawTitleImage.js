@@ -4,20 +4,7 @@ import {
 } from './tools';
 
 import {
-  BackgroundColor,
-  LcdColor,
-  ColorDef,
-  LedColor,
   GaugeType,
-  Orientation,
-  KnobType,
-  KnobStyle,
-  FrameDesign,
-  PointerType,
-  ForegroundType,
-  LabelNumberFormat,
-  TickLabelOrientation,
-  TrendState,
 } from './definitions';
 
 const drawTitleImage = function(ctx, imageWidth, imageHeight, titleString, unitString, backgroundColor, vertical, radial, altPos, gaugeType) {

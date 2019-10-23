@@ -7,20 +7,7 @@ import {
 } from './tools';
 
 import {
-  BackgroundColor,
   LcdColor,
-  ColorDef,
-  LedColor,
-  GaugeType,
-  Orientation,
-  KnobType,
-  KnobStyle,
-  FrameDesign,
-  PointerType,
-  ForegroundType,
-  LabelNumberFormat,
-  TickLabelOrientation,
-  TrendState,
 } from './definitions';
 
 const DisplayMulti = function(canvas, parameters) {

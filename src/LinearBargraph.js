@@ -22,16 +22,8 @@ import {
   LcdColor,
   ColorDef,
   LedColor,
-  GaugeType,
-  Orientation,
-  KnobType,
-  KnobStyle,
   FrameDesign,
-  PointerType,
-  ForegroundType,
   LabelNumberFormat,
-  TickLabelOrientation,
-  TrendState,
 } from './definitions';
 
 const LinearBargraph = function(canvas, parameters) {

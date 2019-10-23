@@ -23,15 +23,8 @@ import {
   ColorDef,
   LedColor,
   GaugeType,
-  Orientation,
-  KnobType,
-  KnobStyle,
   FrameDesign,
-  PointerType,
-  ForegroundType,
   LabelNumberFormat,
-  TickLabelOrientation,
-  TrendState,
 } from './definitions';
 
 const Linear = function(canvas, parameters) {

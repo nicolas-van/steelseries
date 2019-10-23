@@ -3,8 +3,6 @@ import {
   createBuffer,
   requestAnimFrame,
   getCanvasContext,
-  TWO_PI,
-  RAD_FACTOR,
 } from './tools';
 
 const Odometer = function(canvas, parameters) {

@@ -30,7 +30,6 @@ import {
   ColorDef,
   LedColor,
   GaugeType,
-  Orientation,
   KnobType,
   KnobStyle,
   FrameDesign,
