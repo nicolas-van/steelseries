@@ -131,7 +131,6 @@ const Linear = function(canvas, parameters) {
   let niceMinValue = minValue;
   let niceMaxValue = maxValue;
   let niceRange = maxValue - minValue;
-  let range = niceMaxValue - niceMinValue;
   let minorTickSpacing = 0;
   let majorTickSpacing = 0;
   const maxNoOfMinorTicks = 10;
@@ -147,12 +146,10 @@ const Linear = function(canvas, parameters) {
       minorTickSpacing = calcNiceNumber(majorTickSpacing / (maxNoOfMinorTicks - 1), true);
       minValue = niceMinValue;
       maxValue = niceMaxValue;
-      range = maxValue - minValue;
     } else {
       niceRange = (maxValue - minValue);
       niceMinValue = minValue;
       niceMaxValue = maxValue;
-      range = niceRange;
       minorTickSpacing = 1;
       majorTickSpacing = 10;
     }

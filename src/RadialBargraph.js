@@ -110,11 +110,9 @@ const RadialBargraph = function(canvas, parameters) {
   let freeAreaAngle;
   let rotationOffset;
   let bargraphOffset;
-  let tickmarkOffset;
   let angleRange;
   let degAngleRange;
   let angleStep;
-  let angle;
 
   let sectionAngles = [];
   let isSectionsVisible = false;
@@ -155,7 +153,6 @@ const RadialBargraph = function(canvas, parameters) {
       freeAreaAngle = 0;
       rotationOffset = PI;
       bargraphOffset = 0;
-      tickmarkOffset = HALF_PI;
       angleRange = HALF_PI;
       degAngleRange = angleRange * DEG_FACTOR;
       angleStep = angleRange / range;
@@ -165,7 +162,6 @@ const RadialBargraph = function(canvas, parameters) {
       freeAreaAngle = 0;
       rotationOffset = PI;
       bargraphOffset = 0;
-      tickmarkOffset = HALF_PI;
       angleRange = PI;
       degAngleRange = angleRange * DEG_FACTOR;
       angleStep = angleRange / range;
@@ -175,7 +171,6 @@ const RadialBargraph = function(canvas, parameters) {
       freeAreaAngle = 0;
       rotationOffset = HALF_PI;
       bargraphOffset = -HALF_PI;
-      tickmarkOffset = 0;
       angleRange = 1.5 * PI;
       degAngleRange = angleRange * DEG_FACTOR;
       angleStep = angleRange / range;
@@ -187,7 +182,6 @@ const RadialBargraph = function(canvas, parameters) {
       freeAreaAngle = 60 * RAD_FACTOR;
       rotationOffset = HALF_PI + (freeAreaAngle / 2);
       bargraphOffset = -TWO_PI / 6;
-      tickmarkOffset = 0;
       angleRange = TWO_PI - freeAreaAngle;
       degAngleRange = angleRange * DEG_FACTOR;
       angleStep = angleRange / range;
@@ -229,8 +223,6 @@ const RadialBargraph = function(canvas, parameters) {
 
   // Buffer for current user led painting code
   let userLedBuffer = userLedBufferOff;
-  // Buffer for the background of the led
-  let ledBackground;
 
   // Buffer for static foreground painting code
   const foregroundBuffer = createBuffer(size, size);
@@ -282,7 +274,6 @@ const RadialBargraph = function(canvas, parameters) {
       case 'type1':
         freeAreaAngle = 0;
         rotationOffset = PI;
-        tickmarkOffset = HALF_PI;
         angleRange = HALF_PI;
         angleStep = angleRange / range;
         break;
@@ -290,7 +281,6 @@ const RadialBargraph = function(canvas, parameters) {
       case 'type2':
         freeAreaAngle = 0;
         rotationOffset = PI;
-        tickmarkOffset = HALF_PI;
         angleRange = PI;
         angleStep = angleRange / range;
         break;
@@ -298,7 +288,6 @@ const RadialBargraph = function(canvas, parameters) {
       case 'type3':
         freeAreaAngle = 0;
         rotationOffset = HALF_PI;
-        tickmarkOffset = 0;
         angleRange = 1.5 * PI;
         angleStep = angleRange / range;
         break;
@@ -308,12 +297,10 @@ const RadialBargraph = function(canvas, parameters) {
       default:
         freeAreaAngle = 60 * RAD_FACTOR;
         rotationOffset = HALF_PI + (freeAreaAngle / 2);
-        tickmarkOffset = 0;
         angleRange = TWO_PI - freeAreaAngle;
         angleStep = angleRange / range;
         break;
     }
-    angle = rotationOffset + (value - minValue) * angleStep;
   };
 
   //* ******************************** Private methods *********************************
@@ -351,9 +338,6 @@ const RadialBargraph = function(canvas, parameters) {
 
       // Draw LED OFF in ledBuffer_OFF
       ledContextOff.drawImage(createLedImage(LED_SIZE, 0, ledColor), 0, 0);
-
-      // Buffer the background of the led for blinking
-      ledBackground = backgroundContext.getImageData(LED_POS_X, LED_POS_Y, LED_SIZE, LED_SIZE);
     }
 
     if (drawUserLed) {

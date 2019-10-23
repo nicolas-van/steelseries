@@ -1,15 +1,10 @@
 module.exports = {
   'env': {
-    'es6': true,
-    'node': true,
+    'browser': true,
   },
   'extends': [
     'google',
   ],
-  'globals': {
-    'Atomics': 'readonly',
-    'SharedArrayBuffer': 'readonly',
-  },
   'parserOptions': {
     'ecmaVersion': 2018,
     'sourceType': 'module',
@@ -21,9 +16,9 @@ module.exports = {
     'no-invalid-this': "off",
     'no-var': 'off',
     'prefer-const': 'off',
-    'no-unused-vars': 'off',
     'camelcase': 'off',
     'prefer-rest-params': 'off',
     'prefer-spread': 'off',
+    'no-undef': 'error',
   },
 };

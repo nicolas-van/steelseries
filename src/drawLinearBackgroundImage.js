@@ -13,7 +13,7 @@ import {
 var drawLinearBackgroundImage = function(ctx, backgroundColor, imageWidth, imageHeight, vertical) {
   let i; let end; let grad; let fractions; let colors;
   let frameWidth;
-  let linBBuffer; let linBCtx; let linBColor;
+  let linBBuffer; let linBCtx;
   let radius;
   let turnRadius; let centerX; let centerY; let stepSize;
   let mono; let textureColor; let texture;
@@ -28,7 +28,6 @@ var drawLinearBackgroundImage = function(ctx, backgroundColor, imageWidth, image
     // Setup buffer
     linBBuffer = createBuffer(imageWidth, imageHeight);
     linBCtx = linBBuffer.getContext('2d');
-    linBColor = backgroundColor;
     linBCtx.lineWidth = 0;
 
     roundedRectangle(linBCtx, frameWidth, frameWidth, imageWidth - frameWidth * 2, imageHeight - frameWidth * 2, CORNER_RADIUS);

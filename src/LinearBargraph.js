@@ -33,7 +33,6 @@ const LinearBargraph = function(canvas, parameters) {
   let minValue = (undefined === parameters.minValue ? 0 : parameters.minValue);
   let maxValue = (undefined === parameters.maxValue ? (minValue + 100) : parameters.maxValue);
   let section = (undefined === parameters.section ? null : parameters.section);
-  let useSectionColors = (undefined === parameters.useSectionColors ? false : parameters.useSectionColors);
   const niceScale = (undefined === parameters.niceScale ? true : parameters.niceScale);
   let threshold = (undefined === parameters.threshold ? (maxValue - minValue) / 2 + minValue : parameters.threshold);
   let titleString = (undefined === parameters.titleString ? '' : parameters.titleString);
@@ -128,7 +127,6 @@ const LinearBargraph = function(canvas, parameters) {
   let niceMinValue = minValue;
   let niceMaxValue = maxValue;
   let niceRange = maxValue - minValue;
-  let range = niceMaxValue - niceMinValue;
   let minorTickSpacing = 0;
   let majorTickSpacing = 0;
   const maxNoOfMinorTicks = 10;
@@ -144,12 +142,10 @@ const LinearBargraph = function(canvas, parameters) {
       minorTickSpacing = calcNiceNumber(majorTickSpacing / (maxNoOfMinorTicks - 1), true);
       minValue = niceMinValue;
       maxValue = niceMaxValue;
-      range = maxValue - minValue;
     } else {
       niceRange = (maxValue - minValue);
       niceMinValue = minValue;
       niceMaxValue = maxValue;
-      range = niceRange;
       minorTickSpacing = 1;
       majorTickSpacing = 10;
     }
@@ -679,8 +675,6 @@ const LinearBargraph = function(canvas, parameters) {
     let bottom; // position of min value
     const labelColor = backgroundColor.labelColor;
     let fullSize;
-    let valueSize;
-    let valueTop;
     let valueBackgroundStartX;
     let valueBackgroundStartY;
     let valueBackgroundStopX;
@@ -699,8 +693,6 @@ const LinearBargraph = function(canvas, parameters) {
       top = imageHeight * 0.128640; // position of max value
       bottom = imageHeight * 0.856796; // position of min value
       fullSize = bottom - top;
-      valueSize = fullSize * (value - minValue) / (maxValue - minValue);
-      valueTop = top + fullSize - valueSize;
       valueBackgroundStartX = 0;
       valueBackgroundStartY = top;
       valueBackgroundStopX = 0;
@@ -710,8 +702,6 @@ const LinearBargraph = function(canvas, parameters) {
       top = imageWidth * 0.856796; // position of max value
       bottom = imageWidth * 0.128640;
       fullSize = top - bottom;
-      valueSize = fullSize * (value - minValue) / (maxValue - minValue);
-      valueTop = bottom;
       valueBackgroundStartX = imageWidth * 0.13;
       valueBackgroundStartY = imageHeight * 0.435714;
       valueBackgroundStopX = valueBackgroundStartX + fullSize * 1.035;
@@ -778,8 +768,6 @@ const LinearBargraph = function(canvas, parameters) {
     let ledY;
     let ledW;
     let ledH;
-    let ledCenterX;
-    let ledCenterY;
     let activeLeds;
     let inactiveLeds;
     if (vertical) {
@@ -788,16 +776,12 @@ const LinearBargraph = function(canvas, parameters) {
       ledY = imageHeight * 0.851941;
       ledW = imageWidth * 0.121428;
       ledH = imageHeight * 0.012135;
-      ledCenterX = (ledX + ledW) / 2;
-      ledCenterY = (ledY + ledH) / 2;
     } else {
       // HORIZONTAL
       ledX = imageWidth * 0.142857;
       ledY = imageHeight * 0.45;
       ledW = imageWidth * 0.012135;
       ledH = imageHeight * 0.121428;
-      ledCenterX = (ledX + ledW) / 2;
-      ledCenterY = (ledY + ledH) / 2;
     }
 
     let translateX; let translateY;
@@ -1137,7 +1121,6 @@ const LinearBargraph = function(canvas, parameters) {
   };
 
   this.setSectionActive = function(value) {
-    useSectionColors = value;
     init();
     this.repaint();
     return this;

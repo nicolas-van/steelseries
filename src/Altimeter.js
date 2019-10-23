@@ -141,7 +141,6 @@ const Altimeter = function(canvas, parameters) {
     const MAX_LENGTH = imageWidth * 0.07;
     const RADIUS = imageWidth * 0.4;
     let counter = 0;
-    let tickCounter = 0;
     let sinValue = 0;
     let cosValue = 0;
     let alpha; // angle for tickmarks
@@ -181,7 +180,6 @@ const Altimeter = function(canvas, parameters) {
           }
         }
         counter = 0;
-        tickCounter++;
 
         // Draw ticks
         ctx.beginPath();

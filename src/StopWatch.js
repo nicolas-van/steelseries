@@ -88,7 +88,6 @@ const Stopwatch = function(canvas, parameters) {
     let innerPoint; let outerPoint; let textPoint;
     let counter = 0;
     let numberCounter = 0;
-    let tickCounter = 0;
     let valueCounter; // value for the tickmarks
     let sinValue = 0;
     let cosValue = 0;
@@ -152,7 +151,6 @@ const Stopwatch = function(canvas, parameters) {
         ctx.stroke();
 
         counter = 0;
-        tickCounter++;
         numberCounter++;
       }
       counter++;

@@ -108,9 +108,7 @@ const RadialVertical = function(canvas, parameters) {
   const maxNoOfMinorTicks = 10;
   const maxNoOfMajorTicks = 10;
 
-  let freeAreaAngle = 0;
   let rotationOffset = 1.25 * PI;
-  let tickmarkOffset = 1.25 * PI;
   let angleRange = HALF_PI;
   let angleStep = angleRange / range;
   const shadowOffset = imageWidth * 0.006;
@@ -152,9 +150,7 @@ const RadialVertical = function(canvas, parameters) {
     maxMeasuredValue = maxMeasuredValue < minValue ? minValue : maxMeasuredValue > maxValue ? maxValue : maxMeasuredValue;
     threshold = threshold < minValue ? minValue : threshold > maxValue ? maxValue : threshold;
 
-    freeAreaAngle = 0;
     rotationOffset = 1.25 * PI;
-    tickmarkOffset = 1.25 * PI;
     angleRange = HALF_PI;
     angleStep = angleRange / range;
 

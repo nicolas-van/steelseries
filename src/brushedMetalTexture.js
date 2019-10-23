@@ -18,7 +18,6 @@ const brushedMetalTexture = function(color, radius, amount, monochrome, shine) {
     const blue = color & 0xff;
     let n = 0;
     const variation = 255 * amount;
-    let totR; let totG; let totB;
     let indx; let tr; let tg; let tb; let f;
 
     startX = Math.floor(startX);
@@ -46,10 +45,6 @@ const brushedMetalTexture = function(color, radius, amount, monochrome, shine) {
     }
 
     for (y = 0; y < height; y++) {
-      // The pixel array is addressed as 4 elements per pixel [r,g,b,a]
-      if (radius !== 0) {
-        totR = totG = totB = 0;
-      }
       for (x = 0; x < width; x++) {
         indx = (y * width * 4) + (x * 4);
         tr = red;

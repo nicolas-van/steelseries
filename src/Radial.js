@@ -132,7 +132,6 @@ const Radial = function(canvas, parameters) {
   // GaugeType specific private variables
   let freeAreaAngle;
   let rotationOffset;
-  let tickmarkOffset;
   let angleRange;
   let angleStep;
 
@@ -202,7 +201,6 @@ const Radial = function(canvas, parameters) {
       case 'type1':
         freeAreaAngle = 0;
         rotationOffset = PI;
-        tickmarkOffset = HALF_PI;
         angleRange = HALF_PI;
         angleStep = angleRange / range;
         break;
@@ -210,7 +208,6 @@ const Radial = function(canvas, parameters) {
       case 'type2':
         freeAreaAngle = 0;
         rotationOffset = PI;
-        tickmarkOffset = HALF_PI;
         angleRange = PI;
         angleStep = angleRange / range;
         break;
@@ -218,7 +215,6 @@ const Radial = function(canvas, parameters) {
       case 'type3':
         freeAreaAngle = 0;
         rotationOffset = HALF_PI;
-        tickmarkOffset = 0;
         angleRange = 1.5 * PI;
         angleStep = angleRange / range;
         break;
@@ -228,7 +224,6 @@ const Radial = function(canvas, parameters) {
       default:
         freeAreaAngle = 60 * RAD_FACTOR;
         rotationOffset = HALF_PI + (freeAreaAngle / 2);
-        tickmarkOffset = 0;
         angleRange = TWO_PI - freeAreaAngle;
         angleStep = angleRange / range;
         break;
