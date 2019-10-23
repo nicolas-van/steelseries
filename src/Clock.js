@@ -27,7 +27,7 @@ import {
   TrendState,
 } from './definitions';
 
-const clock = function(canvas, parameters) {
+const Clock = function(canvas, parameters) {
   parameters = parameters || {};
   let size = (undefined === parameters.size ? 0 : parameters.size);
   let frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign);
@@ -743,4 +743,4 @@ const clock = function(canvas, parameters) {
   return this;
 };
 
-export default clock;
+export default Clock;

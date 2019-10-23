@@ -29,7 +29,7 @@ import {
   TrendState,
 } from './definitions';
 
-const stopwatch = function(canvas, parameters) {
+const Stopwatch = function(canvas, parameters) {
   parameters = parameters || {};
   let size = (undefined === parameters.size ? 0 : parameters.size);
   let frameDesign = (undefined === parameters.frameDesign ? FrameDesign.METAL : parameters.frameDesign);
@@ -579,4 +579,4 @@ const stopwatch = function(canvas, parameters) {
   return this;
 };
 
-export default stopwatch;
+export default Stopwatch;

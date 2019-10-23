@@ -30,7 +30,7 @@ import {
   TrendState,
 } from './definitions';
 
-const level = function(canvas, parameters) {
+const Level = function(canvas, parameters) {
   parameters = parameters || {};
   let size = (undefined === parameters.size ? 0 : parameters.size);
   const decimalsVisible = (undefined === parameters.decimalsVisible ? false : parameters.decimalsVisible);
@@ -696,4 +696,4 @@ const level = function(canvas, parameters) {
   return this;
 };
 
-export default level;
+export default Level;

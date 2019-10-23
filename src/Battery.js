@@ -6,7 +6,7 @@ import {
 } from './tools';
 
 
-const battery = function(canvas, parameters) {
+const Battery = function(canvas, parameters) {
   parameters = parameters || {};
   let size = (undefined === parameters.size ? 0 : parameters.size);
   let value = (undefined === parameters.value ? 50 : parameters.value);
@@ -130,4 +130,4 @@ const battery = function(canvas, parameters) {
   return this;
 };
 
-export default battery;
+export default Battery;

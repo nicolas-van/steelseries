@@ -7,7 +7,7 @@ import {
   RAD_FACTOR,
 } from './tools';
 
-const odometer = function(canvas, parameters) {
+const Odometer = function(canvas, parameters) {
   parameters = parameters || {};
 
   // parameters
@@ -248,4 +248,4 @@ const odometer = function(canvas, parameters) {
   this.repaint();
 };
 
-export default odometer;
+export default Odometer;

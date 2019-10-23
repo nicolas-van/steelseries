@@ -4,7 +4,7 @@ import {
   doc,
 } from './tools';
 
-const lightbulb = function(canvas, parameters) {
+const Lightbulb = function(canvas, parameters) {
   parameters = parameters || {};
   let mainCtx;
   // parameters
@@ -364,4 +364,4 @@ const lightbulb = function(canvas, parameters) {
   return this;
 };
 
-export default lightbulb;
+export default Lightbulb;

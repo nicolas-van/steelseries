@@ -33,7 +33,7 @@ import {
 } from './definitions';
 
 
-const altimeter = function(canvas, parameters) {
+const Altimeter = function(canvas, parameters) {
   parameters = parameters || {};
   // parameters
   let size = (undefined === parameters.size ? 0 : parameters.size);
@@ -595,4 +595,4 @@ const altimeter = function(canvas, parameters) {
   return this;
 };
 
-export default altimeter;
+export default Altimeter;

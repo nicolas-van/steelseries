@@ -5,7 +5,7 @@ import {
   doc,
 } from './tools';
 
-const trafficlight = function(canvas, parameters) {
+const Trafficlight = function(canvas, parameters) {
   parameters = parameters || {};
   let width = (undefined === parameters.width ? 0 : parameters.width);
   let height = (undefined === parameters.height ? 0 : parameters.height);
@@ -649,4 +649,4 @@ const trafficlight = function(canvas, parameters) {
   return this;
 };
 
-export default trafficlight;
+export default Trafficlight;
