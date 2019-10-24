@@ -1,7 +1,7 @@
 
 # Steelseries Gauges
 
-[![Build Status](https://travis-ci.org/nicolas-van/steelseries.svg?branch=master)](https://travis-ci.org/nicolas-van/steelseries) [![npm version](https://img.shields.io/npm/v/steelseries.svg)](https://www.npmjs.com/package/steelseries) ![](https://github.com/nicolas-van/steelseries/workflows/Node%20CI/badge.svg)
+[![Build Status](https://travis-ci.org/nicolas-van/steelseries.svg?branch=master)](https://travis-ci.org/nicolas-van/steelseries) [![npm version](https://img.shields.io/npm/v/steelseries.svg)](https://www.npmjs.com/package/steelseries) ![](https://github.com/nicolas-van/steelseries/workflows/nodejs/badge.svg)
 
 A collection of gauge components for JavaScript.
 
