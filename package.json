@@ -10,7 +10,8 @@
   ],
   "main": "dist/steelseries.js",
   "scripts": {
-    "build": "webpack",
+    "build": "npm run compile && npm run website",
+    "compile": "webpack",
     "lint": "eslint \"src/**/*.js\"",
     "lint:fix": "eslint \"src/**/*.js\" --fix",
     "test": "npm run lint",
