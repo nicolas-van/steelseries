@@ -4,20 +4,20 @@ node_js:
 script:
   - npm run build
   - npm run website
-deploy:
-  - provider: npm
-    skip_cleanup: true
-    email: nicolas.vanhoren@gmail.com
-    api_key:
-      secure: jDkFm0TZSe6jmK4abOd2VAGxgNRoHzPIQKqVC641dVNTNkggtWcHO0l811rQsQt0ZEZh3O69DvAx9jYO75OF5dAsQrpwRFSF+SHTLTyYc4hpvxq+tktSJ8e4ZDtfHIbh7hOiMCKRfFjwBjTnR5pd+DViq54BIQLbbi7k7bTZCrrvKRBlUrxjH6Pu4tnxB/KLY8M9hZcLPgMKFUaZ6Pg4EjqWWIZK96xAOVKp/zz+wqhXeQpEh0eVn5ZkDiFWjOEHLnOW0Ew01+EqvrUnvwoo/MEFT+kieWdMCuIsKzq37Q1G0P00AQwgCPZYEzy2xLSmliHzm75MsgtkhbgfTaSBpVjdUv3Hzp9jv8c+qwhM33+t4oaN7eAgg8TiYgivpg4z5PHr926CHbctBBPqc35qvP86PTVxpt7rgruIE0um5ERQ0Mb7hSjk4T6zwbj8G2m4o819W6QYRnIowffbC6/EBU/NU/4HYK5hrS9A+9o9oJg3g731kqbjk4Xlx3lIrBDyQUrzFFJtsso6ilFPjFF4AKQse/hjuArhJbfAeeBjDaJ5qy77u9kadgFbXQbFCkoD5xC+otzOZOC+9qPF2lNwY5jg5OsVOfBJ1suzTqY9jmstJXez2UobM9GihqUbi2mneZQkKvCrBcdkO8kM+emhN6OF9xIf1z5DOf4blLnzUXA=
-    on:
-      tags: true
-      repo: nicolas-van/steelseries
-      branch: master
-  - provider: pages
-    skip_cleanup: true
-    github_token: $GITHUB_TOKEN
-    keep_history: false
-    local_dir: docs
-    on:
-      branch: master
+#deploy:
+#  - provider: npm
+#    skip_cleanup: true
+#    email: nicolas.vanhoren@gmail.com
+#    api_key:
+#      secure: jDkFm0TZSe6jmK4abOd2VAGxgNRoHzPIQKqVC641dVNTNkggtWcHO0l811rQsQt0ZEZh3O69DvAx9jYO75OF5dAsQrpwRFSF+SHTLTyYc4hpvxq+tktSJ8e4ZDtfHIbh7hOiMCKRfFjwBjTnR5pd+DViq54BIQLbbi7k7bTZCrrvKRBlUrxjH6Pu4tnxB/KLY8M9hZcLPgMKFUaZ6Pg4EjqWWIZK96xAOVKp/zz+wqhXeQpEh0eVn5ZkDiFWjOEHLnOW0Ew01+EqvrUnvwoo/MEFT+kieWdMCuIsKzq37Q1G0P00AQwgCPZYEzy2xLSmliHzm75MsgtkhbgfTaSBpVjdUv3Hzp9jv8c+qwhM33+t4oaN7eAgg8TiYgivpg4z5PHr926CHbctBBPqc35qvP86PTVxpt7rgruIE0um5ERQ0Mb7hSjk4T6zwbj8G2m4o819W6QYRnIowffbC6/EBU/NU/4HYK5hrS9A+9o9oJg3g731kqbjk4Xlx3lIrBDyQUrzFFJtsso6ilFPjFF4AKQse/hjuArhJbfAeeBjDaJ5qy77u9kadgFbXQbFCkoD5xC+otzOZOC+9qPF2lNwY5jg5OsVOfBJ1suzTqY9jmstJXez2UobM9GihqUbi2mneZQkKvCrBcdkO8kM+emhN6OF9xIf1z5DOf4blLnzUXA=
+#    on:
+#      tags: true
+#      repo: nicolas-van/steelseries
+#      branch: master
+#  - provider: pages
+#    skip_cleanup: true
+#    github_token: $GITHUB_TOKEN
+#    keep_history: false
+#    local_dir: docs
+#    on:
+#      branch: master
