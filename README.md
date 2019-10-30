@@ -52,4 +52,4 @@ const compass = new Compass(document.querySelector("#myCanvas"), {
 
 ## Documentation
 
-Unfortunately there is no formal documentation :) . But you can take a look at the [Demo Website](https://nicolas-van.github.io/steelseries/) and [it's source code](https://github.com/nicolas-van/steelseries/tree/develop/srcdocs).
+Unfortunately there is no formal documentation :) . But you can take a look at the [Demo Website](https://nicolas-van.github.io/steelseries/) and [it's source code](https://github.com/nicolas-van/steelseries/tree/master/srcdocs).
