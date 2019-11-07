@@ -1,4 +1,4 @@
 
-import * as steelseries from '../src/steelseries';
+import * as steelseries from '../src/steelseries'
 
-window.steelseries = steelseries;
+window.steelseries = steelseries
