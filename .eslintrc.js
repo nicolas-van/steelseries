@@ -17,7 +17,7 @@ module.exports = {
   rules: {
     'new-cap': "off",
     'camelcase': 'off',
-    'no-case-declarations': 'off',
     'no-fallthrough': 'off',
+    'no-var': 'error',
   },
 }

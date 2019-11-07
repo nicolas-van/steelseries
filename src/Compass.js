@@ -321,7 +321,7 @@ const Compass = function (canvas, parameters) {
     ctx.save()
 
     switch (pointerType.type) {
-      case 'type2':
+      case 'type2': {
         // NORTHPOINTER
         ctx.beginPath()
         ctx.moveTo(imageWidth * 0.53271, imageHeight * 0.453271)
@@ -458,9 +458,10 @@ const Compass = function (canvas, parameters) {
         ctx.lineJoin = 'miter'
         ctx.fill()
         ctx.stroke()
+      }
         break
 
-      case 'type3':
+      case 'type3': {
         // NORTHPOINTER
         ctx.beginPath()
         ctx.moveTo(imageWidth * 0.5, imageHeight * 0.149532)
@@ -526,11 +527,12 @@ const Compass = function (canvas, parameters) {
         ctx.lineJoin = 'miter'
         ctx.fill()
         ctx.stroke()
+      }
         break
 
       case 'type1:':
       /* falls through */
-      default:
+      default: {
         // NORTHPOINTER
         ctx.beginPath()
         ctx.moveTo(imageWidth * 0.5, imageHeight * 0.495327)
@@ -595,6 +597,7 @@ const Compass = function (canvas, parameters) {
         ctx.lineJoin = 'miter'
         ctx.fill()
         ctx.stroke()
+      }
         break
     }
     ctx.restore()
