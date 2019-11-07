@@ -85,4 +85,4 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
 },{"./Radial":"aU+J","./RadialBargraph":"LAh9","./RadialVertical":"Hxoo","./Linear":"9DLv","./LinearBargraph":"843q","./DisplaySingle":"hAvV","./DisplayMulti":"9arX","./Level":"h1PX","./Compass":"a5Uq","./WindDirection":"jg31","./Horizon":"PMnP","./Led":"cgOy","./Clock":"EdbV","./Battery":"QEnH","./StopWatch":"YVdQ","./Altimeter":"DT9Q","./TrafficLight":"xIZE","./LightBulb":"2IwS","./Odometer":"5ii7","./drawFrame":"KgjH","./drawBackground":"fHxf","./drawForeground":"VXCS","./tools":"TtwJ","./definitions":"LoOB"}],"Focm":[function(require,module,exports) {
 "use strict";var e=r(require("../src/steelseries"));function r(e){if(e&&e.__esModule)return e;var r={};if(null!=e)for(var t in e)if(Object.prototype.hasOwnProperty.call(e,t)){var i=Object.defineProperty&&Object.getOwnPropertyDescriptor?Object.getOwnPropertyDescriptor(e,t):{};i.get||i.set?Object.defineProperty(r,t,i):r[t]=e[t]}return r.default=e,r}window.steelseries=e;
 },{"../src/steelseries":"jp0T"}]},{},["Focm"], null)
-//# sourceMappingURL=srcdocs.a5d01228.js.map
+//# sourceMappingURL=srcdocs.3ed814b3.js.map
