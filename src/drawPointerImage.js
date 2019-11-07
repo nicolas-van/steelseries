@@ -378,6 +378,7 @@ const drawPointerImage = function (ctx, size, ptrType, ptrColor, lblColor) {
 
       case 'type13':
       // POINTER_TYPE13
+      // eslint-disable-next-line no-fallthrough
       case 'type14':
         // POINTER_TYPE14 (same shape as 13)
         ptrCtx.beginPath()
@@ -414,6 +415,7 @@ const drawPointerImage = function (ctx, size, ptrType, ptrColor, lblColor) {
 
       case 'type15':
       // POINTER TYPE15 - Classic with crescent
+      // eslint-disable-next-line no-fallthrough
       case 'type16':
         // POINTER TYPE16 - Classic without crescent
         ptrCtx.beginPath()
