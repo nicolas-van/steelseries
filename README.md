@@ -27,6 +27,29 @@ import * as steelseries from "steelseries";
 
 Use unpkg: https://unpkg.com/steelseries .
 
+## Example
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <div>
+      <canvas id="myCanvas"></canvas>
+    </div>
+
+    <script src="./index.js"></script>
+  </body>
+</html>
+```
+
+```javascript
+import { Compass } from "steelseries";
+
+const compass = new Compass(document.querySelector("#myCanvas"), {
+  size: 200
+});
+```
+
 ## Documentation
 
-Unfortunately there is no formal documentation :) . But you can take a look at the [Demo Website](https://nicolas-van.github.io/steelseries/) and [it's source code](https://github.com/nicolas-van/steelseries/tree/develop/srcdocs).
+Unfortunately there is no formal documentation :) . But you can take a look at the [Demo Website](https://nicolas-van.github.io/steelseries/) and [it's source code](https://github.com/nicolas-van/steelseries/tree/master/srcdocs).
