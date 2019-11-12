@@ -1,6 +1,6 @@
 {
   "name": "steelseries",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A collection of gauge components for JavaScript.",
   "keywords": [
     "gauge",
@@ -41,7 +41,5 @@
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.6"
   },
-  "dependencies": {
-    "prettier": "^1.18.2"
-  }
+  "dependencies": {}
 }
