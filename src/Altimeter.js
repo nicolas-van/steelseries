@@ -24,6 +24,8 @@ import {
   ForegroundType
 } from './definitions'
 
+import { LitElement, html } from 'lit'
+
 const Altimeter = function (canvas, parameters) {
   parameters = parameters || {}
   // parameters
@@ -72,7 +74,7 @@ const Altimeter = function (canvas, parameters) {
   //
   const minValue = 0
   const maxValue = 10
-  let value = minValue
+  let value = parameters.value || minValue
   let value100 = 0
   let value1000 = 0
   let value10000 = 0
@@ -922,3 +924,47 @@ const Altimeter = function (canvas, parameters) {
 }
 
 export default Altimeter
+
+export class AltimeterElement extends LitElement {
+  static get properties () {
+    return {
+      size: { type: Number },
+      value: { type: Number },
+      animated: { type: Boolean },
+      frameDesign: { type: String },
+      backgroundColor: { type: String }
+    }
+  }
+
+  constructor () {
+    super()
+    this.size = 200
+    this.value = 0
+    this.animated = false
+    this.frameDesign = 'METAL'
+    this.backgroundColor = 'DARK_GRAY'
+  }
+
+  render () {
+    const htm = html`
+      <canvas width="${this.size}" height="${this.size}"></canvas>
+    `
+    return htm
+  }
+
+  updated () {
+    const canvas = this.renderRoot.querySelector('canvas')
+    const el = new Altimeter(canvas, {
+      size: this.size
+    })
+    if (this.animated) {
+      el.setValueAnimated(this.value)
+    } else {
+      el.setValue(this.value)
+    }
+    el.setFrameDesign(FrameDesign[this.frameDesign] || FrameDesign.METAL)
+    el.setBackgroundColor(BackgroundColor[this.backgroundColor] || BackgroundColor.DARK_GRAY)
+  }
+}
+
+window.customElements.define('steelseries-altimeter', AltimeterElement)

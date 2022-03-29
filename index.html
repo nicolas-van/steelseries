@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Test file</title>
+    <script type="module" src="./src/steelseries.js"></script>
+  </head>
+  <body>
+    <steelseries-altimeter value="0" size="500" frameDesign="BRASS"></steelseries-altimeter>
+    <script>
+      setInterval(() => {
+        const v = parseFloat(document.querySelector('steelseries-altimeter').getAttribute('value'))
+        document.querySelector('steelseries-altimeter').setAttribute('value', v + 1)
+      }, 1000)
+    </script>
+  </body>
+</html>

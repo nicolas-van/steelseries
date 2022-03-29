@@ -15,8 +15,8 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
-    'new-cap': "off",
-    'camelcase': 'off',
-    'no-var': 'error',
-  },
+    'new-cap': 'off',
+    camelcase: 'off',
+    'no-var': 'error'
+  }
 }
