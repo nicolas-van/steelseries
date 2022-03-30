@@ -48,7 +48,7 @@ const Altimeter = function (canvas, parameters) {
     undefined === parameters.titleString ? '' : parameters.titleString
   let unitString =
     undefined === parameters.unitString ? '' : parameters.unitString
-  const unitAltPos = undefined !== parameters.unitAltPos
+  const unitAltPos = parameters.unitAltPos ?? false
   const knobType =
     undefined === parameters.knobType
       ? KnobType.METAL_KNOB
@@ -74,7 +74,7 @@ const Altimeter = function (canvas, parameters) {
   //
   const minValue = 0
   const maxValue = 10
-  let value = parameters.value || minValue
+  let value = parameters.value ?? minValue
   let value100 = 0
   let value1000 = 0
   let value10000 = 0
@@ -932,7 +932,19 @@ export class AltimeterElement extends LitElement {
       value: { type: Number },
       animated: { type: Boolean },
       frameDesign: { type: String },
-      backgroundColor: { type: String }
+      frameVisible: { type: Boolean },
+      backgroundColor: { type: String },
+      backgroundVisible: { type: Boolean },
+      titleString: { type: String },
+      unitString: { type: String },
+      unitAltPos: { type: Boolean },
+      knobType: { type: String },
+      knobStyle: { type: String },
+      lcdColor: { type: String },
+      lcdVisible: { type: Boolean },
+      digitalFont: { type: Boolean },
+      foregroundType: { type: String },
+      foregroundVisible: { type: Boolean }
     }
   }
 
@@ -940,30 +952,49 @@ export class AltimeterElement extends LitElement {
     super()
     this.size = 200
     this.value = 0
-    this.animated = false
     this.frameDesign = 'METAL'
+    this.frameVisible = true
     this.backgroundColor = 'DARK_GRAY'
+    this.backgroundVisible = true
+    this.titleString = ''
+    this.unitString = ''
+    this.unitAltPos = false
+    this.knobType = 'METAL_KNOB'
+    this.knobStyle = 'BLACK'
+    this.lcdColor = 'BLACK'
+    this.lcdVisible = true
+    this.digitalFont = false
+    this.foregroundType = 'TYPE1'
+    this.foregroundVisible = true
   }
 
   render () {
-    const htm = html`
+    return html`
       <canvas width="${this.size}" height="${this.size}"></canvas>
     `
-    return htm
   }
 
   updated () {
     const canvas = this.renderRoot.querySelector('canvas')
-    const el = new Altimeter(canvas, {
-      size: this.size
+    console.log('this', this.backgroundVisible)
+    new Altimeter(canvas, {
+      size: this.size,
+      value: this.value,
+      frameDesign: FrameDesign[this.frameDesign] ?? FrameDesign.METAL,
+      frameVisible: this.frameVisible,
+      backgroundColor: BackgroundColor[this.backgroundColor] ?? BackgroundColor.DARK_GRAY,
+      backgroundVisible: this.backgroundVisible,
+      titleString: this.titleString,
+      unitString: this.unitString,
+      unitAltPos: this.unitAltPos,
+      knobType: KnobType[this.knobType] ?? KnobType.METAL_KNOB,
+      knobStyle: KnobStyle[this.knobStyle] ?? KnobStyle.BLACK,
+      lcdColor: LcdColor[this.lcdColor] ?? LcdColor.BLACK,
+      lcdVisible: this.lcdVisible,
+      digitalFont: this.digitalFont,
+      foregroundType: ForegroundType[this.foregroundType] ?? ForegroundType.TYPE1,
+      foregroundVisible: this.foregroundVisible
     })
-    if (this.animated) {
-      el.setValueAnimated(this.value)
-    } else {
-      el.setValue(this.value)
-    }
-    el.setFrameDesign(FrameDesign[this.frameDesign] || FrameDesign.METAL)
-    el.setBackgroundColor(BackgroundColor[this.backgroundColor] || BackgroundColor.DARK_GRAY)
   }
 }
 
