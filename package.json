@@ -11,14 +11,12 @@
   "main": "dist/steelseries.js",
   "scripts": {
     "build": "rollup -c rollup.config.js",
-    "build-old": "npm run compile && npm run website",
-    "compile": "webpack",
+    "doc": "rm -rf docs .parcel-cache && parcel build srcdocs/index.html --public-url ./ --dist-dir docs",
+    "doc:dev": "rm -rf docs .parcel-cache && parcel serve srcdocs/index.html --dist-dir docs",
     "lint": "eslint \"*.js\" \"src/**/*.js\" \"srcdocs/**/*.js\"",
     "lint:fix": "npm run lint -- --fix",
     "serve": "wds --node-resolve",
-    "test": "npm run lint",
-    "website": "rm -rf docs .cache && parcel build srcdocs/index.njk --public-url ./ --out-dir docs",
-    "website-dev": "rm -rf docs .cache && parcel srcdocs/index.njk --out-dir docs"
+    "test": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -40,9 +38,13 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.0.0",
     "eslint-plugin-standard": "^4.1.0",
+    "parcel": "^2.4.0",
     "rollup": "^2.70.1"
   },
   "dependencies": {
     "lit": "^2.2.1"
+  },
+  "targets": {
+    "main": false
   }
 }
