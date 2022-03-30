@@ -8,7 +8,7 @@ export function generateDocumentation (elementName) {
   const properties = sampleElement.constructor.properties
   const keys = Object.keys(properties)
   const defaultValues = Object.fromEntries(keys.map((key) => {
-    return [key, sampleElement[key]]
+    return [key, properties[key].defaultValue]
   }))
   return class DocGenerator extends LitElement {
     static get properties () {
@@ -65,45 +65,47 @@ export function generateDocumentation (elementName) {
                 </h2>
                 <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#parametersAccordion">
                   <div class="accordion-body">
-                    ${keys.map((key) => {
-                      if (properties[key].enum) {
-                        return html`
-                          <div class="mb-3">
-                            <label class="form-label">${key}</label>
-                            <select class="form-control" @change=${(e) => { this.updateValue(key, e.target.value) }}>
-                              ${properties[key].enum.map((el) => {
+                    <div class="row">
+                      ${keys.map((key) => {
+                        return html` 
+                          <div class="col-md-4 mb-3">
+                            ${(() => {
+                              if (properties[key].objectEnum) {
                                 return html`
-                                  <option value=${el} ?selected=${this.values[key] === el}>${el}</option>
+                                  <label class="form-label">${key}</label>
+                                  <select class="form-select" @change=${(e) => { this.updateValue(key, e.target.value) }}>
+                                    ${Object.keys(properties[key].objectEnum).map((el) => {
+                                      return html`
+                                        <option value=${el} ?selected=${this.values[key] === el}>${el}</option>
+                                      `
+                                    })}
+                                  </select>
                                 `
-                              })}
-                            </select>
+                              } else if (properties[key].type === String) {
+                                return html`
+                                  <label class="form-label">${key}</label>
+                                  <input type="text" class="form-control" value="${this.values[key]}" @change=${(e) => { this.updateValue(key, e.target.value) }}>
+                                `
+                              } else if (properties[key].type === Number) {
+                                return html`
+                                  <label class="form-label">${key}</label>
+                                  <input type="number" class="form-control" value="${this.values[key]}" @change=${(e) => { this.updateValue(key, parseFloat(e.target.value)) }}>
+                                `
+                              } else if (properties[key].type === Boolean) {
+                                return html`
+                                  <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" ?checked="${this.values[key]}" @change=${(e) => { this.updateValue(key, e.target.checked) }}>
+                                    <label class="form-check-label">${key}</label>
+                                  </div>
+                                `
+                              } else {
+                                throw new Error('Invalid state')
+                              }
+                            })()}
                           </div>
                         `
-                      } else if (properties[key].type === String) {
-                        return html`
-                          <div class="mb-3">
-                            <label class="form-label">${key}</label>
-                            <input type="text" class="form-control" value="${this.values[key]}" @change=${(e) => { this.updateValue(key, e.target.value) }}>
-                          </div>
-                        `
-                      } else if (properties[key].type === Number) {
-                        return html`
-                          <div class="mb-3">
-                            <label class="form-label">${key}</label>
-                            <input type="number" class="form-control" value="${this.values[key]}" @change=${(e) => { this.updateValue(key, parseFloat(e.target.value)) }}>
-                          </div>
-                        `
-                      } else if (properties[key].type === Boolean) {
-                        return html`
-                          <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" ?checked="${this.values[key]}" @change=${(e) => { this.updateValue(key, e.target.checked) }}>
-                            <label class="form-check-label">${key}</label>
-                          </div>
-                        `
-                      } else {
-                        throw new Error('Invalid state')
-                      }
-                    })}
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>

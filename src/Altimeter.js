@@ -24,7 +24,8 @@ import {
   ForegroundType
 } from './definitions'
 
-import { LitElement, html } from 'lit'
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
 
 const Altimeter = function (canvas, parameters) {
   parameters = parameters || {}
@@ -925,74 +926,34 @@ const Altimeter = function (canvas, parameters) {
 
 export default Altimeter
 
-export class AltimeterElement extends LitElement {
+export class AltimeterElement extends BaseElement {
+  static get objectConstructor () { return Altimeter }
+
   static get properties () {
     return {
-      size: { type: Number },
-      value: { type: Number },
-      frameDesign: { type: String, enum: Object.keys(FrameDesign) },
-      noFrameVisible: { type: Boolean },
-      backgroundColor: { type: String, enum: Object.keys(BackgroundColor) },
-      noBackgroundVisible: { type: Boolean },
-      titleString: { type: String },
-      unitString: { type: String },
-      unitAltPos: { type: Boolean },
-      knobType: { type: String, enum: Object.keys(KnobType) },
-      knobStyle: { type: String, enum: Object.keys(KnobStyle) },
-      lcdColor: { type: String, enum: Object.keys(LcdColor) },
-      noLcdVisible: { type: Boolean },
-      digitalFont: { type: Boolean },
-      foregroundType: { type: String, enum: Object.keys(ForegroundType) },
-      noForegroundVisible: { type: Boolean }
+      size: { type: Number, defaultValue: 200 },
+      value: { type: Number, defaultValue: 0 },
+      frameDesign: { type: String, objectEnum: FrameDesign, defaultValue: 'METAL' },
+      noFrameVisible: { type: Boolean, defaultValue: false },
+      backgroundColor: { type: String, objectEnum: BackgroundColor, defaultValue: 'DARK_GRAY' },
+      noBackgroundVisible: { type: Boolean, defaultValue: false },
+      titleString: { type: String, defaultValue: '' },
+      unitString: { type: String, defaultValue: '' },
+      unitAltPos: { type: Boolean, defaultValue: false },
+      knobType: { type: String, objectEnum: KnobType, defaultValue: 'METAL_KNOB' },
+      knobStyle: { type: String, objectEnum: KnobStyle, defaultValue: 'BLACK' },
+      lcdColor: { type: String, objectEnum: LcdColor, defaultValue: 'BLACK' },
+      noLcdVisible: { type: Boolean, defaultValue: false },
+      digitalFont: { type: Boolean, defaultValue: false },
+      foregroundType: { type: String, objectEnum: ForegroundType, defaultValue: 'TYPE1' },
+      noForegroundVisible: { type: Boolean, defaultValue: false }
     }
-  }
-
-  constructor () {
-    super()
-    this.size = 200
-    this.value = 0
-    this.frameDesign = 'METAL'
-    this.noFrameVisible = false
-    this.backgroundColor = 'DARK_GRAY'
-    this.noBackgroundVisible = false
-    this.titleString = ''
-    this.unitString = ''
-    this.unitAltPos = false
-    this.knobType = 'METAL_KNOB'
-    this.knobStyle = 'BLACK'
-    this.lcdColor = 'BLACK'
-    this.noLcdVisible = false
-    this.digitalFont = false
-    this.foregroundType = 'TYPE1'
-    this.noForegroundVisible = false
   }
 
   render () {
     return html`
       <canvas width="${this.size}" height="${this.size}"></canvas>
     `
-  }
-
-  updated () {
-    const canvas = this.renderRoot.querySelector('canvas')
-    new Altimeter(canvas, {
-      size: this.size,
-      value: this.value,
-      frameDesign: FrameDesign[this.frameDesign] ?? FrameDesign.METAL,
-      frameVisible: !this.noFrameVisible,
-      backgroundColor: BackgroundColor[this.backgroundColor] ?? BackgroundColor.DARK_GRAY,
-      backgroundVisible: !this.noBackgroundVisible,
-      titleString: this.titleString,
-      unitString: this.unitString,
-      unitAltPos: this.unitAltPos,
-      knobType: KnobType[this.knobType] ?? KnobType.METAL_KNOB,
-      knobStyle: KnobStyle[this.knobStyle] ?? KnobStyle.BLACK,
-      lcdColor: LcdColor[this.lcdColor] ?? LcdColor.BLACK,
-      lcdVisible: !this.noLcdVisible,
-      digitalFont: this.digitalFont,
-      foregroundType: ForegroundType[this.foregroundType] ?? ForegroundType.TYPE1,
-      foregroundVisible: !this.noForegroundVisible
-    })
   }
 }
 
