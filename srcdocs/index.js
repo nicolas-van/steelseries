@@ -21,3 +21,5 @@ window.customElements.define('steelseries-doc-led', generateDocumentation('steel
 window.customElements.define('steelseries-doc-level', generateDocumentation('steelseries-level', { value: 10 }))
 
 window.customElements.define('steelseries-doc-lightbulb', generateDocumentation('steelseries-lightbulb', { lightOn: true }))
+
+window.customElements.define('steelseries-doc-linear', generateDocumentation('steelseries-linear', { value: 75 }))
