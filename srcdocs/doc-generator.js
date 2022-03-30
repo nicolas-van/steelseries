@@ -33,20 +33,26 @@ export function generateDocumentation (elementName) {
       const htm = (() => {
         let htm = `<${elementName}`
         for (const key of keys) {
+          function escape (str) {
+            return str.replace(/&/g, '&amp;')
+              .replace(/</g, '&lt;')
+              .replace(/>/g, '&gt;')
+              .replace(/"/g, '&quot;')
+              .replace(/'/g, '&#39;')
+          }
           if (properties[key].type === Boolean) {
             if (this.values[key]) {
               htm += ` ${key}`
             }
           } else {
-            if (this.values[key] !== defaultValues[key]) {
-              function escape (htmlStr) {
-                return ('' + htmlStr).replace(/&/g, '&amp;')
-                  .replace(/</g, '&lt;')
-                  .replace(/>/g, '&gt;')
-                  .replace(/"/g, '&quot;')
-                  .replace(/'/g, '&#39;')
-              }
-              htm += ` ${key}="${escape(this.values[key])}"`
+            let value = this.values[key]
+            if (properties[key].type === Array) {
+              value = JSON.stringify(value)
+            } else {
+              value = '' + value
+            }
+            if (!_.isEqual(this.values[key], defaultValues[key])) {
+              htm += ` ${key}="${escape(value)}"`
             }
           }
         }
@@ -94,13 +100,6 @@ export function generateDocumentation (elementName) {
                                     </select>
                                   </div>
                                 `
-                              } else if (properties[key].type === String) {
-                                return html`
-                                  <label class="col-form-label col-sm-5">${key}</label>
-                                  <div class="col-sm-7">
-                                    <input type="text" class="form-control" value="${this.values[key]}" @change=${(e) => { this.updateValue(key, e.target.value) }}>
-                                  </div>
-                                `
                               } else if (properties[key].type === Number) {
                                 return html`
                                   <label class="col-form-label col-sm-5">${key}</label>
@@ -115,8 +114,22 @@ export function generateDocumentation (elementName) {
                                     <input type="checkbox" class="form-check-input" ?checked="${this.values[key]}" @change=${(e) => { this.updateValue(key, e.target.checked) }}>
                                   </div>
                                 `
+                              } else if (properties[key].type === String) {
+                                return html`
+                                  <label class="col-form-label col-sm-5">${key}</label>
+                                  <div class="col-sm-7">
+                                    <input type="text" class="form-control" value="${this.values[key]}" @change=${(e) => { this.updateValue(key, e.target.value) }}>
+                                  </div>
+                                `
+                              } else if (properties[key].type === Array) {
+                                return html`
+                                  <label class="col-form-label col-sm-5">${key}</label>
+                                  <div class="col-sm-7">
+                                    <input type="text" class="form-control" value="${JSON.stringify(this.values[key])}" @change=${(e) => { this.updateValue(key, JSON.parse(e.target.value)) }}>
+                                  </div>
+                                `
                               } else {
-                                throw new Error('Invalid state')
+                                throw new Error('invalid state')
                               }
                             })()}
                           </div>

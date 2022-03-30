@@ -2,11 +2,10 @@
 import { generateDocumentation } from './doc-generator.js'
 import '@vanillawc/wc-markdown'
 
-const AltimeterDoc = generateDocumentation('steelseries-altimeter')
-window.customElements.define('steelseries-doc-altimeter', AltimeterDoc)
+window.customElements.define('steelseries-doc-altimeter', generateDocumentation('steelseries-altimeter'))
 
-const BatteryDoc = generateDocumentation('steelseries-battery')
-window.customElements.define('steelseries-doc-battery', BatteryDoc)
+window.customElements.define('steelseries-doc-battery', generateDocumentation('steelseries-battery'))
 
-const ClockDoc = generateDocumentation('steelseries-clock')
-window.customElements.define('steelseries-doc-clock', ClockDoc)
+window.customElements.define('steelseries-doc-clock', generateDocumentation('steelseries-clock'))
+
+window.customElements.define('steelseries-doc-compass', generateDocumentation('steelseries-compass'))

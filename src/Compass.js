@@ -23,6 +23,9 @@ import {
   ForegroundType
 } from './definitions'
 
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
+
 const Compass = function (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
@@ -83,7 +86,7 @@ const Compass = function (canvas, parameters) {
 
   let tween
   let repainting = false
-  let value = 0
+  let value = parameters.value ?? 0
   const angleStep = RAD_FACTOR
   let angle = this.value
 
@@ -844,3 +847,37 @@ const Compass = function (canvas, parameters) {
 }
 
 export default Compass
+
+export class CompassElement extends BaseElement {
+  static get objectConstructor () { return Compass }
+
+  static get properties () {
+    return {
+      size: { type: Number, defaultValue: 200 },
+      value: { type: Number, defaultValue: 0 },
+      frameDesign: { type: String, objectEnum: FrameDesign, defaultValue: 'METAL' },
+      noFrameVisible: { type: Boolean, defaultValue: false },
+      backgroundColor: { type: String, objectEnum: BackgroundColor, defaultValue: 'DARK_GRAY' },
+      noBackgroundVisible: { type: Boolean, defaultValue: false },
+      pointerType: { type: String, objectEnum: PointerType, defaultValue: 'TYPE1' },
+      pointerColor: { type: String, objectEnum: ColorDef, defaultValue: 'GRAY' },
+      knobType: { type: String, objectEnum: KnobType, defaultValue: 'METAL_KNOB' },
+      knobStyle: { type: String, objectEnum: KnobStyle, defaultValue: 'BLACK' },
+      foregroundType: { type: String, objectEnum: ForegroundType, defaultValue: 'TYPE1' },
+      noForegroundVisible: { type: Boolean, defaultValue: false },
+      pointSymbols: { type: Array, defaultValue: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'] },
+      noPointSymbolsVisible: { type: Boolean, defaultValue: false },
+      degreeScale: { type: Boolean, defaultValue: false },
+      noRoseVisible: { type: Boolean, defaultValue: false },
+      rotateFace: { type: Boolean, defaultValue: false }
+    }
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.size}" height="${this.size}"></canvas>
+    `
+  }
+}
+
+window.customElements.define('steelseries-compass', CompassElement)
