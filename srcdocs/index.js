@@ -23,3 +23,5 @@ window.customElements.define('steelseries-doc-level', generateDocumentation('ste
 window.customElements.define('steelseries-doc-lightbulb', generateDocumentation('steelseries-lightbulb', { lightOn: true }))
 
 window.customElements.define('steelseries-doc-linear', generateDocumentation('steelseries-linear', { value: 75 }))
+
+window.customElements.define('steelseries-doc-linear-bargraph', generateDocumentation('steelseries-linear-bargraph', { value: 75 }))
