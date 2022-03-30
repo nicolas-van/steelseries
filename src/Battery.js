@@ -1,5 +1,8 @@
 import { rgbaColor, gradientWrapper, getCanvasContext } from './tools'
 
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
+
 const Battery = function (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
@@ -196,3 +199,22 @@ const Battery = function (canvas, parameters) {
 }
 
 export default Battery
+
+export class BatteryElement extends BaseElement {
+  static get objectConstructor () { return Battery }
+
+  static get properties () {
+    return {
+      size: { type: Number, defaultValue: 80 },
+      value: { type: Number, defaultValue: 0 }
+    }
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.size}" height="${Math.ceil(this.size * 0.45)}"></canvas>
+    `
+  }
+}
+
+window.customElements.define('steelseries-battery', BatteryElement)

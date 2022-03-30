@@ -2,6 +2,7 @@
 import { LitElement, html } from 'lit'
 import { unsafeHTML } from 'lit/directives/unsafe-html.js'
 import '../src/steelseries.js'
+import _ from 'lodash-es'
 
 export function generateDocumentation (elementName) {
   const sampleElement = document.createElement(elementName)
@@ -27,6 +28,8 @@ export function generateDocumentation (elementName) {
     }
 
     render () {
+      const accId = _.uniqueId('acc')
+      const collId = _.uniqueId('coll')
       const htm = (() => {
         let htm = `<${elementName}`
         for (const key of keys) {
@@ -37,7 +40,7 @@ export function generateDocumentation (elementName) {
           } else {
             if (this.values[key] !== defaultValues[key]) {
               function escape (htmlStr) {
-                return htmlStr.replace(/&/g, '&amp;')
+                return ('' + htmlStr).replace(/&/g, '&amp;')
                   .replace(/</g, '&lt;')
                   .replace(/>/g, '&gt;')
                   .replace(/"/g, '&quot;')
@@ -64,14 +67,14 @@ export function generateDocumentation (elementName) {
               </div>
             </div>
             
-            <div class="accordion" id="parametersAccordion">
+            <div class="accordion" id="${accId}">
               <div class="accordion-item">
                 <h5 class="accordion-header">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#${collId}">
                     Parameters
                   </button>
                 </h5>
-                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#parametersAccordion">
+                <div id="${collId}" class="accordion-collapse collapse" data-bs-parent="#${accId}">
                   <div class="accordion-body">
                     <div class="row">
                       ${keys.map((key) => {
