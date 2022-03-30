@@ -36,7 +36,14 @@ export function generateDocumentation (elementName) {
             }
           } else {
             if (this.values[key] !== defaultValues[key]) {
-              htm += ` ${key}="${this.values[key]}"`
+              function escape(htmlStr) {
+                return htmlStr.replace(/&/g, '&amp;')
+                  .replace(/</g, '&lt;')
+                  .replace(/>/g, '&gt;')
+                  .replace(/"/g, '&quot;')
+                  .replace(/'/g, '&#39;')
+              }
+              htm += ` ${key}="${escape(this.values[key])}"`
             }
           }
         }
@@ -46,10 +53,11 @@ export function generateDocumentation (elementName) {
       return html`
         <div class="card">
           <div class="card-body">
-            <h2 class="card-title">&lt;${elementName}&gt;</h2>
+            <h3 class="card-title">&lt;${elementName}&gt;</h3>
             <div class="text-center">
               ${unsafeHTML(htm)}
             </div>
+            <h5>Code</h5>
             <div class="card">
               <div class="card-body">
                 <pre><code>${htm}</code></pre>
@@ -58,11 +66,11 @@ export function generateDocumentation (elementName) {
             
             <div class="accordion" id="parametersAccordion">
               <div class="accordion-item">
-                <h2 class="accordion-header">
+                <h5 class="accordion-header">
                   <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
                     Parameters
                   </button>
-                </h2>
+                </h5>
                 <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#parametersAccordion">
                   <div class="accordion-body">
                     <div class="row">
