@@ -3,6 +3,9 @@ import { getCanvasContext, lcdFontName, stdFontName } from './tools'
 
 import { LcdColor } from './definitions'
 
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
+
 const DisplayMulti = function (canvas, parameters) {
   parameters = parameters || {}
   let width = undefined === parameters.width ? 0 : parameters.width
@@ -223,3 +226,35 @@ const DisplayMulti = function (canvas, parameters) {
 }
 
 export default DisplayMulti
+
+export class DisplayMultiElement extends BaseElement {
+  static get objectConstructor () { return DisplayMulti }
+
+  static get properties () {
+    return {
+      width: { type: Number, defaultValue: 200 },
+      height: { type: Number, defaultValue: 80 },
+      value: { type: Number, defaultValue: 0 },
+      altValue: { type: Number, defaultValue: 0 },
+      lcdColor: { type: String, objectEnum: LcdColor, defaultValue: 'STANDARD' },
+      lcdDecimals: { type: Number, defaultValue: 2 },
+      headerString: { type: String, defaultValue: '' },
+      headerStringVisible: { type: Boolean, defaultValue: false },
+      detailString: { type: String, defaultValue: '' },
+      detailStringVisible: { type: Boolean, defaultValue: false },
+      noLinkAltValue: { type: Boolean, defaultValue: false },
+      unitString: { type: String, defaultValue: '' },
+      unitStringVisible: { type: Boolean, defaultValue: false },
+      digitalFont: { type: Boolean, defaultValue: false },
+      noValuesNumeric: { type: Boolean, defaultValue: false }
+    }
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.width}" height="${this.height}"></canvas>
+    `
+  }
+}
+
+window.customElements.define('steelseries-display-multi', DisplayMultiElement)

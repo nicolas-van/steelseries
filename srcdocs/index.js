@@ -9,3 +9,5 @@ window.customElements.define('steelseries-doc-battery', generateDocumentation('s
 window.customElements.define('steelseries-doc-clock', generateDocumentation('steelseries-clock'))
 
 window.customElements.define('steelseries-doc-compass', generateDocumentation('steelseries-compass'))
+
+window.customElements.define('steelseries-doc-display-multi', generateDocumentation('steelseries-display-multi'))
