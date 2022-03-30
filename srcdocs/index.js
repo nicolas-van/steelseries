@@ -37,3 +37,5 @@ window.customElements.define('steelseries-doc-radial-vertical', generateDocument
 window.customElements.define('steelseries-doc-stopwatch', generateDocumentation('steelseries-stopwatch', { running: true }))
 
 window.customElements.define('steelseries-doc-trafficlight', generateDocumentation('steelseries-trafficlight', { redOn: true, yellowOn: true, greenOn: true }))
+
+window.customElements.define('steelseries-doc-wind-direction', generateDocumentation('steelseries-wind-direction', { valueLatest: 25, valueAverage: 75 }))
