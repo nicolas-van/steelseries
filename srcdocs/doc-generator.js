@@ -68,34 +68,40 @@ export function generateDocumentation (elementName) {
                     <div class="row">
                       ${keys.map((key) => {
                         return html` 
-                          <div class="col-md-4 mb-3">
+                          <div class="row col-md-6 mb-3">
                             ${(() => {
                               if (properties[key].objectEnum) {
                                 return html`
-                                  <label class="form-label">${key}</label>
-                                  <select class="form-select" @change=${(e) => { this.updateValue(key, e.target.value) }}>
-                                    ${Object.keys(properties[key].objectEnum).map((el) => {
-                                      return html`
-                                        <option value=${el} ?selected=${this.values[key] === el}>${el}</option>
-                                      `
-                                    })}
-                                  </select>
+                                  <label class="col-form-label col-sm-5">${key}</label>
+                                  <div class="col-sm-7">
+                                    <select class="form-select" @change=${(e) => { this.updateValue(key, e.target.value) }}>
+                                      ${Object.keys(properties[key].objectEnum).map((el) => {
+                                        return html`
+                                          <option value=${el} ?selected=${this.values[key] === el}>${el}</option>
+                                        `
+                                      })}
+                                    </select>
+                                  </div>
                                 `
                               } else if (properties[key].type === String) {
                                 return html`
-                                  <label class="form-label">${key}</label>
-                                  <input type="text" class="form-control" value="${this.values[key]}" @change=${(e) => { this.updateValue(key, e.target.value) }}>
+                                  <label class="col-form-label col-sm-5">${key}</label>
+                                  <div class="col-sm-7">
+                                    <input type="text" class="form-control" value="${this.values[key]}" @change=${(e) => { this.updateValue(key, e.target.value) }}>
+                                  </div>
                                 `
                               } else if (properties[key].type === Number) {
                                 return html`
-                                  <label class="form-label">${key}</label>
-                                  <input type="number" class="form-control" value="${this.values[key]}" @change=${(e) => { this.updateValue(key, parseFloat(e.target.value)) }}>
+                                  <label class="col-form-label col-sm-5">${key}</label>
+                                  <div class="col-sm-7">
+                                    <input type="number" class="form-control" value="${this.values[key]}" @change=${(e) => { this.updateValue(key, parseFloat(e.target.value)) }}>
+                                  </div>
                                 `
                               } else if (properties[key].type === Boolean) {
                                 return html`
-                                  <div class="form-check">
+                                  <label class="col-form-label col-sm-5">${key}</label>
+                                  <div class="col-sm-7">
                                     <input type="checkbox" class="form-check-input" ?checked="${this.values[key]}" @change=${(e) => { this.updateValue(key, e.target.checked) }}>
-                                    <label class="form-check-label">${key}</label>
                                   </div>
                                 `
                               } else {
