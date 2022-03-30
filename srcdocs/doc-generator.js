@@ -4,7 +4,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js'
 import '../src/steelseries.js'
 import _ from 'lodash-es'
 
-export function generateDocumentation (elementName) {
+export function generateDocumentation (elementName, docValues = {}) {
   const sampleElement = document.createElement(elementName)
   const properties = sampleElement.constructor.properties
   const keys = Object.keys(properties)
@@ -20,7 +20,7 @@ export function generateDocumentation (elementName) {
 
     constructor () {
       super()
-      this.values = { ...defaultValues }
+      this.values = { ...defaultValues, ...docValues }
     }
 
     createRenderRoot () {

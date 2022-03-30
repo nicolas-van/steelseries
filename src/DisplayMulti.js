@@ -41,6 +41,9 @@ const DisplayMulti = function (canvas, parameters) {
   let value = undefined === parameters.value ? 0 : parameters.value
   let altValue = undefined === parameters.altValue ? 0 : parameters.altValue
 
+  value = valuesNumeric ? parseFloat(value) : value
+  altValue = valuesNumeric ? parseFloat(altValue) : altValue
+
   // Get the canvas context and clear it
   const mainCtx = getCanvasContext(canvas)
   // Has a size been specified?
@@ -234,10 +237,11 @@ export class DisplayMultiElement extends BaseElement {
     return {
       width: { type: Number, defaultValue: 200 },
       height: { type: Number, defaultValue: 80 },
-      value: { type: Number, defaultValue: 0 },
-      altValue: { type: Number, defaultValue: 0 },
-      lcdColor: { type: String, objectEnum: LcdColor, defaultValue: 'STANDARD' },
+      value: { type: String, defaultValue: '' },
+      altValue: { type: String, defaultValue: '' },
+      valuesNumeric: { type: Boolean, defaultValue: false },
       lcdDecimals: { type: Number, defaultValue: 2 },
+      lcdColor: { type: String, objectEnum: LcdColor, defaultValue: 'STANDARD' },
       headerString: { type: String, defaultValue: '' },
       headerStringVisible: { type: Boolean, defaultValue: false },
       detailString: { type: String, defaultValue: '' },
@@ -245,8 +249,7 @@ export class DisplayMultiElement extends BaseElement {
       noLinkAltValue: { type: Boolean, defaultValue: false },
       unitString: { type: String, defaultValue: '' },
       unitStringVisible: { type: Boolean, defaultValue: false },
-      digitalFont: { type: Boolean, defaultValue: false },
-      noValuesNumeric: { type: Boolean, defaultValue: false }
+      digitalFont: { type: Boolean, defaultValue: false }
     }
   }
 
