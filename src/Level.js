@@ -20,6 +20,9 @@ import {
   ForegroundType
 } from './definitions'
 
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
+
 const Level = function (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
@@ -74,9 +77,9 @@ const Level = function (canvas, parameters) {
   let tween
   let repainting = false
 
-  let value = 0
+  let value = parameters.value ?? 0
   let stepValue = 0
-  let visibleValue = 0
+  let visibleValue = value
   const angleStep = TWO_PI / 360
   let angle = this.value
   const decimals = decimalsVisible ? 1 : 0
@@ -811,3 +814,32 @@ const Level = function (canvas, parameters) {
 }
 
 export default Level
+
+export class LevelElement extends BaseElement {
+  static get objectConstructor () { return Level }
+
+  static get properties () {
+    return {
+      size: { type: Number, defaultValue: 200 },
+      value: { type: Number, defaultValue: 0 },
+      decimalsVisible: { type: Boolean, defaultValue: false },
+      textOrientationFixed: { type: Boolean, defaultValue: false },
+      frameDesign: { type: String, objectEnum: FrameDesign, defaultValue: 'METAL' },
+      noFrameVisible: { type: Boolean, defaultValue: false },
+      backgroundColor: { type: String, objectEnum: BackgroundColor, defaultValue: 'DARK_GRAY' },
+      noBackgroundVisible: { type: Boolean, defaultValue: false },
+      pointerColor: { type: String, objectEnum: ColorDef, defaultValue: 'RED' },
+      foregroundType: { type: String, objectEnum: ForegroundType, defaultValue: 'TYPE1' },
+      noForegroundVisible: { type: Boolean, defaultValue: false },
+      rotateFace: { type: Boolean, defaultValue: false }
+    }
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.size}" height="${this.size}"></canvas>
+    `
+  }
+}
+
+window.customElements.define('steelseries-level', LevelElement)
