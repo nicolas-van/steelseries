@@ -36,7 +36,7 @@ export function generateDocumentation (elementName) {
             }
           } else {
             if (this.values[key] !== defaultValues[key]) {
-              function escape(htmlStr) {
+              function escape (htmlStr) {
                 return htmlStr.replace(/&/g, '&amp;')
                   .replace(/</g, '&lt;')
                   .replace(/>/g, '&gt;')
