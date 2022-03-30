@@ -12,6 +12,9 @@ import {
   ForegroundType
 } from './definitions'
 
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
+
 const Clock = function (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
@@ -834,3 +837,37 @@ const Clock = function (canvas, parameters) {
 }
 
 export default Clock
+
+export class ClockElement extends BaseElement {
+  static get objectConstructor () { return Clock }
+
+  static get properties () {
+    return {
+      size: { type: Number, defaultValue: 200 },
+      noIsAutomatic: { type: Boolean, defaultValue: false },
+      hour: { type: Number, defaultValue: 0 },
+      minute: { type: Number, defaultValue: 0 },
+      second: { type: Number, defaultValue: 0 },
+      frameDesign: { type: String, objectEnum: FrameDesign, defaultValue: 'METAL' },
+      noFrameVisible: { type: Boolean, defaultValue: false },
+      pointerType: { type: String, objectEnum: PointerType, defaultValue: 'TYPE1' },
+      pointerColor: { type: String, objectEnum: ColorDef, defaultValue: 'GRAY' },
+      backgroundColor: { type: String, objectEnum: BackgroundColor, defaultValue: 'ANTHRACITE' },
+      noBackgroundVisible: { type: Boolean, defaultValue: false },
+      foregroundType: { type: String, objectEnum: ForegroundType, defaultValue: 'TYPE1' },
+      noForegroundVisible: { type: Boolean, defaultValue: false },
+      secondMovesContinuous: { type: Boolean, defaultValue: false },
+      timeZoneOffsetHour: { type: Number, defaultValue: 0 },
+      timeZoneOffsetMinute: { type: Number, defaultValue: 0 },
+      noSecondPointerVisible: { type: Boolean, defaultValue: false }
+    }
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.size}" height="${this.size}"></canvas>
+    `
+  }
+}
+
+window.customElements.define('steelseries-clock', ClockElement)

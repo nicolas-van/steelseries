@@ -7,3 +7,6 @@ window.customElements.define('steelseries-doc-altimeter', AltimeterDoc)
 
 const BatteryDoc = generateDocumentation('steelseries-battery')
 window.customElements.define('steelseries-doc-battery', BatteryDoc)
+
+const ClockDoc = generateDocumentation('steelseries-clock')
+window.customElements.define('steelseries-doc-clock', ClockDoc)
