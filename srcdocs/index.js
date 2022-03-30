@@ -34,4 +34,6 @@ window.customElements.define('steelseries-doc-radial-bargraph', generateDocument
 
 window.customElements.define('steelseries-doc-radial-vertical', generateDocumentation('steelseries-radial-vertical', { value: 75 }))
 
-window.customElements.define('steelseries-doc-stopwatch', generateDocumentation('steelseries-stopwatch'))
+window.customElements.define('steelseries-doc-stopwatch', generateDocumentation('steelseries-stopwatch', { running: true }))
+
+window.customElements.define('steelseries-doc-trafficlight', generateDocumentation('steelseries-trafficlight', { redOn: true, yellowOn: true, greenOn: true }))

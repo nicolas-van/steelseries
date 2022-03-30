@@ -281,7 +281,7 @@ export class OdometerElement extends BaseElement {
 
   static get properties () {
     return {
-      height: { type: Number, defaultValue: 75 },
+      height: { type: Number, defaultValue: 50 },
       value: { type: Number, defaultValue: 0 },
       digits: { type: Number, defaultValue: 6 },
       decimals: { type: Number, defaultValue: 1 },

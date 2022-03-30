@@ -1,14 +1,17 @@
 import { getCanvasContext, TWO_PI, doc } from './tools'
 
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
+
 const Trafficlight = function (canvas, parameters) {
   parameters = parameters || {}
   let width = undefined === parameters.width ? 0 : parameters.width
   let height = undefined === parameters.height ? 0 : parameters.height
   //
   const mainCtx = getCanvasContext(canvas)
-  let redOn = false
-  let yellowOn = false
-  let greenOn = false
+  let redOn = parameters.redOn ?? false
+  let yellowOn = parameters.yellowOn ?? false
+  let greenOn = parameters.greenOn ?? false
   let initialized = false
   const housingBuffer = doc.createElement('canvas')
   const housingCtx = housingBuffer.getContext('2d')
@@ -1054,3 +1057,25 @@ const Trafficlight = function (canvas, parameters) {
 }
 
 export default Trafficlight
+
+export class TrafficlightElement extends BaseElement {
+  static get objectConstructor () { return Trafficlight }
+
+  static get properties () {
+    return {
+      width: { type: Number, defaultValue: 75 },
+      height: { type: Number, defaultValue: 200 },
+      greenOn: { type: Boolean, defaultValue: false },
+      yellowOn: { type: Boolean, defaultValue: false },
+      redOn: { type: Boolean, defaultValue: false }
+    }
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.width}" height="${this.height}"></canvas>
+    `
+  }
+}
+
+window.customElements.define('steelseries-trafficlight', TrafficlightElement)
