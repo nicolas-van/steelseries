@@ -42,6 +42,9 @@ import {
 
 import Odometer from './Odometer'
 
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
+
 const Radial = function (canvas, parameters) {
   parameters = parameters || {}
   const gaugeType =
@@ -192,8 +195,8 @@ const Radial = function (canvas, parameters) {
     audioElement.setAttribute('preload', 'auto')
   }
 
-  let value = minValue
-  let odoValue = minValue
+  let value = parameters.value ?? minValue
+  let odoValue = parameters.odoValue ?? minValue
   const self = this
 
   // Properties
@@ -1723,3 +1726,61 @@ const Radial = function (canvas, parameters) {
 }
 
 export default Radial
+
+export class RadialElement extends BaseElement {
+  static get objectConstructor () { return Radial }
+
+  static get properties () {
+    return {
+      size: { type: Number, defaultValue: 200 },
+      value: { type: Number, defaultValue: 0 },
+      odoValue: { type: Number, defaultValue: 0 },
+      minValue: { type: Number, defaultValue: 0 },
+      maxValue: { type: Number, defaultValue: 100 },
+      threshold: { type: Number, defaultValue: 50 },
+      gaugeType: { type: String, objectEnum: GaugeType, defaultValue: 'TYPE1' },
+      noNiceScale: { type: Boolean, defaultValue: false },
+      titleString: { type: String, defaultValue: '' },
+      unitString: { type: String, defaultValue: '' },
+      frameDesign: { type: String, objectEnum: FrameDesign, defaultValue: 'METAL' },
+      noFrameVisible: { type: Boolean, defaultValue: false },
+      backgroundColor: { type: String, objectEnum: BackgroundColor, defaultValue: 'DARK_GRAY' },
+      noBackgroundVisible: { type: Boolean, defaultValue: false },
+      pointerType: { type: String, objectEnum: PointerType, defaultValue: 'TYPE1' },
+      pointerColor: { type: String, objectEnum: ColorDef, defaultValue: 'RED' },
+      knobType: { type: String, objectEnum: KnobType, defaultValue: 'METAL_KNOB' },
+      knobStyle: { type: String, objectEnum: KnobStyle, defaultValue: 'BLACK' },
+      lcdColor: { type: String, objectEnum: LcdColor, defaultValue: 'STANDARD' },
+      noLcdVisible: { type: Boolean, defaultValue: false },
+      lcdDecimals: { type: Number, defaultValue: 2 },
+      digitalFont: { type: Boolean, defaultValue: false },
+      fractionalScaleDecimals: { type: Number, defaultValue: 1 },
+      ledColor: { type: String, objectEnum: LedColor, defaultValue: 'RED_LED' },
+      noLedVisible: { type: Boolean, defaultValue: false },
+      userLedColor: { type: String, objectEnum: LedColor, defaultValue: 'GREEN_LED' },
+      userLedVisible: { type: Boolean, defaultValue: false },
+      noThresholdVisible: { type: Boolean, defaultValue: false },
+      noThresholdRising: { type: Boolean, defaultValue: false },
+      minMeasuredValueVisible: { type: Boolean, defaultValue: false },
+      maxMeasuredValueVisible: { type: Boolean, defaultValue: false },
+      labelNumberFormat: { type: String, objectEnum: LabelNumberFormat, defaultValue: 'STANDARD' },
+      foregroundType: { type: String, objectEnum: ForegroundType, defaultValue: 'TYPE1' },
+      noForegroundVisible: { type: Boolean, defaultValue: false },
+      playAlarm: { type: Boolean, defaultValue: false },
+      alarmSound: { type: Boolean, defaultValue: false },
+      tickLabelOrientation: { type: String, objectEnum: TickLabelOrientation, defaultValue: 'TANGENT' },
+      trendVisible: { type: Boolean, defaultValue: false },
+      useOdometer: { type: Boolean, defaultValue: false },
+      odometerUseValue: { type: Boolean, defaultValue: false },
+      fullScaleDeflectionTime: { type: Number, defaultValue: 2.5 }
+    }
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.size}" height="${this.size}"></canvas>
+    `
+  }
+}
+
+window.customElements.define('steelseries-radial', RadialElement)
