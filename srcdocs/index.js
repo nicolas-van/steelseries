@@ -32,4 +32,6 @@ window.customElements.define('steelseries-doc-radial', generateDocumentation('st
 
 window.customElements.define('steelseries-doc-radial-bargraph', generateDocumentation('steelseries-radial-bargraph', { value: 75, gaugeType: 'TYPE3' }))
 
-window.customElements.define('steelseries-doc-radial-vertical', generateDocumentation('steelseries-radial-vertical', { value: 75, gaugeType: 'TYPE3' }))
+window.customElements.define('steelseries-doc-radial-vertical', generateDocumentation('steelseries-radial-vertical', { value: 75 }))
+
+window.customElements.define('steelseries-doc-stopwatch', generateDocumentation('steelseries-stopwatch'))

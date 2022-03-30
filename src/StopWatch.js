@@ -18,6 +18,9 @@ import {
   ForegroundType
 } from './definitions'
 
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
+
 const Stopwatch = function (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
@@ -805,7 +808,37 @@ const Stopwatch = function (canvas, parameters) {
   start = new Date().getTime()
   tickTock()
 
+  if (parameters.running ?? false) {
+    this.start()
+  }
+
   return this
 }
 
 export default Stopwatch
+
+export class StopwatchElement extends BaseElement {
+  static get objectConstructor () { return Stopwatch }
+
+  static get properties () {
+    return {
+      size: { type: Number, defaultValue: 200 },
+      running: { type: Boolean, defaultValue: false },
+      frameDesign: { type: String, objectEnum: FrameDesign, defaultValue: 'METAL' },
+      noFrameVisible: { type: Boolean, defaultValue: false },
+      pointerColor: { type: String, objectEnum: ColorDef, defaultValue: 'BLACK' },
+      backgroundColor: { type: String, objectEnum: BackgroundColor, defaultValue: 'DARK_GRAY' },
+      noBackgroundVisible: { type: Boolean, defaultValue: false },
+      foregroundType: { type: String, objectEnum: ForegroundType, defaultValue: 'TYPE1' },
+      noForegroundVisible: { type: Boolean, defaultValue: false }
+    }
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.size}" height="${this.size}"></canvas>
+    `
+  }
+}
+
+window.customElements.define('steelseries-stopwatch', StopwatchElement)
