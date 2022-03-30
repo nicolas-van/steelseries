@@ -1,6 +1,9 @@
 import Tween from './tween.js'
 import { createBuffer, requestAnimFrame, getCanvasContext } from './tools'
 
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
+
 const Odometer = function (canvas, parameters) {
   parameters = parameters || {}
 
@@ -272,3 +275,30 @@ const Odometer = function (canvas, parameters) {
 }
 
 export default Odometer
+
+export class OdometerElement extends BaseElement {
+  static get objectConstructor () { return Odometer }
+
+  static get properties () {
+    return {
+      height: { type: Number, defaultValue: 75 },
+      value: { type: Number, defaultValue: 0 },
+      digits: { type: Number, defaultValue: 6 },
+      decimals: { type: Number, defaultValue: 1 },
+      decimalBackColor: { type: String, defaultValue: '#F0F0F0' },
+      decimalForeColor: { type: String, defaultValue: '#F01010' },
+      font: { type: String, defaultValue: 'sans-serif' },
+      valueBackColor: { type: String, defaultValue: '#050505' },
+      valueForeColor: { type: String, defaultValue: '#F8F8F8' },
+      wobbleFactor: { type: Number, defaultValue: 0.07 }
+    }
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.width}" height="${this.height}"></canvas>
+    `
+  }
+}
+
+window.customElements.define('steelseries-odometer', OdometerElement)
