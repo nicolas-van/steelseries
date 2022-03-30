@@ -19,3 +19,5 @@ window.customElements.define('steelseries-doc-horizon', generateDocumentation('s
 window.customElements.define('steelseries-doc-led', generateDocumentation('steelseries-led', { ledOn: true, blinking: true }))
 
 window.customElements.define('steelseries-doc-level', generateDocumentation('steelseries-level', { value: 10 }))
+
+window.customElements.define('steelseries-doc-lightbulb', generateDocumentation('steelseries-lightbulb', { lightOn: true }))
