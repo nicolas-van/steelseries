@@ -53,17 +53,13 @@ const Stopwatch = function (canvas, parameters) {
   const customLayer =
     undefined === parameters.customLayer ? null : parameters.customLayer
 
-  let minutePointerAngle = 0
-  let secondPointerAngle = 0
+  let seconds = parameters.seconds ?? 0
+
   let tickTimer
   const ANGLE_STEP = 6
   const self = this
 
-  let start = 0
-  let currentMilliSeconds = 0
-  let minutes = 0
-  let seconds = 0
-  let milliSeconds = 0
+  let start
   let running = false
   let lap = false
   // Get the canvas context
@@ -85,6 +81,9 @@ const Stopwatch = function (canvas, parameters) {
 
   // Buffer for static foreground painting code
   let foregroundContext
+
+  let minutePointerAngle
+  let secondPointerAngle
 
   const drawTickmarksImage = function (
     ctx,
@@ -462,13 +461,8 @@ const Stopwatch = function (canvas, parameters) {
   }
 
   const calculateAngles = function () {
-    currentMilliSeconds = new Date().getTime() - start
-    secondPointerAngle = (currentMilliSeconds * ANGLE_STEP) / 1000
-    minutePointerAngle = (secondPointerAngle % 10800) / 30
-
-    minutes = (currentMilliSeconds / 60000) % 30
-    seconds = (currentMilliSeconds / 1000) % 60
-    milliSeconds = currentMilliSeconds % 1000
+    secondPointerAngle = seconds * ANGLE_STEP
+    minutePointerAngle = (seconds / 60) * ANGLE_STEP * 2
   }
 
   const init = function (parameters) {
@@ -584,6 +578,7 @@ const Stopwatch = function (canvas, parameters) {
 
   const tickTock = function () {
     if (!lap) {
+      seconds = (new Date().getTime() / 1000) - start
       calculateAngles()
       self.repaint()
     }
@@ -602,7 +597,7 @@ const Stopwatch = function (canvas, parameters) {
   this.start = function () {
     if (!running) {
       running = true
-      start = new Date().getTime() - currentMilliSeconds
+      start = (new Date().getTime() / 1000) - seconds
       tickTock()
     }
     return this
@@ -613,7 +608,6 @@ const Stopwatch = function (canvas, parameters) {
     if (running) {
       running = false
       clearTimeout(tickTimer)
-      // calculateAngles();
     }
     if (lap) {
       lap = false
@@ -630,7 +624,7 @@ const Stopwatch = function (canvas, parameters) {
       lap = false
       clearTimeout(tickTimer)
     }
-    start = new Date().getTime()
+    start = (new Date().getTime() / 1000)
     calculateAngles()
     this.repaint()
     return this
@@ -647,7 +641,7 @@ const Stopwatch = function (canvas, parameters) {
   }
 
   this.getMeasuredTime = function () {
-    return minutes + ':' + seconds + ':' + milliSeconds
+    return Math.floor(seconds / 60) + ':' + Math.floor(seconds % 60) + ':' + Math.floor((seconds * 1000) % 1000)
   }
 
   this.setFrameDesign = function (newFrameDesign) {
@@ -805,8 +799,8 @@ const Stopwatch = function (canvas, parameters) {
   foregroundContext = foregroundBuffer.getContext('2d')
 
   // Visualize the component
-  start = new Date().getTime()
-  tickTock()
+  calculateAngles()
+  this.repaint()
 
   if (parameters.running ?? false) {
     this.start()
@@ -823,6 +817,7 @@ export class StopwatchElement extends BaseElement {
   static get properties () {
     return {
       size: { type: Number, defaultValue: 200 },
+      seconds: { type: Number, defaultValue: 0 },
       running: { type: Boolean, defaultValue: false },
       frameDesign: { type: String, objectEnum: FrameDesign, defaultValue: 'METAL' },
       noFrameVisible: { type: Boolean, defaultValue: false },
