@@ -13,3 +13,5 @@ window.customElements.define('steelseries-doc-compass', generateDocumentation('s
 window.customElements.define('steelseries-doc-display-multi', generateDocumentation('steelseries-display-multi', { value: 'text1', altValue: 'text2' }))
 
 window.customElements.define('steelseries-doc-display-single', generateDocumentation('steelseries-display-single', { value: 'text' }))
+
+window.customElements.define('steelseries-doc-horizon', generateDocumentation('steelseries-horizon'))

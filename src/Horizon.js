@@ -21,6 +21,9 @@ import {
   ForegroundType
 } from './definitions'
 
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
+
 const Horizon = function (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
@@ -46,8 +49,8 @@ const Horizon = function (canvas, parameters) {
   let tweenRoll
   let tweenPitch
   let repainting = false
-  let roll = 0
-  let pitch = 0
+  let roll = parameters.roll ?? 0
+  let pitch = parameters.pitch ?? 0
   const pitchPixel = (PI * size) / 360
   let pitchOffset = 0
   let upsidedown = false
@@ -634,3 +637,28 @@ const Horizon = function (canvas, parameters) {
 }
 
 export default Horizon
+
+export class HorizonElement extends BaseElement {
+  static get objectConstructor () { return Horizon }
+
+  static get properties () {
+    return {
+      size: { type: Number, defaultValue: 200 },
+      roll: { type: Number, defaultValue: 0 },
+      pitch: { type: Number, defaultValue: 0 },
+      frameDesign: { type: String, objectEnum: FrameDesign, defaultValue: 'METAL' },
+      noFrameVisible: { type: Boolean, defaultValue: false },
+      foregroundType: { type: String, objectEnum: ForegroundType, defaultValue: 'TYPE1' },
+      noForegroundVisible: { type: Boolean, defaultValue: false },
+      pointerColor: { type: String, objectEnum: ColorDef, defaultValue: 'GRAY' }
+    }
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.size}" height="${this.size}"></canvas>
+    `
+  }
+}
+
+window.customElements.define('steelseries-horizon', HorizonElement)
