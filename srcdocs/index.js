@@ -29,3 +29,5 @@ window.customElements.define('steelseries-doc-linear-bargraph', generateDocument
 window.customElements.define('steelseries-doc-odometer', generateDocumentation('steelseries-odometer', { value: 75.55 }))
 
 window.customElements.define('steelseries-doc-radial', generateDocumentation('steelseries-radial', { value: 75, gaugeType: 'TYPE3' }))
+
+window.customElements.define('steelseries-doc-radial-bargraph', generateDocumentation('steelseries-radial-bargraph', { value: 75, gaugeType: 'TYPE3' }))
