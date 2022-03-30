@@ -3,6 +3,9 @@ import { getCanvasContext, doc } from './tools'
 
 import { LedColor } from './definitions'
 
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
+
 const Led = function (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
@@ -38,7 +41,7 @@ const Led = function (canvas, parameters) {
   const ledContextOff = ledBufferOff.getContext('2d')
 
   // Buffer for current led painting code
-  let ledBuffer = ledBufferOff
+  let ledBuffer = parameters.ledOn ?? false ? ledBufferOn : ledBufferOff
 
   const init = function () {
     initialized = true
@@ -120,7 +123,32 @@ const Led = function (canvas, parameters) {
 
   repaint()
 
+  if (parameters.blinking) {
+    this.blink(true)
+  }
+
   return this
 }
 
 export default Led
+
+export class LedElement extends BaseElement {
+  static get objectConstructor () { return Led }
+
+  static get properties () {
+    return {
+      size: { type: Number, defaultValue: 50 },
+      blinking: { type: Boolean, defaultValue: false },
+      ledOn: { type: Boolean, defaultValue: false },
+      ledColor: { type: String, objectEnum: LedColor, defaultValue: 'RED_LED' }
+    }
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.size}" height="${this.size}"></canvas>
+    `
+  }
+}
+
+window.customElements.define('steelseries-led', LedElement)

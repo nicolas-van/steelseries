@@ -14,4 +14,6 @@ window.customElements.define('steelseries-doc-display-multi', generateDocumentat
 
 window.customElements.define('steelseries-doc-display-single', generateDocumentation('steelseries-display-single', { value: 'text' }))
 
-window.customElements.define('steelseries-doc-horizon', generateDocumentation('steelseries-horizon'))
+window.customElements.define('steelseries-doc-horizon', generateDocumentation('steelseries-horizon', { roll: 10, pitch: 10 }))
+
+window.customElements.define('steelseries-doc-led', generateDocumentation('steelseries-led', { ledOn: true, blinking: true }))
