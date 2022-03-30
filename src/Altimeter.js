@@ -930,21 +930,20 @@ export class AltimeterElement extends LitElement {
     return {
       size: { type: Number },
       value: { type: Number },
-      animated: { type: Boolean },
-      frameDesign: { type: String },
-      frameVisible: { type: Boolean },
-      backgroundColor: { type: String },
-      backgroundVisible: { type: Boolean },
+      frameDesign: { type: String, enum: Object.keys(FrameDesign) },
+      noFrameVisible: { type: Boolean },
+      backgroundColor: { type: String, enum: Object.keys(BackgroundColor) },
+      noBackgroundVisible: { type: Boolean },
       titleString: { type: String },
       unitString: { type: String },
       unitAltPos: { type: Boolean },
-      knobType: { type: String },
-      knobStyle: { type: String },
-      lcdColor: { type: String },
-      lcdVisible: { type: Boolean },
+      knobType: { type: String, enum: Object.keys(KnobType) },
+      knobStyle: { type: String, enum: Object.keys(KnobStyle) },
+      lcdColor: { type: String, enum: Object.keys(LcdColor) },
+      noLcdVisible: { type: Boolean },
       digitalFont: { type: Boolean },
-      foregroundType: { type: String },
-      foregroundVisible: { type: Boolean }
+      foregroundType: { type: String, enum: Object.keys(ForegroundType) },
+      noForegroundVisible: { type: Boolean }
     }
   }
 
@@ -953,19 +952,19 @@ export class AltimeterElement extends LitElement {
     this.size = 200
     this.value = 0
     this.frameDesign = 'METAL'
-    this.frameVisible = true
+    this.noFrameVisible = false
     this.backgroundColor = 'DARK_GRAY'
-    this.backgroundVisible = true
+    this.noBackgroundVisible = false
     this.titleString = ''
     this.unitString = ''
     this.unitAltPos = false
     this.knobType = 'METAL_KNOB'
     this.knobStyle = 'BLACK'
     this.lcdColor = 'BLACK'
-    this.lcdVisible = true
+    this.noLcdVisible = false
     this.digitalFont = false
     this.foregroundType = 'TYPE1'
-    this.foregroundVisible = true
+    this.noForegroundVisible = false
   }
 
   render () {
@@ -976,24 +975,23 @@ export class AltimeterElement extends LitElement {
 
   updated () {
     const canvas = this.renderRoot.querySelector('canvas')
-    console.log('this', this.backgroundVisible)
     new Altimeter(canvas, {
       size: this.size,
       value: this.value,
       frameDesign: FrameDesign[this.frameDesign] ?? FrameDesign.METAL,
-      frameVisible: this.frameVisible,
+      frameVisible: !this.noFrameVisible,
       backgroundColor: BackgroundColor[this.backgroundColor] ?? BackgroundColor.DARK_GRAY,
-      backgroundVisible: this.backgroundVisible,
+      backgroundVisible: !this.noBackgroundVisible,
       titleString: this.titleString,
       unitString: this.unitString,
       unitAltPos: this.unitAltPos,
       knobType: KnobType[this.knobType] ?? KnobType.METAL_KNOB,
       knobStyle: KnobStyle[this.knobStyle] ?? KnobStyle.BLACK,
       lcdColor: LcdColor[this.lcdColor] ?? LcdColor.BLACK,
-      lcdVisible: this.lcdVisible,
+      lcdVisible: !this.noLcdVisible,
       digitalFont: this.digitalFont,
       foregroundType: ForegroundType[this.foregroundType] ?? ForegroundType.TYPE1,
-      foregroundVisible: this.foregroundVisible
+      foregroundVisible: !this.noForegroundVisible
     })
   }
 }
