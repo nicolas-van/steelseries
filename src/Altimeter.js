@@ -1,4 +1,4 @@
-import Tween from './tween.js'
+
 import drawFrame from './drawFrame'
 import drawBackground from './drawBackground'
 import drawRadialCustomImage from './drawRadialCustomImage'
@@ -7,7 +7,6 @@ import createLcdBackgroundImage from './createLcdBackgroundImage'
 import drawTitleImage from './drawTitleImage'
 import {
   createBuffer,
-  requestAnimFrame,
   getCanvasContext,
   TWO_PI,
   PI,
@@ -35,13 +34,13 @@ const Altimeter = function (canvas, parameters) {
   parameters = parameters || {}
   // parameters
   let size = undefined === parameters.size ? 0 : parameters.size
-  let frameDesign =
+  const frameDesign =
     undefined === parameters.frameDesign
       ? FrameDesign.METAL
       : parameters.frameDesign
   const frameVisible =
     undefined === parameters.frameVisible ? true : parameters.frameVisible
-  let backgroundColor =
+  const backgroundColor =
     undefined === parameters.backgroundColor
       ? BackgroundColor.DARK_GRAY
       : parameters.backgroundColor
@@ -49,9 +48,9 @@ const Altimeter = function (canvas, parameters) {
     undefined === parameters.backgroundVisible
       ? true
       : parameters.backgroundVisible
-  let titleString =
+  const titleString =
     undefined === parameters.titleString ? '' : parameters.titleString
-  let unitString =
+  const unitString =
     undefined === parameters.unitString ? '' : parameters.unitString
   const unitAltPos = parameters.unitAltPos ?? false
   const knobType =
@@ -60,13 +59,13 @@ const Altimeter = function (canvas, parameters) {
       : parameters.knobType
   const knobStyle =
     undefined === parameters.knobStyle ? KnobStyle.BLACK : parameters.knobStyle
-  let lcdColor =
+  const lcdColor =
     undefined === parameters.lcdColor ? LcdColor.BLACK : parameters.lcdColor
   const lcdVisible =
     undefined === parameters.lcdVisible ? true : parameters.lcdVisible
   const digitalFont =
     undefined === parameters.digitalFont ? false : parameters.digitalFont
-  let foregroundType =
+  const foregroundType =
     undefined === parameters.foregroundType
       ? ForegroundType.TYPE1
       : parameters.foregroundType
@@ -79,7 +78,7 @@ const Altimeter = function (canvas, parameters) {
   //
   const minValue = 0
   const maxValue = 10
-  let value = parameters.value ?? minValue
+  const value = parameters.value ?? minValue
   let value100 = 0
   let value1000 = 0
   let value10000 = 0
@@ -87,8 +86,6 @@ const Altimeter = function (canvas, parameters) {
   let angleStep1000ft
   let angleStep10000ft
   const tickLabelPeriod = 1 // Draw value at every 10th tickmark
-  let tween
-  let repainting = false
   const mainCtx = getCanvasContext(canvas) // Get the canvas context
   // Constants
   const TICKMARK_OFFSET = PI
@@ -97,28 +94,28 @@ const Altimeter = function (canvas, parameters) {
   // **************   Buffer creation  ********************
   // Buffer for the frame
   const frameBuffer = createBuffer(size, size)
-  let frameContext = frameBuffer.getContext('2d')
+  const frameContext = frameBuffer.getContext('2d')
   // Buffer for the background
   const backgroundBuffer = createBuffer(size, size)
-  let backgroundContext = backgroundBuffer.getContext('2d')
+  const backgroundContext = backgroundBuffer.getContext('2d')
 
   let lcdBuffer
 
   // Buffer for 10000ft pointer image painting code
   const pointer10000Buffer = createBuffer(size, size)
-  let pointer10000Context = pointer10000Buffer.getContext('2d')
+  const pointer10000Context = pointer10000Buffer.getContext('2d')
 
   // Buffer for 1000ft pointer image painting code
   const pointer1000Buffer = createBuffer(size, size)
-  let pointer1000Context = pointer1000Buffer.getContext('2d')
+  const pointer1000Context = pointer1000Buffer.getContext('2d')
 
   // Buffer for 100ft pointer image painting code
   const pointer100Buffer = createBuffer(size, size)
-  let pointer100Context = pointer100Buffer.getContext('2d')
+  const pointer100Context = pointer100Buffer.getContext('2d')
 
   // Buffer for static foreground painting code
   const foregroundBuffer = createBuffer(size, size)
-  let foregroundContext = foregroundBuffer.getContext('2d')
+  const foregroundContext = foregroundBuffer.getContext('2d')
   // End of variables
 
   // Get the canvas context and clear it
@@ -678,173 +675,7 @@ const Altimeter = function (canvas, parameters) {
     }
   }
 
-  const resetBuffers = function (buffers) {
-    buffers = buffers || {}
-    const resetFrame = undefined === buffers.frame ? false : buffers.frame
-    const resetBackground =
-      undefined === buffers.background ? false : buffers.background
-    const resetPointers =
-      undefined === buffers.pointers ? false : buffers.pointers
-    const resetForeground =
-      undefined === buffers.foreground ? false : buffers.foreground
-
-    if (resetFrame) {
-      frameBuffer.width = size
-      frameBuffer.height = size
-      frameContext = frameBuffer.getContext('2d')
-    }
-
-    if (resetBackground) {
-      backgroundBuffer.width = size
-      backgroundBuffer.height = size
-      backgroundContext = backgroundBuffer.getContext('2d')
-    }
-
-    if (resetPointers) {
-      pointer100Buffer.width = size
-      pointer100Buffer.height = size
-      pointer100Context = pointer100Buffer.getContext('2d')
-
-      pointer1000Buffer.width = size
-      pointer1000Buffer.height = size
-      pointer1000Context = pointer1000Buffer.getContext('2d')
-
-      pointer10000Buffer.width = size
-      pointer10000Buffer.height = size
-      pointer10000Context = pointer10000Buffer.getContext('2d')
-    }
-
-    if (resetForeground) {
-      foregroundBuffer.width = size
-      foregroundBuffer.height = size
-      foregroundContext = foregroundBuffer.getContext('2d')
-    }
-  }
-
-  //* *********************************** Public methods **************************************
-  this.setValue = function (newValue) {
-    value = parseFloat(newValue)
-    this.repaint()
-  }
-
-  this.getValue = function () {
-    return value
-  }
-
-  this.setValueAnimated = function (newValue, callback) {
-    newValue = parseFloat(newValue)
-    const targetValue = newValue < minValue ? minValue : newValue
-    const gauge = this
-    let time
-
-    if (value !== targetValue) {
-      if (undefined !== tween && tween.isPlaying) {
-        tween.stop()
-      }
-      // Allow 5 secs per 10,000ft
-      time = Math.max((Math.abs(value - targetValue) / 10000) * 5, 1)
-      tween = new Tween(
-        {},
-        '',
-        Tween.regularEaseInOut,
-        value,
-        targetValue,
-        time
-      )
-      // tween = new Tween(new Object(), '', Tween.strongEaseInOut, value, targetValue, 1);
-      tween.onMotionChanged = function (event) {
-        value = event.target._pos
-        if (!repainting) {
-          repainting = true
-          requestAnimFrame(gauge.repaint)
-        }
-      }
-
-      // do we have a callback function to process?
-      if (callback && typeof callback === 'function') {
-        tween.onMotionFinished = callback
-      }
-
-      tween.start()
-    }
-    return this
-  }
-
-  this.setFrameDesign = function (newFrameDesign) {
-    resetBuffers({
-      frame: true
-    })
-    frameDesign = newFrameDesign
-    init({
-      frame: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setBackgroundColor = function (newBackgroundColor) {
-    resetBuffers({
-      background: true,
-      pointer: true // type2 & 13 depend on background
-    })
-    backgroundColor = newBackgroundColor
-    init({
-      background: true, // type2 & 13 depend on background
-      pointer: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setForegroundType = function (newForegroundType) {
-    resetBuffers({
-      foreground: true
-    })
-    foregroundType = newForegroundType
-    init({
-      foreground: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setLcdColor = function (newLcdColor) {
-    lcdColor = newLcdColor
-    resetBuffers({
-      background: true
-    })
-    init({
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setTitleString = function (title) {
-    titleString = title
-    resetBuffers({
-      background: true
-    })
-    init({
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setUnitString = function (unit) {
-    unitString = unit
-    resetBuffers({
-      background: true
-    })
-    init({
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.repaint = function () {
+  const repaint = function () {
     if (!initialized) {
       init({
         frame: true,
@@ -918,12 +749,10 @@ const Altimeter = function (canvas, parameters) {
     if (foregroundVisible) {
       mainCtx.drawImage(foregroundBuffer, 0, 0)
     }
-
-    repainting = false
   }
 
   // Visualize the component
-  this.repaint()
+  repaint()
 
   return this
 }

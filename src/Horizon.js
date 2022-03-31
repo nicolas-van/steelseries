@@ -1,9 +1,8 @@
-import Tween from './tween.js'
+
 import drawFrame from './drawFrame'
 import drawForeground from './drawForeground'
 import {
   createBuffer,
-  requestAnimFrame,
   getCanvasContext,
   HALF_PI,
   TWO_PI,
@@ -31,13 +30,13 @@ import { scaleLinear } from 'd3-scale'
 const Horizon = function (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
-  let frameDesign =
+  const frameDesign =
     undefined === parameters.frameDesign
       ? FrameDesign.METAL
       : parameters.frameDesign
   const frameVisible =
     undefined === parameters.frameVisible ? true : parameters.frameVisible
-  let foregroundType =
+  const foregroundType =
     undefined === parameters.foregroundType
       ? ForegroundType.TYPE1
       : parameters.foregroundType
@@ -50,14 +49,9 @@ const Horizon = function (canvas, parameters) {
       ? ColorDef.WHITE
       : parameters.pointerColor
 
-  let tweenRoll
-  let tweenPitch
-  let repainting = false
-  let roll = parameters.roll ?? 0
-  let pitch = parameters.pitch ?? 0
+  const roll = parameters.roll ?? 0
+  const pitch = parameters.pitch ?? 0
   const pitchPixel = (PI * size) / 360
-  let pitchOffset = 0
-  let upsidedown = false
 
   // Get the canvas context and clear it
   const mainCtx = getCanvasContext(canvas)
@@ -81,19 +75,19 @@ const Horizon = function (canvas, parameters) {
   // **************   Buffer creation  ********************
   // Buffer for all static background painting code
   const backgroundBuffer = createBuffer(size, size)
-  let backgroundContext = backgroundBuffer.getContext('2d')
+  const backgroundContext = backgroundBuffer.getContext('2d')
 
   // Buffer for pointer image painting code
   const valueBuffer = createBuffer(size, size * PI)
-  let valueContext = valueBuffer.getContext('2d')
+  const valueContext = valueBuffer.getContext('2d')
 
   // Buffer for indicator painting code
   const indicatorBuffer = createBuffer(size * 0.037383, size * 0.056074)
-  let indicatorContext = indicatorBuffer.getContext('2d')
+  const indicatorContext = indicatorBuffer.getContext('2d')
 
   // Buffer for static foreground painting code
   const foregroundBuffer = createBuffer(size, size)
-  let foregroundContext = foregroundBuffer.getContext('2d')
+  const foregroundContext = foregroundBuffer.getContext('2d')
 
   // **************   Image creation  ********************
   const drawHorizonBackgroundImage = function (ctx) {
@@ -425,174 +419,7 @@ const Horizon = function (canvas, parameters) {
     }
   }
 
-  const resetBuffers = function () {
-    // Buffer for all static background painting code
-    backgroundBuffer.width = size
-    backgroundBuffer.height = size
-    backgroundContext = backgroundBuffer.getContext('2d')
-
-    // Buffer for pointer image painting code
-    valueBuffer.width = size
-    valueBuffer.height = size * PI
-    valueContext = valueBuffer.getContext('2d')
-
-    // Buffer for the indicator
-    indicatorBuffer.width = size * 0.037383
-    indicatorBuffer.height = size * 0.056074
-    indicatorContext = indicatorBuffer.getContext('2d')
-
-    // Buffer for static foreground painting code
-    foregroundBuffer.width = size
-    foregroundBuffer.height = size
-    foregroundContext = foregroundBuffer.getContext('2d')
-  }
-
-  //* *********************************** Public methods **************************************
-  this.setRoll = function (newRoll) {
-    newRoll = parseFloat(newRoll) % 360
-    if (roll !== newRoll) {
-      roll = newRoll
-      this.repaint()
-    }
-    return this
-  }
-
-  this.getRoll = function () {
-    return roll
-  }
-
-  this.setRollAnimated = function (newRoll, callback) {
-    const gauge = this
-    newRoll = parseFloat(newRoll) % 360
-    if (roll !== newRoll) {
-      if (undefined !== tweenRoll && tweenRoll.isPlaying) {
-        tweenRoll.stop()
-      }
-
-      tweenRoll = new Tween({}, '', Tween.regularEaseInOut, roll, newRoll, 1)
-
-      tweenRoll.onMotionChanged = function (event) {
-        roll = event.target._pos
-        if (!repainting) {
-          repainting = true
-          requestAnimFrame(gauge.repaint)
-        }
-      }
-
-      // do we have a callback function to process?
-      if (callback && typeof callback === 'function') {
-        tweenRoll.onMotionFinished = callback
-      }
-
-      tweenRoll.start()
-    }
-    return this
-  }
-
-  this.setPitch = function (newPitch) {
-    // constrain to range -180..180
-    // normal range -90..90 and -180..-90/90..180 indicate inverted
-    newPitch = ((parseFloat(newPitch) + 180 - pitchOffset) % 360) - 180
-    // pitch = -(newPitch + pitchOffset) % 180;
-    if (pitch !== newPitch) {
-      pitch = newPitch
-      if (pitch > 90) {
-        pitch = 90 - (pitch - 90)
-        if (!upsidedown) {
-          this.setRoll(roll - 180)
-        }
-        upsidedown = true
-      } else if (pitch < -90) {
-        pitch = -90 + (-90 - pitch)
-        if (!upsidedown) {
-          this.setRoll(roll + 180)
-        }
-        upsidedown = true
-      } else {
-        upsidedown = false
-      }
-      this.repaint()
-    }
-    return this
-  }
-
-  this.getPitch = function () {
-    return pitch
-  }
-
-  this.setPitchAnimated = function (newPitch, callback) {
-    const gauge = this
-    newPitch = parseFloat(newPitch)
-    // perform all range checking in setPitch()
-    if (pitch !== newPitch) {
-      if (undefined !== tweenPitch && tweenPitch.isPlaying) {
-        tweenPitch.stop()
-      }
-      tweenPitch = new Tween(
-        {},
-        '',
-        Tween.regularEaseInOut,
-        pitch,
-        newPitch,
-        1
-      )
-      tweenPitch.onMotionChanged = function (event) {
-        pitch = event.target._pos
-        if (pitch > 90) {
-          pitch = 90 - (pitch - 90)
-          if (!upsidedown) {
-            this.setRoll(roll - 180)
-          }
-          upsidedown = true
-        } else if (pitch < -90) {
-          pitch = -90 + (-90 - pitch)
-          if (!upsidedown) {
-            this.setRoll(roll + 180)
-          }
-          upsidedown = true
-        } else {
-          upsidedown = false
-        }
-        if (!repainting) {
-          repainting = true
-          requestAnimFrame(gauge.repaint)
-        }
-        gauge.setPitch(event.target._pos)
-      }
-
-      // do we have a callback function to process?
-      if (callback && typeof callback === 'function') {
-        tweenPitch.onMotionFinished = callback
-      }
-
-      tweenPitch.start()
-    }
-    return this
-  }
-
-  this.setPitchOffset = function (newPitchOffset) {
-    pitchOffset = parseFloat(newPitchOffset)
-    this.repaint()
-    return this
-  }
-
-  this.setFrameDesign = function (newFrameDesign) {
-    resetBuffers()
-    frameDesign = newFrameDesign
-    init()
-    this.repaint()
-    return this
-  }
-
-  this.setForegroundType = function (newForegroundType) {
-    resetBuffers()
-    foregroundType = newForegroundType
-    init()
-    this.repaint()
-    return this
-  }
-
-  this.repaint = function () {
+  const repaint = function () {
     if (!initialized) {
       init()
     }
@@ -635,7 +462,7 @@ const Horizon = function (canvas, parameters) {
   }
 
   // Visualize the component
-  this.repaint()
+  repaint()
 
   return this
 }

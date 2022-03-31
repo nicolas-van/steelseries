@@ -5,7 +5,6 @@ import {
   getColorValues,
   hsbToRgb,
   rgbToHsb,
-  requestAnimFrame,
   getCanvasContext,
   lcdFontName,
   stdFontName
@@ -20,7 +19,7 @@ const DisplaySingle = function (canvas, parameters) {
   parameters = parameters || {}
   let width = undefined === parameters.width ? 0 : parameters.width
   let height = undefined === parameters.height ? 0 : parameters.height
-  let lcdColor =
+  const lcdColor =
     undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor
   const lcdDecimals =
     undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals
@@ -41,20 +40,9 @@ const DisplaySingle = function (canvas, parameters) {
   const valuesNumeric =
     undefined === parameters.valuesNumeric ? true : parameters.valuesNumeric
   let value = undefined === parameters.value ? 0 : parameters.value
-  const alwaysScroll =
-    undefined === parameters.alwaysScroll ? false : parameters.alwaysScroll
-  const autoScroll =
-    undefined === parameters.autoScroll ? false : parameters.autoScroll
-  let section = undefined === parameters.section ? null : parameters.section
+  const section = undefined === parameters.section ? null : parameters.section
 
   value = valuesNumeric ? parseFloat(value) : value
-
-  let scrolling = false
-  let scrollX = 0
-  let scrollTimer
-  let repainting = false
-
-  const self = this
 
   // Get the canvas context and clear it
   const mainCtx = getCanvasContext(canvas)
@@ -72,7 +60,6 @@ const DisplaySingle = function (canvas, parameters) {
 
   const imageWidth = width
   const imageHeight = height
-  let textWidth = 0
 
   const fontHeight = Math.floor(imageHeight / 1.5)
   const stdFont = fontHeight + 'px ' + stdFontName
@@ -115,14 +102,12 @@ const DisplaySingle = function (canvas, parameters) {
     if (valuesNumeric) {
       // Numeric value
       let unitWidth = 0
-      textWidth = 0
       if (unitStringVisible) {
         mainCtx.font = Math.floor(imageHeight / 2.5) + 'px ' + stdFontName
         unitWidth = mainCtx.measureText(unitString).width
       }
       mainCtx.font = digitalFont ? lcdFont : stdFont
       const lcdText = value.toFixed(lcdDecimals)
-      textWidth = mainCtx.measureText(lcdText).width
       let vPos = 0.38
       if (headerStringVisible) {
         vPos = 0.52
@@ -130,7 +115,7 @@ const DisplaySingle = function (canvas, parameters) {
 
       mainCtx.fillText(
         lcdText,
-        imageWidth - unitWidth - 4 - scrollX,
+        imageWidth - unitWidth - 4,
         imageHeight * 0.5 + fontHeight * vPos
       )
 
@@ -138,7 +123,7 @@ const DisplaySingle = function (canvas, parameters) {
         mainCtx.font = Math.floor(imageHeight / 2.5) + 'px ' + stdFontName
         mainCtx.fillText(
           unitString,
-          imageWidth - 2 - scrollX,
+          imageWidth - 2,
           imageHeight * 0.5 + fontHeight * vPos
         )
       }
@@ -149,26 +134,9 @@ const DisplaySingle = function (canvas, parameters) {
       }
     } else {
       // Text value
-      textWidth = mainCtx.measureText(value).width
-      if (alwaysScroll || (autoScroll && textWidth > imageWidth - 4)) {
-        if (!scrolling) {
-          if (textWidth > imageWidth * 0.8) {
-            // leave 20% blank leading space to give time to read start of message
-            scrollX = imageWidth - textWidth - imageWidth * 0.2
-          } else {
-            scrollX = 0
-          }
-          scrolling = true
-          clearTimeout(scrollTimer) // kill any pending animate
-          scrollTimer = setTimeout(animate, 200)
-        }
-      } else if (autoScroll && textWidth <= imageWidth - 4) {
-        scrollX = 0
-        scrolling = false
-      }
       mainCtx.fillText(
         value,
-        imageWidth - 2 - scrollX,
+        imageWidth - 2,
         imageHeight * 0.5 + fontHeight * 0.38
       )
     }
@@ -302,22 +270,6 @@ const DisplaySingle = function (canvas, parameters) {
     )
   }
 
-  const animate = function () {
-    if (scrolling) {
-      if (scrollX > imageWidth) {
-        scrollX = -textWidth
-      }
-      scrollX += 2
-      scrollTimer = setTimeout(animate, 50)
-    } else {
-      scrollX = 0
-    }
-    if (!repainting) {
-      repainting = true
-      requestAnimFrame(self.repaint)
-    }
-  }
-
   // **************   Initialization  ********************
   const init = function () {
     let sectionIndex
@@ -341,48 +293,7 @@ const DisplaySingle = function (canvas, parameters) {
     }
   }
 
-  // **************   Public methods  ********************
-  this.setValue = function (newValue) {
-    if (value !== newValue) {
-      value = newValue
-      this.repaint()
-    }
-    return this
-  }
-
-  this.setLcdColor = function (newLcdColor) {
-    lcdColor = newLcdColor
-    init()
-    this.repaint()
-    return this
-  }
-
-  this.setSection = function (newSection) {
-    section = newSection
-    init({
-      background: true,
-      foreground: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setScrolling = function (scroll) {
-    if (scroll) {
-      if (scrolling) {
-        return
-      } else {
-        scrolling = scroll
-        animate()
-      }
-    } else {
-      // disable scrolling
-      scrolling = scroll
-    }
-    return this
-  }
-
-  this.repaint = function () {
+  const repaint = function () {
     if (!initialized) {
       init()
     }
@@ -412,12 +323,10 @@ const DisplaySingle = function (canvas, parameters) {
 
     // Draw lcd text
     drawLcdText(value, lcdTextColor)
-
-    repainting = false
   }
 
   // Visualize the component
-  this.repaint()
+  repaint()
 
   return this
 }

@@ -10,7 +10,7 @@ const DisplayMulti = function (canvas, parameters) {
   parameters = parameters || {}
   let width = undefined === parameters.width ? 0 : parameters.width
   let height = undefined === parameters.height ? 0 : parameters.height
-  let lcdColor =
+  const lcdColor =
     undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor
   const lcdDecimals =
     undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals
@@ -26,8 +26,6 @@ const DisplayMulti = function (canvas, parameters) {
     undefined === parameters.detailStringVisible
       ? false
       : parameters.detailStringVisible
-  const linkAltValue =
-    undefined === parameters.linkAltValue ? true : parameters.linkAltValue
   const unitString =
     undefined === parameters.unitString ? '' : parameters.unitString
   const unitStringVisible =
@@ -180,34 +178,7 @@ const DisplayMulti = function (canvas, parameters) {
     lcdBuffer = createLcdBackgroundImage(width, height, lcdColor)
   }
 
-  // **************   Public methods  ********************
-  this.setValue = function (newValue) {
-    if (value !== newValue) {
-      if (linkAltValue) {
-        altValue = value
-      }
-      value = newValue
-      this.repaint()
-    }
-    return this
-  }
-
-  this.setAltValue = function (altValueNew) {
-    if (altValue !== altValueNew) {
-      altValue = altValueNew
-      this.repaint()
-    }
-    return this
-  }
-
-  this.setLcdColor = function (newLcdColor) {
-    lcdColor = newLcdColor
-    init()
-    this.repaint()
-    return this
-  }
-
-  this.repaint = function () {
+  const repaint = function () {
     if (!initialized) {
       init()
     }
@@ -223,7 +194,7 @@ const DisplayMulti = function (canvas, parameters) {
   }
 
   // Visualize the component
-  this.repaint()
+  repaint()
 
   return this
 }
@@ -246,7 +217,6 @@ export class DisplayMultiElement extends BaseElement {
       headerStringVisible: { type: Boolean, defaultValue: false },
       detailString: { type: String, defaultValue: '' },
       detailStringVisible: { type: Boolean, defaultValue: false },
-      noLinkAltValue: { type: Boolean, defaultValue: false },
       unitString: { type: String, defaultValue: '' },
       unitStringVisible: { type: Boolean, defaultValue: false },
       digitalFont: { type: Boolean, defaultValue: false }

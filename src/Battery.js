@@ -10,7 +10,7 @@ import { scaleLinear } from 'd3-scale'
 const Battery = function (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
-  let value = undefined === parameters.value ? 50 : parameters.value
+  const value = undefined === parameters.value ? 50 : parameters.value
 
   // Get the canvas context and clear it
   const mainCtx = getCanvasContext(canvas)
@@ -177,27 +177,13 @@ const Battery = function (canvas, parameters) {
     ctx.fill()
   }
 
-  // **************   Public methods  ********************
-  this.setValue = function (newValue) {
-    newValue = newValue < 0 ? 0 : newValue > 100 ? 100 : newValue
-    if (value !== newValue) {
-      value = newValue
-      this.repaint()
-    }
-    return this
-  }
-
-  this.getValue = function () {
-    return value
-  }
-
-  this.repaint = function () {
+  const repaint = function () {
     mainCtx.clearRect(0, 0, mainCtx.canvas.width, mainCtx.canvas.height)
     createBatteryImage(mainCtx, imageWidth, imageHeight, value)
   }
 
   // Visualize the component
-  this.repaint()
+  repaint()
 
   return this
 }
