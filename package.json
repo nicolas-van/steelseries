@@ -1,7 +1,7 @@
 {
   "name": "steelseries",
   "version": "2.0.0",
-  "description": "A collection of gauge components for JavaScript.",
+  "description": "A collection of gauge web components",
   "keywords": [
     "gauge",
     "canvas",
