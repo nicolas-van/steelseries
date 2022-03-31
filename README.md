@@ -3,53 +3,44 @@
 
 [![Build Status](https://travis-ci.org/nicolas-van/steelseries.svg?branch=master)](https://travis-ci.org/nicolas-van/steelseries) [![npm version](https://img.shields.io/npm/v/steelseries.svg)](https://www.npmjs.com/package/steelseries) [![](https://github.com/nicolas-van/steelseries/workflows/Node%20CI/badge.svg)](https://github.com/nicolas-van/steelseries/actions)
 
-A collection of gauge components for JavaScript.
-
-[See the demo here](https://nicolas-van.github.io/steelseries/).
-
 ![gauges](./gauges.gif)
+      
+The steelseries library is a collection of gauges components related to navigation.
+
+These components are packed as web components, which means they do not necessitate knowledge in Javascript
+in order to be used on web pages. Just include the following snippet in your HTML file:
+
+```
+  <script type="module" src="https://cdn.jsdelivr.net/npm/steelseries@2.0.0-rc1/dist/steelseries.bundled.min.js">&lt;/script>
+```
+
+Then select one of the compoments displayed [in the documentation](https://nicolas-van.github.io/steelseries/), adjust the parameters as you see fit and copy paste the resulting
+code in your HTML. That's it, the component should now display correctly on your web page.
+
+[See the documentation here](https://nicolas-van.github.io/steelseries/).
 
 This project is a re-packaging of [HanSolo's SteelSeries-Canvas](https://github.com/HanSolo/SteelSeries-Canvas).
 
-## Installation
+## Development
 
-### Using npm
+### Installation
+
+#### Using jsdelivr
+
+https://www.jsdelivr.com/package/npm/steelseries
+
+#### Using npm
 
 ```bash
 npm install steelseries
 ```
 
 ```javascript
-import * as steelseries from "steelseries";
+import "steelseries"
 ```
 
-### Using a CDN
-
-Use unpkg: https://unpkg.com/steelseries .
-
-## Example
+### Example code
 
 ```html
-<!DOCTYPE html>
-<html>
-  <body>
-    <div>
-      <canvas id="myCanvas"></canvas>
-    </div>
-
-    <script src="./index.js"></script>
-  </body>
-</html>
+<steelseries-compass value="75"></steelseries-compass>
 ```
-
-```javascript
-import { Compass } from "steelseries";
-
-const compass = new Compass(document.querySelector("#myCanvas"), {
-  size: 200
-});
-```
-
-## Documentation
-
-Unfortunately there is no formal documentation :) . But you can take a look at the [Demo Website](https://nicolas-van.github.io/steelseries/) and [it's source code](https://github.com/nicolas-van/steelseries/tree/master/srcdocs).
