@@ -1,4 +1,14 @@
-Main Changes
+# Changelog
+
+## 2.0
+
+* Complete rewrite of the API to use web components.
+
+## 1.0
+
+* Re-packaging of the library for NPM
+
+## 0.X
 
 v0.14.17
 > RadialVertical
