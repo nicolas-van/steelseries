@@ -36,8 +36,8 @@ export default class BaseElement extends LitElement {
 
   updated () {
     const canvas = this.renderRoot.querySelector('canvas')
-    const Constructor = this.constructor.objectConstructor
+    const drawFunction = this.constructor.drawFunction
     const params = Object.fromEntries(this._keys.map((el) => this.buildPair(el)))
-    new Constructor(canvas, params)
+    drawFunction(canvas, params)
   }
 }

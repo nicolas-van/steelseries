@@ -1,4 +1,4 @@
-import Tween from './tween.js'
+
 import drawFrame from './drawFrame'
 import drawBackground from './drawBackground'
 import drawRadialCustomImage from './drawRadialCustomImage'
@@ -6,8 +6,6 @@ import drawForeground from './drawForeground'
 import drawRoseImage from './drawRoseImage'
 import {
   createBuffer,
-  getShortestAngle,
-  requestAnimFrame,
   getCanvasContext,
   HALF_PI,
   RAD_FACTOR
@@ -30,16 +28,16 @@ import { easeCubicInOut } from 'd3-ease'
 import { timer, now } from 'd3-timer'
 import { scaleLinear } from 'd3-scale'
 
-const Compass = function (canvas, parameters) {
+export function drawCompass (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
-  let frameDesign =
+  const frameDesign =
     undefined === parameters.frameDesign
       ? FrameDesign.METAL
       : parameters.frameDesign
   const frameVisible =
     undefined === parameters.frameVisible ? true : parameters.frameVisible
-  let backgroundColor =
+  const backgroundColor =
     undefined === parameters.backgroundColor
       ? BackgroundColor.DARK_GRAY
       : parameters.backgroundColor
@@ -47,11 +45,11 @@ const Compass = function (canvas, parameters) {
     undefined === parameters.backgroundVisible
       ? true
       : parameters.backgroundVisible
-  let pointerType =
+  const pointerType =
     undefined === parameters.pointerType
       ? PointerType.TYPE2
       : parameters.pointerType
-  let pointerColor =
+  const pointerColor =
     undefined === parameters.pointerColor
       ? ColorDef.RED
       : parameters.pointerColor
@@ -63,7 +61,7 @@ const Compass = function (canvas, parameters) {
     undefined === parameters.knobStyle
       ? KnobStyle.SILVER
       : parameters.knobStyle
-  let foregroundType =
+  const foregroundType =
     undefined === parameters.foregroundType
       ? ForegroundType.TYPE1
       : parameters.foregroundType
@@ -71,7 +69,7 @@ const Compass = function (canvas, parameters) {
     undefined === parameters.foregroundVisible
       ? true
       : parameters.foregroundVisible
-  let pointSymbols =
+  const pointSymbols =
     undefined === parameters.pointSymbols
       ? ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']
       : parameters.pointSymbols
@@ -88,11 +86,9 @@ const Compass = function (canvas, parameters) {
   const rotateFace =
     undefined === parameters.rotateFace ? false : parameters.rotateFace
 
-  let tween
-  let repainting = false
-  let value = parameters.value ?? 0
+  const value = parameters.value ?? 0
   const angleStep = RAD_FACTOR
-  let angle = this.value
+  let angle
 
   // Get the canvas context and clear it
   const mainCtx = getCanvasContext(canvas)
@@ -118,19 +114,19 @@ const Compass = function (canvas, parameters) {
   // **************   Buffer creation  ********************
   // Buffer for all static background painting code
   const backgroundBuffer = createBuffer(size, size)
-  let backgroundContext = backgroundBuffer.getContext('2d')
+  const backgroundContext = backgroundBuffer.getContext('2d')
 
   // Buffer for symbol/rose painting code
   const roseBuffer = createBuffer(size, size)
-  let roseContext = roseBuffer.getContext('2d')
+  const roseContext = roseBuffer.getContext('2d')
 
   // Buffer for pointer image painting code
   const pointerBuffer = createBuffer(size, size)
-  let pointerContext = pointerBuffer.getContext('2d')
+  const pointerContext = pointerBuffer.getContext('2d')
 
   // Buffer for static foreground painting code
   const foregroundBuffer = createBuffer(size, size)
-  let foregroundContext = foregroundBuffer.getContext('2d')
+  const foregroundContext = foregroundBuffer.getContext('2d')
 
   // **************   Image creation  ********************
   const drawTickmarksImage = function (ctx) {
@@ -673,131 +669,7 @@ const Compass = function (canvas, parameters) {
     }
   }
 
-  const resetBuffers = function () {
-    // Buffer for all static background painting code
-    backgroundBuffer.width = size
-    backgroundBuffer.height = size
-    backgroundContext = backgroundBuffer.getContext('2d')
-
-    // Buffer for symbols/rose painting code
-    roseBuffer.width = size
-    roseBuffer.height = size
-    roseContext = roseBuffer.getContext('2d')
-
-    // Buffer for pointer image painting code
-    pointerBuffer.width = size
-    pointerBuffer.height = size
-    pointerContext = pointerBuffer.getContext('2d')
-
-    // Buffer for static foreground painting code
-    foregroundBuffer.width = size
-    foregroundBuffer.height = size
-    foregroundContext = foregroundBuffer.getContext('2d')
-  }
-
-  //* *********************************** Public methods **************************************
-  this.setValue = function (newValue) {
-    newValue = parseFloat(newValue) % 360
-    if (value !== newValue) {
-      value = newValue
-      this.repaint()
-    }
-    return this
-  }
-
-  this.getValue = function () {
-    return value
-  }
-
-  this.setValueAnimated = function (newValue, callback) {
-    const targetValue = newValue % 360
-    const gauge = this
-    let diff
-    if (value !== targetValue) {
-      if (undefined !== tween && tween.isPlaying) {
-        tween.stop()
-      }
-
-      diff = getShortestAngle(value, targetValue)
-      if (rotateFace) {
-        tween = new Tween(
-          {},
-          '',
-          Tween.regularEaseInOut,
-          value,
-          value + diff,
-          2
-        )
-      } else {
-        tween = new Tween({}, '', Tween.elasticEaseOut, value, value + diff, 2)
-      }
-      tween.onMotionChanged = function (event) {
-        value = event.target._pos % 360
-        if (!repainting) {
-          repainting = true
-          requestAnimFrame(gauge.repaint)
-        }
-      }
-
-      // do we have a callback function to process?
-      if (callback && typeof callback === 'function') {
-        tween.onMotionFinished = callback
-      }
-
-      tween.start()
-    }
-    return this
-  }
-
-  this.setFrameDesign = function (newFrameDesign) {
-    resetBuffers()
-    frameDesign = newFrameDesign
-    init()
-    this.repaint()
-    return this
-  }
-
-  this.setBackgroundColor = function (newBackgroundColor) {
-    resetBuffers()
-    backgroundColor = newBackgroundColor
-    init()
-    this.repaint()
-    return this
-  }
-
-  this.setForegroundType = function (newForegroundType) {
-    resetBuffers()
-    foregroundType = newForegroundType
-    init()
-    this.repaint()
-    return this
-  }
-
-  this.setPointerColor = function (newPointerColor) {
-    resetBuffers()
-    pointerColor = newPointerColor
-    init()
-    this.repaint()
-    return this
-  }
-
-  this.setPointerType = function (newPointerType) {
-    resetBuffers()
-    pointerType = newPointerType
-    init()
-    this.repaint()
-    return this
-  }
-
-  this.setPointSymbols = function (newPointSymbols) {
-    resetBuffers()
-    pointSymbols = newPointSymbols
-    init()
-    this.repaint()
-    return this
-  }
-
-  this.repaint = function () {
+  const repaint = function () {
     if (!initialized) {
       init()
     }
@@ -840,20 +712,14 @@ const Compass = function (canvas, parameters) {
     if (foregroundVisible) {
       mainCtx.drawImage(foregroundBuffer, 0, 0)
     }
-
-    repainting = false
   }
 
   // Visualize the component
-  this.repaint()
-
-  return this
+  repaint()
 }
 
-export default Compass
-
 export class CompassElement extends BaseElement {
-  static get objectConstructor () { return Compass }
+  static get drawFunction () { return drawCompass }
 
   static get properties () {
     return {

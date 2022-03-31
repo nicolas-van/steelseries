@@ -3,17 +3,17 @@ import { rgbToHsl, doc, getCanvasContext } from './tools'
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'
 
-const Lightbulb = function (canvas, parameters) {
+export function drawLightbulb (canvas, parameters) {
   parameters = parameters || {}
   // parameters
   let width = undefined === parameters.width ? 0 : parameters.width
   let height = undefined === parameters.height ? 0 : parameters.height
-  let glowColor =
+  const glowColor =
     undefined === parameters.glowColor ? '#ffff00' : parameters.glowColor
   //
   let initialized = false
-  let lightOn = parameters.lightOn ?? false
-  let alpha = 1
+  const lightOn = parameters.lightOn ?? false
+  const alpha = 1
   const offBuffer = doc.createElement('canvas')
   const offCtx = offBuffer.getContext('2d')
   const onBuffer = doc.createElement('canvas')
@@ -558,40 +558,8 @@ const Lightbulb = function (canvas, parameters) {
     drawBulb(bulbCtx)
   }
 
-  // **************   P U B L I C   M E T H O D S   ********************************
-  this.setOn = function (on) {
-    lightOn = !!on
-    this.repaint()
-    return this
-  }
-
-  this.isOn = function () {
-    return lightOn
-  }
-
-  this.setAlpha = function (a) {
-    alpha = a
-    this.repaint()
-    return this
-  }
-
-  this.getAlpha = function () {
-    return alpha
-  }
-
-  this.setGlowColor = function (color) {
-    glowColor = color
-    init()
-    this.repaint()
-    return this
-  }
-
-  this.getGlowColor = function () {
-    return glowColor
-  }
-
   // Component visualization
-  this.repaint = function () {
+  const repaint = function () {
     if (!initialized) {
       init()
     }
@@ -611,15 +579,11 @@ const Lightbulb = function (canvas, parameters) {
     mainCtx.restore()
   }
 
-  this.repaint()
-
-  return this
+  repaint()
 }
 
-export default Lightbulb
-
 export class LightbulbElement extends BaseElement {
-  static get objectConstructor () { return Lightbulb }
+  static get drawFunction () { return drawLightbulb }
 
   static get properties () {
     return {

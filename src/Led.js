@@ -6,14 +6,11 @@ import { LedColor } from './definitions'
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'
 
-const Led = function (canvas, parameters) {
+export function drawLed (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
-  let ledColor =
+  const ledColor =
     undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor
-
-  let ledBlinking = false
-  let ledTimerId = 0
 
   // Get the canvas context and clear it
   const mainCtx = getCanvasContext(canvas)
@@ -41,7 +38,7 @@ const Led = function (canvas, parameters) {
   const ledContextOff = ledBufferOff.getContext('2d')
 
   // Buffer for current led painting code
-  let ledBuffer = parameters.ledOn ?? false ? ledBufferOn : ledBufferOff
+  const ledBuffer = parameters.ledOn ?? false ? ledBufferOn : ledBufferOff
 
   const init = function () {
     initialized = true
@@ -65,49 +62,6 @@ const Led = function (canvas, parameters) {
     ledContextOff.drawImage(createLedImage(size, 0, ledColor), 0, 0)
   }
 
-  this.toggleLed = function () {
-    if (ledBuffer === ledBufferOn) {
-      ledBuffer = ledBufferOff
-    } else {
-      ledBuffer = ledBufferOn
-    }
-    repaint()
-    return this
-  }
-
-  this.setLedColor = function (newColor) {
-    ledColor = newColor
-    initialized = false
-    repaint()
-    return this
-  }
-
-  this.setLedOnOff = function (on) {
-    if (on) {
-      ledBuffer = ledBufferOn
-    } else {
-      ledBuffer = ledBufferOff
-    }
-    repaint()
-    return this
-  }
-
-  this.blink = function (blink) {
-    if (blink) {
-      if (!ledBlinking) {
-        ledTimerId = setInterval(this.toggleLed, 1000)
-        ledBlinking = true
-      }
-    } else {
-      if (ledBlinking) {
-        clearInterval(ledTimerId)
-        ledBlinking = false
-        ledBuffer = ledBufferOff
-      }
-    }
-    return this
-  }
-
   const repaint = function () {
     if (!initialized) {
       init()
@@ -122,14 +76,10 @@ const Led = function (canvas, parameters) {
   }
 
   repaint()
-
-  return this
 }
 
-export default Led
-
 export class LedElement extends BaseElement {
-  static get objectConstructor () { return Led }
+  static get drawFunction () { return drawLed }
 
   static get properties () {
     return {
