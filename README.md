@@ -44,3 +44,12 @@ import "steelseries"
 ```html
 <steelseries-compass value="75"></steelseries-compass>
 ```
+
+### Migration from 1.0
+
+In version 2.0 all the API has been rewritten to [web components](https://developer.mozilla.org/fr/docs/Web/Web_Components), which makes it a major change breaking all the API. During that process multiple features were
+removed because they were more complicated to implement in the context of web components.
+
+This change was made in order to make the library more accessible to non-programmer users, most notably web site authors that may not have advanced JavaScript knowledge. That rewrite also allowed to make an interactive documentation which also makes this library way easier to use.
+
+If you already integrated steelseries in one of you project I would recommend to stick with version 1.0 until you can rewrite all the code to use the new web components API. If you miss one the previous features you can still re-implement them and make a pull request in this repository.
