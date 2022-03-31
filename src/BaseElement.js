@@ -6,7 +6,7 @@ export default class BaseElement extends LitElement {
   constructor () {
     super()
     this._properties = this.constructor.properties
-    this._keys = Object.keys(this._properties)
+    this._keys = Object.keys(this._properties).filter((k) => !this._properties[k].state)
     for (const key of this._keys) {
       assert('defaultValue' in this._properties[key])
       this[key] = this._properties[key].defaultValue
@@ -15,6 +15,13 @@ export default class BaseElement extends LitElement {
 
   buildPair (key) {
     let value = this[key]
+
+    // for animations
+    const realKey = `real_${key}`
+    if (realKey in this._properties) {
+      value = this[realKey]
+    }
+
     if (this._properties[key].type === Boolean && key.startsWith('no')) {
       value = !value
       key = key.slice(2)

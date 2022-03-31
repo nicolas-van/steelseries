@@ -27,6 +27,10 @@ import {
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'
 
+import { easeCubicInOut } from 'd3-ease'
+import { timer, now } from 'd3-timer'
+import { scaleLinear } from 'd3-scale'
+
 const Altimeter = function (canvas, parameters) {
   parameters = parameters || {}
   // parameters
@@ -933,6 +937,8 @@ export class AltimeterElement extends BaseElement {
     return {
       size: { type: Number, defaultValue: 200 },
       value: { type: Number, defaultValue: 0 },
+      transitionTime: { type: Number, defaultValue: 500 },
+      real_value: { state: true },
       frameDesign: { type: String, objectEnum: FrameDesign, defaultValue: 'METAL' },
       noFrameVisible: { type: Boolean, defaultValue: false },
       backgroundColor: { type: String, objectEnum: BackgroundColor, defaultValue: 'DARK_GRAY' },
@@ -950,10 +956,38 @@ export class AltimeterElement extends BaseElement {
     }
   }
 
+  constructor () {
+    super()
+    this._timer = timer(() => {})
+    this._timer.stop()
+    this.real_value = 0
+  }
+
   render () {
     return html`
       <canvas width="${this.size}" height="${this.size}"></canvas>
     `
+  }
+
+  updated (changedProperties) {
+    super.updated()
+    if (changedProperties.has('value') || changedProperties.has('transitionTime')) {
+      const transitionTime = this.transitionTime
+      const originTime = now()
+      const originValue = this.real_value
+      const targetValue = this.value
+      const timeScale = transitionTime <= 0 ? () => 1 : scaleLinear().domain([0, transitionTime]).clamp(true)
+      const valueScale = scaleLinear().range([originValue, targetValue]).clamp(true)
+      this._timer.restart((elapsedTime) => {
+        const scaled = timeScale(elapsedTime)
+        const eased = easeCubicInOut(scaled)
+        const newValue = valueScale(eased)
+        this.real_value = newValue
+        if (now() >= originTime + transitionTime) {
+          this._timer.stop()
+        }
+      })
+    }
   }
 }
 

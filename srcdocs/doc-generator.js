@@ -1,13 +1,12 @@
 
 import { LitElement, html } from 'lit'
-import { unsafeHTML } from 'lit/directives/unsafe-html.js'
 import '../src/steelseries.js'
 import _ from 'lodash-es'
 
 export function generateDocumentation (elementName, docValues = {}) {
   const sampleElement = document.createElement(elementName)
   const properties = sampleElement.constructor.properties
-  const keys = Object.keys(properties)
+  const keys = Object.keys(properties).filter((k) => !properties[k].state)
   const defaultValues = Object.fromEntries(keys.map((key) => {
     return [key, properties[key].defaultValue]
   }))
@@ -21,6 +20,7 @@ export function generateDocumentation (elementName, docValues = {}) {
     constructor () {
       super()
       this.values = { ...defaultValues, ...docValues }
+      this.sampleElem = document.createElement(elementName)
     }
 
     createRenderRoot () {
@@ -59,12 +59,15 @@ export function generateDocumentation (elementName, docValues = {}) {
         htm += `></${elementName}>`
         return htm
       })()
+      for (const key of keys) {
+        this.sampleElem[key] = this.values[key]
+      }
       return html`
         <div class="card">
           <div class="card-body">
             <h3 class="card-title">&lt;${elementName}&gt;</h3>
             <div class="text-center">
-              ${unsafeHTML(htm)}
+              ${this.sampleElem}
             </div>
             <h5>Code</h5>
             <div class="card">
