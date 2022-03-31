@@ -440,9 +440,7 @@ export class DisplaySingleElement extends BaseElement {
       noLinkAltValue: { type: Boolean, defaultValue: false },
       unitString: { type: String, defaultValue: '' },
       unitStringVisible: { type: Boolean, defaultValue: false },
-      digitalFont: { type: Boolean, defaultValue: false },
-      alwaysScroll: { type: Boolean, defaultValue: false },
-      noAutoScroll: { type: Boolean, defaultValue: false }
+      digitalFont: { type: Boolean, defaultValue: false }
     }
   }
 
