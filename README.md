@@ -19,7 +19,7 @@ code in your HTML. That's it, the component should now display correctly on your
 
 [See the documentation here](https://nicolas-van.github.io/steelseries/).
 
-This project is a re-packaging of [HanSolo's SteelSeries-Canvas](https://github.com/HanSolo/SteelSeries-Canvas).
+This project was forked from [HanSolo's SteelSeries-Canvas](https://github.com/HanSolo/SteelSeries-Canvas).
 
 ## Development
 
