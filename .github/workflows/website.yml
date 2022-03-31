@@ -17,7 +17,7 @@ jobs:
     - name: npm install, build, and test
       run: |
         npm ci
-        npm run docs
+        npm run doc
     - run: touch docs/.nojekyll
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v2.5.0
