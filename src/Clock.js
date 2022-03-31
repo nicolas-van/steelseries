@@ -17,7 +17,7 @@ import BaseElement from './BaseElement.js'
 
 import { timer } from 'd3-timer'
 
-const Clock = function (canvas, parameters) {
+export function drawClock (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
   const frameDesign =
@@ -601,14 +601,10 @@ const Clock = function (canvas, parameters) {
 
   // Visualize the component
   tickTock()
-
-  return this
 }
 
-export default Clock
-
 export class ClockElement extends BaseElement {
-  static get objectConstructor () { return Clock }
+  static get drawFunction () { return drawClock }
 
   static get properties () {
     return {

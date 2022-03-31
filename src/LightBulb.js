@@ -3,7 +3,7 @@ import { rgbToHsl, doc, getCanvasContext } from './tools'
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'
 
-const Lightbulb = function (canvas, parameters) {
+export function drawLightbulb (canvas, parameters) {
   parameters = parameters || {}
   // parameters
   let width = undefined === parameters.width ? 0 : parameters.width
@@ -580,14 +580,10 @@ const Lightbulb = function (canvas, parameters) {
   }
 
   repaint()
-
-  return this
 }
 
-export default Lightbulb
-
 export class LightbulbElement extends BaseElement {
-  static get objectConstructor () { return Lightbulb }
+  static get drawFunction () { return drawLightbulb }
 
   static get properties () {
     return {

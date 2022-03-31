@@ -30,7 +30,7 @@ import { easeCubicInOut } from 'd3-ease'
 import { timer, now } from 'd3-timer'
 import { scaleLinear } from 'd3-scale'
 
-const Altimeter = function (canvas, parameters) {
+export function drawAltimeter (canvas, parameters) {
   parameters = parameters || {}
   // parameters
   let size = undefined === parameters.size ? 0 : parameters.size
@@ -753,14 +753,10 @@ const Altimeter = function (canvas, parameters) {
 
   // Visualize the component
   repaint()
-
-  return this
 }
 
-export default Altimeter
-
 export class AltimeterElement extends BaseElement {
-  static get objectConstructor () { return Altimeter }
+  static get drawFunction () { return drawAltimeter }
 
   static get properties () {
     return {

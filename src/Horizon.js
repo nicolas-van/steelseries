@@ -27,7 +27,7 @@ import { easeCubicInOut } from 'd3-ease'
 import { timer, now } from 'd3-timer'
 import { scaleLinear } from 'd3-scale'
 
-const Horizon = function (canvas, parameters) {
+export function drawHorizon (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
   const frameDesign =
@@ -463,14 +463,10 @@ const Horizon = function (canvas, parameters) {
 
   // Visualize the component
   repaint()
-
-  return this
 }
 
-export default Horizon
-
 export class HorizonElement extends BaseElement {
-  static get objectConstructor () { return Horizon }
+  static get drawFunction () { return drawHorizon }
 
   static get properties () {
     return {

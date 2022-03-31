@@ -26,7 +26,7 @@ import { easeCubicInOut } from 'd3-ease'
 import { timer, now } from 'd3-timer'
 import { scaleLinear } from 'd3-scale'
 
-const Level = function (canvas, parameters) {
+export function drawLevel (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
   const decimalsVisible =
@@ -620,14 +620,10 @@ const Level = function (canvas, parameters) {
 
   // Visualize the component
   repaint()
-
-  return this
 }
 
-export default Level
-
 export class LevelElement extends BaseElement {
-  static get objectConstructor () { return Level }
+  static get drawFunction () { return drawLevel }
 
   static get properties () {
     return {

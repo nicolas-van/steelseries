@@ -23,7 +23,7 @@ import BaseElement from './BaseElement.js'
 
 import { timer } from 'd3-timer'
 
-const Stopwatch = function (canvas, parameters) {
+export function drawStopwatch (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
   const frameDesign =
@@ -628,14 +628,10 @@ const Stopwatch = function (canvas, parameters) {
   // Visualize the component
   calculateAngles()
   repaint()
-
-  return this
 }
 
-export default Stopwatch
-
 export class StopwatchElement extends BaseElement {
-  static get objectConstructor () { return Stopwatch }
+  static get drawFunction () { return drawStopwatch }
 
   static get properties () {
     return {

@@ -39,7 +39,7 @@ import {
   TrendState
 } from './definitions'
 
-import Odometer from './Odometer'
+import { drawOdometer } from './Odometer'
 
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'
@@ -48,7 +48,7 @@ import { easeCubicInOut } from 'd3-ease'
 import { timer, now } from 'd3-timer'
 import { scaleLinear } from 'd3-scale'
 
-const Radial = function (canvas, parameters) {
+export function drawRadial (canvas, parameters) {
   parameters = parameters || {}
   const gaugeType =
     undefined === parameters.gaugeType ? GaugeType.TYPE4 : parameters.gaugeType
@@ -166,10 +166,6 @@ const Radial = function (canvas, parameters) {
     undefined === parameters.useOdometer ? false : parameters.useOdometer
   const odometerParams =
     undefined === parameters.odometerParams ? {} : parameters.odometerParams
-  const odometerUseValue =
-    undefined === parameters.odometerUseValue
-      ? true
-      : parameters.odometerUseValue
 
   // Get the canvas context and clear it
   const mainCtx = getCanvasContext(canvas)
@@ -191,7 +187,6 @@ const Radial = function (canvas, parameters) {
   }
 
   let value = parameters.value ?? minValue
-  const odoValue = parameters.odoValue ?? minValue
 
   // Properties
   let minMeasuredValue = maxValue
@@ -396,7 +391,6 @@ const Radial = function (canvas, parameters) {
   let trendOffBuffer
 
   // Buffer for odometer
-  let odoGauge
   let odoBuffer
   let odoContext
   if (useOdometer && lcdVisible) {
@@ -916,7 +910,7 @@ const Radial = function (canvas, parameters) {
     // Create lcd background if selected in background buffer (backgroundBuffer)
     if (drawBackground2 && lcdVisible) {
       if (useOdometer && drawOdo) {
-        odoGauge = new Odometer('', {
+        drawOdometer('', {
           _context: odoContext,
           height: size * 0.075,
           decimals: odometerParams.decimals,
@@ -1014,7 +1008,6 @@ const Radial = function (canvas, parameters) {
     // Draw lcd display
     if (lcdVisible) {
       if (useOdometer) {
-        odoGauge.setValue(odometerUseValue ? value : odoValue)
         mainCtx.drawImage(odoBuffer, odoPosX, odoPosY)
       } else {
         drawLcdText(mainCtx, value)
@@ -1105,14 +1098,10 @@ const Radial = function (canvas, parameters) {
 
   // Visualize the component
   repaint()
-
-  return this
 }
 
-export default Radial
-
 export class RadialElement extends BaseElement {
-  static get objectConstructor () { return Radial }
+  static get drawFunction () { return drawRadial }
 
   static get properties () {
     return {

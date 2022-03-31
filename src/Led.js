@@ -6,7 +6,7 @@ import { LedColor } from './definitions'
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'
 
-const Led = function (canvas, parameters) {
+export function drawLed (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
   const ledColor =
@@ -76,14 +76,10 @@ const Led = function (canvas, parameters) {
   }
 
   repaint()
-
-  return this
 }
 
-export default Led
-
 export class LedElement extends BaseElement {
-  static get objectConstructor () { return Led }
+  static get drawFunction () { return drawLed }
 
   static get properties () {
     return {

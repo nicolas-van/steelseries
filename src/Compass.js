@@ -28,7 +28,7 @@ import { easeCubicInOut } from 'd3-ease'
 import { timer, now } from 'd3-timer'
 import { scaleLinear } from 'd3-scale'
 
-const Compass = function (canvas, parameters) {
+export function drawCompass (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
   const frameDesign =
@@ -716,14 +716,10 @@ const Compass = function (canvas, parameters) {
 
   // Visualize the component
   repaint()
-
-  return this
 }
 
-export default Compass
-
 export class CompassElement extends BaseElement {
-  static get objectConstructor () { return Compass }
+  static get drawFunction () { return drawCompass }
 
   static get properties () {
     return {

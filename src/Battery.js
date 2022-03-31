@@ -7,7 +7,7 @@ import { easeCubicInOut } from 'd3-ease'
 import { timer, now } from 'd3-timer'
 import { scaleLinear } from 'd3-scale'
 
-const Battery = function (canvas, parameters) {
+export function drawBattery (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
   const value = undefined === parameters.value ? 50 : parameters.value
@@ -184,14 +184,10 @@ const Battery = function (canvas, parameters) {
 
   // Visualize the component
   repaint()
-
-  return this
 }
 
-export default Battery
-
 export class BatteryElement extends BaseElement {
-  static get objectConstructor () { return Battery }
+  static get drawFunction () { return drawBattery }
 
   static get properties () {
     return {

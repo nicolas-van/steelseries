@@ -3,7 +3,7 @@ import { getCanvasContext, TWO_PI, doc } from './tools'
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'
 
-const Trafficlight = function (canvas, parameters) {
+export function drawTrafficlight (canvas, parameters) {
   parameters = parameters || {}
   let width = undefined === parameters.width ? 0 : parameters.width
   let height = undefined === parameters.height ? 0 : parameters.height
@@ -1024,14 +1024,10 @@ const Trafficlight = function (canvas, parameters) {
 
   // Visualize the component
   repaint()
-
-  return this
 }
 
-export default Trafficlight
-
 export class TrafficlightElement extends BaseElement {
-  static get objectConstructor () { return Trafficlight }
+  static get drawFunction () { return drawTrafficlight }
 
   static get properties () {
     return {

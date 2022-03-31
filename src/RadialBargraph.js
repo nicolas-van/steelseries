@@ -42,7 +42,7 @@ import { easeCubicInOut } from 'd3-ease'
 import { timer, now } from 'd3-timer'
 import { scaleLinear } from 'd3-scale'
 
-const RadialBargraph = function (canvas, parameters) {
+export function drawRadialBargraph (canvas, parameters) {
   parameters = parameters || {}
   const gaugeType =
     undefined === parameters.gaugeType ? GaugeType.TYPE4 : parameters.gaugeType
@@ -933,14 +933,10 @@ const RadialBargraph = function (canvas, parameters) {
 
   // Visualize the component
   repaint()
-
-  return this
 }
 
-export default RadialBargraph
-
 export class RadialBargraphElement extends BaseElement {
-  static get objectConstructor () { return RadialBargraph }
+  static get drawFunction () { return drawRadialBargraph }
 
   static get properties () {
     return {

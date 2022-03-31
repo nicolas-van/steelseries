@@ -15,7 +15,7 @@ import { LcdColor } from './definitions'
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'
 
-const DisplaySingle = function (canvas, parameters) {
+export function drawDisplaySingle (canvas, parameters) {
   parameters = parameters || {}
   let width = undefined === parameters.width ? 0 : parameters.width
   let height = undefined === parameters.height ? 0 : parameters.height
@@ -327,14 +327,10 @@ const DisplaySingle = function (canvas, parameters) {
 
   // Visualize the component
   repaint()
-
-  return this
 }
 
-export default DisplaySingle
-
 export class DisplaySingleElement extends BaseElement {
-  static get objectConstructor () { return DisplaySingle }
+  static get drawFunction () { return drawDisplaySingle }
 
   static get properties () {
     return {

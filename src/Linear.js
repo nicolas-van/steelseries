@@ -33,7 +33,7 @@ import { easeCubicInOut } from 'd3-ease'
 import { timer, now } from 'd3-timer'
 import { scaleLinear } from 'd3-scale'
 
-const Linear = function (canvas, parameters) {
+export function drawLinear (canvas, parameters) {
   parameters = parameters || {}
   let gaugeType =
     undefined === parameters.gaugeType ? GaugeType.TYPE1 : parameters.gaugeType
@@ -1485,14 +1485,10 @@ const Linear = function (canvas, parameters) {
 
   // Visualize the component
   repaint()
-
-  return this
 }
 
-export default Linear
-
 export class LinearElement extends BaseElement {
-  static get objectConstructor () { return Linear }
+  static get drawFunction () { return drawLinear }
 
   static get properties () {
     return {

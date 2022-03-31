@@ -32,7 +32,7 @@ import { easeCubicInOut } from 'd3-ease'
 import { timer, now } from 'd3-timer'
 import { scaleLinear } from 'd3-scale'
 
-const LinearBargraph = function (canvas, parameters) {
+export function drawLinearBargraph (canvas, parameters) {
   parameters = parameters || {}
   let width = undefined === parameters.width ? 0 : parameters.width
   let height = undefined === parameters.height ? 0 : parameters.height
@@ -1259,14 +1259,10 @@ const LinearBargraph = function (canvas, parameters) {
 
   // Visualize the component
   repaint()
-
-  return this
 }
 
-export default LinearBargraph
-
 export class LinearBargraphElement extends BaseElement {
-  static get objectConstructor () { return LinearBargraph }
+  static get drawFunction () { return drawLinearBargraph }
 
   static get properties () {
     return {

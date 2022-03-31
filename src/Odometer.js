@@ -8,7 +8,7 @@ import { easeLinear } from 'd3-ease'
 import { timer, now } from 'd3-timer'
 import { scaleLinear } from 'd3-scale'
 
-const Odometer = function (canvas, parameters) {
+export function drawOdometer (canvas, parameters) {
   parameters = parameters || {}
 
   // parameters
@@ -229,10 +229,8 @@ const Odometer = function (canvas, parameters) {
   repaint()
 }
 
-export default Odometer
-
 export class OdometerElement extends BaseElement {
-  static get objectConstructor () { return Odometer }
+  static get drawFunction () { return drawOdometer }
 
   static get properties () {
     return {

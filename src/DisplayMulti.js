@@ -6,7 +6,7 @@ import { LcdColor } from './definitions'
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'
 
-const DisplayMulti = function (canvas, parameters) {
+export function drawDisplayMulti (canvas, parameters) {
   parameters = parameters || {}
   let width = undefined === parameters.width ? 0 : parameters.width
   let height = undefined === parameters.height ? 0 : parameters.height
@@ -195,14 +195,10 @@ const DisplayMulti = function (canvas, parameters) {
 
   // Visualize the component
   repaint()
-
-  return this
 }
 
-export default DisplayMulti
-
 export class DisplayMultiElement extends BaseElement {
-  static get objectConstructor () { return DisplayMulti }
+  static get drawFunction () { return drawDisplayMulti }
 
   static get properties () {
     return {

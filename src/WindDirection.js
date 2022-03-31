@@ -34,7 +34,7 @@ import { easeCubicInOut } from 'd3-ease'
 import { timer, now } from 'd3-timer'
 import { scaleLinear } from 'd3-scale'
 
-const WindDirection = function (canvas, parameters) {
+export function drawWindDirection (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
   const frameDesign =
@@ -730,14 +730,10 @@ const WindDirection = function (canvas, parameters) {
 
   // Visualize the component
   repaint()
-
-  return this
 }
 
-export default WindDirection
-
 export class WindDirectionElement extends BaseElement {
-  static get objectConstructor () { return WindDirection }
+  static get drawFunction () { return drawWindDirection }
 
   static get properties () {
     return {

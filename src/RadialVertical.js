@@ -37,7 +37,7 @@ import { easeCubicInOut } from 'd3-ease'
 import { timer, now } from 'd3-timer'
 import { scaleLinear } from 'd3-scale'
 
-const RadialVertical = function (canvas, parameters) {
+export function drawRadialVertical (canvas, parameters) {
   parameters = parameters || {}
   const orientation =
     undefined === parameters.orientation
@@ -864,14 +864,10 @@ const RadialVertical = function (canvas, parameters) {
 
   // Visualize the component
   repaint()
-
-  return this
 }
 
-export default RadialVertical
-
 export class RadialVerticalElement extends BaseElement {
-  static get objectConstructor () { return RadialVertical }
+  static get drawFunction () { return drawRadialVertical }
 
   static get properties () {
     return {
