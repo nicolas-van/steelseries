@@ -870,6 +870,11 @@ export class ClockElement extends BaseElement {
     this._timer.stop()
   }
 
+  disconnectedCallback () {
+    super.disconnectedCallback()
+    this._timer.stop()
+  }
+
   render () {
     return html`
       <canvas width="${this.size}" height="${this.size}"></canvas>
@@ -878,27 +883,22 @@ export class ClockElement extends BaseElement {
 
   updated (changedProperties) {
     super.updated()
-    if (changedProperties.has('hour') ||
-    changedProperties.has('minute') ||
-    changedProperties.has('second') ||
-    changedProperties.has('isCurrentTime')) {
-      if (this.isCurrentTime) {
-        this._timer.restart(() => {
-          const date = new Date()
-          const hour = date.getHours()
-          const minute = date.getMinutes()
-          const second = date.getSeconds()
-          if (this.hour !== hour ||
-            this.minute !== minute ||
-            this.second !== second) {
-            this.setAttribute('hour', hour)
-            this.setAttribute('minute', minute)
-            this.setAttribute('second', second)
-          }
-        })
-      } else {
-        this._timer.stop()
-      }
+    if (this.isCurrentTime) {
+      this._timer.restart(() => {
+        const date = new Date()
+        const hour = date.getHours()
+        const minute = date.getMinutes()
+        const second = date.getSeconds()
+        if (this.hour !== hour ||
+          this.minute !== minute ||
+          this.second !== second) {
+          this.setAttribute('hour', hour)
+          this.setAttribute('minute', minute)
+          this.setAttribute('second', second)
+        }
+      })
+    } else {
+      this._timer.stop()
     }
   }
 }

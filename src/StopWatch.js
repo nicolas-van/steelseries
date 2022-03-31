@@ -21,7 +21,7 @@ import {
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'
 
-import { timer, now } from 'd3-timer'
+import { timer } from 'd3-timer'
 
 const Stopwatch = function (canvas, parameters) {
   parameters = parameters || {}
@@ -833,6 +833,11 @@ export class StopwatchElement extends BaseElement {
     this._timer.stop()
   }
 
+  disconnectedCallback () {
+    super.disconnectedCallback()
+    this._timer.stop()
+  }
+
   render () {
     return html`
       <canvas width="${this.size}" height="${this.size}"></canvas>
@@ -841,21 +846,18 @@ export class StopwatchElement extends BaseElement {
 
   updated (changedProperties) {
     super.updated()
-    if (changedProperties.has('seconds') ||
-    changedProperties.has('running')) {
-      if (this.running) {
-        let lastEllapsedTime = 0
-        let seconds = this.seconds
-        this._timer.restart((ellapsedTime) => {
-          seconds += (ellapsedTime - lastEllapsedTime) / 1000
-          if (Math.floor(seconds) !== this.seconds) {
-            this.setAttribute('seconds', Math.floor(seconds))
-          }
-          lastEllapsedTime = ellapsedTime
-        })
-      } else {
-        this._timer.stop()
-      }
+    if (this.running) {
+      let lastEllapsedTime = 0
+      let seconds = this.seconds
+      this._timer.restart((ellapsedTime) => {
+        seconds += (ellapsedTime - lastEllapsedTime) / 1000
+        if (Math.floor(seconds) !== this.seconds) {
+          this.setAttribute('seconds', Math.floor(seconds))
+        }
+        lastEllapsedTime = ellapsedTime
+      })
+    } else {
+      this._timer.stop()
     }
   }
 }
