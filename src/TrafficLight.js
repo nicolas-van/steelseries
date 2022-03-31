@@ -9,9 +9,9 @@ const Trafficlight = function (canvas, parameters) {
   let height = undefined === parameters.height ? 0 : parameters.height
   //
   const mainCtx = getCanvasContext(canvas)
-  let redOn = parameters.redOn ?? false
-  let yellowOn = parameters.yellowOn ?? false
-  let greenOn = parameters.greenOn ?? false
+  const redOn = parameters.redOn ?? false
+  const yellowOn = parameters.yellowOn ?? false
+  const greenOn = parameters.greenOn ?? false
   let initialized = false
   const housingBuffer = doc.createElement('canvas')
   const housingCtx = housingBuffer.getContext('2d')
@@ -982,35 +982,7 @@ const Trafficlight = function (canvas, parameters) {
     drawRedOff(redOffCtx)
   }
 
-  // **************   P U B L I C   M E T H O D S   ********************************
-  this.setRedOn = function (on) {
-    redOn = !!on
-    this.repaint()
-  }
-
-  this.isRedOn = function () {
-    return redOn
-  }
-
-  this.setYellowOn = function (on) {
-    yellowOn = !!on
-    this.repaint()
-  }
-
-  this.isYellowOn = function () {
-    return yellowOn
-  }
-
-  this.setGreenOn = function (on) {
-    greenOn = !!on
-    this.repaint()
-  }
-
-  this.isGreenOn = function () {
-    return greenOn
-  }
-
-  this.repaint = function () {
+  const repaint = function () {
     if (!initialized) {
       init()
     }
@@ -1051,7 +1023,7 @@ const Trafficlight = function (canvas, parameters) {
   }
 
   // Visualize the component
-  this.repaint()
+  repaint()
 
   return this
 }

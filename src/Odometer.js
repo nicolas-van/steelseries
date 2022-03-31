@@ -1,5 +1,5 @@
-import Tween from './tween.js'
-import { createBuffer, requestAnimFrame, getCanvasContext } from './tools'
+
+import { createBuffer, getCanvasContext } from './tools'
 
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'
@@ -39,9 +39,7 @@ const Odometer = function (canvas, parameters) {
     undefined === parameters.wobbleFactor ? 0 : parameters.wobbleFactor
   //
   let initialized = false
-  let tween
   let ctx
-  let repainting = false
   const wobble = []
   // End of variables
 
@@ -213,52 +211,7 @@ const Odometer = function (canvas, parameters) {
     }
   }
 
-  this.setValueAnimated = function (newVal, callback) {
-    const gauge = this
-    newVal = parseFloat(newVal)
-
-    if (newVal < 0) {
-      newVal = 0
-    }
-    if (value !== newVal) {
-      if (undefined !== tween && tween.isPlaying) {
-        tween.stop()
-      }
-
-      tween = new Tween({}, '', Tween.strongEaseOut, value, newVal, 2)
-      tween.onMotionChanged = function (event) {
-        value = event.target._pos
-        if (!repainting) {
-          repainting = true
-          requestAnimFrame(gauge.repaint)
-        }
-      }
-
-      // do we have a callback function to process?
-      if (callback && typeof callback === 'function') {
-        tween.onMotionFinished = callback
-      }
-
-      tween.start()
-    }
-    this.repaint()
-    return this
-  }
-
-  this.setValue = function (newVal) {
-    value = parseFloat(newVal)
-    if (value < 0) {
-      value = 0
-    }
-    this.repaint()
-    return this
-  }
-
-  this.getValue = function () {
-    return value
-  }
-
-  this.repaint = function () {
+  const repaint = function () {
     if (!initialized) {
       init()
     }
@@ -271,11 +224,9 @@ const Odometer = function (canvas, parameters) {
 
     // paint back to the main context
     ctx.drawImage(backgroundBuffer, 0, 0)
-
-    repainting = false
   }
 
-  this.repaint()
+  repaint()
 }
 
 export default Odometer

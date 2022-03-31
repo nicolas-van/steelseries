@@ -26,17 +26,17 @@ import { timer } from 'd3-timer'
 const Stopwatch = function (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
-  let frameDesign =
+  const frameDesign =
     undefined === parameters.frameDesign
       ? FrameDesign.METAL
       : parameters.frameDesign
   const frameVisible =
     undefined === parameters.frameVisible ? true : parameters.frameVisible
-  let pointerColor =
+  const pointerColor =
     undefined === parameters.pointerColor
       ? ColorDef.BLACK
       : parameters.pointerColor
-  let backgroundColor =
+  const backgroundColor =
     undefined === parameters.backgroundColor
       ? BackgroundColor.LIGHT_GRAY
       : parameters.backgroundColor
@@ -44,7 +44,7 @@ const Stopwatch = function (canvas, parameters) {
     undefined === parameters.backgroundVisible
       ? true
       : parameters.backgroundVisible
-  let foregroundType =
+  const foregroundType =
     undefined === parameters.foregroundType
       ? ForegroundType.TYPE1
       : parameters.foregroundType
@@ -55,34 +55,14 @@ const Stopwatch = function (canvas, parameters) {
   const customLayer =
     undefined === parameters.customLayer ? null : parameters.customLayer
 
-  let seconds = parameters.seconds ?? 0
+  const seconds = parameters.seconds ?? 0
 
-  let tickTimer
   const ANGLE_STEP = 6
-  const self = this
 
-  let start
-  let running = false
-  let lap = false
   // Get the canvas context
   const mainCtx = getCanvasContext(canvas)
 
   let initialized = false
-
-  // Buffer for the frame
-  let frameContext
-
-  // Buffer for static background painting code
-  let backgroundContext
-
-  // Buffer for small pointer image painting code
-  let smallPointerContext
-
-  // Buffer for large pointer image painting code
-  let largePointerContext
-
-  // Buffer for static foreground painting code
-  let foregroundContext
 
   let minutePointerAngle
   let secondPointerAngle
@@ -539,162 +519,7 @@ const Stopwatch = function (canvas, parameters) {
     }
   }
 
-  const resetBuffers = function (buffers) {
-    buffers = buffers || {}
-    const resetFrame = undefined === buffers.frame ? false : buffers.frame
-    const resetBackground =
-      undefined === buffers.background ? false : buffers.background
-    const resetPointers =
-      undefined === buffers.pointers ? false : buffers.pointers
-    const resetForeground =
-      undefined === buffers.foreground ? false : buffers.foreground
-
-    if (resetFrame) {
-      frameBuffer.width = size
-      frameBuffer.height = size
-      frameContext = frameBuffer.getContext('2d')
-    }
-
-    if (resetBackground) {
-      backgroundBuffer.width = size
-      backgroundBuffer.height = size
-      backgroundContext = backgroundBuffer.getContext('2d')
-    }
-
-    if (resetPointers) {
-      smallPointerBuffer.width = size
-      smallPointerBuffer.height = size
-      smallPointerContext = smallPointerBuffer.getContext('2d')
-
-      largePointerBuffer.width = size
-      largePointerBuffer.height = size
-      largePointerContext = largePointerBuffer.getContext('2d')
-    }
-
-    if (resetForeground) {
-      foregroundBuffer.width = size
-      foregroundBuffer.height = size
-      foregroundContext = foregroundBuffer.getContext('2d')
-    }
-  }
-
-  const tickTock = function () {
-    if (!lap) {
-      seconds = (new Date().getTime() / 1000) - start
-      calculateAngles()
-      self.repaint()
-    }
-    if (running) {
-      tickTimer = setTimeout(tickTock, 200)
-    }
-  }
-
-  //* *********************************** Public methods **************************************
-  // Returns true if the stopwatch is running
-  this.isRunning = function () {
-    return running
-  }
-
-  // Starts the stopwatch
-  this.start = function () {
-    if (!running) {
-      running = true
-      start = (new Date().getTime() / 1000) - seconds
-      tickTock()
-    }
-    return this
-  }
-
-  // Stops the stopwatch
-  this.stop = function () {
-    if (running) {
-      running = false
-      clearTimeout(tickTimer)
-    }
-    if (lap) {
-      lap = false
-      calculateAngles()
-      this.repaint()
-    }
-    return this
-  }
-
-  // Resets the stopwatch
-  this.reset = function () {
-    if (running) {
-      running = false
-      lap = false
-      clearTimeout(tickTimer)
-    }
-    start = (new Date().getTime() / 1000)
-    calculateAngles()
-    this.repaint()
-    return this
-  }
-
-  // Laptimer, stop/restart stopwatch
-  this.lap = function () {
-    if (running && !lap) {
-      lap = true
-    } else if (lap) {
-      lap = false
-    }
-    return this
-  }
-
-  this.getMeasuredTime = function () {
-    return Math.floor(seconds / 60) + ':' + Math.floor(seconds % 60) + ':' + Math.floor((seconds * 1000) % 1000)
-  }
-
-  this.setFrameDesign = function (newFrameDesign) {
-    resetBuffers({
-      frame: true
-    })
-    frameDesign = newFrameDesign
-    init({
-      frame: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setBackgroundColor = function (newBackgroundColor) {
-    resetBuffers({
-      background: true
-    })
-    backgroundColor = newBackgroundColor
-    init({
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setForegroundType = function (newForegroundType) {
-    resetBuffers({
-      foreground: true
-    })
-    foregroundType = newForegroundType
-    init({
-      foreground: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setPointerColor = function (newPointerColor) {
-    resetBuffers({
-      pointers: true
-    })
-    pointerColor = newPointerColor
-    init({
-      pointers: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.repaint = function () {
+  const repaint = function () {
     if (!initialized) {
       init({
         frame: true,
@@ -782,27 +607,27 @@ const Stopwatch = function (canvas, parameters) {
 
   // Buffer for the frame
   const frameBuffer = createBuffer(size, size)
-  frameContext = frameBuffer.getContext('2d')
+  const frameContext = frameBuffer.getContext('2d')
 
   // Buffer for static background painting code
   const backgroundBuffer = createBuffer(size, size)
-  backgroundContext = backgroundBuffer.getContext('2d')
+  const backgroundContext = backgroundBuffer.getContext('2d')
 
   // Buffer for small pointer image painting code
   const smallPointerBuffer = createBuffer(size, size)
-  smallPointerContext = smallPointerBuffer.getContext('2d')
+  const smallPointerContext = smallPointerBuffer.getContext('2d')
 
   // Buffer for large pointer image painting code
   const largePointerBuffer = createBuffer(size, size)
-  largePointerContext = largePointerBuffer.getContext('2d')
+  const largePointerContext = largePointerBuffer.getContext('2d')
 
   // Buffer for static foreground painting code
   const foregroundBuffer = createBuffer(size, size)
-  foregroundContext = foregroundBuffer.getContext('2d')
+  const foregroundContext = foregroundBuffer.getContext('2d')
 
   // Visualize the component
   calculateAngles()
-  this.repaint()
+  repaint()
 
   return this
 }

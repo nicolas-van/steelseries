@@ -1,4 +1,4 @@
-import Tween from './tween.js'
+
 import drawLinearBackgroundImage from './drawLinearBackgroundImage'
 import drawLinearForegroundImage from './drawLinearForegroundImage'
 import drawLinearFrameImage from './drawLinearFrameImage'
@@ -10,7 +10,6 @@ import {
   calcNiceNumber,
   createBuffer,
   customColorDef,
-  requestAnimFrame,
   getCanvasContext,
   doc,
   lcdFontName,
@@ -40,24 +39,24 @@ const LinearBargraph = function (canvas, parameters) {
   let minValue = undefined === parameters.minValue ? 0 : parameters.minValue
   let maxValue =
     undefined === parameters.maxValue ? minValue + 100 : parameters.maxValue
-  let section = undefined === parameters.section ? null : parameters.section
+  const section = undefined === parameters.section ? null : parameters.section
   const niceScale =
     undefined === parameters.niceScale ? true : parameters.niceScale
   let threshold =
     undefined === parameters.threshold
       ? (maxValue - minValue) / 2 + minValue
       : parameters.threshold
-  let titleString =
+  const titleString =
     undefined === parameters.titleString ? '' : parameters.titleString
-  let unitString =
+  const unitString =
     undefined === parameters.unitString ? '' : parameters.unitString
-  let frameDesign =
+  const frameDesign =
     undefined === parameters.frameDesign
       ? FrameDesign.METAL
       : parameters.frameDesign
   const frameVisible =
     undefined === parameters.frameVisible ? true : parameters.frameVisible
-  let backgroundColor =
+  const backgroundColor =
     undefined === parameters.backgroundColor
       ? BackgroundColor.DARK_GRAY
       : parameters.backgroundColor
@@ -65,33 +64,29 @@ const LinearBargraph = function (canvas, parameters) {
     undefined === parameters.backgroundVisible
       ? true
       : parameters.backgroundVisible
-  let valueColor =
+  const valueColor =
     undefined === parameters.valueColor ? ColorDef.RED : parameters.valueColor
-  let lcdColor =
+  const lcdColor =
     undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor
   const lcdVisible =
     undefined === parameters.lcdVisible ? true : parameters.lcdVisible
-  let lcdDecimals =
+  const lcdDecimals =
     undefined === parameters.lcdDecimals ? 2 : parameters.lcdDecimals
   const digitalFont =
     undefined === parameters.digitalFont ? false : parameters.digitalFont
-  let ledColor =
+  const ledColor =
     undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor
-  let ledVisible =
+  const ledVisible =
     undefined === parameters.ledVisible ? false : parameters.ledVisible
-  let thresholdVisible =
+  const thresholdVisible =
     undefined === parameters.thresholdVisible
       ? true
       : parameters.thresholdVisible
-  let thresholdRising =
-    undefined === parameters.thresholdRising
-      ? false
-      : parameters.thresholdRising
-  let minMeasuredValueVisible =
+  const minMeasuredValueVisible =
     undefined === parameters.minMeasuredValueVisible
       ? false
       : parameters.minMeasuredValueVisible
-  let maxMeasuredValueVisible =
+  const maxMeasuredValueVisible =
     undefined === parameters.maxMeasuredValueVisible
       ? false
       : parameters.maxMeasuredValueVisible
@@ -107,16 +102,12 @@ const LinearBargraph = function (canvas, parameters) {
     undefined === parameters.playAlarm ? false : parameters.playAlarm
   const alarmSound =
     undefined === parameters.alarmSound ? false : parameters.alarmSound
-  let valueGradient =
+  const valueGradient =
     undefined === parameters.valueGradient ? null : parameters.valueGradient
-  let useValueGradient =
+  const useValueGradient =
     undefined === parameters.useValueGradient
       ? false
       : parameters.useValueGradient
-  const fullScaleDeflectionTime =
-    undefined === parameters.fullScaleDeflectionTime
-      ? 2.5
-      : parameters.fullScaleDeflectionTime
 
   // Get the canvas context and clear it
   const mainCtx = getCanvasContext(canvas)
@@ -144,20 +135,15 @@ const LinearBargraph = function (canvas, parameters) {
     audioElement.setAttribute('preload', 'auto')
   }
 
-  const self = this
   let value = parameters.value ?? minValue
 
   // Properties
   let minMeasuredValue = maxValue
   let maxMeasuredValue = minValue
 
-  let tween
-  let ledBlinking = false
-  let repainting = false
   let isSectionsVisible = false
   let isGradientVisible = false
   let sectionPixels = []
-  let ledTimerId = 0
 
   const vertical = width <= height
 
@@ -240,11 +226,11 @@ const LinearBargraph = function (canvas, parameters) {
   // **************   Buffer creation  ********************
   // Buffer for the frame
   const frameBuffer = createBuffer(width, height)
-  let frameContext = frameBuffer.getContext('2d')
+  const frameContext = frameBuffer.getContext('2d')
 
   // Buffer for the background
   const backgroundBuffer = createBuffer(width, height)
-  let backgroundContext = backgroundBuffer.getContext('2d')
+  const backgroundContext = backgroundBuffer.getContext('2d')
 
   let lcdBuffer
 
@@ -257,7 +243,7 @@ const LinearBargraph = function (canvas, parameters) {
     activeLedBuffer.width = imageWidth * 0.012135
     activeLedBuffer.height = imageHeight * 0.121428
   }
-  let activeLedContext = activeLedBuffer.getContext('2d')
+  const activeLedContext = activeLedBuffer.getContext('2d')
 
   // Buffer for active bargraph led
   const inActiveLedBuffer = doc.createElement('canvas')
@@ -268,18 +254,18 @@ const LinearBargraph = function (canvas, parameters) {
     inActiveLedBuffer.width = imageWidth * 0.012135
     inActiveLedBuffer.height = imageHeight * 0.121428
   }
-  let inActiveLedContext = inActiveLedBuffer.getContext('2d')
+  const inActiveLedContext = inActiveLedBuffer.getContext('2d')
 
   // Buffer for led on painting code
   const ledBufferOn = createBuffer(ledSize, ledSize)
-  let ledContextOn = ledBufferOn.getContext('2d')
+  const ledContextOn = ledBufferOn.getContext('2d')
 
   // Buffer for led off painting code
   const ledBufferOff = createBuffer(ledSize, ledSize)
-  let ledContextOff = ledBufferOff.getContext('2d')
+  const ledContextOff = ledBufferOff.getContext('2d')
 
   // Buffer for current led painting code
-  let ledBuffer = ledBufferOff
+  const ledBuffer = ledBufferOff
 
   // Buffer for the minMeasuredValue indicator
   const minMeasuredValueBuffer = createBuffer(minMaxIndSize, minMaxIndSize)
@@ -291,7 +277,7 @@ const LinearBargraph = function (canvas, parameters) {
 
   // Buffer for static foreground painting code
   const foregroundBuffer = createBuffer(width, height)
-  let foregroundContext = foregroundBuffer.getContext('2d')
+  const foregroundContext = foregroundBuffer.getContext('2d')
 
   // **************   Image creation  ********************
   const drawLcdText = function (ctx, value, vertical) {
@@ -864,93 +850,6 @@ const LinearBargraph = function (canvas, parameters) {
     }
   }
 
-  const resetBuffers = function (buffers) {
-    buffers = buffers || {}
-    const resetFrame = undefined === buffers.frame ? false : buffers.frame
-    const resetBackground =
-      undefined === buffers.background ? false : buffers.background
-    const resetLed = undefined === buffers.led ? false : buffers.led
-    const resetBargraphLed =
-      undefined === buffers.bargraphled ? false : buffers.bargraphled
-    const resetForeground =
-      undefined === buffers.foreground ? false : buffers.foreground
-
-    if (resetFrame) {
-      frameBuffer.width = width
-      frameBuffer.height = height
-      frameContext = frameBuffer.getContext('2d')
-    }
-
-    if (resetBackground) {
-      backgroundBuffer.width = width
-      backgroundBuffer.height = height
-      backgroundContext = backgroundBuffer.getContext('2d')
-    }
-
-    if (resetBargraphLed) {
-      if (vertical) {
-        activeLedBuffer.width = width * 0.121428
-        activeLedBuffer.height = height * 0.012135
-      } else {
-        activeLedBuffer.width = width * 0.012135
-        activeLedBuffer.height = height * 0.121428
-      }
-      activeLedContext = activeLedBuffer.getContext('2d')
-
-      // Buffer for active bargraph led
-      if (vertical) {
-        inActiveLedBuffer.width = width * 0.121428
-        inActiveLedBuffer.height = height * 0.012135
-      } else {
-        inActiveLedBuffer.width = width * 0.012135
-        inActiveLedBuffer.height = height * 0.121428
-      }
-      inActiveLedContext = inActiveLedBuffer.getContext('2d')
-    }
-
-    if (resetLed) {
-      ledBufferOn.width = Math.ceil(width * 0.093457)
-      ledBufferOn.height = Math.ceil(height * 0.093457)
-      ledContextOn = ledBufferOn.getContext('2d')
-
-      ledBufferOff.width = Math.ceil(width * 0.093457)
-      ledBufferOff.height = Math.ceil(height * 0.093457)
-      ledContextOff = ledBufferOff.getContext('2d')
-
-      // Buffer for current led painting code
-      ledBuffer = ledBufferOff
-    }
-
-    if (resetForeground) {
-      foregroundBuffer.width = width
-      foregroundBuffer.height = height
-      foregroundContext = foregroundBuffer.getContext('2d')
-    }
-  }
-
-  const blink = function (blinking) {
-    if (blinking) {
-      ledTimerId = setInterval(toggleAndRepaintLed, 1000)
-    } else {
-      clearInterval(ledTimerId)
-      ledBuffer = ledBufferOff
-    }
-  }
-
-  const toggleAndRepaintLed = function () {
-    if (ledVisible) {
-      if (ledBuffer === ledBufferOn) {
-        ledBuffer = ledBufferOff
-      } else {
-        ledBuffer = ledBufferOn
-      }
-      if (!repainting) {
-        repainting = true
-        requestAnimFrame(self.repaint)
-      }
-    }
-  }
-
   const drawValue = function (ctx, imageWidth, imageHeight) {
     let top // position of max value
     let bottom // position of min value
@@ -1269,382 +1168,7 @@ const LinearBargraph = function (canvas, parameters) {
     ctx.restore()
   }
 
-  //* *********************************** Public methods **************************************
-  this.setValue = function (newValue) {
-    newValue = parseFloat(newValue)
-    const targetValue =
-      newValue < minValue
-        ? minValue
-        : newValue > maxValue
-          ? maxValue
-          : newValue
-    if (value !== targetValue) {
-      value = targetValue
-
-      if (value > maxMeasuredValue) {
-        maxMeasuredValue = value
-      }
-      if (value < minMeasuredValue) {
-        minMeasuredValue = value
-      }
-
-      if (
-        (value >= threshold && !ledBlinking && thresholdRising) ||
-        (value <= threshold && !ledBlinking && !thresholdRising)
-      ) {
-        ledBlinking = true
-        blink(ledBlinking)
-        if (playAlarm) {
-          audioElement.play()
-        }
-      } else if (
-        (value < threshold && ledBlinking && thresholdRising) ||
-        (value > threshold && ledBlinking && !thresholdRising)
-      ) {
-        ledBlinking = false
-        blink(ledBlinking)
-        if (playAlarm) {
-          audioElement.pause()
-        }
-      }
-
-      this.repaint()
-    }
-    return this
-  }
-
-  this.getValue = function () {
-    return value
-  }
-
-  this.setValueAnimated = function (newValue, callback) {
-    const gauge = this
-    let time
-    newValue = parseFloat(newValue)
-    const targetValue =
-      newValue < minValue
-        ? minValue
-        : newValue > maxValue
-          ? maxValue
-          : newValue
-
-    if (value !== targetValue) {
-      if (undefined !== tween && tween.isPlaying) {
-        tween.stop()
-      }
-
-      time =
-        (fullScaleDeflectionTime * Math.abs(targetValue - value)) /
-        (maxValue - minValue)
-      time = Math.max(time, fullScaleDeflectionTime / 5)
-      tween = new Tween(
-        {},
-        '',
-        Tween.regularEaseInOut,
-        value,
-        targetValue,
-        time
-      )
-      // tween = new Tween({}, '', Tween.regularEaseInOut, value, targetValue, 1);
-      // tween = new Tween(new Object(), '', Tween.strongEaseInOut, value, targetValue, 1);
-      tween.onMotionChanged = function (event) {
-        value = event.target._pos
-
-        if (
-          (value >= threshold && !ledBlinking && thresholdRising) ||
-          (value <= threshold && !ledBlinking && !thresholdRising)
-        ) {
-          ledBlinking = true
-          blink(ledBlinking)
-          if (playAlarm) {
-            audioElement.play()
-          }
-        } else if (
-          (value < threshold && ledBlinking && thresholdRising) ||
-          (value > threshold && ledBlinking && !thresholdRising)
-        ) {
-          ledBlinking = false
-          blink(ledBlinking)
-          if (playAlarm) {
-            audioElement.pause()
-          }
-        }
-
-        if (value > maxMeasuredValue) {
-          maxMeasuredValue = value
-        }
-        if (value < minMeasuredValue) {
-          minMeasuredValue = value
-        }
-
-        if (!repainting) {
-          repainting = true
-          requestAnimFrame(gauge.repaint)
-        }
-      }
-
-      // do we have a callback function to process?
-      if (callback && typeof callback === 'function') {
-        tween.onMotionFinished = callback
-      }
-
-      tween.start()
-    }
-    return this
-  }
-
-  this.resetMinMeasuredValue = function () {
-    minMeasuredValue = value
-    this.repaint()
-    return this
-  }
-
-  this.resetMaxMeasuredValue = function () {
-    maxMeasuredValue = value
-    this.repaint()
-    return this
-  }
-
-  this.setMinMeasuredValueVisible = function (visible) {
-    minMeasuredValueVisible = !!visible
-    this.repaint()
-    return this
-  }
-
-  this.setMaxMeasuredValueVisible = function (visible) {
-    maxMeasuredValueVisible = !!visible
-    this.repaint()
-    return this
-  }
-
-  this.setThresholdVisible = function (visible) {
-    thresholdVisible = !!visible
-    this.repaint()
-    return this
-  }
-
-  this.setThresholdRising = function (rising) {
-    thresholdRising = !!rising
-    // reset existing threshold alerts
-    ledBlinking = !ledBlinking
-    blink(ledBlinking)
-    this.repaint()
-    return this
-  }
-
-  this.setLcdDecimals = function (decimals) {
-    lcdDecimals = parseInt(decimals, 10)
-    this.repaint()
-    return this
-  }
-
-  this.setFrameDesign = function (newFrameDesign) {
-    resetBuffers({
-      frame: true
-    })
-    frameDesign = newFrameDesign
-    init({
-      frame: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setBackgroundColor = function (newBackgroundColor) {
-    resetBuffers({
-      background: true
-    })
-    backgroundColor = newBackgroundColor
-    init({
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setValueColor = function (newValueColor) {
-    resetBuffers({
-      bargraphled: true
-    })
-    valueColor = newValueColor
-    init({
-      bargraphled: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setLedColor = function (newLedColor) {
-    resetBuffers({
-      led: true
-    })
-    ledColor = newLedColor
-    init({
-      led: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setLedVisible = function (visible) {
-    ledVisible = !!visible
-    this.repaint()
-    return this
-  }
-
-  this.setLcdColor = function (newLcdColor) {
-    lcdColor = newLcdColor
-    resetBuffers({
-      background: true
-    })
-    init({
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setSection = function (areaSec) {
-    section = areaSec
-    init()
-    this.repaint()
-    return this
-  }
-
-  this.setSectionActive = function (value) {
-    init()
-    this.repaint()
-    return this
-  }
-
-  this.setGradient = function (grad) {
-    valueGradient = grad
-    init()
-    this.repaint()
-    return this
-  }
-
-  this.setGradientActive = function (value) {
-    useValueGradient = value
-    init()
-    this.repaint()
-    return this
-  }
-
-  this.setMaxMeasuredValue = function (newValue) {
-    newValue = parseFloat(newValue)
-    const targetValue =
-      newValue < minValue
-        ? minValue
-        : newValue > maxValue
-          ? maxValue
-          : newValue
-    if (maxMeasuredValue !== targetValue) {
-      maxMeasuredValue = targetValue
-      this.repaint()
-    }
-    return this
-  }
-
-  this.setMinMeasuredValue = function (newValue) {
-    newValue = parseFloat(newValue)
-    const targetValue =
-      newValue < minValue
-        ? minValue
-        : newValue > maxValue
-          ? maxValue
-          : newValue
-    if (minMeasuredValue !== targetValue) {
-      minMeasuredValue = targetValue
-      this.repaint()
-    }
-    return this
-  }
-
-  this.setTitleString = function (title) {
-    titleString = title
-    resetBuffers({
-      background: true
-    })
-    init({
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setUnitString = function (unit) {
-    unitString = unit
-    resetBuffers({
-      background: true
-    })
-    init({
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setMinValue = function (newValue) {
-    minValue = parseFloat(newValue)
-    resetBuffers({
-      background: true
-    })
-    init({
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.getMinValue = function () {
-    return minValue
-  }
-
-  this.setMaxValue = function (newValue) {
-    maxValue = parseFloat(newValue)
-    resetBuffers({
-      background: true
-    })
-    init({
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.getMaxValue = function () {
-    return maxValue
-  }
-
-  this.setThreshold = function (newValue) {
-    newValue = parseFloat(newValue)
-    const targetValue =
-      newValue < minValue
-        ? minValue
-        : newValue > maxValue
-          ? maxValue
-          : newValue
-    if (threshold !== targetValue) {
-      threshold = targetValue
-      resetBuffers({
-        background: true
-      })
-      init({
-        background: true
-      })
-      this.repaint()
-    }
-    return this
-  }
-
-  this.setThresholdVisible = function (visible) {
-    thresholdVisible = !!visible
-    this.repaint()
-    return this
-  }
-
-  this.repaint = function () {
+  const repaint = function () {
     if (!initialized) {
       init({
         frame: true,
@@ -1731,12 +1255,10 @@ const LinearBargraph = function (canvas, parameters) {
     if (foregroundVisible) {
       mainCtx.drawImage(foregroundBuffer, 0, 0)
     }
-
-    repainting = false
   }
 
   // Visualize the component
-  this.repaint()
+  repaint()
 
   return this
 }
@@ -1772,8 +1294,7 @@ export class LinearBargraphElement extends BaseElement {
       minMeasuredValueVisible: { type: Boolean, defaultValue: false },
       maxMeasuredValueVisible: { type: Boolean, defaultValue: false },
       labelNumberFormat: { type: String, objectEnum: LabelNumberFormat, defaultValue: 'STANDARD' },
-      noForegroundVisible: { type: Boolean, defaultValue: false },
-      fullScaleDeflectionTime: { type: Number, defaultValue: 2.5 }
+      noForegroundVisible: { type: Boolean, defaultValue: false }
     }
   }
 
