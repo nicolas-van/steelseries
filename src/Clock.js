@@ -15,6 +15,8 @@ import {
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'
 
+import { timer } from 'd3-timer'
+
 const Clock = function (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
@@ -55,7 +57,7 @@ const Clock = function (canvas, parameters) {
   const customLayer =
     undefined === parameters.customLayer ? null : parameters.customLayer
   let isAutomatic =
-    undefined === parameters.isAutomatic ? true : parameters.isAutomatic
+    undefined === parameters.isAutomatic ? false : parameters.isAutomatic
   let hour = undefined === parameters.hour ? 11 : parameters.hour
   let minute = undefined === parameters.minute ? 5 : parameters.minute
   let second = undefined === parameters.second ? 0 : parameters.second
@@ -844,10 +846,13 @@ export class ClockElement extends BaseElement {
   static get properties () {
     return {
       size: { type: Number, defaultValue: 200 },
-      noIsAutomatic: { type: Boolean, defaultValue: false },
+      isCurrentTime: { type: Boolean, defaultValue: false },
       hour: { type: Number, defaultValue: 0 },
+      real_hour: { state: true },
       minute: { type: Number, defaultValue: 0 },
+      real_minute: { state: true },
       second: { type: Number, defaultValue: 0 },
+      real_second: { state: true },
       frameDesign: { type: String, objectEnum: FrameDesign, defaultValue: 'METAL' },
       noFrameVisible: { type: Boolean, defaultValue: false },
       pointerType: { type: String, objectEnum: PointerType, defaultValue: 'TYPE1' },
@@ -856,17 +861,58 @@ export class ClockElement extends BaseElement {
       noBackgroundVisible: { type: Boolean, defaultValue: false },
       foregroundType: { type: String, objectEnum: ForegroundType, defaultValue: 'TYPE1' },
       noForegroundVisible: { type: Boolean, defaultValue: false },
-      secondMovesContinuous: { type: Boolean, defaultValue: false },
       timeZoneOffsetHour: { type: Number, defaultValue: 0 },
       timeZoneOffsetMinute: { type: Number, defaultValue: 0 },
       noSecondPointerVisible: { type: Boolean, defaultValue: false }
     }
   }
 
+  constructor () {
+    super()
+    this._timer = timer(() => {})
+    this._timer.stop()
+  }
+
+  connectedCallback () {
+    super.connectedCallback()
+    this.real_hour = this.hour
+    this.real_minute = this.minute
+    this.real_second = this.second
+  }
+
   render () {
     return html`
       <canvas width="${this.size}" height="${this.size}"></canvas>
     `
+  }
+
+  updated (changedProperties) {
+    super.updated()
+    if (changedProperties.has('hour') ||
+    changedProperties.has('minute') ||
+    changedProperties.has('second') ||
+    changedProperties.has('isCurrentTime')) {
+      if (this.isCurrentTime) {
+        this._timer.restart(() => {
+          const date = new Date()
+          const hour = date.getHours()
+          const minute = date.getMinutes()
+          const second = date.getSeconds()
+          if (this.real_hour !== hour ||
+            this.real_minute !== minute ||
+            this.real_second !== second) {
+            this.real_hour = hour
+            this.real_minute = minute
+            this.real_second = second
+          }
+        })
+      } else {
+        this._timer.stop()
+        this.real_hour = this.hour
+        this.real_minute = this.minute
+        this.real_second = this.second
+      }
+    }
   }
 }
 

@@ -6,7 +6,7 @@ window.customElements.define('steelseries-doc-altimeter', generateDocumentation(
 
 window.customElements.define('steelseries-doc-battery', generateDocumentation('steelseries-battery', { value: 75 }))
 
-window.customElements.define('steelseries-doc-clock', generateDocumentation('steelseries-clock'))
+window.customElements.define('steelseries-doc-clock', generateDocumentation('steelseries-clock', { isCurrentTime: true }))
 
 window.customElements.define('steelseries-doc-compass', generateDocumentation('steelseries-compass', { value: 75 }))
 
