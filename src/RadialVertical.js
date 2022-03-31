@@ -93,14 +93,14 @@ const RadialVertical = function (canvas, parameters) {
   let ledColor =
     undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor
   let ledVisible =
-    undefined === parameters.ledVisible ? true : parameters.ledVisible
+    undefined === parameters.ledVisible ? false : parameters.ledVisible
   let thresholdVisible =
     undefined === parameters.thresholdVisible
       ? true
       : parameters.thresholdVisible
   let thresholdRising =
     undefined === parameters.thresholdRising
-      ? true
+      ? false
       : parameters.thresholdRising
   let minMeasuredValueVisible =
     undefined === parameters.minMeasuredValueVisible
@@ -1289,17 +1289,12 @@ export class RadialVerticalElement extends BaseElement {
       pointerColor: { type: String, objectEnum: ColorDef, defaultValue: 'RED' },
       knobType: { type: String, objectEnum: KnobType, defaultValue: 'METAL_KNOB' },
       knobStyle: { type: String, objectEnum: KnobStyle, defaultValue: 'BLACK' },
-      ledColor: { type: String, objectEnum: LedColor, defaultValue: 'RED_LED' },
-      noLedVisible: { type: Boolean, defaultValue: false },
-      noThresholdVisible: { type: Boolean, defaultValue: false },
-      noThresholdRising: { type: Boolean, defaultValue: false },
+      thresholdVisible: { type: Boolean, defaultValue: false },
       minMeasuredValueVisible: { type: Boolean, defaultValue: false },
       maxMeasuredValueVisible: { type: Boolean, defaultValue: false },
       labelNumberFormat: { type: String, objectEnum: LabelNumberFormat, defaultValue: 'STANDARD' },
       foregroundType: { type: String, objectEnum: ForegroundType, defaultValue: 'TYPE1' },
       noForegroundVisible: { type: Boolean, defaultValue: false },
-      playAlarm: { type: Boolean, defaultValue: false },
-      alarmSound: { type: Boolean, defaultValue: false },
       fullScaleDeflectionTime: { type: Number, defaultValue: 2.5 }
     }
   }

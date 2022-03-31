@@ -65,7 +65,7 @@ const Radial = function (canvas, parameters) {
       : parameters.threshold
   let thresholdRising =
     undefined === parameters.thresholdRising
-      ? true
+      ? false
       : parameters.thresholdRising
   let section = undefined === parameters.section ? null : parameters.section
   let area = undefined === parameters.area ? null : parameters.area
@@ -118,7 +118,7 @@ const Radial = function (canvas, parameters) {
   let ledColor =
     undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor
   let ledVisible =
-    undefined === parameters.ledVisible ? true : parameters.ledVisible
+    undefined === parameters.ledVisible ? false : parameters.ledVisible
   let userLedColor =
     undefined === parameters.userLedColor
       ? LedColor.GREEN_LED
@@ -1760,19 +1760,12 @@ export class RadialElement extends BaseElement {
       lcdDecimals: { type: Number, defaultValue: 2 },
       digitalFont: { type: Boolean, defaultValue: false },
       fractionalScaleDecimals: { type: Number, defaultValue: 1 },
-      ledColor: { type: String, objectEnum: LedColor, defaultValue: 'RED_LED' },
-      noLedVisible: { type: Boolean, defaultValue: false },
-      userLedColor: { type: String, objectEnum: LedColor, defaultValue: 'GREEN_LED' },
-      userLedVisible: { type: Boolean, defaultValue: false },
-      noThresholdVisible: { type: Boolean, defaultValue: false },
-      noThresholdRising: { type: Boolean, defaultValue: false },
+      thresholdVisible: { type: Boolean, defaultValue: false },
       minMeasuredValueVisible: { type: Boolean, defaultValue: false },
       maxMeasuredValueVisible: { type: Boolean, defaultValue: false },
       labelNumberFormat: { type: String, objectEnum: LabelNumberFormat, defaultValue: 'STANDARD' },
       foregroundType: { type: String, objectEnum: ForegroundType, defaultValue: 'TYPE1' },
       noForegroundVisible: { type: Boolean, defaultValue: false },
-      playAlarm: { type: Boolean, defaultValue: false },
-      alarmSound: { type: Boolean, defaultValue: false },
       tickLabelOrientation: { type: String, objectEnum: TickLabelOrientation, defaultValue: 'TANGENT' },
       trendVisible: { type: Boolean, defaultValue: false },
       useOdometer: { type: Boolean, defaultValue: false },
