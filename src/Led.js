@@ -123,10 +123,6 @@ const Led = function (canvas, parameters) {
 
   repaint()
 
-  if (parameters.blinking) {
-    this.blink(true)
-  }
-
   return this
 }
 
@@ -138,7 +134,6 @@ export class LedElement extends BaseElement {
   static get properties () {
     return {
       size: { type: Number, defaultValue: 50 },
-      blinking: { type: Boolean, defaultValue: false },
       ledOn: { type: Boolean, defaultValue: false },
       ledColor: { type: String, objectEnum: LedColor, defaultValue: 'RED_LED' }
     }
