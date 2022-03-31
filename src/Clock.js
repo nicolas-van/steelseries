@@ -848,11 +848,8 @@ export class ClockElement extends BaseElement {
       size: { type: Number, defaultValue: 200 },
       isCurrentTime: { type: Boolean, defaultValue: false },
       hour: { type: Number, defaultValue: 0 },
-      real_hour: { state: true },
       minute: { type: Number, defaultValue: 0 },
-      real_minute: { state: true },
       second: { type: Number, defaultValue: 0 },
-      real_second: { state: true },
       frameDesign: { type: String, objectEnum: FrameDesign, defaultValue: 'METAL' },
       noFrameVisible: { type: Boolean, defaultValue: false },
       pointerType: { type: String, objectEnum: PointerType, defaultValue: 'TYPE1' },
@@ -873,13 +870,6 @@ export class ClockElement extends BaseElement {
     this._timer.stop()
   }
 
-  connectedCallback () {
-    super.connectedCallback()
-    this.real_hour = this.hour
-    this.real_minute = this.minute
-    this.real_second = this.second
-  }
-
   render () {
     return html`
       <canvas width="${this.size}" height="${this.size}"></canvas>
@@ -898,19 +888,16 @@ export class ClockElement extends BaseElement {
           const hour = date.getHours()
           const minute = date.getMinutes()
           const second = date.getSeconds()
-          if (this.real_hour !== hour ||
-            this.real_minute !== minute ||
-            this.real_second !== second) {
-            this.real_hour = hour
-            this.real_minute = minute
-            this.real_second = second
+          if (this.hour !== hour ||
+            this.minute !== minute ||
+            this.second !== second) {
+            this.setAttribute('hour', hour)
+            this.setAttribute('minute', minute)
+            this.setAttribute('second', second)
           }
         })
       } else {
         this._timer.stop()
-        this.real_hour = this.hour
-        this.real_minute = this.minute
-        this.real_second = this.second
       }
     }
   }

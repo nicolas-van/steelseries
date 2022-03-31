@@ -21,6 +21,8 @@ import {
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'
 
+import { timer, now } from 'd3-timer'
+
 const Stopwatch = function (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
@@ -802,10 +804,6 @@ const Stopwatch = function (canvas, parameters) {
   calculateAngles()
   this.repaint()
 
-  if (parameters.running ?? false) {
-    this.start()
-  }
-
   return this
 }
 
@@ -829,10 +827,36 @@ export class StopwatchElement extends BaseElement {
     }
   }
 
+  constructor () {
+    super()
+    this._timer = timer(() => {})
+    this._timer.stop()
+  }
+
   render () {
     return html`
       <canvas width="${this.size}" height="${this.size}"></canvas>
     `
+  }
+
+  updated (changedProperties) {
+    super.updated()
+    if (changedProperties.has('seconds') ||
+    changedProperties.has('running')) {
+      if (this.running) {
+        let lastEllapsedTime = 0
+        let seconds = this.seconds
+        this._timer.restart((ellapsedTime) => {
+          seconds += (ellapsedTime - lastEllapsedTime) / 1000
+          if (Math.floor(seconds) !== this.seconds) {
+            this.setAttribute('seconds', Math.floor(seconds))
+          }
+          lastEllapsedTime = ellapsedTime
+        })
+      } else {
+        this._timer.stop()
+      }
+    }
   }
 }
 
