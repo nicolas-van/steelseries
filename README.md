@@ -1,7 +1,7 @@
 
 # Steelseries Gauges
 
-[![Build Status](https://travis-ci.org/nicolas-van/steelseries.svg?branch=master)](https://travis-ci.org/nicolas-van/steelseries) [![npm version](https://img.shields.io/npm/v/steelseries.svg)](https://www.npmjs.com/package/steelseries) [![](https://github.com/nicolas-van/steelseries/workflows/Node%20CI/badge.svg)](https://github.com/nicolas-van/steelseries/actions) [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/steelseries) [![](https://data.jsdelivr.com/v1/package/npm/steelseries/badge)](https://www.jsdelivr.com/package/npm/steelseries)
+[![](https://github.com/nicolas-van/steelseries/workflows/Node%20CI/badge.svg)](https://github.com/nicolas-van/steelseries/actions) [![npm version](https://img.shields.io/npm/v/steelseries.svg)](https://www.npmjs.com/package/steelseries) [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/steelseries) [![](https://data.jsdelivr.com/v1/package/npm/steelseries/badge)](https://www.jsdelivr.com/package/npm/steelseries)
 
 ![gauges](./gauges.gif)
       
