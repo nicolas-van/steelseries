@@ -4,6 +4,10 @@ import { createBuffer, requestAnimFrame, getCanvasContext } from './tools'
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'
 
+import { easeLinear } from 'd3-ease'
+import { timer, now } from 'd3-timer'
+import { scaleLinear } from 'd3-scale'
+
 const Odometer = function (canvas, parameters) {
   parameters = parameters || {}
 
@@ -32,7 +36,7 @@ const Odometer = function (canvas, parameters) {
       ? '#F8F8F8'
       : parameters.valueForeColor
   const wobbleFactor =
-    undefined === parameters.wobbleFactor ? 0.07 : parameters.wobbleFactor
+    undefined === parameters.wobbleFactor ? 0 : parameters.wobbleFactor
   //
   let initialized = false
   let tween
@@ -283,21 +287,54 @@ export class OdometerElement extends BaseElement {
     return {
       height: { type: Number, defaultValue: 50 },
       value: { type: Number, defaultValue: 0 },
+      real_value: { state: true },
+      transitionTime: { type: Number, defaultValue: 500 },
       digits: { type: Number, defaultValue: 6 },
       decimals: { type: Number, defaultValue: 1 },
       decimalBackColor: { type: String, defaultValue: '#F0F0F0' },
       decimalForeColor: { type: String, defaultValue: '#F01010' },
       font: { type: String, defaultValue: 'sans-serif' },
       valueBackColor: { type: String, defaultValue: '#050505' },
-      valueForeColor: { type: String, defaultValue: '#F8F8F8' },
-      wobbleFactor: { type: Number, defaultValue: 0.07 }
+      valueForeColor: { type: String, defaultValue: '#F8F8F8' }
     }
+  }
+
+  constructor () {
+    super()
+    this._timer = timer(() => {})
+    this._timer.stop()
+  }
+
+  connectedCallback () {
+    super.connectedCallback()
+    this.real_value = this.real_value ?? 0
   }
 
   render () {
     return html`
       <canvas width="${this.width}" height="${this.height}"></canvas>
     `
+  }
+
+  updated (changedProperties) {
+    super.updated()
+    if (changedProperties.has('value') || changedProperties.has('transitionTime')) {
+      const transitionTime = this.transitionTime
+      const originTime = now()
+      const originValue = this.real_value
+      const targetValue = this.value
+      const timeScale = transitionTime <= 0 ? () => 1 : scaleLinear().domain([0, transitionTime]).clamp(true)
+      const valueScale = scaleLinear().range([originValue, targetValue]).clamp(true)
+      this._timer.restart((elapsedTime) => {
+        const scaled = timeScale(elapsedTime)
+        const eased = easeLinear(scaled)
+        const newValue = valueScale(eased)
+        this.real_value = newValue
+        if (now() >= originTime + transitionTime) {
+          this._timer.stop()
+        }
+      })
+    }
   }
 }
 

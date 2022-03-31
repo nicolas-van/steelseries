@@ -29,6 +29,10 @@ import {
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'
 
+import { easeCubicInOut } from 'd3-ease'
+import { timer, now } from 'd3-timer'
+import { scaleLinear } from 'd3-scale'
+
 const LinearBargraph = function (canvas, parameters) {
   parameters = parameters || {}
   let width = undefined === parameters.width ? 0 : parameters.width
@@ -1747,6 +1751,8 @@ export class LinearBargraphElement extends BaseElement {
       width: { type: Number, defaultValue: 125 },
       height: { type: Number, defaultValue: 200 },
       value: { type: Number, defaultValue: 0 },
+      real_value: { state: true },
+      transitionTime: { type: Number, defaultValue: 500 },
       minValue: { type: Number, defaultValue: 0 },
       maxValue: { type: Number, defaultValue: 100 },
       threshold: { type: Number, defaultValue: 50 },
@@ -1776,10 +1782,42 @@ export class LinearBargraphElement extends BaseElement {
     }
   }
 
+  constructor () {
+    super()
+    this._timer = timer(() => {})
+    this._timer.stop()
+  }
+
+  connectedCallback () {
+    super.connectedCallback()
+    this.real_value = this.real_value ?? this.minValue
+  }
+
   render () {
     return html`
       <canvas width="${this.width}" height="${this.height}"></canvas>
     `
+  }
+
+  updated (changedProperties) {
+    super.updated()
+    if (changedProperties.has('value') || changedProperties.has('transitionTime')) {
+      const transitionTime = this.transitionTime
+      const originTime = now()
+      const originValue = this.real_value
+      const targetValue = this.value
+      const timeScale = transitionTime <= 0 ? () => 1 : scaleLinear().domain([0, transitionTime]).clamp(true)
+      const valueScale = scaleLinear().range([originValue, targetValue]).clamp(true)
+      this._timer.restart((elapsedTime) => {
+        const scaled = timeScale(elapsedTime)
+        const eased = easeCubicInOut(scaled)
+        const newValue = valueScale(eased)
+        this.real_value = newValue
+        if (now() >= originTime + transitionTime) {
+          this._timer.stop()
+        }
+      })
+    }
   }
 }
 

@@ -937,8 +937,8 @@ export class AltimeterElement extends BaseElement {
     return {
       size: { type: Number, defaultValue: 200 },
       value: { type: Number, defaultValue: 0 },
-      transitionTime: { type: Number, defaultValue: 500 },
       real_value: { state: true },
+      transitionTime: { type: Number, defaultValue: 500 },
       frameDesign: { type: String, objectEnum: FrameDesign, defaultValue: 'METAL' },
       noFrameVisible: { type: Boolean, defaultValue: false },
       backgroundColor: { type: String, objectEnum: BackgroundColor, defaultValue: 'DARK_GRAY' },
@@ -960,7 +960,11 @@ export class AltimeterElement extends BaseElement {
     super()
     this._timer = timer(() => {})
     this._timer.stop()
-    this.real_value = 0
+  }
+
+  connectedCallback () {
+    super.connectedCallback()
+    this.real_value = this.real_value ?? 0
   }
 
   render () {
