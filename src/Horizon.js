@@ -21,6 +21,13 @@ import {
   ForegroundType
 } from './definitions'
 
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
+
+import { easeCubicInOut } from 'd3-ease'
+import { timer, now } from 'd3-timer'
+import { scaleLinear } from 'd3-scale'
+
 const Horizon = function (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
@@ -46,8 +53,8 @@ const Horizon = function (canvas, parameters) {
   let tweenRoll
   let tweenPitch
   let repainting = false
-  let roll = 0
-  let pitch = 0
+  let roll = parameters.roll ?? 0
+  let pitch = parameters.pitch ?? 0
   const pitchPixel = (PI * size) / 360
   let pitchOffset = 0
   let upsidedown = false
@@ -634,3 +641,71 @@ const Horizon = function (canvas, parameters) {
 }
 
 export default Horizon
+
+export class HorizonElement extends BaseElement {
+  static get objectConstructor () { return Horizon }
+
+  static get properties () {
+    return {
+      size: { type: Number, defaultValue: 200 },
+      roll: { type: Number, defaultValue: 0 },
+      pitch: { type: Number, defaultValue: 0 },
+      real_roll: { state: true },
+      real_pitch: { state: true },
+      transitionTime: { type: Number, defaultValue: 500 },
+      frameDesign: { type: String, objectEnum: FrameDesign, defaultValue: 'METAL' },
+      noFrameVisible: { type: Boolean, defaultValue: false },
+      foregroundType: { type: String, objectEnum: ForegroundType, defaultValue: 'TYPE1' },
+      noForegroundVisible: { type: Boolean, defaultValue: false },
+      pointerColor: { type: String, objectEnum: ColorDef, defaultValue: 'GRAY' }
+    }
+  }
+
+  constructor () {
+    super()
+    this._timer = timer(() => {})
+    this._timer.stop()
+  }
+
+  connectedCallback () {
+    super.connectedCallback()
+    this.real_roll = this.real_roll ?? 0
+    this.real_pitch = this.real_pitch ?? 0
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.size}" height="${this.size}"></canvas>
+    `
+  }
+
+  updated (changedProperties) {
+    super.updated()
+    if (changedProperties.has('roll') ||
+    changedProperties.has('pitch') ||
+    changedProperties.has('transitionTime')) {
+      const transitionTime = this.transitionTime
+      const originTime = now()
+      const originRoll = this.real_roll
+      const targetRoll = this.roll
+      const originPitch = this.real_pitch
+      const targetPitch = this.pitch
+      const timeScale = transitionTime <= 0 ? () => 1 : scaleLinear().domain([0, transitionTime]).clamp(true)
+      const rollScale = scaleLinear().range([originRoll, targetRoll]).clamp(true)
+      const pitchScale = scaleLinear().range([originPitch, targetPitch]).clamp(true)
+      this._timer.restart((elapsedTime) => {
+        const scaled = timeScale(elapsedTime)
+        const eased = easeCubicInOut(scaled)
+        const newRoll = rollScale(eased)
+        const newPitch = pitchScale(eased)
+        this.real_roll = newRoll
+        this.real_pitch = newPitch
+        if (now() >= originTime + transitionTime) {
+          this._timer.stop()
+        }
+      })
+    }
+  }
+}
+
+window.customElements.define('steelseries-horizon', HorizonElement)

@@ -581,3 +581,23 @@ export function getCanvasContext (elementOrId) {
       : elementOrId
   return element.getContext('2d')
 }
+
+export class AssertionError extends Error {
+  constructor (...params) {
+    super(...params)
+
+    this.name = 'AssertionError'
+  }
+}
+
+export function assert (cond, textOrException = undefined) {
+  if (!cond) {
+    if (textOrException instanceof Error) {
+      throw textOrException
+    } else if (textOrException === undefined) {
+      throw new AssertionError()
+    } else {
+      throw new AssertionError(textOrException)
+    }
+  }
+}

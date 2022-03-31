@@ -24,6 +24,13 @@ import {
   ForegroundType
 } from './definitions'
 
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
+
+import { easeCubicInOut } from 'd3-ease'
+import { timer, now } from 'd3-timer'
+import { scaleLinear } from 'd3-scale'
+
 const Altimeter = function (canvas, parameters) {
   parameters = parameters || {}
   // parameters
@@ -46,7 +53,7 @@ const Altimeter = function (canvas, parameters) {
     undefined === parameters.titleString ? '' : parameters.titleString
   let unitString =
     undefined === parameters.unitString ? '' : parameters.unitString
-  const unitAltPos = undefined !== parameters.unitAltPos
+  const unitAltPos = parameters.unitAltPos ?? false
   const knobType =
     undefined === parameters.knobType
       ? KnobType.METAL_KNOB
@@ -72,7 +79,7 @@ const Altimeter = function (canvas, parameters) {
   //
   const minValue = 0
   const maxValue = 10
-  let value = minValue
+  let value = parameters.value ?? minValue
   let value100 = 0
   let value1000 = 0
   let value10000 = 0
@@ -922,3 +929,70 @@ const Altimeter = function (canvas, parameters) {
 }
 
 export default Altimeter
+
+export class AltimeterElement extends BaseElement {
+  static get objectConstructor () { return Altimeter }
+
+  static get properties () {
+    return {
+      size: { type: Number, defaultValue: 200 },
+      value: { type: Number, defaultValue: 0 },
+      real_value: { state: true },
+      transitionTime: { type: Number, defaultValue: 500 },
+      frameDesign: { type: String, objectEnum: FrameDesign, defaultValue: 'METAL' },
+      noFrameVisible: { type: Boolean, defaultValue: false },
+      backgroundColor: { type: String, objectEnum: BackgroundColor, defaultValue: 'DARK_GRAY' },
+      noBackgroundVisible: { type: Boolean, defaultValue: false },
+      titleString: { type: String, defaultValue: '' },
+      unitString: { type: String, defaultValue: '' },
+      unitAltPos: { type: Boolean, defaultValue: false },
+      knobType: { type: String, objectEnum: KnobType, defaultValue: 'METAL_KNOB' },
+      knobStyle: { type: String, objectEnum: KnobStyle, defaultValue: 'BLACK' },
+      lcdColor: { type: String, objectEnum: LcdColor, defaultValue: 'BLACK' },
+      noLcdVisible: { type: Boolean, defaultValue: false },
+      digitalFont: { type: Boolean, defaultValue: false },
+      foregroundType: { type: String, objectEnum: ForegroundType, defaultValue: 'TYPE1' },
+      noForegroundVisible: { type: Boolean, defaultValue: false }
+    }
+  }
+
+  constructor () {
+    super()
+    this._timer = timer(() => {})
+    this._timer.stop()
+  }
+
+  connectedCallback () {
+    super.connectedCallback()
+    this.real_value = this.real_value ?? 0
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.size}" height="${this.size}"></canvas>
+    `
+  }
+
+  updated (changedProperties) {
+    super.updated()
+    if (changedProperties.has('value') || changedProperties.has('transitionTime')) {
+      const transitionTime = this.transitionTime
+      const originTime = now()
+      const originValue = this.real_value
+      const targetValue = this.value
+      const timeScale = transitionTime <= 0 ? () => 1 : scaleLinear().domain([0, transitionTime]).clamp(true)
+      const valueScale = scaleLinear().range([originValue, targetValue]).clamp(true)
+      this._timer.restart((elapsedTime) => {
+        const scaled = timeScale(elapsedTime)
+        const eased = easeCubicInOut(scaled)
+        const newValue = valueScale(eased)
+        this.real_value = newValue
+        if (now() >= originTime + transitionTime) {
+          this._timer.stop()
+        }
+      })
+    }
+  }
+}
+
+window.customElements.define('steelseries-altimeter', AltimeterElement)

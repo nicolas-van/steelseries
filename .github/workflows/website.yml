@@ -7,18 +7,17 @@ on:
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - name: Install Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: 12.x
+        node-version: 16.x
     - name: npm install, build, and test
       run: |
         npm ci
-        npm run build
-        npm test
+        npm run docs
     - run: touch docs/.nojekyll
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v2.5.0

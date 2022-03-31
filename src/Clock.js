@@ -12,6 +12,11 @@ import {
   ForegroundType
 } from './definitions'
 
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
+
+import { timer } from 'd3-timer'
+
 const Clock = function (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
@@ -52,7 +57,7 @@ const Clock = function (canvas, parameters) {
   const customLayer =
     undefined === parameters.customLayer ? null : parameters.customLayer
   let isAutomatic =
-    undefined === parameters.isAutomatic ? true : parameters.isAutomatic
+    undefined === parameters.isAutomatic ? false : parameters.isAutomatic
   let hour = undefined === parameters.hour ? 11 : parameters.hour
   let minute = undefined === parameters.minute ? 5 : parameters.minute
   let second = undefined === parameters.second ? 0 : parameters.second
@@ -834,3 +839,68 @@ const Clock = function (canvas, parameters) {
 }
 
 export default Clock
+
+export class ClockElement extends BaseElement {
+  static get objectConstructor () { return Clock }
+
+  static get properties () {
+    return {
+      size: { type: Number, defaultValue: 200 },
+      isCurrentTime: { type: Boolean, defaultValue: false },
+      hour: { type: Number, defaultValue: 0 },
+      minute: { type: Number, defaultValue: 0 },
+      second: { type: Number, defaultValue: 0 },
+      frameDesign: { type: String, objectEnum: FrameDesign, defaultValue: 'METAL' },
+      noFrameVisible: { type: Boolean, defaultValue: false },
+      pointerType: { type: String, objectEnum: PointerType, defaultValue: 'TYPE1' },
+      pointerColor: { type: String, objectEnum: ColorDef, defaultValue: 'GRAY' },
+      backgroundColor: { type: String, objectEnum: BackgroundColor, defaultValue: 'ANTHRACITE' },
+      noBackgroundVisible: { type: Boolean, defaultValue: false },
+      foregroundType: { type: String, objectEnum: ForegroundType, defaultValue: 'TYPE1' },
+      noForegroundVisible: { type: Boolean, defaultValue: false },
+      timeZoneOffsetHour: { type: Number, defaultValue: 0 },
+      timeZoneOffsetMinute: { type: Number, defaultValue: 0 },
+      noSecondPointerVisible: { type: Boolean, defaultValue: false }
+    }
+  }
+
+  constructor () {
+    super()
+    this._timer = timer(() => {})
+    this._timer.stop()
+  }
+
+  disconnectedCallback () {
+    super.disconnectedCallback()
+    this._timer.stop()
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.size}" height="${this.size}"></canvas>
+    `
+  }
+
+  updated (changedProperties) {
+    super.updated()
+    if (this.isCurrentTime) {
+      this._timer.restart(() => {
+        const date = new Date()
+        const hour = date.getHours()
+        const minute = date.getMinutes()
+        const second = date.getSeconds()
+        if (this.hour !== hour ||
+          this.minute !== minute ||
+          this.second !== second) {
+          this.setAttribute('hour', hour)
+          this.setAttribute('minute', minute)
+          this.setAttribute('second', second)
+        }
+      })
+    } else {
+      this._timer.stop()
+    }
+  }
+}
+
+window.customElements.define('steelseries-clock', ClockElement)

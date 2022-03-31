@@ -36,6 +36,13 @@ import {
   TrendState
 } from './definitions'
 
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
+
+import { easeCubicInOut } from 'd3-ease'
+import { timer, now } from 'd3-timer'
+import { scaleLinear } from 'd3-scale'
+
 const RadialBargraph = function (canvas, parameters) {
   parameters = parameters || {}
   const gaugeType =
@@ -52,7 +59,7 @@ const RadialBargraph = function (canvas, parameters) {
       : parameters.threshold
   let thresholdRising =
     undefined === parameters.thresholdRising
-      ? true
+      ? false
       : parameters.thresholdRising
   let section = undefined === parameters.section ? null : parameters.section
   let useSectionColors =
@@ -96,7 +103,7 @@ const RadialBargraph = function (canvas, parameters) {
   let ledColor =
     undefined === parameters.ledColor ? LedColor.RED_LED : parameters.ledColor
   let ledVisible =
-    undefined === parameters.ledVisible ? true : parameters.ledVisible
+    undefined === parameters.ledVisible ? false : parameters.ledVisible
   let userLedColor =
     undefined === parameters.userLedColor
       ? LedColor.GREEN_LED
@@ -162,7 +169,7 @@ const RadialBargraph = function (canvas, parameters) {
     audioElement.setAttribute('preload', 'auto')
   }
 
-  let value = minValue
+  let value = parameters.value ?? minValue
   let minMeasuredValue = minValue
   let maxMeasuredValue = maxValue
   let range = maxValue - minValue
@@ -1457,3 +1464,79 @@ const RadialBargraph = function (canvas, parameters) {
 }
 
 export default RadialBargraph
+
+export class RadialBargraphElement extends BaseElement {
+  static get objectConstructor () { return RadialBargraph }
+
+  static get properties () {
+    return {
+      size: { type: Number, defaultValue: 200 },
+      value: { type: Number, defaultValue: 0 },
+      real_value: { state: true },
+      transitionTime: { type: Number, defaultValue: 500 },
+      minValue: { type: Number, defaultValue: 0 },
+      maxValue: { type: Number, defaultValue: 100 },
+      threshold: { type: Number, defaultValue: 50 },
+      gaugeType: { type: String, objectEnum: GaugeType, defaultValue: 'TYPE1' },
+      noNiceScale: { type: Boolean, defaultValue: false },
+      titleString: { type: String, defaultValue: '' },
+      unitString: { type: String, defaultValue: '' },
+      frameDesign: { type: String, objectEnum: FrameDesign, defaultValue: 'METAL' },
+      noFrameVisible: { type: Boolean, defaultValue: false },
+      backgroundColor: { type: String, objectEnum: BackgroundColor, defaultValue: 'DARK_GRAY' },
+      noBackgroundVisible: { type: Boolean, defaultValue: false },
+      valueColor: { type: String, objectEnum: ColorDef, defaultValue: 'RED' },
+      lcdColor: { type: String, objectEnum: LcdColor, defaultValue: 'STANDARD' },
+      noLcdVisible: { type: Boolean, defaultValue: false },
+      lcdDecimals: { type: Number, defaultValue: 2 },
+      digitalFont: { type: Boolean, defaultValue: false },
+      fractionalScaleDecimals: { type: Number, defaultValue: 1 },
+      labelNumberFormat: { type: String, objectEnum: LabelNumberFormat, defaultValue: 'STANDARD' },
+      foregroundType: { type: String, objectEnum: ForegroundType, defaultValue: 'TYPE1' },
+      noForegroundVisible: { type: Boolean, defaultValue: false },
+      tickLabelOrientation: { type: String, objectEnum: TickLabelOrientation, defaultValue: 'TANGENT' },
+      trendVisible: { type: Boolean, defaultValue: false },
+      fullScaleDeflectionTime: { type: Number, defaultValue: 2.5 }
+    }
+  }
+
+  constructor () {
+    super()
+    this._timer = timer(() => {})
+    this._timer.stop()
+  }
+
+  connectedCallback () {
+    super.connectedCallback()
+    this.real_value = this.real_value ?? this.minValue
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.size}" height="${this.size}"></canvas>
+    `
+  }
+
+  updated (changedProperties) {
+    super.updated()
+    if (changedProperties.has('value') || changedProperties.has('transitionTime')) {
+      const transitionTime = this.transitionTime
+      const originTime = now()
+      const originValue = this.real_value
+      const targetValue = this.value
+      const timeScale = transitionTime <= 0 ? () => 1 : scaleLinear().domain([0, transitionTime]).clamp(true)
+      const valueScale = scaleLinear().range([originValue, targetValue]).clamp(true)
+      this._timer.restart((elapsedTime) => {
+        const scaled = timeScale(elapsedTime)
+        const eased = easeCubicInOut(scaled)
+        const newValue = valueScale(eased)
+        this.real_value = newValue
+        if (now() >= originTime + transitionTime) {
+          this._timer.stop()
+        }
+      })
+    }
+  }
+}
+
+window.customElements.define('steelseries-radial-bargraph', RadialBargraphElement)

@@ -13,6 +13,9 @@ import {
 
 import { LcdColor } from './definitions'
 
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
+
 const DisplaySingle = function (canvas, parameters) {
   parameters = parameters || {}
   let width = undefined === parameters.width ? 0 : parameters.width
@@ -43,6 +46,8 @@ const DisplaySingle = function (canvas, parameters) {
   const autoScroll =
     undefined === parameters.autoScroll ? false : parameters.autoScroll
   let section = undefined === parameters.section ? null : parameters.section
+
+  value = valuesNumeric ? parseFloat(value) : value
 
   let scrolling = false
   let scrollX = 0
@@ -418,3 +423,32 @@ const DisplaySingle = function (canvas, parameters) {
 }
 
 export default DisplaySingle
+
+export class DisplaySingleElement extends BaseElement {
+  static get objectConstructor () { return DisplaySingle }
+
+  static get properties () {
+    return {
+      width: { type: Number, defaultValue: 200 },
+      height: { type: Number, defaultValue: 80 },
+      value: { type: String, defaultValue: '' },
+      valuesNumeric: { type: Boolean, defaultValue: false },
+      lcdDecimals: { type: Number, defaultValue: 2 },
+      lcdColor: { type: String, objectEnum: LcdColor, defaultValue: 'STANDARD' },
+      headerString: { type: String, defaultValue: '' },
+      headerStringVisible: { type: Boolean, defaultValue: false },
+      noLinkAltValue: { type: Boolean, defaultValue: false },
+      unitString: { type: String, defaultValue: '' },
+      unitStringVisible: { type: Boolean, defaultValue: false },
+      digitalFont: { type: Boolean, defaultValue: false }
+    }
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.width}" height="${this.height}"></canvas>
+    `
+  }
+}
+
+window.customElements.define('steelseries-display-single', DisplaySingleElement)

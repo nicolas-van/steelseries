@@ -1,4 +1,7 @@
-import { rgbToHsl, doc } from './tools'
+import { rgbToHsl, doc, getCanvasContext } from './tools'
+
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
 
 const Lightbulb = function (canvas, parameters) {
   parameters = parameters || {}
@@ -9,7 +12,7 @@ const Lightbulb = function (canvas, parameters) {
     undefined === parameters.glowColor ? '#ffff00' : parameters.glowColor
   //
   let initialized = false
-  let lightOn = false
+  let lightOn = parameters.lightOn ?? false
   let alpha = 1
   const offBuffer = doc.createElement('canvas')
   const offCtx = offBuffer.getContext('2d')
@@ -20,7 +23,7 @@ const Lightbulb = function (canvas, parameters) {
   // End of variables
 
   // Get the canvas context and clear it
-  const mainCtx = document.getElementById(canvas).getContext('2d')
+  const mainCtx = getCanvasContext(canvas)
 
   // Has a size been specified?
   if (width === 0) {
@@ -614,3 +617,24 @@ const Lightbulb = function (canvas, parameters) {
 }
 
 export default Lightbulb
+
+export class LightbulbElement extends BaseElement {
+  static get objectConstructor () { return Lightbulb }
+
+  static get properties () {
+    return {
+      width: { type: Number, defaultValue: 100 },
+      height: { type: Number, defaultValue: 150 },
+      lightOn: { type: Boolean, defaultValue: false },
+      glowColor: { type: String, defaultValue: '#ffff00' }
+    }
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.width}" height="${this.height}"></canvas>
+    `
+  }
+}
+
+window.customElements.define('steelseries-lightbulb', LightbulbElement)

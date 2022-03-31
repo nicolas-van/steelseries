@@ -8,38 +8,54 @@
     "radial-gauge",
     "linear-gauge"
   ],
-  "main": "dist/steelseries.js",
+  "type": "module",
+  "main": "src/steelseries.js",
+  "jsdelivr": "dist/steelseries.bundled.js",
+  "unpkg": "dist/steelseries.bundled.js",
+  "files": [
+    "src/*",
+    "dist/*",
+    "README.md",
+    "LICENSE.md"
+  ],
   "scripts": {
-    "build": "npm run compile && npm run website",
-    "compile": "webpack",
+    "build": "rollup -c rollup.config.js",
+    "doc": "rm -rf docs .parcel-cache && parcel build srcdocs/index.html --public-url ./ --dist-dir docs",
+    "doc:serve": "rm -rf docs .parcel-cache && parcel serve srcdocs/index.html --dist-dir docs",
     "lint": "eslint \"*.js\" \"src/**/*.js\" \"srcdocs/**/*.js\"",
     "lint:fix": "npm run lint -- --fix",
-    "test": "npm run lint",
-    "website": "rm -rf docs .cache && parcel build srcdocs/index.njk --public-url ./ --out-dir docs",
-    "website-dev": "rm -rf docs .cache && parcel srcdocs/index.njk --out-dir docs"
+    "test": "npm run lint"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nicolas-van/steelseries.git"
   },
-  "author": "",
+  "author": "Nicolas Vanhoren",
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/nicolas-van/steelseries/issues"
   },
-  "homepage": "https://github.com/nicolas-van/steelseries#readme",
+  "homepage": "https://nicolas-van.github.io/steelseries/",
   "devDependencies": {
-    "eslint": "^6.6.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "nunjucks": "^3.2.0",
-    "parcel-bundler": "^1.12.3",
-    "parcel-plugin-nunjucks": "^1.1.0",
-    "webpack": "^4.35.3",
-    "webpack-cli": "^3.3.6"
+    "@rollup/plugin-node-resolve": "^13.1.3",
+    "@vanillawc/wc-markdown": "^1.6.11",
+    "eslint": "^7.12.1",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.0.0",
+    "eslint-plugin-standard": "^4.1.0",
+    "lodash-es": "^4.17.21",
+    "parcel": "^2.4.0",
+    "rollup": "^2.70.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "d3-ease": "^3.0.1",
+    "d3-scale": "^4.0.2",
+    "d3-timer": "^3.0.1",
+    "lit": "^2.2.1"
+  },
+  "targets": {
+    "main": false
+  }
 }

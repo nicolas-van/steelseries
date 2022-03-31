@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Steelseries Documentation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script type="module" src="./index.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="./">Steelseries Documentation</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="https://github.com/nicolas-van/steelseries">Github</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <a href="https://github.com/nicolas-van/steelseries" style="position: absolute; right: 0; z-index: 100">
+      <img width="149" height="149"
+        src="https://github.blog/wp-content/uploads/2008/12/forkme_right_darkblue_121621.png?resize=149%2C149"
+        class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1">
+    </a>
+    <div class="container pt-3">
+      <wc-markdown>
+        <script type="wc-content">
+          # steelseries
+      
+          The steelseries library is a collection of gauges components related to navigation.
+
+          These components are packed as web components, which means they do not necessitate knowledge in Javascript
+          in order to be used on web pages. Just include the following snippet in your HTML file:
+
+          ```
+            <script type="module" src="https://cdn.jsdelivr.net/npm/steelseries@2.0.0-rc1/dist/steelseries.bundled.min.js">&lt;/script>
+          ```
+
+          Then select one of the components bellow, adjust the parameters as you see fit and copy paste the resulting
+          code in your HTML. That's it, the component should now display correctly on your web page.
+        </script>
+      </wc-markdown>
+      <steelseries-doc-altimeter></steelseries-doc-altimeter>
+      <steelseries-doc-battery></steelseries-doc-battery>
+      <steelseries-doc-clock></steelseries-doc-clock>
+      <steelseries-doc-compass></steelseries-doc-compass>
+      <steelseries-doc-display-multi></steelseries-doc-display-multi>
+      <steelseries-doc-display-single></steelseries-doc-display-single>
+      <steelseries-doc-horizon></steelseries-doc-horizon>
+      <steelseries-doc-led></steelseries-doc-led>
+      <steelseries-doc-level></steelseries-doc-level>
+      <steelseries-doc-lightbulb></steelseries-doc-lightbulb>
+      <steelseries-doc-linear></steelseries-doc-linear>
+      <steelseries-doc-linear-bargraph></steelseries-doc-linear-bargraph>
+      <steelseries-doc-odometer></steelseries-doc-odometer>
+      <steelseries-doc-radial></steelseries-doc-radial>
+      <steelseries-doc-radial-bargraph></steelseries-doc-radial-bargraph>
+      <steelseries-doc-radial-vertical></steelseries-doc-radial-vertical>
+      <steelseries-doc-stopwatch></steelseries-doc-stopwatch>
+      <steelseries-doc-trafficlight></steelseries-doc-trafficlight>
+      <steelseries-doc-wind-direction></steelseries-doc-wind-direction>
+    </div>
+  </body>
+</html>

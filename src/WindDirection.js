@@ -29,6 +29,13 @@ import {
   ForegroundType
 } from './definitions'
 
+import { html } from 'lit'
+import BaseElement from './BaseElement.js'
+
+import { easeCubicInOut } from 'd3-ease'
+import { timer, now } from 'd3-timer'
+import { scaleLinear } from 'd3-scale'
+
 const WindDirection = function (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
@@ -119,8 +126,8 @@ const WindDirection = function (canvas, parameters) {
 
   let tweenLatest
   let tweenAverage
-  let valueLatest = 0
-  let valueAverage = 0
+  let valueLatest = parameters.valueLatest ?? 0
+  let valueAverage = parameters.valueAverage ?? 0
   const angleStep = RAD_FACTOR
   let angleLatest = this.valueLatest
   let angleAverage = this.valueAverage
@@ -1079,3 +1086,88 @@ const WindDirection = function (canvas, parameters) {
 }
 
 export default WindDirection
+
+export class WindDirectionElement extends BaseElement {
+  static get objectConstructor () { return WindDirection }
+
+  static get properties () {
+    return {
+      size: { type: Number, defaultValue: 200 },
+      valueLatest: { type: Number, defaultValue: 0 },
+      valueAverage: { type: Number, defaultValue: 0 },
+      real_valueLatest: { state: true },
+      real_valueAverage: { state: true },
+      transitionTime: { type: Number, defaultValue: 500 },
+      frameDesign: { type: String, objectEnum: FrameDesign, defaultValue: 'METAL' },
+      noFrameVisible: { type: Boolean, defaultValue: false },
+      backgroundColor: { type: String, objectEnum: BackgroundColor, defaultValue: 'DARK_GRAY' },
+      noBackgroundVisible: { type: Boolean, defaultValue: false },
+      pointerTypeLatest: { type: String, objectEnum: PointerType, defaultValue: 'TYPE1' },
+      pointerTypeAverage: { type: String, objectEnum: PointerType, defaultValue: 'TYPE8' },
+      pointerColor: { type: String, objectEnum: ColorDef, defaultValue: 'RED' },
+      pointerColorAverage: { type: String, objectEnum: ColorDef, defaultValue: 'BLUE' },
+      knobType: { type: String, objectEnum: KnobType, defaultValue: 'STANDARD_KNOB' },
+      knobStyle: { type: String, objectEnum: KnobStyle, defaultValue: 'SILVER' },
+      foregroundType: { type: String, objectEnum: ForegroundType, defaultValue: 'TYPE1' },
+      noForegroundVisible: { type: Boolean, defaultValue: false },
+      pointSymbols: { type: Array, defaultValue: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'] },
+      noPointSymbolsVisible: { type: Boolean, defaultValue: false },
+      noDegreeScale: { type: Boolean, defaultValue: false },
+      degreeScaleHalf: { type: Boolean, defaultValue: false },
+      roseVisible: { type: Boolean, defaultValue: false },
+      lcdColor: { type: String, objectEnum: LcdColor, defaultValue: 'STANDARD' },
+      noLcdVisible: { type: Boolean, defaultValue: false },
+      digitalFont: { type: Boolean, defaultValue: false },
+      lcdTitleStrings: { type: Array, defaultValue: ['Latest', 'Average'] },
+      titleString: { type: String, defaultValue: '' },
+      useColorLabels: { type: Boolean, defaultValue: false },
+      fullScaleDeflectionTime: { type: Number, defaultValue: 2.5 }
+    }
+  }
+
+  constructor () {
+    super()
+    this._timer = timer(() => {})
+    this._timer.stop()
+  }
+
+  connectedCallback () {
+    super.connectedCallback()
+    this.real_valueLatest = this.real_valueLatest ?? 0
+    this.real_valueAverage = this.real_valueAverage ?? 0
+  }
+
+  render () {
+    return html`
+      <canvas width="${this.size}" height="${this.size}"></canvas>
+    `
+  }
+
+  updated (changedProperties) {
+    super.updated()
+    if (changedProperties.has('valueLatest') ||
+    changedProperties.has('valueAverage') ||
+    changedProperties.has('transitionTime')) {
+      const transitionTime = this.transitionTime
+      const originTime = now()
+      const originValueLatest = this.real_valueLatest
+      const targetValueLatest = this.valueLatest
+      const originValueAverage = this.real_valueAverage
+      const targetValueAverage = this.valueAverage
+      const timeScale = transitionTime <= 0 ? () => 1 : scaleLinear().domain([0, transitionTime]).clamp(true)
+      const valueLatestScale = scaleLinear().range([originValueLatest, targetValueLatest]).clamp(true)
+      const valueAverageScale = scaleLinear().range([originValueAverage, targetValueAverage]).clamp(true)
+      this._timer.restart((elapsedTime) => {
+        const scaled = timeScale(elapsedTime)
+        const eased = easeCubicInOut(scaled)
+        this.real_valueLatest = valueLatestScale(eased)
+        this.real_valueAverage = valueAverageScale(eased)
+        if (now() >= originTime + transitionTime) {
+          this._timer.stop()
+        }
+      })
+    }
+  }
+}
+
+window.customElements.define('steelseries-wind-direction', WindDirectionElement)
