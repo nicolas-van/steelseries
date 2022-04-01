@@ -17,26 +17,26 @@ import BaseElement from './BaseElement.js'
 
 import { timer } from 'd3-timer'
 
-const Clock = function (canvas, parameters) {
+export function drawClock (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
-  let frameDesign =
+  const frameDesign =
     undefined === parameters.frameDesign
       ? FrameDesign.METAL
       : parameters.frameDesign
   const frameVisible =
     undefined === parameters.frameVisible ? true : parameters.frameVisible
-  let pointerType =
+  const pointerType =
     undefined === parameters.pointerType
       ? PointerType.TYPE1
       : parameters.pointerType
-  let pointerColor =
+  const pointerColor =
     undefined === parameters.pointerColor
       ? pointerType === PointerType.TYPE1
         ? ColorDef.GRAY
         : ColorDef.BLACK
       : parameters.pointerColor
-  let backgroundColor =
+  const backgroundColor =
     undefined === parameters.backgroundColor
       ? pointerType === PointerType.TYPE1
         ? BackgroundColor.ANTHRACITE
@@ -46,7 +46,7 @@ const Clock = function (canvas, parameters) {
     undefined === parameters.backgroundVisible
       ? true
       : parameters.backgroundVisible
-  let foregroundType =
+  const foregroundType =
     undefined === parameters.foregroundType
       ? ForegroundType.TYPE1
       : parameters.foregroundType
@@ -56,38 +56,31 @@ const Clock = function (canvas, parameters) {
       : parameters.foregroundVisible
   const customLayer =
     undefined === parameters.customLayer ? null : parameters.customLayer
-  let isAutomatic =
-    undefined === parameters.isAutomatic ? false : parameters.isAutomatic
   let hour = undefined === parameters.hour ? 11 : parameters.hour
   let minute = undefined === parameters.minute ? 5 : parameters.minute
   let second = undefined === parameters.second ? 0 : parameters.second
-  let secondMovesContinuous =
+  const secondMovesContinuous =
     undefined === parameters.secondMovesContinuous
       ? false
       : parameters.secondMovesContinuous
-  let timeZoneOffsetHour =
+  const timeZoneOffsetHour =
     undefined === parameters.timeZoneOffsetHour
       ? 0
       : parameters.timeZoneOffsetHour
-  let timeZoneOffsetMinute =
+  const timeZoneOffsetMinute =
     undefined === parameters.timeZoneOffsetMinute
       ? 0
       : parameters.timeZoneOffsetMinute
-  let secondPointerVisible =
+  const secondPointerVisible =
     undefined === parameters.secondPointerVisible
       ? true
       : parameters.secondPointerVisible
 
   // GaugeType specific private variables
-  let objDate = new Date()
+  const objDate = new Date()
   let minutePointerAngle
   let hourPointerAngle
   let secondPointerAngle
-  let tickTimer
-  let tickInterval = secondMovesContinuous ? 100 : 1000
-  tickInterval = secondPointerVisible ? tickInterval : 100
-
-  const self = this
 
   // Constants
   const ANGLE_STEP = 6
@@ -113,27 +106,27 @@ const Clock = function (canvas, parameters) {
 
   // Buffer for the frame
   const frameBuffer = createBuffer(size, size)
-  let frameContext = frameBuffer.getContext('2d')
+  const frameContext = frameBuffer.getContext('2d')
 
   // Buffer for static background painting code
   const backgroundBuffer = createBuffer(size, size)
-  let backgroundContext = backgroundBuffer.getContext('2d')
+  const backgroundContext = backgroundBuffer.getContext('2d')
 
   // Buffer for hour pointer image painting code
   const hourBuffer = createBuffer(size, size)
-  let hourContext = hourBuffer.getContext('2d')
+  const hourContext = hourBuffer.getContext('2d')
 
   // Buffer for minute pointer image painting code
   const minuteBuffer = createBuffer(size, size)
-  let minuteContext = minuteBuffer.getContext('2d')
+  const minuteContext = minuteBuffer.getContext('2d')
 
   // Buffer for second pointer image painting code
   const secondBuffer = createBuffer(size, size)
-  let secondContext = secondBuffer.getContext('2d')
+  const secondContext = secondBuffer.getContext('2d')
 
   // Buffer for static foreground painting code
   const foregroundBuffer = createBuffer(size, size)
-  let foregroundContext = foregroundBuffer.getContext('2d')
+  const foregroundContext = foregroundBuffer.getContext('2d')
 
   const drawTickmarksImage = function (ctx, ptrType) {
     let tickAngle
@@ -427,13 +420,9 @@ const Clock = function (canvas, parameters) {
   }
 
   const tickTock = function () {
-    if (isAutomatic) {
-      objDate = new Date()
-    } else {
-      objDate.setHours(hour)
-      objDate.setMinutes(minute)
-      objDate.setSeconds(second)
-    }
+    objDate.setHours(hour)
+    objDate.setMinutes(minute)
+    objDate.setSeconds(second)
     // Seconds
     second =
       objDate.getSeconds() +
@@ -465,11 +454,7 @@ const Clock = function (canvas, parameters) {
     // Calculate angles from current hour and minute values
     calculateAngles(hour, minute, second)
 
-    if (isAutomatic) {
-      tickTimer = setTimeout(tickTock, tickInterval)
-    }
-
-    self.repaint()
+    repaint()
   }
 
   // **************   Initialization  ********************
@@ -540,225 +525,7 @@ const Clock = function (canvas, parameters) {
     }
   }
 
-  const resetBuffers = function (buffers) {
-    buffers = buffers || {}
-    const resetFrame = undefined === buffers.frame ? false : buffers.frame
-    const resetBackground =
-      undefined === buffers.background ? false : buffers.background
-    const resetPointers =
-      undefined === buffers.pointers ? false : buffers.pointers
-    const resetForeground =
-      undefined === buffers.foreground ? false : buffers.foreground
-
-    if (resetFrame) {
-      frameBuffer.width = size
-      frameBuffer.height = size
-      frameContext = frameBuffer.getContext('2d')
-    }
-
-    if (resetBackground) {
-      backgroundBuffer.width = size
-      backgroundBuffer.height = size
-      backgroundContext = backgroundBuffer.getContext('2d')
-    }
-
-    if (resetPointers) {
-      hourBuffer.width = size
-      hourBuffer.height = size
-      hourContext = hourBuffer.getContext('2d')
-
-      minuteBuffer.width = size
-      minuteBuffer.height = size
-      minuteContext = minuteBuffer.getContext('2d')
-
-      secondBuffer.width = size
-      secondBuffer.height = size
-      secondContext = secondBuffer.getContext('2d')
-    }
-
-    if (resetForeground) {
-      foregroundBuffer.width = size
-      foregroundBuffer.height = size
-      foregroundContext = foregroundBuffer.getContext('2d')
-    }
-  }
-
-  //* *********************************** Public methods **************************************
-  this.getAutomatic = function () {
-    return isAutomatic
-  }
-
-  this.setAutomatic = function (newValue) {
-    newValue = !!newValue
-    if (isAutomatic && !newValue) {
-      // stop the clock!
-      clearTimeout(tickTimer)
-      isAutomatic = newValue
-    } else if (!isAutomatic && newValue) {
-      // start the clock
-      isAutomatic = newValue
-      tickTock()
-    }
-    return this
-  }
-
-  this.getHour = function () {
-    return hour
-  }
-
-  this.setHour = function (newValue) {
-    newValue = parseInt(newValue, 10) % 12
-    if (hour !== newValue) {
-      hour = newValue
-      calculateAngles(hour, minute, second)
-      this.repaint()
-    }
-    return this
-  }
-
-  this.getMinute = function () {
-    return minute
-  }
-
-  this.setMinute = function (newValue) {
-    newValue = parseInt(newValue, 10) % 60
-    if (minute !== newValue) {
-      minute = newValue
-      calculateAngles(hour, minute, second)
-      this.repaint()
-    }
-    return this
-  }
-
-  this.getSecond = function () {
-    return second
-  }
-
-  this.setSecond = function (newValue) {
-    newValue = parseInt(newValue, 10) % 60
-    if (second !== newValue) {
-      second = newValue
-      calculateAngles(hour, minute, second)
-      this.repaint()
-    }
-    return this
-  }
-
-  this.getTimeZoneOffsetHour = function () {
-    return timeZoneOffsetHour
-  }
-
-  this.setTimeZoneOffsetHour = function (newValue) {
-    timeZoneOffsetHour = parseInt(newValue, 10)
-    this.repaint()
-    return this
-  }
-
-  this.getTimeZoneOffsetMinute = function () {
-    return timeZoneOffsetMinute
-  }
-
-  this.setTimeZoneOffsetMinute = function (newValue) {
-    timeZoneOffsetMinute = parseInt(newValue, 10)
-    this.repaint()
-    return this
-  }
-
-  this.getSecondPointerVisible = function () {
-    return secondPointerVisible
-  }
-
-  this.setSecondPointerVisible = function (newValue) {
-    secondPointerVisible = !!newValue
-    this.repaint()
-    return this
-  }
-
-  this.getSecondMovesContinuous = function () {
-    return secondMovesContinuous
-  }
-
-  this.setSecondMovesContinuous = function (newValue) {
-    secondMovesContinuous = !!newValue
-    tickInterval = secondMovesContinuous ? 100 : 1000
-    tickInterval = secondPointerVisible ? tickInterval : 100
-    return this
-  }
-
-  this.setFrameDesign = function (newFrameDesign) {
-    resetBuffers({
-      frame: true
-    })
-    frameDesign = newFrameDesign
-    init({
-      frame: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setBackgroundColor = function (newBackgroundColor) {
-    resetBuffers({
-      frame: true,
-      background: true
-    })
-    backgroundColor = newBackgroundColor
-    init({
-      frame: true,
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setForegroundType = function (newForegroundType) {
-    resetBuffers({
-      foreground: true
-    })
-    foregroundType = newForegroundType
-    init({
-      foreground: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setPointerType = function (newPointerType) {
-    resetBuffers({
-      background: true,
-      foreground: true,
-      pointers: true
-    })
-    pointerType = newPointerType
-    if (pointerType.type === 'type1') {
-      pointerColor = ColorDef.GRAY
-      backgroundColor = BackgroundColor.ANTHRACITE
-    } else {
-      pointerColor = ColorDef.BLACK
-      backgroundColor = BackgroundColor.LIGHT_GRAY
-    }
-    init({
-      background: true,
-      foreground: true,
-      pointers: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setPointerColor = function (newPointerColor) {
-    resetBuffers({
-      pointers: true
-    })
-    pointerColor = newPointerColor
-    init({
-      pointers: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.repaint = function () {
+  const repaint = function () {
     if (!initialized) {
       init({
         frame: true,
@@ -834,14 +601,10 @@ const Clock = function (canvas, parameters) {
 
   // Visualize the component
   tickTock()
-
-  return this
 }
 
-export default Clock
-
 export class ClockElement extends BaseElement {
-  static get objectConstructor () { return Clock }
+  static get drawFunction () { return drawClock }
 
   static get properties () {
     return {

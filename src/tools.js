@@ -560,20 +560,6 @@ export function getShortestAngle (from, to) {
   return wrap(to - from, -180, 180)
 }
 
-// shim layer
-export const requestAnimFrame = (function () {
-  return (
-    window.requestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.oRequestAnimationFrame ||
-    window.msRequestAnimationFrame ||
-    function (callback) {
-      window.setTimeout(callback, 1000 / 16)
-    }
-  )
-})()
-
 export function getCanvasContext (elementOrId) {
   const element =
     typeof elementOrId === 'string' || elementOrId instanceof String

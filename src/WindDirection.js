@@ -1,4 +1,4 @@
-import Tween from './tween.js'
+
 import drawPointerImage from './drawPointerImage'
 import drawFrame from './drawFrame'
 import drawBackground from './drawBackground'
@@ -8,8 +8,6 @@ import createLcdBackgroundImage from './createLcdBackgroundImage'
 import drawRoseImage from './drawRoseImage'
 import {
   createBuffer,
-  getShortestAngle,
-  requestAnimFrame,
   getCanvasContext,
   HALF_PI,
   TWO_PI,
@@ -36,16 +34,16 @@ import { easeCubicInOut } from 'd3-ease'
 import { timer, now } from 'd3-timer'
 import { scaleLinear } from 'd3-scale'
 
-const WindDirection = function (canvas, parameters) {
+export function drawWindDirection (canvas, parameters) {
   parameters = parameters || {}
   let size = undefined === parameters.size ? 0 : parameters.size
-  let frameDesign =
+  const frameDesign =
     undefined === parameters.frameDesign
       ? FrameDesign.METAL
       : parameters.frameDesign
   const frameVisible =
     undefined === parameters.frameVisible ? true : parameters.frameVisible
-  let backgroundColor =
+  const backgroundColor =
     undefined === parameters.backgroundColor
       ? BackgroundColor.DARK_GRAY
       : parameters.backgroundColor
@@ -53,19 +51,19 @@ const WindDirection = function (canvas, parameters) {
     undefined === parameters.backgroundVisible
       ? true
       : parameters.backgroundVisible
-  let pointerTypeLatest =
+  const pointerTypeLatest =
     undefined === parameters.pointerTypeLatest
       ? PointerType.TYPE1
       : parameters.pointerTypeLatest
-  let pointerTypeAverage =
+  const pointerTypeAverage =
     undefined === parameters.pointerTypeAverage
       ? PointerType.TYPE8
       : parameters.pointerTypeAverage
-  let pointerColor =
+  const pointerColor =
     undefined === parameters.pointerColor
       ? ColorDef.RED
       : parameters.pointerColor
-  let pointerColorAverage =
+  const pointerColorAverage =
     undefined === parameters.pointerColorAverage
       ? ColorDef.BLUE
       : parameters.pointerColorAverage
@@ -77,7 +75,7 @@ const WindDirection = function (canvas, parameters) {
     undefined === parameters.knobStyle
       ? KnobStyle.SILVER
       : parameters.knobStyle
-  let foregroundType =
+  const foregroundType =
     undefined === parameters.foregroundType
       ? ForegroundType.TYPE1
       : parameters.foregroundType
@@ -85,7 +83,7 @@ const WindDirection = function (canvas, parameters) {
     undefined === parameters.foregroundVisible
       ? true
       : parameters.foregroundVisible
-  let pointSymbols =
+  const pointSymbols =
     undefined === parameters.pointSymbols
       ? ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']
       : parameters.pointSymbols
@@ -103,15 +101,15 @@ const WindDirection = function (canvas, parameters) {
       : parameters.degreeScaleHalf
   const roseVisible =
     undefined === parameters.roseVisible ? false : parameters.roseVisible
-  let lcdColor =
+  const lcdColor =
     undefined === parameters.lcdColor ? LcdColor.STANDARD : parameters.lcdColor
   const lcdVisible =
     undefined === parameters.lcdVisible ? true : parameters.lcdVisible
   const digitalFont =
     undefined === parameters.digitalFont ? false : parameters.digitalFont
-  let section = undefined === parameters.section ? null : parameters.section
-  let area = undefined === parameters.area ? null : parameters.area
-  let lcdTitleStrings =
+  const section = undefined === parameters.section ? null : parameters.section
+  const area = undefined === parameters.area ? null : parameters.area
+  const lcdTitleStrings =
     undefined === parameters.lcdTitleStrings
       ? ['Latest', 'Average']
       : parameters.lcdTitleStrings
@@ -119,22 +117,15 @@ const WindDirection = function (canvas, parameters) {
     undefined === parameters.titleString ? '' : parameters.titleString
   const useColorLabels =
     undefined === parameters.useColorLabels ? false : parameters.useColorLabels
-  const fullScaleDeflectionTime =
-    undefined === parameters.fullScaleDeflectionTime
-      ? 2.5
-      : parameters.fullScaleDeflectionTime
 
-  let tweenLatest
-  let tweenAverage
-  let valueLatest = parameters.valueLatest ?? 0
-  let valueAverage = parameters.valueAverage ?? 0
+  const valueLatest = parameters.valueLatest ?? 0
+  const valueAverage = parameters.valueAverage ?? 0
   const angleStep = RAD_FACTOR
-  let angleLatest = this.valueLatest
-  let angleAverage = this.valueAverage
+  let angleLatest
+  let angleAverage
   const rotationOffset = -HALF_PI
   const angleRange = TWO_PI
   const range = 360
-  let repainting = false
 
   // Get the canvas context and clear it
   const mainCtx = getCanvasContext(canvas)
@@ -167,22 +158,22 @@ const WindDirection = function (canvas, parameters) {
   // **************   Buffer creation  ********************
   // Buffer for all static background painting code
   const backgroundBuffer = createBuffer(size, size)
-  let backgroundContext = backgroundBuffer.getContext('2d')
+  const backgroundContext = backgroundBuffer.getContext('2d')
 
   // Buffer for LCD displays
   let lcdBuffer
 
   // Buffer for latest pointer images painting code
   const pointerBufferLatest = createBuffer(size, size)
-  let pointerContextLatest = pointerBufferLatest.getContext('2d')
+  const pointerContextLatest = pointerBufferLatest.getContext('2d')
 
   // Buffer for average pointer image
   const pointerBufferAverage = createBuffer(size, size)
-  let pointerContextAverage = pointerBufferAverage.getContext('2d')
+  const pointerContextAverage = pointerBufferAverage.getContext('2d')
 
   // Buffer for static foreground painting code
   const foregroundBuffer = createBuffer(size, size)
-  let foregroundContext = foregroundBuffer.getContext('2d')
+  const foregroundContext = foregroundBuffer.getContext('2d')
 
   // **************   Image creation  ********************
   const drawLcdText = function (value, bLatest) {
@@ -683,347 +674,7 @@ const WindDirection = function (canvas, parameters) {
     }
   }
 
-  const resetBuffers = function (buffers) {
-    buffers = buffers || {}
-    const resetBackground =
-      undefined === buffers.background ? false : buffers.background
-    const resetPointer =
-      undefined === buffers.pointer ? false : buffers.pointer
-    const resetForeground =
-      undefined === buffers.foreground ? false : buffers.foreground
-
-    // Buffer for all static background painting code
-    if (resetBackground) {
-      backgroundBuffer.width = size
-      backgroundBuffer.height = size
-      backgroundContext = backgroundBuffer.getContext('2d')
-    }
-    // Buffers for pointer image painting code
-    if (resetPointer) {
-      pointerBufferLatest.width = size
-      pointerBufferLatest.height = size
-      pointerContextLatest = pointerBufferLatest.getContext('2d')
-
-      pointerBufferAverage.width = size
-      pointerBufferAverage.height = size
-      pointerContextAverage = pointerBufferAverage.getContext('2d')
-    }
-    // Buffer for static foreground painting code
-    if (resetForeground) {
-      foregroundBuffer.width = size
-      foregroundBuffer.height = size
-      foregroundContext = foregroundBuffer.getContext('2d')
-    }
-  }
-
-  //* *********************************** Public methods **************************************
-  this.setValueLatest = function (newValue) {
-    // Actually need to handle 0-360 rather than 0-359
-    // 1-360 are used for directions
-    // 0 is used as a special case to indicate 'calm'
-    newValue = parseFloat(newValue)
-    newValue = newValue === 360 ? 360 : newValue % 360
-    if (valueLatest !== newValue) {
-      valueLatest = newValue
-      this.repaint()
-    }
-    return this
-  }
-
-  this.getValueLatest = function () {
-    return valueLatest
-  }
-
-  this.setValueAverage = function (newValue) {
-    // Actually need to handle 0-360 rather than 0-359
-    // 1-360 are used for directions
-    // 0 is used as a special case to indicate 'calm'
-    newValue = parseFloat(newValue)
-    newValue = newValue === 360 ? 360 : newValue % 360
-    if (valueAverage !== newValue) {
-      valueAverage = newValue
-      this.repaint()
-    }
-    return this
-  }
-
-  this.getValueAverage = function () {
-    return valueAverage
-  }
-
-  this.setValueAnimatedLatest = function (newValue, callback) {
-    const gauge = this
-    let diff
-    let time
-    // Actually need to handle 0-360 rather than 0-359
-    // 1-360 are used for directions
-    // 0 is used as a special case to indicate 'calm'
-    newValue = parseFloat(newValue)
-    const targetValue = newValue === 360 ? 360 : newValue % 360
-
-    if (valueLatest !== targetValue) {
-      if (undefined !== tweenLatest && tweenLatest.isPlaying) {
-        tweenLatest.stop()
-      }
-
-      diff = getShortestAngle(valueLatest, targetValue)
-
-      if (diff !== 0) {
-        // 360 - 0 is a diff of zero
-        time = (fullScaleDeflectionTime * Math.abs(diff)) / 180
-        time = Math.max(time, fullScaleDeflectionTime / 5)
-        tweenLatest = new Tween(
-          {},
-          '',
-          Tween.regularEaseInOut,
-          valueLatest,
-          valueLatest + diff,
-          time
-        )
-        tweenLatest.onMotionChanged = function (event) {
-          valueLatest =
-            event.target._pos === 360 ? 360 : event.target._pos % 360
-          if (!repainting) {
-            repainting = true
-            requestAnimFrame(gauge.repaint)
-          }
-        }
-
-        tweenLatest.onMotionFinished = function () {
-          valueLatest = targetValue
-          if (!repainting) {
-            repainting = true
-            requestAnimFrame(gauge.repaint)
-          }
-          // do we have a callback function to process?
-          if (callback && typeof callback === 'function') {
-            callback()
-          }
-        }
-
-        tweenLatest.start()
-      } else {
-        // target different from current, but diff is zero (0 -> 360 for instance), so just repaint
-        valueLatest = targetValue
-        if (!repainting) {
-          repainting = true
-          requestAnimFrame(gauge.repaint)
-        }
-      }
-    }
-    return this
-  }
-
-  this.setValueAnimatedAverage = function (newValue, callback) {
-    const gauge = this
-    let diff
-    let time
-    // Actually need to handle 0-360 rather than 0-359
-    // 1-360 are used for directions
-    // 0 is used as a special case to indicate 'calm'
-    newValue = parseFloat(newValue)
-    const targetValue = newValue === 360 ? 360 : newValue % 360
-    if (valueAverage !== newValue) {
-      if (undefined !== tweenAverage && tweenAverage.isPlaying) {
-        tweenAverage.stop()
-      }
-
-      diff = getShortestAngle(valueAverage, targetValue)
-      if (diff !== 0) {
-        // 360 - 0 is a diff of zero
-        time = (fullScaleDeflectionTime * Math.abs(diff)) / 180
-        time = Math.max(time, fullScaleDeflectionTime / 5)
-        tweenAverage = new Tween(
-          {},
-          '',
-          Tween.regularEaseInOut,
-          valueAverage,
-          valueAverage + diff,
-          time
-        )
-        tweenAverage.onMotionChanged = function (event) {
-          valueAverage =
-            event.target._pos === 360 ? 360 : event.target._pos % 360
-          if (!repainting) {
-            repainting = true
-            requestAnimFrame(gauge.repaint)
-          }
-        }
-
-        tweenAverage.onMotionFinished = function () {
-          valueAverage = targetValue
-          if (!repainting) {
-            repainting = true
-            requestAnimFrame(gauge.repaint)
-          }
-          // do we have a callback function to process?
-          if (callback && typeof callback === 'function') {
-            callback()
-          }
-        }
-
-        tweenAverage.start()
-      } else {
-        // target different from current, but diff is zero (0 -> 360 for instance), so just repaint
-        valueAverage = targetValue
-        if (!repainting) {
-          repainting = true
-          requestAnimFrame(gauge.repaint)
-        }
-      }
-    }
-    return this
-  }
-
-  this.setArea = function (areaVal) {
-    area = areaVal
-    resetBuffers({
-      background: true
-    })
-    init({
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setSection = function (areaSec) {
-    section = areaSec
-    resetBuffers({
-      background: true
-    })
-    init({
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setFrameDesign = function (newFrameDesign) {
-    frameDesign = newFrameDesign
-    resetBuffers({
-      background: true
-    })
-    init({
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setBackgroundColor = function (newBackgroundColor) {
-    backgroundColor = newBackgroundColor
-    resetBuffers({
-      background: true
-    })
-    init({
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setForegroundType = function (newForegroundType) {
-    resetBuffers({
-      foreground: true
-    })
-    foregroundType = newForegroundType
-    init({
-      foreground: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setPointerColor = function (newPointerColor) {
-    resetBuffers({
-      pointer: true
-    })
-    pointerColor = newPointerColor
-    init({
-      pointer: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setPointerColorAverage = function (newPointerColor) {
-    resetBuffers({
-      pointer: true
-    })
-    pointerColorAverage = newPointerColor
-    init({
-      pointer: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setPointerType = function (newPointerType) {
-    pointerTypeLatest = newPointerType
-    resetBuffers({
-      pointer: true,
-      foreground: true
-    })
-    init({
-      pointer: true,
-      foreground: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setPointerTypeAverage = function (newPointerType) {
-    pointerTypeAverage = newPointerType
-    resetBuffers({
-      pointer: true,
-      foreground: true
-    })
-    init({
-      pointer: true,
-      foreground: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setPointSymbols = function (newPointSymbols) {
-    pointSymbols = newPointSymbols
-    resetBuffers({
-      background: true
-    })
-    init({
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setLcdColor = function (newLcdColor) {
-    lcdColor = newLcdColor
-    resetBuffers({
-      background: true
-    })
-    init({
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.setLcdTitleStrings = function (titles) {
-    lcdTitleStrings = titles
-    resetBuffers({
-      background: true
-    })
-    init({
-      background: true
-    })
-    this.repaint()
-    return this
-  }
-
-  this.repaint = function () {
+  const repaint = function () {
     if (!initialized) {
       init({
         frame: true,
@@ -1075,20 +726,14 @@ const WindDirection = function (canvas, parameters) {
     if (foregroundVisible) {
       mainCtx.drawImage(foregroundBuffer, 0, 0)
     }
-
-    repainting = false
   }
 
   // Visualize the component
-  this.repaint()
-
-  return this
+  repaint()
 }
 
-export default WindDirection
-
 export class WindDirectionElement extends BaseElement {
-  static get objectConstructor () { return WindDirection }
+  static get drawFunction () { return drawWindDirection }
 
   static get properties () {
     return {
@@ -1120,8 +765,7 @@ export class WindDirectionElement extends BaseElement {
       digitalFont: { type: Boolean, defaultValue: false },
       lcdTitleStrings: { type: Array, defaultValue: ['Latest', 'Average'] },
       titleString: { type: String, defaultValue: '' },
-      useColorLabels: { type: Boolean, defaultValue: false },
-      fullScaleDeflectionTime: { type: Number, defaultValue: 2.5 }
+      useColorLabels: { type: Boolean, defaultValue: false }
     }
   }
 
