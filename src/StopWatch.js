@@ -652,11 +652,13 @@ export class StopwatchElement extends BaseElement {
     super()
     this._timer = timer(() => {})
     this._timer.stop()
+    this._timerRunning = false
   }
 
   disconnectedCallback () {
     super.disconnectedCallback()
     this._timer.stop()
+    this._timerRunning = false
   }
 
   render () {
@@ -667,18 +669,21 @@ export class StopwatchElement extends BaseElement {
 
   updated (changedProperties) {
     super.updated()
-    if (this.running) {
-      let lastEllapsedTime = 0
-      let seconds = this.seconds
-      this._timer.restart((ellapsedTime) => {
-        seconds += (ellapsedTime - lastEllapsedTime) / 1000
-        if (Math.floor(seconds) !== this.seconds) {
-          this.setAttribute('seconds', Math.floor(seconds))
-        }
-        lastEllapsedTime = ellapsedTime
-      })
-    } else {
-      this._timer.stop()
+    if (this.running !== this._timerRunning) {
+      if (this.running) {
+        let lastEllapsedTime = 0
+        let seconds = this.seconds
+        this._timer.restart((ellapsedTime) => {
+          seconds += (ellapsedTime - lastEllapsedTime) / 1000
+          if (Math.floor(seconds) !== this.seconds) {
+            this.setAttribute('seconds', Math.floor(seconds))
+          }
+          lastEllapsedTime = ellapsedTime
+        })
+      } else {
+        this._timer.stop()
+      }
+      this._timerRunning = this.running
     }
   }
 }
