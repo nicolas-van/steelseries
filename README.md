@@ -1,7 +1,11 @@
 
 # Steelseries Gauges
 
-[![](https://github.com/nicolas-van/steelseries/workflows/Node%20CI/badge.svg)](https://github.com/nicolas-van/steelseries/actions) [![npm version](https://img.shields.io/npm/v/steelseries.svg)](https://www.npmjs.com/package/steelseries) [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/steelseries) [![](https://data.jsdelivr.com/v1/package/npm/steelseries/badge)](https://www.jsdelivr.com/package/npm/steelseries)
+[![](https://github.com/nicolas-van/steelseries/workflows/Node%20CI/badge.svg)](https://github.com/nicolas-van/steelseries/actions)
+[![npm version](https://img.shields.io/npm/v/steelseries.svg)](https://www.npmjs.com/package/steelseries)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/steelseries)
+[![](https://data.jsdelivr.com/v1/package/npm/steelseries/badge)](https://www.jsdelivr.com/package/npm/steelseries)
+![GitHub Repo stars](https://img.shields.io/github/stars/nicolas-van/steelseries?style=social)
 
 ![gauges](./gauges.gif)
       
@@ -11,7 +15,7 @@ These components are packed as web components, which means they do not necessita
 in order to be used on web pages. Just include the following snippet in your HTML file:
 
 ```
-  <script type="module" src="https://cdn.jsdelivr.net/npm/steelseries@2.0.3/dist/steelseries.bundled.min.js">&lt;/script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/steelseries@2.0.4/dist/steelseries.bundled.min.js">&lt;/script>
 ```
 
 Then select one of the compoments displayed [in the documentation](https://nicolas-van.github.io/steelseries/), adjust the parameters as you see fit and copy paste the resulting
