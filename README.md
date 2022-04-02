@@ -15,7 +15,7 @@ These components are packed as web components, which means they do not necessita
 in order to be used on web pages. Just include the following snippet in your HTML file:
 
 ```
-  <script type="module" src="https://cdn.jsdelivr.net/npm/steelseries@2.0.5/dist/steelseries.bundled.min.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/steelseries@2.0.6/dist/steelseries.bundled.min.js"></script>
 ```
 
 Then select one of the compoments displayed [in the documentation](https://nicolas-van.github.io/steelseries/), adjust the parameters as you see fit and copy paste the resulting
