@@ -49,6 +49,15 @@ import "steelseries"
 <steelseries-compass value="75"></steelseries-compass>
 ```
 
+### Using a web framework (React, Angular, Vue,...)
+
+Same as in the example code.
+
+Web components integrate naturally with any web framework. You just have to import the project correctly and
+use the component as if it was normal HTML. No wrapper is needed.
+
+Some web frameworks do perform so kind of validation by default to ensure all elements are know elements. That feature is not compatible with web components and must be deactivated to use web components at all. Hopefully that feature will be deactivated in all web frameworks one day but in the mean time you just have to refer to your framework's documentation or make a Google search with "how to use web components with X" and you should find the solution without problem.
+
 ### Migration from 1.0
 
 In version 2.0 all the API has been rewritten to [web components](https://developer.mozilla.org/fr/docs/Web/Web_Components), which makes it a major change breaking all the API. During that process multiple features were
