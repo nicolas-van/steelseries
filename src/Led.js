@@ -1,7 +1,7 @@
-import createLedImage from './createLedImage'
-import { getCanvasContext, doc } from './tools'
+import createLedImage from './createLedImage.js'
+import { getCanvasContext, doc } from './tools.js'
 
-import { LedColor } from './definitions'
+import { LedColor } from './definitions.js'
 
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'

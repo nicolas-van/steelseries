@@ -1,4 +1,4 @@
-import { rgbaColor, gradientWrapper, getCanvasContext } from './tools'
+import { rgbaColor, gradientWrapper, getCanvasContext } from './tools.js'
 
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'

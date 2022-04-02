@@ -1,15 +1,15 @@
 
-import drawPointerImage from './drawPointerImage'
-import drawFrame from './drawFrame'
-import drawBackground from './drawBackground'
-import drawRadialCustomImage from './drawRadialCustomImage'
-import drawForeground from './drawForeground'
-import createKnobImage from './createKnobImage'
-import createLedImage from './createLedImage'
-import createLcdBackgroundImage from './createLcdBackgroundImage'
-import createMeasuredValueImage from './createMeasuredValueImage'
-import createTrendIndicator from './createTrendIndicator'
-import drawTitleImage from './drawTitleImage'
+import drawPointerImage from './drawPointerImage.js'
+import drawFrame from './drawFrame.js'
+import drawBackground from './drawBackground.js'
+import drawRadialCustomImage from './drawRadialCustomImage.js'
+import drawForeground from './drawForeground.js'
+import createKnobImage from './createKnobImage.js'
+import createLedImage from './createLedImage.js'
+import createLcdBackgroundImage from './createLcdBackgroundImage.js'
+import createMeasuredValueImage from './createMeasuredValueImage.js'
+import createTrendIndicator from './createTrendIndicator.js'
+import drawTitleImage from './drawTitleImage.js'
 import {
   calcNiceNumber,
   createBuffer,
@@ -21,7 +21,7 @@ import {
   doc,
   lcdFontName,
   stdFontName
-} from './tools'
+} from './tools.js'
 
 import {
   BackgroundColor,
@@ -37,9 +37,9 @@ import {
   LabelNumberFormat,
   TickLabelOrientation,
   TrendState
-} from './definitions'
+} from './definitions.js'
 
-import { drawOdometer } from './Odometer'
+import { drawOdometer } from './Odometer.js'
 
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'

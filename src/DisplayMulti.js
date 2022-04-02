@@ -1,7 +1,7 @@
-import createLcdBackgroundImage from './createLcdBackgroundImage'
-import { getCanvasContext, lcdFontName, stdFontName } from './tools'
+import createLcdBackgroundImage from './createLcdBackgroundImage.js'
+import { getCanvasContext, lcdFontName, stdFontName } from './tools.js'
 
-import { LcdColor } from './definitions'
+import { LcdColor } from './definitions.js'
 
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'

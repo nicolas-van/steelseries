@@ -1,7 +1,7 @@
-import createKnobImage from './createKnobImage'
-import { createBuffer } from './tools'
+import createKnobImage from './createKnobImage.js'
+import { createBuffer } from './tools.js'
 
-import { GaugeType, Orientation } from './definitions'
+import { GaugeType, Orientation } from './definitions.js'
 
 const drawForeground = function (
   ctx,

@@ -1,4 +1,4 @@
-import { roundedRectangle, createBuffer } from './tools'
+import { roundedRectangle, createBuffer } from './tools.js'
 
 const createLcdBackgroundImage = function (width, height, lcdColor) {
   let lcdBuffer

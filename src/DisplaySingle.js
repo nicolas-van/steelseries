@@ -1,4 +1,4 @@
-import createLcdBackgroundImage from './createLcdBackgroundImage'
+import createLcdBackgroundImage from './createLcdBackgroundImage.js'
 import {
   roundedRectangle,
   createBuffer,
@@ -8,9 +8,9 @@ import {
   getCanvasContext,
   lcdFontName,
   stdFontName
-} from './tools'
+} from './tools.js'
 
-import { LcdColor } from './definitions'
+import { LcdColor } from './definitions.js'
 
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'

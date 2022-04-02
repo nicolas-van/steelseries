@@ -1,4 +1,4 @@
-import { drawToBuffer } from './tools'
+import { drawToBuffer } from './tools.js'
 
 const punchedSheetBuffer = drawToBuffer(15, 15, function (ctx) {
   const imageWidth = ctx.canvas.width

@@ -1,4 +1,4 @@
-import { getCanvasContext, TWO_PI, doc } from './tools'
+import { getCanvasContext, TWO_PI, doc } from './tools.js'
 
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'

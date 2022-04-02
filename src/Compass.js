@@ -1,15 +1,15 @@
 
-import drawFrame from './drawFrame'
-import drawBackground from './drawBackground'
-import drawRadialCustomImage from './drawRadialCustomImage'
-import drawForeground from './drawForeground'
-import drawRoseImage from './drawRoseImage'
+import drawFrame from './drawFrame.js'
+import drawBackground from './drawBackground.js'
+import drawRadialCustomImage from './drawRadialCustomImage.js'
+import drawForeground from './drawForeground.js'
+import drawRoseImage from './drawRoseImage.js'
 import {
   createBuffer,
   getCanvasContext,
   HALF_PI,
   RAD_FACTOR
-} from './tools'
+} from './tools.js'
 
 import {
   BackgroundColor,
@@ -19,7 +19,7 @@ import {
   FrameDesign,
   PointerType,
   ForegroundType
-} from './definitions'
+} from './definitions.js'
 
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'

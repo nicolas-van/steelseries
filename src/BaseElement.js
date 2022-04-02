@@ -1,6 +1,6 @@
 
 import { LitElement } from 'lit'
-import { assert } from './tools'
+import { assert } from './tools.js'
 
 export default class BaseElement extends LitElement {
   constructor () {

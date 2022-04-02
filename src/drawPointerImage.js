@@ -1,4 +1,4 @@
-import { createBuffer, TWO_PI } from './tools'
+import { createBuffer, TWO_PI } from './tools.js'
 
 const drawPointerImage = function (ctx, size, ptrType, ptrColor, lblColor) {
   let ptrBuffer

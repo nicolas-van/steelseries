@@ -1,11 +1,11 @@
 
-import drawPointerImage from './drawPointerImage'
-import drawFrame from './drawFrame'
-import drawBackground from './drawBackground'
-import drawRadialCustomImage from './drawRadialCustomImage'
-import drawForeground from './drawForeground'
-import createLcdBackgroundImage from './createLcdBackgroundImage'
-import drawRoseImage from './drawRoseImage'
+import drawPointerImage from './drawPointerImage.js'
+import drawFrame from './drawFrame.js'
+import drawBackground from './drawBackground.js'
+import drawRadialCustomImage from './drawRadialCustomImage.js'
+import drawForeground from './drawForeground.js'
+import createLcdBackgroundImage from './createLcdBackgroundImage.js'
+import drawRoseImage from './drawRoseImage.js'
 import {
   createBuffer,
   getCanvasContext,
@@ -14,7 +14,7 @@ import {
   RAD_FACTOR,
   lcdFontName,
   stdFontName
-} from './tools'
+} from './tools.js'
 
 import {
   BackgroundColor,
@@ -25,7 +25,7 @@ import {
   FrameDesign,
   PointerType,
   ForegroundType
-} from './definitions'
+} from './definitions.js'
 
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'

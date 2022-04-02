@@ -1,11 +1,11 @@
 
-import drawLinearBackgroundImage from './drawLinearBackgroundImage'
-import drawLinearForegroundImage from './drawLinearForegroundImage'
-import drawLinearFrameImage from './drawLinearFrameImage'
-import createLedImage from './createLedImage'
-import createLcdBackgroundImage from './createLcdBackgroundImage'
-import createMeasuredValueImage from './createMeasuredValueImage'
-import drawTitleImage from './drawTitleImage'
+import drawLinearBackgroundImage from './drawLinearBackgroundImage.js'
+import drawLinearForegroundImage from './drawLinearForegroundImage.js'
+import drawLinearFrameImage from './drawLinearFrameImage.js'
+import createLedImage from './createLedImage.js'
+import createLcdBackgroundImage from './createLcdBackgroundImage.js'
+import createMeasuredValueImage from './createMeasuredValueImage.js'
+import drawTitleImage from './drawTitleImage.js'
 import {
   calcNiceNumber,
   createBuffer,
@@ -14,7 +14,7 @@ import {
   doc,
   lcdFontName,
   stdFontName
-} from './tools'
+} from './tools.js'
 
 import {
   BackgroundColor,
@@ -23,7 +23,7 @@ import {
   LedColor,
   FrameDesign,
   LabelNumberFormat
-} from './definitions'
+} from './definitions.js'
 
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'

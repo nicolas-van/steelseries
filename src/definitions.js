@@ -1,4 +1,4 @@
-import { rgbaColor } from './tools'
+import { rgbaColor } from './tools.js'
 
 import {
   BackgroundColorDef,
@@ -15,7 +15,7 @@ import {
   LabelNumberFormatDef,
   TickLabelOrientationDef,
   TrendStateDef
-} from './constants'
+} from './constants.js'
 
 export const BackgroundColor = {
   DARK_GRAY: new BackgroundColorDef(

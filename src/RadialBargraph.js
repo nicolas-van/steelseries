@@ -1,12 +1,12 @@
 
-import drawFrame from './drawFrame'
-import drawBackground from './drawBackground'
-import drawRadialCustomImage from './drawRadialCustomImage'
-import drawForeground from './drawForeground'
-import createLedImage from './createLedImage'
-import createLcdBackgroundImage from './createLcdBackgroundImage'
-import createTrendIndicator from './createTrendIndicator'
-import drawTitleImage from './drawTitleImage'
+import drawFrame from './drawFrame.js'
+import drawBackground from './drawBackground.js'
+import drawRadialCustomImage from './drawRadialCustomImage.js'
+import drawForeground from './drawForeground.js'
+import createLedImage from './createLedImage.js'
+import createLcdBackgroundImage from './createLcdBackgroundImage.js'
+import createTrendIndicator from './createTrendIndicator.js'
+import drawTitleImage from './drawTitleImage.js'
 import {
   calcNiceNumber,
   createBuffer,
@@ -20,7 +20,7 @@ import {
   doc,
   lcdFontName,
   stdFontName
-} from './tools'
+} from './tools.js'
 
 import {
   BackgroundColor,
@@ -33,7 +33,7 @@ import {
   LabelNumberFormat,
   TickLabelOrientation,
   TrendState
-} from './definitions'
+} from './definitions.js'
 
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'

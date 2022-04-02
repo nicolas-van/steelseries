@@ -1,11 +1,11 @@
 
-import drawPointerImage from './drawPointerImage'
-import drawFrame from './drawFrame'
-import drawBackground from './drawBackground'
-import drawForeground from './drawForeground'
-import createKnobImage from './createKnobImage'
-import createLedImage from './createLedImage'
-import createMeasuredValueImage from './createMeasuredValueImage'
+import drawPointerImage from './drawPointerImage.js'
+import drawFrame from './drawFrame.js'
+import drawBackground from './drawBackground.js'
+import drawForeground from './drawForeground.js'
+import createKnobImage from './createKnobImage.js'
+import createLedImage from './createLedImage.js'
+import createMeasuredValueImage from './createMeasuredValueImage.js'
 import {
   calcNiceNumber,
   createBuffer,
@@ -14,7 +14,7 @@ import {
   PI,
   doc,
   stdFontName
-} from './tools'
+} from './tools.js'
 
 import {
   BackgroundColor,
@@ -28,7 +28,7 @@ import {
   PointerType,
   ForegroundType,
   LabelNumberFormat
-} from './definitions'
+} from './definitions.js'
 
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'

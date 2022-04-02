@@ -1,4 +1,4 @@
-import { TWO_PI } from './tools'
+import { TWO_PI } from './tools.js'
 
 const drawRadialCustomImage = function (
   ctx,

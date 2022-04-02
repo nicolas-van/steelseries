@@ -1,4 +1,4 @@
-import { TWO_PI, RAD_FACTOR } from './tools'
+import { TWO_PI, RAD_FACTOR } from './tools.js'
 
 const drawRoseImage = function (
   ctx,

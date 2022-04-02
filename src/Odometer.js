@@ -1,5 +1,5 @@
 
-import { createBuffer, getCanvasContext } from './tools'
+import { createBuffer, getCanvasContext } from './tools.js'
 
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'

@@ -1,10 +1,10 @@
 
-import drawFrame from './drawFrame'
-import drawBackground from './drawBackground'
-import drawRadialCustomImage from './drawRadialCustomImage'
-import drawForeground from './drawForeground'
-import createLcdBackgroundImage from './createLcdBackgroundImage'
-import drawTitleImage from './drawTitleImage'
+import drawFrame from './drawFrame.js'
+import drawBackground from './drawBackground.js'
+import drawRadialCustomImage from './drawRadialCustomImage.js'
+import drawForeground from './drawForeground.js'
+import createLcdBackgroundImage from './createLcdBackgroundImage.js'
+import drawTitleImage from './drawTitleImage.js'
 import {
   createBuffer,
   getCanvasContext,
@@ -12,7 +12,7 @@ import {
   PI,
   lcdFontName,
   stdFontName
-} from './tools'
+} from './tools.js'
 
 import {
   BackgroundColor,
@@ -21,7 +21,7 @@ import {
   KnobStyle,
   FrameDesign,
   ForegroundType
-} from './definitions'
+} from './definitions.js'
 
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'

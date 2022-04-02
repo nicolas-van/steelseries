@@ -1,7 +1,7 @@
 
-import drawFrame from './drawFrame'
-import drawBackground from './drawBackground'
-import drawForeground from './drawForeground'
+import drawFrame from './drawFrame.js'
+import drawBackground from './drawBackground.js'
+import drawForeground from './drawForeground.js'
 import {
   createBuffer,
   getCanvasContext,
@@ -10,14 +10,14 @@ import {
   PI,
   RAD_FACTOR,
   stdFontName
-} from './tools'
+} from './tools.js'
 
 import {
   BackgroundColor,
   ColorDef,
   FrameDesign,
   ForegroundType
-} from './definitions'
+} from './definitions.js'
 
 import { html } from 'lit'
 import BaseElement from './BaseElement.js'
