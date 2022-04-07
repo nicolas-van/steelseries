@@ -23,6 +23,8 @@ code in your HTML. That's it, the component should now display correctly on your
 
 [See the documentation here](https://nicolas-van.github.io/steelseries/).
 
+[![Stargazers repo roster for @nicolas-van/steelseries](https://reporoster.com/stars/nicolas-van/steelseries)](https://github.com/nicolas-van/steelseries/stargazers)
+
 This project was forked from [HanSolo's SteelSeries-Canvas](https://github.com/HanSolo/SteelSeries-Canvas).
 
 ## Development
