@@ -129,9 +129,8 @@ export function drawDisplayMulti (canvas, parameters) {
       }
 
       let altValueText = altValue.toFixed(lcdDecimals)
-      let altValueText = altValue.toFixed(lcdDecimals)
       if (detailStringVisible) {
-        altValueText = detailString + altValueText
+        altValueText = detailString + altValueText + detailUnitString
       }
       if (digitalFont) {
         mainCtx.font = lcdAltFont
