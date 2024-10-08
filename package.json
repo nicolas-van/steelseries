@@ -37,6 +37,10 @@
     "url": "https://github.com/nicolas-van/steelseries/issues"
   },
   "homepage": "https://nicolas-van.github.io/steelseries/",
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/nicolas-van"
+  },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.1.3",
     "@vanillawc/wc-markdown": "^1.6.11",
