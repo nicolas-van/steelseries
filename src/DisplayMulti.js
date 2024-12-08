@@ -28,6 +28,8 @@ export function drawDisplayMulti (canvas, parameters) {
       : parameters.detailStringVisible
   const unitString =
     undefined === parameters.unitString ? '' : parameters.unitString
+  const detailUnitString =
+    undefined === parameters.detailUnitString ? '' : parameters.detailUnitString
   const unitStringVisible =
     undefined === parameters.unitStringVisible
       ? false
@@ -128,7 +130,7 @@ export function drawDisplayMulti (canvas, parameters) {
 
       let altValueText = altValue.toFixed(lcdDecimals)
       if (detailStringVisible) {
-        altValueText = detailString + altValueText
+        altValueText = detailString + altValueText + detailUnitString
       }
       if (digitalFont) {
         mainCtx.font = lcdAltFont
@@ -215,6 +217,7 @@ export class DisplayMultiElement extends BaseElement {
       detailStringVisible: { type: Boolean, defaultValue: false },
       unitString: { type: String, defaultValue: '' },
       unitStringVisible: { type: Boolean, defaultValue: false },
+      detailUnitString: { type: String, defaultValue: '' },
       digitalFont: { type: Boolean, defaultValue: false }
     }
   }
